@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mapas Bíblicos · Mapas interactivos por libro</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mapas Bíblicos">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+
+:root{
+  --bg:#0b0f14;
+  --bg-2:#0f1620;
+  --panel:#121a24;
+  --panel-2:#1a2434;
+  --border:#223040;
+  --text:#e6edf3;
+  --muted:#8b9bb0;
+  --at:#e0a862;        --at-glow:rgba(224,168,98,.45);
+  --cristo:#ff5c5c;    --cristo-glow:rgba(255,92,92,.45);
+  --iglesia:#3ddc84;   --iglesia-glow:rgba(61,220,132,.45);
+  --pacto:#58a6ff;     --pacto-glow:rgba(88,166,255,.45);
+  --esperanza:#b87cff; --esperanza-glow:rgba(184,124,255,.45);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(1400px 700px at 5% -10%, rgba(224,168,98,.10), transparent 60%),
+    radial-gradient(1400px 700px at 50% -10%, rgba(255,92,92,.08), transparent 60%),
+    radial-gradient(1400px 700px at 95% -10%, rgba(61,220,132,.10), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  line-height:1.55;
+  min-height:100vh;
+  padding:calc(20px + var(--safe-top)) calc(20px + var(--safe-right)) calc(40px + var(--safe-bottom)) calc(20px + var(--safe-left));
+}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;left:0;right:0;
+  background:rgba(11,15,20,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:10px 18px;
+  margin:-20px -20px 20px;
+  padding-top:calc(10px + var(--safe-top));
+  padding-left:calc(18px + var(--safe-left));
+  padding-right:calc(18px + var(--safe-right));
+  z-index:50;
+  display:flex;align-items:center;gap:14px;
+  flex-wrap:wrap;
+}
+.topbar a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.78rem;font-weight:600;letter-spacing:.4px;
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:.18s;
+}
+.topbar a:hover{color:var(--text)}
+.topbar .home-link::before{content:"←";font-size:.95rem}
+.topbar h1{
+  font-size:1.1rem;font-weight:700;
+  background:linear-gradient(90deg,var(--at),var(--cristo),var(--iglesia),var(--pacto),var(--esperanza));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  letter-spacing:.3px;
+  flex:1;
+}
+.topbar .badge{
+  font-size:.66rem;font-weight:700;
+  padding:3px 10px;border-radius:11px;
+  letter-spacing:.8px;text-transform:uppercase;
+}
+
+
+/* Hero */
+.hero{
+  text-align:center;
+  margin:20px auto 32px;
+  max-width:900px;
+}
+.hero h1{
+  font-size:clamp(1.7rem, 4vw, 2.6rem);
+  font-weight:700;
+  background:linear-gradient(90deg,var(--at),var(--cristo),var(--iglesia),var(--pacto),var(--esperanza));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  letter-spacing:.5px;
+  margin-bottom:8px;
+}
+.hero .subtitle{
+  color:var(--muted);
+  font-size:.92rem;font-style:italic;
+  margin-bottom:14px;
+}
+.hero .stats{
+  font-size:.78rem;color:var(--muted);
+  display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center;
+}
+.hero .stats b{color:var(--text);font-weight:700}
+
+/* Legend */
+.legend{
+  display:flex;justify-content:center;gap:18px;flex-wrap:wrap;
+  margin:14px 0 8px;font-size:.74rem;color:var(--muted);
+}
+.legend-item{display:inline-flex;align-items:center;gap:5px}
+.legend-item em{opacity:.7;font-style:normal}
+.legend-item .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+/* Division */
+.division{
+  margin:0 auto 36px;
+  max-width:1300px;
+}
+.division-title{
+  font-size:.95rem;font-weight:700;
+  color:var(--text);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:14px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.division-title .count{
+  font-size:.74rem;font-weight:500;color:var(--muted);
+  text-transform:none;letter-spacing:.3px;
+}
+
+/* Books grid */
+.books-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:12px;
+}
+.book-card{
+  background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border:1px solid var(--border);
+  border-left:3px solid var(--cat-color, var(--muted));
+  border-radius:10px;
+  padding:14px 14px 12px;
+  text-decoration:none;color:var(--text);
+  display:flex;flex-direction:column;gap:8px;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  min-height:130px;
+  position:relative;
+}
+.book-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--cat-color);
+  box-shadow:0 6px 22px -6px var(--cat-glow);
+}
+.book-card[data-cat="at"]{--cat-color:var(--at);--cat-glow:var(--at-glow)}
+.book-card[data-cat="cristo"]{--cat-color:var(--cristo);--cat-glow:var(--cristo-glow)}
+.book-card[data-cat="iglesia"]{--cat-color:var(--iglesia);--cat-glow:var(--iglesia-glow)}
+.book-card[data-cat="pacto"]{--cat-color:var(--pacto);--cat-glow:var(--pacto-glow)}
+.book-card[data-cat="esperanza"]{--cat-color:var(--esperanza);--cat-glow:var(--esperanza-glow)}
+
+.book-card.coming-soon{
+  opacity:.5;
+  cursor:not-allowed;
+}
+.book-card.coming-soon:hover{
+  transform:none;
+  border-color:var(--border);
+  box-shadow:none;
+}
+
+.book-header{
+  display:flex;justify-content:space-between;align-items:start;gap:8px;
+}
+.book-header h3{
+  font-size:.98rem;font-weight:600;color:#fff;line-height:1.25;
+}
+.cat-dot{
+  width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:5px;
+}
+.book-summary{
+  font-size:.78rem;color:var(--muted);
+  line-height:1.45;flex:1;
+}
+.book-footer{
+  display:flex;justify-content:space-between;align-items:center;gap:6px;
+  margin-top:auto;
+}
+.cat-tag{
+  font-size:.62rem;font-weight:700;
+  padding:2px 7px;border-radius:8px;
+  border:1px solid;letter-spacing:.5px;text-transform:uppercase;
+}
+.status-pill{
+  font-size:.6rem;font-weight:600;
+  color:var(--muted);
+  letter-spacing:.5px;text-transform:uppercase;
+}
+.book-card.available .status-pill{color:var(--iglesia)}
+
+footer{
+  text-align:center;color:var(--muted);
+  font-size:.78rem;margin-top:50px;padding-top:20px;
+  border-top:1px solid var(--border);
+}
+
+@media (max-width:600px){
+  body{padding:10px 10px 30px}
+  .topbar{margin:-10px -10px 16px;padding:8px 10px}
+  .hero{margin:14px auto 24px}
+  .books-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .book-card{padding:11px 11px 10px;min-height:115px}
+  .book-header h3{font-size:.88rem}
+  .book-summary{font-size:.72rem}
+  .cat-tag{font-size:.56rem}
+  .status-pill{font-size:.54rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Mapas Bíblicos</h1>
+  <span class="badge" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)">66 libros</span>
+</div>
+
+<header class="hero">
+  <h1>Mapas Bíblicos Interactivos</h1>
+  <p class="subtitle">Estudio tipológico libro por libro · De la sombra a la realidad en Cristo</p>
+  <div class="stats">
+    <span><b>66</b> libros</span>
+    <span><b>10</b> divisiones</span>
+    <span><b>1</b> disponible</span>
+    <span><b>65</b> en preparación</span>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><i class="dot" style="background:#e0a862"></i> AT · Figura <em>(17)</em></span><span class="legend-item"><i class="dot" style="background:#ff5c5c"></i> Cristo <em>(5)</em></span><span class="legend-item"><i class="dot" style="background:#3ddc84"></i> Iglesia <em>(21)</em></span><span class="legend-item"><i class="dot" style="background:#58a6ff"></i> Pacto / Promesa <em>(5)</em></span><span class="legend-item"><i class="dot" style="background:#b87cff"></i> Esperanza <em>(18)</em></span>
+  </div>
+</header>
+
+
+        <section class="division">
+          <h2 class="division-title">Pentateuco <span class="count">(5)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-gen/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Génesis</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Principios: creación, pecado, promesa, patriarcas</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-exo/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Éxodo</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Liberación de Egipto, entrega de la Ley, tabernáculo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-lev/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Levítico</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Santidad, sacerdocio, sacrificios, pureza</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-num/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Números</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Peregrinación por el desierto, censos, rebelión</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-deu/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Deuteronomio</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Repaso de la Ley antes de entrar a Canaán</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Históricos <span class="count">(12)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-jos/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Josué</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Conquista y reparto de la Tierra Prometida</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-jue/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Jueces</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Ciclos de rebelión, opresión y liberación</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-rut/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Rut</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Lealtad, redención, linaje de David</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1sa/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>1 Samuel</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Último juez, primer rey: Saúl</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2sa/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>2 Samuel</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Reinado de David</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1re/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>1 Reyes</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Salomón, división del reino, Elías</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2re/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>2 Reyes</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Reinos divididos, exilio, Eliseo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1cr/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>1 Crónicas</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Genealogías y reinado de David</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2cr/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>2 Crónicas</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Templo, reyes de Judá, exilio</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-esd/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Esdras</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Retorno del exilio, reconstrucción del templo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-neh/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Nehemías</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Reconstrucción de los muros de Jerusalén</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-est/index.html" class="book-card coming-soon" data-cat="at">
+              <div class="book-header">
+                <h3>Ester</h3>
+                <span class="cat-dot" style="background:#e0a862"></span>
+              </div>
+              <p class="book-summary">Providencia en el exilio persa</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#e0a862;border-color:#e0a862">AT · Figura</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Poéticos y Sabiduría <span class="count">(5)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-job/index.html" class="book-card coming-soon" data-cat="pacto">
+              <div class="book-header">
+                <h3>Job</h3>
+                <span class="cat-dot" style="background:#58a6ff"></span>
+              </div>
+              <p class="book-summary">Sufrimiento del justo y soberanía de Dios</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#58a6ff;border-color:#58a6ff">Pacto / Promesa</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-sal/index.html" class="book-card coming-soon" data-cat="pacto">
+              <div class="book-header">
+                <h3>Salmos</h3>
+                <span class="cat-dot" style="background:#58a6ff"></span>
+              </div>
+              <p class="book-summary">Himnos, lamentaciones, alabanza, profecía</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#58a6ff;border-color:#58a6ff">Pacto / Promesa</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-pro/index.html" class="book-card coming-soon" data-cat="pacto">
+              <div class="book-header">
+                <h3>Proverbios</h3>
+                <span class="cat-dot" style="background:#58a6ff"></span>
+              </div>
+              <p class="book-summary">Sabiduría práctica para la vida diaria</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#58a6ff;border-color:#58a6ff">Pacto / Promesa</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-ecc/index.html" class="book-card coming-soon" data-cat="pacto">
+              <div class="book-header">
+                <h3>Eclesiastés</h3>
+                <span class="cat-dot" style="background:#58a6ff"></span>
+              </div>
+              <p class="book-summary">Vanidad de la vida sin Dios</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#58a6ff;border-color:#58a6ff">Pacto / Promesa</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-cnt/index.html" class="book-card coming-soon" data-cat="pacto">
+              <div class="book-header">
+                <h3>Cantares</h3>
+                <span class="cat-dot" style="background:#58a6ff"></span>
+              </div>
+              <p class="book-summary">Amor entre el Esposo y la Esposa</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#58a6ff;border-color:#58a6ff">Pacto / Promesa</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Profetas Mayores <span class="count">(5)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-isa/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Isaías</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Santo de Israel, Siervo Sufriente, consuelo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-jer/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Jeremías</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Lamento sobre Judá, Nuevo Pacto prometido</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-lam/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Lamentaciones</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Lamentos por la caída de Jerusalén</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-eze/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Ezequiel</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Gloria del Señor, valle de huesos secos, nuevo corazón</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-dan/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Daniel</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Fidelidad en Babilonia, visiones del Reino</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Profetas Menores <span class="count">(12)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-oso/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Oseas</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Amor de Dios frente a la infidelidad de Israel</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-joe/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Joel</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Plaga de langostas, derramamiento del Espíritu</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-amo/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Amós</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Justicia social, juicio a las naciones</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-abd/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Abdías</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Juicio sobre Edom</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-jon/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Jonás</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Misericordia hacia Nínive</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-mic/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Miqueas</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Belén, requerimiento de justicia</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-nah/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Nahúm</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Juicio sobre Nínive</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-hab/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Habacuc</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">El justo por su fe vivirá</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-sof/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Sofonías</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Día del Señor, remanente fiel</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-hag/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Hageo</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Reconstrucción del templo post-exilio</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-zac/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Zacarías</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Visiones, el Vástago, Rey humilde</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-mal/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Malaquías</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Última profecía: Elías, día del Señor</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Evangelios <span class="count">(4)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-mat/index.html" class="book-card coming-soon" data-cat="cristo">
+              <div class="book-header">
+                <h3>Mateo</h3>
+                <span class="cat-dot" style="background:#ff5c5c"></span>
+              </div>
+              <p class="book-summary">Jesús, el Mesías prometido a Israel</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#ff5c5c;border-color:#ff5c5c">Cristo</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-mar/index.html" class="book-card coming-soon" data-cat="cristo">
+              <div class="book-header">
+                <h3>Marcos</h3>
+                <span class="cat-dot" style="background:#ff5c5c"></span>
+              </div>
+              <p class="book-summary">Jesús, el Siervo obediente</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#ff5c5c;border-color:#ff5c5c">Cristo</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-luc/index.html" class="book-card coming-soon" data-cat="cristo">
+              <div class="book-header">
+                <h3>Lucas</h3>
+                <span class="cat-dot" style="background:#ff5c5c"></span>
+              </div>
+              <p class="book-summary">Jesús, el Salvador universal</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#ff5c5c;border-color:#ff5c5c">Cristo</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-jua/index.html" class="book-card coming-soon" data-cat="cristo">
+              <div class="book-header">
+                <h3>Juan</h3>
+                <span class="cat-dot" style="background:#ff5c5c"></span>
+              </div>
+              <p class="book-summary">Jesús, el Verbo encarnado, vida eterna</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#ff5c5c;border-color:#ff5c5c">Cristo</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Historia Apostólica <span class="count">(1)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-hec/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Hechos</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Nacimiento y expansión de la Iglesia</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Cartas Paulinas <span class="count">(13)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-rom/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Romanos</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Justificación por la fe, vida en el Espíritu</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1co/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>1 Corintios</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Divisiones, dones, amor, resurrección</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2co/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>2 Corintios</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Ministerio, debilidad, generosidad</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-gal/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Gálatas</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Libertad en Cristo, no a la ley</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-efe/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Efesios</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Iglesia como cuerpo de Cristo, unidad</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-fil/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Filipenses</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Gozo en el sufrimiento, humildad de Cristo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-col/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Colosenses</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Supremacía de Cristo sobre todo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1te/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>1 Tesalonicenses</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Santificación, segunda venida</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2te/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>2 Tesalonicenses</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Apostasía, el Día del Señor</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1ti/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>1 Timoteo</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Liderazgo pastoral, falsos maestros</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2ti/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>2 Timoteo</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Última carta, fidelidad final</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-tito/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Tito</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Buenas obras, ancianos, orden</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-flm/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Filemón</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Perdón, Onesimo, reconciliación</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Cartas Generales <span class="count">(8)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-heb/index.html" class="book-card available" data-cat="cristo">
+              <div class="book-header">
+                <h3>Hebreos</h3>
+                <span class="cat-dot" style="background:#ff5c5c"></span>
+              </div>
+              <p class="book-summary">Cristo superior: sacerdote, pacto, sacrificio</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#ff5c5c;border-color:#ff5c5c">Cristo</span>
+                <span class="status-pill">Disponible</span>
+              </div>
+            </a>
+            <a href="mapa-sant/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Santiago</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Fe sin obras está muerta</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1pe/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>1 Pedro</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Sufrimiento, esperanza, santidad</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2pe/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>2 Pedro</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Crecimiento, falsos maestros, día del Señor</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-1jn/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>1 Juan</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Dios es luz, Dios es amor, vida eterna</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-2jn/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>2 Juan</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Verdad y amor, cautela con engañadores</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-3jn/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>3 Juan</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Hospitalidad, fidelidad de Gayo</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+            <a href="mapa-jud/index.html" class="book-card coming-soon" data-cat="iglesia">
+              <div class="book-header">
+                <h3>Judas</h3>
+                <span class="cat-dot" style="background:#3ddc84"></span>
+              </div>
+              <p class="book-summary">Contendad por la fe, juicio</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#3ddc84;border-color:#3ddc84">Iglesia</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+        <section class="division">
+          <h2 class="division-title">Apocalíptico <span class="count">(1)</span></h2>
+          <div class="books-grid">
+            
+            <a href="mapa-apo/index.html" class="book-card coming-soon" data-cat="esperanza">
+              <div class="book-header">
+                <h3>Apocalipsis</h3>
+                <span class="cat-dot" style="background:#b87cff"></span>
+              </div>
+              <p class="book-summary">Visiones del Cristo exaltado, juicio, consumación</p>
+              <div class="book-footer">
+                <span class="cat-tag" style="color:#b87cff;border-color:#b87cff">Esperanza</span>
+                <span class="status-pill">Próximamente</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+<footer>
+  Repositorio de estudio bíblico · Hecho para profundizar en las Escrituras<br>
+  <span style="opacity:.6;font-size:.7rem">Toca cualquier libro disponible para abrir su mapa interactivo</span>
+</footer>
+
+<script>
+// PWA: register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('[PWA] SW registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW failed:', err.message));
+  });
+}
+</script>
+</body>
+</html>

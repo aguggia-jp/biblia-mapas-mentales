@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>3 Juan · Mapa interactivo (en preparación)</title>
+<style>
+
+:root{
+  --bg:#0b0f14;
+  --bg-2:#0f1620;
+  --panel:#121a24;
+  --panel-2:#1a2434;
+  --border:#223040;
+  --text:#e6edf3;
+  --muted:#8b9bb0;
+  --at:#e0a862;        --at-glow:rgba(224,168,98,.45);
+  --cristo:#ff5c5c;    --cristo-glow:rgba(255,92,92,.45);
+  --iglesia:#3ddc84;   --iglesia-glow:rgba(61,220,132,.45);
+  --pacto:#58a6ff;     --pacto-glow:rgba(88,166,255,.45);
+  --esperanza:#b87cff; --esperanza-glow:rgba(184,124,255,.45);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(1400px 700px at 5% -10%, rgba(224,168,98,.10), transparent 60%),
+    radial-gradient(1400px 700px at 50% -10%, rgba(255,92,92,.08), transparent 60%),
+    radial-gradient(1400px 700px at 95% -10%, rgba(61,220,132,.10), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  line-height:1.55;
+  min-height:100vh;
+  padding:calc(20px + var(--safe-top)) calc(20px + var(--safe-right)) calc(40px + var(--safe-bottom)) calc(20px + var(--safe-left));
+}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;left:0;right:0;
+  background:rgba(11,15,20,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:10px 18px;
+  margin:-20px -20px 20px;
+  padding-top:calc(10px + var(--safe-top));
+  padding-left:calc(18px + var(--safe-left));
+  padding-right:calc(18px + var(--safe-right));
+  z-index:50;
+  display:flex;align-items:center;gap:14px;
+  flex-wrap:wrap;
+}
+.topbar a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.78rem;font-weight:600;letter-spacing:.4px;
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:.18s;
+}
+.topbar a:hover{color:var(--text)}
+.topbar .home-link::before{content:"←";font-size:.95rem}
+.topbar h1{
+  font-size:1.1rem;font-weight:700;
+  background:linear-gradient(90deg,var(--at),var(--cristo),var(--iglesia),var(--pacto),var(--esperanza));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  letter-spacing:.3px;
+  flex:1;
+}
+.topbar .badge{
+  font-size:.66rem;font-weight:700;
+  padding:3px 10px;border-radius:11px;
+  letter-spacing:.8px;text-transform:uppercase;
+}
+
+
+.placeholder-container{
+  max-width:780px;
+  margin:30px auto;
+  padding:30px 24px;
+  background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border:1px solid var(--border);
+  border-left:3px solid #3ddc84;
+  border-radius:14px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.placeholder-container::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,#3ddc84,transparent);
+  opacity:.7;
+}
+
+.book-title{
+  font-size:2rem;font-weight:700;
+  color:#3ddc84;
+  text-shadow:0 0 22px rgba(61,220,132,.45);
+  margin-bottom:6px;
+  letter-spacing:.5px;
+}
+.book-category{
+  font-size:.72rem;font-weight:700;
+  color:#3ddc84;
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:18px;
+}
+.book-summary{
+  color:var(--muted);
+  font-size:.95rem;line-height:1.65;
+  margin-bottom:24px;
+  font-style:italic;
+}
+.status-block{
+  background:rgba(255,255,255,.03);
+  border:1px dashed var(--border);
+  padding:20px 18px;
+  border-radius:10px;
+  margin-bottom:24px;
+}
+.status-block .icon{
+  font-size:2rem;margin-bottom:8px;
+  opacity:.6;
+}
+.status-block .title{
+  font-size:.95rem;font-weight:600;
+  margin-bottom:4px;
+}
+.status-block .text{
+  font-size:.82rem;color:var(--muted);
+  line-height:1.55;
+}
+.preview-tags{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:24px;
+}
+.preview-tag{
+  font-size:.72rem;font-weight:600;
+  padding:4px 10px;
+  border-radius:11px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+
+.actions{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 18px;
+  border-radius:8px;
+  font-size:.82rem;font-weight:600;
+  text-decoration:none;
+  border:1px solid var(--border);
+  font-family:inherit;
+  cursor:pointer;
+  transition:.2s;
+}
+.btn-primary{
+  background:rgba(61,220,132,.10);
+  color:var(--iglesia);
+  border-color:rgba(61,220,132,.3);
+}
+.btn-primary:hover{
+  background:rgba(61,220,132,.18);
+  border-color:var(--iglesia);
+}
+.btn-secondary{
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+}
+.btn-secondary:hover{
+  background:rgba(255,255,255,.08);
+  color:var(--text);
+}
+
+@media (max-width:600px){
+  body{padding:10px}
+  .topbar{margin:-10px -10px 16px}
+  .placeholder-container{padding:22px 18px;margin:16px auto}
+  .book-title{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../index.html" class="home-link">Todos los mapas</a>
+  <h1>3 Juan</h1>
+  <span class="badge" style="color:#3ddc84;border:1px solid #3ddc84;background:rgba(255,255,255,.03)">Iglesia</span>
+</div>
+
+<div class="placeholder-container">
+  <h2 class="book-title">3 Juan</h2>
+  <div class="book-category">Iglesia</div>
+  <p class="book-summary">Hospitalidad, fidelidad de Gayo</p>
+
+  <div class="status-block">
+    <div class="icon">⏳</div>
+    <div class="title">Mapa interactivo en preparación</div>
+    <div class="text">
+      Este libro aún no tiene su mapa constelar interactivo.<br>
+      Cuando esté listo, contendrá nodos conectados con versículos,<br>
+      referencias cruzadas y comentarios de eruditos clásicos.
+    </div>
+  </div>
+
+  <div class="preview-tags">
+    <span class="preview-tag">Versículos</span>
+    <span class="preview-tag">Referencias cruzadas</span>
+    <span class="preview-tag">Comentarios clásicos</span>
+    <span class="preview-tag">Layout constelar</span>
+    <span class="preview-tag">Funciona offline</span>
+  </div>
+
+  <div class="actions">
+    <a href="../index.html" class="btn btn-primary">← Volver al índice</a>
+    <a href="../mapa-heb/index.html" class="btn btn-secondary">Ver mapa de Hebreos (ejemplo)</a>
+  </div>
+</div>
+
+</body>
+</html>
