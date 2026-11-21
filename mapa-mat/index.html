@@ -2,10 +2,40 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mateo · Mapa interactivo (en preparación)</title>
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Mateo · Mapa Constelar Interactivo</title>
 
+<!-- PWA: Manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- PWA: Theme & colors -->
+<meta name="theme-color" content="#0b0f14">
+<meta name="background_color" content="#0b0f14">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Mapa interactivo de tipologías de la Carta a los Hebreos: AT → Cristo → Iglesia.">
+
+<!-- iOS: standalone mode + status bar -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mateo">
+<meta name="application-name" content="Mateo">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<!-- Safe area insets (for notched phones in standalone mode) -->
+<style>
+  :root{
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+</style>
+<style>
 :root{
   --bg:#0b0f14;
   --bg-2:#0f1620;
@@ -19,10 +49,7 @@
   --iglesia:#3ddc84;   --iglesia-glow:rgba(61,220,132,.45);
   --pacto:#58a6ff;     --pacto-glow:rgba(88,166,255,.45);
   --esperanza:#b87cff; --esperanza-glow:rgba(184,124,255,.45);
-  --safe-top:env(safe-area-inset-top,0px);
-  --safe-bottom:env(safe-area-inset-bottom,0px);
-  --safe-left:env(safe-area-inset-left,0px);
-  --safe-right:env(safe-area-inset-right,0px);
+  --radius:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -31,22 +58,50 @@ body{
     radial-gradient(1400px 700px at 5% -10%, rgba(224,168,98,.10), transparent 60%),
     radial-gradient(1400px 700px at 50% -10%, rgba(255,92,92,.08), transparent 60%),
     radial-gradient(1400px 700px at 95% -10%, rgba(61,220,132,.10), transparent 60%),
+    radial-gradient(900px 600px at 30% 110%, rgba(88,166,255,.08), transparent 60%),
+    radial-gradient(900px 600px at 70% 110%, rgba(184,124,255,.08), transparent 60%),
     var(--bg);
   color:var(--text);
   font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-  line-height:1.55;
-  min-height:100vh;
-  padding:calc(20px + var(--safe-top)) calc(20px + var(--safe-right)) calc(40px + var(--safe-bottom)) calc(20px + var(--safe-left));
+  line-height:1.5;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
-/* Topbar */
+/* ---------- HOME BUTTON (back to index) ---------- */
+.home-btn{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;gap:6px;
+  text-decoration:none;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:7px 12px;
+  border-radius:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:.3px;
+  transition:.18s;
+  font-family:inherit;
+  line-height:1;
+}
+.home-btn:hover{
+  background:rgba(255,92,92,.10);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.home-btn:active{transform:scale(.97)}
+.home-icon{font-size:.95rem;line-height:1}
+.home-label{font-size:.78rem}
+
+/* ---------- TOP BAR ---------- */
 .topbar{
-  position:sticky;top:0;left:0;right:0;
+  position:relative;
+  flex-shrink:0;
   background:rgba(11,15,20,.92);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
   padding:10px 18px;
-  margin:-20px -20px 20px;
   padding-top:calc(10px + var(--safe-top));
   padding-left:calc(18px + var(--safe-left));
   padding-right:calc(18px + var(--safe-right));
@@ -54,176 +109,1514 @@ body{
   display:flex;align-items:center;gap:14px;
   flex-wrap:wrap;
 }
-.topbar a{
-  color:var(--muted);
-  text-decoration:none;
-  font-size:.78rem;font-weight:600;letter-spacing:.4px;
-  text-transform:uppercase;
-  display:inline-flex;align-items:center;gap:5px;
-  transition:.18s;
+.brand{
+  display:flex;flex-direction:column;
+  min-width:0;margin-right:8px;
 }
-.topbar a:hover{color:var(--text)}
-.topbar .home-link::before{content:"←";font-size:.95rem}
-.topbar h1{
+.brand h1{
   font-size:1.1rem;font-weight:700;
   background:linear-gradient(90deg,var(--at),var(--cristo),var(--iglesia),var(--pacto),var(--esperanza));
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  letter-spacing:.3px;
-  flex:1;
+  letter-spacing:.4px;line-height:1.1;
 }
-.topbar .badge{
-  font-size:.66rem;font-weight:700;
-  padding:3px 10px;border-radius:11px;
-  letter-spacing:.8px;text-transform:uppercase;
-}
+.brand .sub{color:var(--muted);font-size:.72rem;font-style:italic;margin-top:1px}
 
-
-.placeholder-container{
-  max-width:780px;
-  margin:30px auto;
-  padding:30px 24px;
-  background:linear-gradient(180deg,var(--panel),var(--bg-2));
-  border:1px solid var(--border);
-  border-left:3px solid #ff5c5c;
-  border-radius:14px;
-  text-align:center;
+/* Search */
+.search-box{
+  flex:1;min-width:200px;max-width:340px;
   position:relative;
-  overflow:hidden;
 }
-.placeholder-container::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,transparent,#ff5c5c,transparent);
-  opacity:.7;
-}
-
-.book-title{
-  font-size:2rem;font-weight:700;
-  color:#ff5c5c;
-  text-shadow:0 0 22px rgba(255,92,92,.45);
-  margin-bottom:6px;
-  letter-spacing:.5px;
-}
-.book-category{
-  font-size:.72rem;font-weight:700;
-  color:#ff5c5c;
-  letter-spacing:1.5px;text-transform:uppercase;
-  margin-bottom:18px;
-}
-.book-summary{
-  color:var(--muted);
-  font-size:.95rem;line-height:1.65;
-  margin-bottom:24px;
-  font-style:italic;
-}
-.status-block{
-  background:rgba(255,255,255,.03);
-  border:1px dashed var(--border);
-  padding:20px 18px;
-  border-radius:10px;
-  margin-bottom:24px;
-}
-.status-block .icon{
-  font-size:2rem;margin-bottom:8px;
-  opacity:.6;
-}
-.status-block .title{
-  font-size:.95rem;font-weight:600;
-  margin-bottom:4px;
-}
-.status-block .text{
-  font-size:.82rem;color:var(--muted);
-  line-height:1.55;
-}
-.preview-tags{
-  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
-  margin-bottom:24px;
-}
-.preview-tag{
-  font-size:.72rem;font-weight:600;
-  padding:4px 10px;
-  border-radius:11px;
+.search-box input{
+  width:100%;
   background:rgba(255,255,255,.04);
   border:1px solid var(--border);
-  color:var(--muted);
-}
-
-.actions{
-  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
-}
-.btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:9px 18px;
   border-radius:8px;
-  font-size:.82rem;font-weight:600;
-  text-decoration:none;
-  border:1px solid var(--border);
-  font-family:inherit;
-  cursor:pointer;
+  padding:7px 12px 7px 32px;
+  color:var(--text);
+  font-family:inherit;font-size:.82rem;
   transition:.2s;
 }
-.btn-primary{
-  background:rgba(61,220,132,.10);
-  color:var(--iglesia);
-  border-color:rgba(61,220,132,.3);
+.search-box input:focus{
+  outline:none;border-color:var(--cristo);
+  box-shadow:0 0 0 2px rgba(255,92,92,.15);
 }
-.btn-primary:hover{
-  background:rgba(61,220,132,.18);
-  border-color:var(--iglesia);
-}
-.btn-secondary{
-  background:rgba(255,255,255,.04);
-  color:var(--muted);
-}
-.btn-secondary:hover{
-  background:rgba(255,255,255,.08);
-  color:var(--text);
+.search-box input::placeholder{color:var(--muted)}
+.search-box::before{
+  content:"⌕";position:absolute;left:10px;top:50%;
+  transform:translateY(-50%);color:var(--muted);font-size:.95rem;
 }
 
-@media (max-width:600px){
-  body{padding:10px}
-  .topbar{margin:-10px -10px 16px}
-  .placeholder-container{padding:22px 18px;margin:16px auto}
-  .book-title{font-size:1.6rem}
+/* Filter pills */
+.filter-pills{
+  display:flex;gap:6px;flex-wrap:wrap;
+  align-items:center;
 }
+.filter-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:.72rem;font-weight:600;letter-spacing:.3px;
+  cursor:pointer;transition:.18s;
+  font-family:inherit;
+}
+.filter-pill .dot{width:8px;height:8px;border-radius:50%}
+.filter-pill:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.06);
+}
+.filter-pill.active{
+  background:rgba(255,255,255,.07);
+  border-color:var(--accent-c);
+  color:var(--accent-c);
+  box-shadow:0 0 14px -2px var(--accent-c-glow);
+}
+.filter-pill[data-cat="at"]{--accent-c:var(--at);--accent-c-glow:var(--at-glow)}
+.filter-pill[data-cat="cristo"]{--accent-c:var(--cristo);--accent-c-glow:var(--cristo-glow)}
+.filter-pill[data-cat="iglesia"]{--accent-c:var(--iglesia);--accent-c-glow:var(--iglesia-glow)}
+.filter-pill[data-cat="pacto"]{--accent-c:var(--pacto);--accent-c-glow:var(--pacto-glow)}
+.filter-pill[data-cat="esperanza"]{--accent-c:var(--esperanza);--accent-c-glow:var(--esperanza-glow)}
+.filter-pill[data-cat="all"]{--accent-c:#fff;--accent-c-glow:rgba(255,255,255,.3)}
+
+.stats{
+  font-size:.72rem;color:var(--muted);
+  white-space:nowrap;
+  margin-left:auto;
+}
+.stats b{color:var(--text);font-weight:600}
+
+/* Help button */
+.help-btn{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--muted);
+  width:30px;height:30px;border-radius:50%;
+  font-size:.95rem;font-family:inherit;
+  cursor:pointer;transition:.18s;
+  display:flex;align-items:center;justify-content:center;
+}
+.help-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+
+/* ---------- VIEWPORT ---------- */
+.viewport{
+  position:relative;
+  flex:1 1 auto;
+  min-height:0;
+  overflow:hidden;
+  cursor:grab;
+  /* Disable browser's native touch gestures (pinch-zoom, double-tap zoom)
+     so our custom JS handlers control touch behavior */
+  touch-action:none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.015), transparent 60%);
+}
+.viewport.panning{cursor:grabbing}
+
+.canvas{
+  position:absolute;
+  top:0;left:0;
+  width:2600px;height:1810px;
+  transform-origin:0 0;
+  transition:transform .35s cubic-bezier(.2,.7,.3,1);
+  /* Canvas itself doesn't intercept touch (the viewport does) */
+  touch-action:none;
+}
+.canvas.no-transition{transition:none}
+
+/* ---------- CLUSTER LABELS ---------- */
+.cluster{
+  position:absolute;
+  pointer-events:none;
+  font-size:.7rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,.18);
+  white-space:nowrap;
+  z-index:0;
+}
+
+/* ---------- ARROWS ---------- */
+.arrows-layer{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;
+  z-index:1;
+  overflow:visible;
+}
+.arrow-path{
+  fill:none;
+  stroke-width:1.6;
+  opacity:.32;
+  transition:opacity .25s, stroke-width .25s, filter .25s;
+  stroke-dasharray:6 4;
+  animation:flow 3s linear infinite;
+}
+@keyframes flow{to{stroke-dashoffset:-20;}}
+.arrow-path.highlighted{
+  opacity:1;stroke-width:2.8;
+  stroke-dasharray:none;animation:none;
+  filter:drop-shadow(0 0 5px currentColor);
+}
+.arrow-path.dimmed{opacity:.05}
+
+/* ---------- NODES ---------- */
+.nodes-layer{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  z-index:2;
+}
+.node{
+  position:absolute;
+  width:180px;
+  background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:10px;
+  padding:9px 11px;
+  cursor:pointer;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, opacity .25s;
+  min-height:56px;
+  /* Allow taps on nodes to register without starting pan/pinch */
+  touch-action:manipulation;
+  /* Disable text selection on long-press (mobile) */
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.node.at{--accent:var(--at);--glow:var(--at-glow)}
+.node.cristo{--accent:var(--cristo);--glow:var(--cristo-glow)}
+.node.iglesia{--accent:var(--iglesia);--glow:var(--iglesia-glow)}
+.node.pacto{--accent:var(--pacto);--glow:var(--pacto-glow)}
+.node.esperanza{--accent:var(--esperanza);--glow:var(--esperanza-glow)}
+.node:hover{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+  box-shadow:0 6px 22px -6px var(--glow), 0 0 0 1px var(--accent);
+  z-index:5;
+}
+.node.active{
+  border-color:var(--accent);
+  box-shadow:0 6px 22px -6px var(--glow), 0 0 0 2px var(--accent);
+  z-index:5;
+}
+.node.dimmed{opacity:.18}
+.node.hidden{display:none}
+.node h3{
+  font-size:.83rem;font-weight:600;color:#fff;
+  margin-bottom:2px;line-height:1.25;
+}
+.node .ref{
+  font-size:.68rem;color:var(--muted);
+  letter-spacing:.2px;line-height:1.3;
+}
+.node .hebrew-ref{
+  font-size:.62rem;color:var(--accent);
+  margin-top:3px;letter-spacing:.3px;
+  opacity:.85;font-weight:600;
+}
+.node .hebrew-ref::before{content:"He "}
+
+/* ---------- MODAL ---------- */
+.modal{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(5,8,12,.78);backdrop-filter:blur(8px);
+  justify-content:center;align-items:center;padding:22px;
+  /* Allow modal content to scroll on touch devices */
+  touch-action:pan-y;
+}
+.modal.show{display:flex;animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-content{
+  background:linear-gradient(180deg,#141d28,#0e151d);
+  border:1px solid var(--border);
+  border-top:3px solid var(--cristo);
+  border-radius:14px;
+  padding:28px 32px 26px;
+  max-width:780px;width:100%;max-height:84vh;overflow-y:auto;
+  position:relative;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.95), 0 0 0 1px rgba(255,255,255,.02);
+  animation:slideUp .22s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.close-btn{
+  position:absolute;top:10px;right:16px;
+  font-size:26px;color:var(--muted);cursor:pointer;
+  background:none;border:none;font-family:inherit;line-height:1;
+  transition:.2s;
+}
+.close-btn:hover{color:#fff;transform:rotate(90deg)}
+.modal-cat-tag{
+  display:inline-block;
+  font-size:.66rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 9px;border-radius:11px;
+  margin-bottom:10px;
+}
+.modal-cat-tag.at{background:rgba(224,168,98,.14);color:var(--at);border:1px solid rgba(224,168,98,.3)}
+.modal-cat-tag.cristo{background:rgba(255,92,92,.14);color:var(--cristo);border:1px solid rgba(255,92,92,.3)}
+.modal-cat-tag.iglesia{background:rgba(61,220,132,.14);color:var(--iglesia);border:1px solid rgba(61,220,132,.3)}
+.modal-cat-tag.pacto{background:rgba(88,166,255,.14);color:var(--pacto);border:1px solid rgba(88,166,255,.3)}
+.modal-cat-tag.esperanza{background:rgba(184,124,255,.14);color:var(--esperanza);border:1px solid rgba(184,124,255,.3)}
+.modal-title{
+  font-size:1.35rem;color:#fff;margin-bottom:4px;
+  letter-spacing:.3px;font-weight:700;
+}
+.modal-ref{
+  font-size:.82rem;color:var(--muted);font-style:italic;
+  padding-bottom:12px;border-bottom:1px solid var(--border);
+  margin-bottom:16px;
+}
+.modal-body{font-size:.95rem;line-height:1.7}
+
+.verse-block{
+  margin-bottom:18px;
+}
+.verse-block-header{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:6px;
+}
+.verse-ref{
+  font-size:.72rem;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#79c0ff;
+  background:rgba(88,166,255,.1);
+  padding:3px 8px;border-radius:6px;
+  border:1px solid rgba(88,166,255,.2);
+}
+.verse-text{
+  font-style:italic;color:#cfe3ff;
+  background:rgba(88,166,255,.06);
+  border-left:3px solid #1f6feb;
+  padding:12px 14px;border-radius:8px;
+  font-size:.92rem;line-height:1.65;
+}
+.verse-text + .verse-text{margin-top:10px}
+
+.comment-block{
+  background:rgba(224,168,98,.06);
+  border-left:3px solid var(--at);
+  padding:14px 16px;border-radius:8px;
+  margin-bottom:12px;
+}
+.comment-author{
+  display:block;font-weight:700;color:var(--at);
+  margin-bottom:8px;font-size:.84rem;letter-spacing:.3px;
+}
+.comment-text{font-size:.9rem;color:#e6d4b5;line-height:1.65}
+
+.cross-refs{
+  margin-top:18px;padding-top:14px;
+  border-top:1px dashed var(--border);
+}
+.cross-refs-title{
+  font-size:.7rem;font-weight:700;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.cross-ref-list{
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.cross-ref-item{
+  display:inline-block;
+  font-size:.72rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:3px 9px;border-radius:11px;
+  cursor:pointer;transition:.18s;
+  font-family:inherit;
+}
+.cross-ref-item:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.08);
+  border-color:var(--cristo);
+}
+
+.modal-content::-webkit-scrollbar{width:8px}
+.modal-content::-webkit-scrollbar-thumb{background:#2a3a4d;border-radius:4px}
+.modal-content::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- HELP PANEL ---------- */
+.help-panel{
+  display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(5,8,12,.78);backdrop-filter:blur(6px);
+  justify-content:center;align-items:center;padding:22px;
+}
+.help-panel.show{display:flex}
+.help-content{
+  background:linear-gradient(180deg,#141d28,#0e151d);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:26px 30px;
+  max-width:540px;
+  position:relative;
+}
+.help-content h2{
+  font-size:1.1rem;color:var(--cristo);margin-bottom:14px;
+  letter-spacing:.4px;
+}
+.help-content p{
+  font-size:.88rem;color:var(--text);line-height:1.6;
+  margin-bottom:10px;
+}
+.help-content ul{margin:8px 0 14px 18px;font-size:.85rem;line-height:1.7;color:var(--muted)}
+.help-content ul b{color:var(--text)}
+.help-content .key{display:inline-block;background:rgba(255,255,255,.06);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:.78rem;color:var(--text)}
+
+/* ---------- ZOOM CONTROLS ---------- */
+.zoom-controls{
+  position:fixed;
+  bottom:calc(18px + var(--safe-bottom));
+  right:calc(18px + var(--safe-right));
+  display:flex;flex-direction:column;gap:5px;
+  z-index:40;
+}
+.zoom-btn{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(20,29,40,.85);
+  border:1px solid var(--border);
+  color:var(--text);font-size:1.1rem;
+  cursor:pointer;transition:.18s;
+  font-family:inherit;
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+}
+.zoom-btn:hover{background:rgba(30,40,55,.95);border-color:var(--cristo)}
+.zoom-level{
+  font-size:.7rem;color:var(--muted);text-align:center;
+  background:rgba(20,29,40,.85);
+  padding:2px 0;border-radius:6px;
+  border:1px solid var(--border);
+}
+
+/* ---------- LEGEND (bottom-left) ---------- */
+.legend-panel{
+  position:fixed;
+  bottom:calc(18px + var(--safe-bottom));
+  left:calc(18px + var(--safe-left));
+  background:rgba(20,29,40,.85);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px 14px;
+  z-index:40;
+  backdrop-filter:blur(8px);
+  font-size:.72rem;
+  max-height:calc(100vh - 180px);
+  overflow-y:auto;
+}
+.legend-panel .title{
+  color:var(--muted);font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  font-size:.62rem;margin-bottom:7px;
+}
+.legend-panel .item{
+  display:flex;align-items:center;gap:7px;
+  margin-bottom:3px;color:var(--text);
+}
+.legend-panel .dot{width:9px;height:9px;border-radius:50%}
+
+/* ---------- LEGEND TOGGLE BUTTON (mobile only) ---------- */
+.legend-toggle{
+  display:none;
+  position:fixed;
+  bottom:calc(18px + var(--safe-bottom));
+  left:calc(18px + var(--safe-left));
+  z-index:62;  /* above backdrop (60) and topbar (50) */
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(20,29,40,.92);
+  border:1px solid var(--border);
+  color:var(--text);
+  cursor:pointer;
+  align-items:center;justify-content:center;
+  font-size:.95rem;
+  backdrop-filter:blur(8px);
+  font-family:inherit;
+  box-shadow:0 4px 14px -2px rgba(0,0,0,.5);
+}
+.legend-toggle:hover{background:rgba(30,40,55,.95);border-color:var(--cristo)}
+.legend-toggle.active{background:rgba(255,92,92,.18);border-color:var(--cristo);color:var(--cristo)}
+
+/* Backdrop when legend is open on mobile */
+.legend-backdrop{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(5,8,12,.55);
+  z-index:60;  /* above topbar (50) so it dims everything */
+  opacity:0;
+  transition:opacity .2s;
+}
+.legend-backdrop.show{
+  display:block;
+  opacity:1;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:768px){
+  /* Compact 1-row topbar + horizontal scroll filters */
+  .topbar{
+    padding:7px 10px;
+    padding-top:calc(7px + var(--safe-top));
+    padding-left:calc(10px + var(--safe-left));
+    padding-right:calc(10px + var(--safe-right));
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  /* On mobile: show only the arrow icon, hide the "Inicio" text label */
+  .home-btn{padding:7px 9px}
+  .home-btn .home-label{display:none}
+  .home-btn .home-icon{font-size:1.05rem}
+  .brand{
+    flex:0 0 auto;
+    margin-right:4px;
+  }
+  .brand h1{
+    font-size:.9rem;
+    white-space:nowrap;
+    letter-spacing:.3px;
+  }
+  .brand .sub{display:none}
+
+  /* Search: takes remaining space on row 1 */
+  .search-box{
+    flex:1 1 auto;
+    min-width:0;
+    max-width:none;
+    order:2;
+  }
+  .search-box input{padding:6px 10px 6px 28px;font-size:.78rem}
+  .search-box::before{left:8px;font-size:.85rem}
+
+  /* Help button: small, end of row 1 */
+  .help-btn{
+    width:30px;height:30px;
+    font-size:.85rem;
+    flex-shrink:0;
+    order:3;
+  }
+
+  /* Filter pills: full width row 2, horizontal scroll */
+  .filter-pills{
+    order:5;
+    flex:1 0 100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:3px;
+    margin-top:2px;
+    gap:5px;
+    justify-content:flex-start;
+  }
+  .filter-pills::-webkit-scrollbar{display:none}
+  .filter-pill{
+    flex-shrink:0;
+    padding:4px 9px;
+    font-size:.68rem;
+    letter-spacing:.2px;
+    white-space:nowrap;
+  }
+
+  .stats{display:none}
+
+  /* Hide the always-visible legend; use toggle button instead */
+  .legend-panel{display:none}
+
+  /* Show the toggle button on mobile */
+  .legend-toggle{display:flex}
+
+  /* When legend opens on mobile, show as fixed overlay above the toggle */
+  .legend-panel.mobile-open{
+    display:block;
+    position:fixed;
+    bottom:calc(70px + var(--safe-bottom));
+    left:calc(12px + var(--safe-left));
+    right:auto;
+    max-height:50vh;
+    width:auto;
+    min-width:200px;
+    z-index:63;  /* above backdrop (60) and toggle (62) */
+    font-size:.72rem;
+    padding:12px 14px;
+    box-shadow:0 12px 30px -8px rgba(0,0,0,.7);
+    animation:slideUp .2s ease;
+  }
+
+  /* Smaller zoom controls on mobile */
+  .zoom-btn{width:32px;height:32px;font-size:1rem}
+  .zoom-level{font-size:.62rem;padding:1px 0}
+  .zoom-controls{gap:4px}
+
+  /* Modal: full-screen on mobile for readability */
+  .modal{
+    padding:0;
+    /* Modal should cover ENTIRE screen, including under the topbar.
+       We use a higher z-index than topbar (which is 50) so modal always wins. */
+    z-index:2000;
+  }
+  .modal-content{
+    max-width:100%;
+    width:100%;
+    max-height:100vh;
+    height:100vh;
+    border-radius:0;
+    padding:calc(20px + var(--safe-top)) calc(18px + var(--safe-right)) calc(18px + var(--safe-bottom)) calc(18px + var(--safe-left));
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .close-btn{
+    top:calc(8px + var(--safe-top));
+    right:calc(14px + var(--safe-right));
+    width:36px;height:36px;
+    font-size:24px;
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+    border-radius:50%;
+  }
+  .modal-title{font-size:1.15rem}
+  .modal-body{font-size:.92rem;line-height:1.65}
+  .verse-text{padding:11px 13px;font-size:.88rem}
+  .comment-text{font-size:.86rem}
+  .comment-block{padding:11px 13px}
+}
+
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
 </style>
 </head>
 <body>
 
+<!-- ========== TOP BAR ========== -->
 <div class="topbar">
-  <a href="../index.html" class="home-link">Todos los mapas</a>
-  <h1>Mateo</h1>
-  <span class="badge" style="color:#ff5c5c;border:1px solid #ff5c5c;background:rgba(255,255,255,.03)">Cristo</span>
+  <a href="../index.html" class="home-btn" title="Volver al índice de mapas bíblicos" aria-label="Volver al inicio">
+    <span class="home-icon">←</span>
+    <span class="home-label">Inicio</span>
+  </a>
+  <div class="brand">
+    <h1>Mateo · Mapa Constelar</h1>
+    <span class="sub">El Evangelio del Reino · ~85 nodos temáticos</span>
+  </div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar nodo, referencia o concepto…" autocomplete="off">
+  </div>
+  <div class="filter-pills" id="filterPills">
+    <button class="filter-pill active" data-cat="all"><i class="dot" style="background:#fff"></i> Todos</button>
+    <button class="filter-pill" data-cat="at"><i class="dot" style="background:var(--at)"></i> AT · Sombra</button>
+    <button class="filter-pill" data-cat="cristo"><i class="dot" style="background:var(--cristo)"></i> Cristo</button>
+    <button class="filter-pill" data-cat="iglesia"><i class="dot" style="background:var(--iglesia)"></i> Iglesia</button>
+    <button class="filter-pill" data-cat="pacto"><i class="dot" style="background:var(--pacto)"></i> Pactos</button>
+    <button class="filter-pill" data-cat="esperanza"><i class="dot" style="background:var(--esperanza)"></i> Esperanza</button>
+  </div>
+  <div class="stats" id="stats">— nodos visibles</div>
+  <button class="help-btn" id="helpBtn" title="Ayuda">?</button>
 </div>
 
-<div class="placeholder-container">
-  <h2 class="book-title">Mateo</h2>
-  <div class="book-category">Cristo</div>
-  <p class="book-summary">Jesús, el Mesías prometido a Israel</p>
+<!-- ========== VIEWPORT (zoom + pan) ========== -->
+<div class="viewport" id="viewport">
+  <div class="canvas" id="canvas">
+    <div class="cluster" style="left:80px;top:50px;">INFANCIA · Mt 1-2</div>
+    <div class="cluster" style="left:1000px;top:50px;">PREPARACIÓN · Mt 3-4</div>
+    <div class="cluster" style="left:1920px;top:50px;">ESCATOLOGÍA · Mt 24-25</div>
+    <div class="cluster" style="left:80px;top:590px;">SERMÓN DEL MONTE · Mt 5-7</div>
+    <div class="cluster" style="left:1000px;top:590px;">CRISTO · REINO Y AUTORIDAD</div>
+    <div class="cluster" style="left:1920px;top:590px;">PARÁBOLAS DEL REINO · Mt 13</div>
+    <div class="cluster" style="left:80px;top:1130px;">MISIÓN Y MILAGROS · Mt 8-12</div>
+    <div class="cluster" style="left:1000px;top:1130px;">IGLESIA Y PERDÓN · Mt 16-18</div>
+    <div class="cluster" style="left:1920px;top:1130px;">PASIÓN Y RESURRECCIÓN · Mt 26-28</div>
 
-  <div class="status-block">
-    <div class="icon">⏳</div>
-    <div class="title">Mapa interactivo en preparación</div>
-    <div class="text">
-      Este libro aún no tiene su mapa constelar interactivo.<br>
-      Cuando esté listo, contendrá nodos conectados con versículos,<br>
-      referencias cruzadas y comentarios de eruditos clásicos.
+    <!-- Cluster labels (background) -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- SVG Arrows Layer -->
+    <svg class="arrows-layer" id="arrowsLayer" viewBox="0 0 2600 1810" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="grad-at-cristo" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#e0a862"/>
+          <stop offset="100%" stop-color="#ff5c5c"/>
+        </linearGradient>
+        <linearGradient id="grad-cristo-iglesia" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff5c5c"/>
+          <stop offset="100%" stop-color="#3ddc84"/>
+        </linearGradient>
+        <linearGradient id="grad-at-pacto" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#e0a862"/>
+          <stop offset="100%" stop-color="#58a6ff"/>
+        </linearGradient>
+        <linearGradient id="grad-pacto-cristo" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#58a6ff"/>
+          <stop offset="100%" stop-color="#ff5c5c"/>
+        </linearGradient>
+        <linearGradient id="grad-cristo-esperanza" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff5c5c"/>
+          <stop offset="100%" stop-color="#b87cff"/>
+        </linearGradient>
+        <linearGradient id="grad-iglesia-esperanza" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#3ddc84"/>
+          <stop offset="100%" stop-color="#b87cff"/>
+        </linearGradient>
+        <linearGradient id="grad-same" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="currentColor" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="currentColor" stop-opacity="0.9"/>
+        </linearGradient>
+        <marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#ff5c5c"/></marker>
+        <marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#3ddc84"/></marker>
+        <marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/></marker>
+        <marker id="ah-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b87cff"/></marker>
+      </defs>
+    </svg>
+
+    <!-- Nodes Layer -->
+    <div class="nodes-layer" id="nodesLayer"></div>
+
+  </div>
+</div>
+
+<!-- ========== ZOOM CONTROLS ========== -->
+<div class="zoom-controls">
+  <button class="zoom-btn" id="zoomIn" title="Acercar">+</button>
+  <div class="zoom-level" id="zoomLevel">100%</div>
+  <button class="zoom-btn" id="zoomOut" title="Alejar">−</button>
+  <button class="zoom-btn" id="zoomReset" title="Resetear" style="font-size:.85rem">⤢</button>
+</div>
+
+<!-- ========== LEGEND TOGGLE (mobile only) ========== -->
+<button class="legend-toggle" id="legendToggle" title="Ver categorías" aria-label="Ver categorías">◈</button>
+<div class="legend-backdrop" id="legendBackdrop"></div>
+
+<!-- ========== LEGEND ========== -->
+<div class="legend-panel" id="legendPanel">
+  <div class="title">Categorías</div>
+  <div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
+  <div class="item"><i class="dot" style="background:var(--cristo)"></i> Cristo · Cumplimiento</div>
+  <div class="item"><i class="dot" style="background:var(--iglesia)"></i> Iglesia · Participación</div>
+  <div class="item"><i class="dot" style="background:var(--pacto)"></i> Pactos / Promesas</div>
+  <div class="item"><i class="dot" style="background:var(--esperanza)"></i> Adoración / Escatología</div>
+</div>
+
+<!-- ========== MODAL ========== -->
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal()" aria-label="Cerrar">×</button>
+    <div id="modalCatTag" class="modal-cat-tag"></div>
+    <h2 id="modalTitle" class="modal-title"></h2>
+    <div id="modalRef" class="modal-ref"></div>
+    <div id="modalBody" class="modal-body"></div>
+  </div>
+</div>
+
+<!-- ========== HELP PANEL ========== -->
+<div id="helpPanel" class="help-panel" onclick="if(event.target===this)closeHelp()">
+  <div class="help-content">
+    <button class="close-btn" onclick="closeHelp()" aria-label="Cerrar">×</button>
+    <h2>Cómo usar el mapa</h2>
+    <p>Un mapa interactivo para profundizar en la Carta a los Hebreos, organizado en <b>nueve constelaciones temáticas</b> que conectan el Antiguo Testamento con Cristo, la Iglesia y la esperanza escatológica.</p>
+    <ul>
+      <li><b>Clic</b> en cualquier nodo → versículos + comentario clásico + referencias cruzadas</li>
+      <li><b>Hover</b> sobre un nodo → resalta sus conexiones (flechas luminosas)</li>
+      <li><b>Arrastrar</b> el canvas para desplazarte · <b>Rueda del ratón</b> para zoom</li>
+      <li><b>Botones +/−</b> abajo a la derecha para zoom controlado</li>
+      <li><b>Buscar</b> en la caja superior por título, referencia bíblica o tema</li>
+      <li><b>Filtros</b> por categoría: clic en las pastillas de color</li>
+      <li><b>Referencias cruzadas</b> en el modal: clic para saltar a otro nodo</li>
+    </ul>
+    <p style="font-style:italic;color:var(--muted);font-size:.78rem;margin-top:14px">Comentarios clásicos y modernos: Juan Calvino, Agustín de Hipona, Crisóstomo, Matthew Henry, Jerónimo, Hilario de Poitiers, D.A. Carson, R.T. France, Craig Keener.</p>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA: ~100 NODES FOR HEBREWS CONSTELLATION MAP
+// ============================================================
+const NODES = [
+  { id:'m1', x:80, y:80, cat:'at', title:'Genealogía · Hijo de David', ref:'Mateo 1:1-17', mtRef:'1:1', verses:[{ref:'Mateo 1:1',text:'Libro de la genealogía de Jesucristo, hijo de David, hijo de Abraham.'},{ref:'2 Samuel 7:12-13',text:'Cuando tus días sean cumplidos... yo levantaré después de ti a uno de tu linaje... y yo afirmaré para siempre el trono de su reino.'}], comment:{author:'Juan Calvino · Mt 1:1',text:'Mateo abre con la genealogía para probar que Cristo es el cumplimiento de las promesas mesiánicas. Hijo de David: rey legítimo. Hijo de Abraham: heredero del pacto. Las dos líneas convergen en él.'} },
+  { id:'m2', x:290, y:80, cat:'pacto', title:'Nacimiento virginal', ref:'Mateo 1:18-25', mtRef:'1:23', verses:[{ref:'Mateo 1:23',text:'He aquí, una virgen concebirá y dará a luz un hijo, y llamarás su nombre Emmanuel, que traducido es: Dios con nosotros.'},{ref:'Isaías 7:14',text:'Por tanto, el Señor mismo os dará señal: He aquí que la virgen concebirá, y dará a luz un hijo, y llamará su nombre Emanuel.'}], comment:{author:'Jerónimo · Mt 1:23',text:'La profecía de Isaías se cumple literalmente. La palabra hebrea almah y la griega parthenos señalan una virgen verdadera. Emmanuel no es título, sino realidad: Dios habita corporalmente en Cristo.'} },
+  { id:'m3', x:500, y:80, cat:'at', title:'Magos de Oriente', ref:'Mateo 2:1-12', mtRef:'2:1', verses:[{ref:'Mateo 2:2',text:'Dónde está el rey de los judíos, que ha nacido? Porque su estrella hemos visto en el oriente, y venimos a adorarle.'},{ref:'Números 24:17',text:'Me verá, mas no ahora; lo miraré, mas no de cerca; saldrá ESTRELLA de Jacob, y se levantará cetro de Israel.'}], comment:{author:'Agustín de Hipona · Mt 2:2',text:'Los magos gentiles adoran al Rey de los judíos. La estrella que vieron en Oriente era signo de que las naciones serían llamadas. Israel no le reconoció; los gentiles le buscaron. La gracia rompe fronteras.'} },
+  { id:'m4', x:80, y:180, cat:'at', title:'Huida a Egipto', ref:'Mateo 2:13-15', mtRef:'2:15', verses:[{ref:'Mateo 2:15',text:'Y estuvo allá hasta la muerte de Herodes, para que se cumpliese lo que dijo el Señor por medio del profeta, cuando dijo: De Egipto llamé a mi Hijo.'},{ref:'Oseas 11:1',text:'Cuando Israel era muchacho, yo lo amé, y de Egipto llamé a mi hijo.'}], comment:{author:'Matthew Henry · Mt 2:15',text:'Cristo repite la historia de Israel. Como Israel bajó a Egipto y fue llamado de allá, así Cristo. Es el verdadero Israel que cumple lo que el pueblo antiguo solo fue en figura.'} },
+  { id:'m5', x:290, y:180, cat:'cristo', title:'Matanza de inocentes', ref:'Mateo 2:16-18', mtRef:'2:18', verses:[{ref:'Mateo 2:18',text:'Voz fue oída en Ramá, grande lamentación, lloro y gemido: Raquel que llora a sus hijos, y no quiso ser consolada, porque perecieron.'},{ref:'Jeremías 31:15',text:'Así ha dicho Jehová: Voz fue oída en Ramá, llanto y lloro amargo; Raquel que lamenta por sus hijos, y no quiso ser consolada.'}], comment:{author:'R.T. France · Mt 2:18',text:'Mateo cita a Jeremías para mostrar que el sufrimiento de los inocentes no es derrota, sino cumplimiento. El Mesías nace en medio de violencia, como toda la historia de la salvación: la luz brilla en las tinieblas.'} },
+  { id:'m6', x:500, y:180, cat:'at', title:'Nazareo · Nazaret', ref:'Mateo 2:19-23', mtRef:'2:23', verses:[{ref:'Mateo 2:23',text:'Y vino y habitó en la ciudad que se llama Nazaret, para que se cumpliese lo que fue dicho por los profetas, que habría de ser llamado nazareno.'},{ref:'Jueces 13:5',text:'Porque tú concebirás y darás a luz un hijo; y no pasará navaja sobre su cabeza, pues el niño será nazareo a Dios desde su nacimiento.'}], comment:{author:'Craig Keener · Mt 2:23',text:'Mateo combina varias profecías. Nazareno evoca al nazareo (consagrado), pero también al "Renuevo" (netzer, Is 11:1). Jesús es el consagrado y el renuevo davidico a la vez.'} },
+  { id:'m7', x:1000, y:80, cat:'at', title:'Juan Bautista · Voz en el desierto', ref:'Mateo 3:1-12', mtRef:'3:3', verses:[{ref:'Mateo 3:3',text:'Porque este es de quien habló el profeta Isaías, cuando dijo: Voz del que clama en el desierto: Preparad el camino del Señor, enderezad sus sendas.'},{ref:'Isaías 40:3',text:'Voz que clama en el desierto: Preparad camino a Jehová; nivelad una calzada en la estepa a nuestro Dios.'}], comment:{author:'Crisóstomo · Mt 3:3',text:'Juan es la voz; Cristo es la Palabra. Juan prepara; Cristo llega. El desierto es figura del corazón estéril que será hecho camino del Señor. El AT termina donde comienza el Evangelio.'} },
+  { id:'m8', x:1210, y:80, cat:'cristo', title:'Bautismo de Jesús', ref:'Mateo 3:13-17', mtRef:'3:16-17', verses:[{ref:'Mateo 3:16-17',text:'Y Jesús, después que fue bautizado, subió luego del agua; y he aquí los cielos le fueron abiertos, y vio al Espíritu de Dios que descendía como paloma, y venía sobre él. Y hubo una voz de los cielos, que decía: Este es mi Hijo amado, en quien tengo complacencia.'},{ref:'Salmo 2:7',text:'Yo publicaré el decreto: Jehová me ha dicho: Mi hijo eres tú; yo te engendré hoy.'},{ref:'Isaías 42:1',text:'He aquí mi siervo, yo le sostendré; mi escogido, en quien mi alma tiene complacencia.'}], comment:{author:'Hilario de Poitiers · Mt 3:17',text:'En el bautismo se manifiesta la Trinidad: el Padre habla, el Hijo es ungido, el Espíritu desciende. Cristo no se bautiza por pecado propio, sino para santificar las aguas y cumplir toda justicia.'} },
+  { id:'m9', x:1420, y:80, cat:'cristo', title:'Tentación en el desierto', ref:'Mateo 4:1-11', mtRef:'4:4', verses:[{ref:'Mateo 4:4',text:'No solo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios.'},{ref:'Deuteronomio 8:3',text:'No solo de pan vivirá el hombre, sino de todo lo que sale de la boca de Jehová vivirá el hombre.'}], comment:{author:'Agustín de Hipona · Mt 4:4',text:'Cristo vence donde Israel cayó. Cuarenta días contra cuarenta años. Cada tentación respondida con Deuteronomio: la Palabra es espada del Espíritu. El segundo Adán deshace la caída del primero.'} },
+  { id:'m10', x:1000, y:180, cat:'iglesia', title:'Llamado de los primeros discípulos', ref:'Mateo 4:18-22', mtRef:'4:19', verses:[{ref:'Mateo 4:19',text:'Y les dijo: Venid en pos de mí, y os haré pescadores de hombres.'},{ref:'Jeremías 16:16',text:'He aquí que yo envío muchos pescadores, dice Jehová, y los pescarán.'}], comment:{author:'Matthew Henry · Mt 4:19',text:'Cristo no ofrece doctrina primero, sino persona: "venid en pos de mí". El discipulado comienza con seguimiento, no con intelecto. Pescadores de hombres: oficio humilde transformado en ministerio de salvación.'} },
+  { id:'m11', x:1210, y:180, cat:'iglesia', title:'Inicio del ministerio en Galilea', ref:'Mateo 4:12-17', mtRef:'4:17', verses:[{ref:'Mateo 4:17',text:'Desde entonces comenzó Jesús a predicar, y a decir: Arrepentíos, porque el reino de los cielos se ha acercado.'},{ref:'Isaías 9:1-2',text:'El pueblo que andaba en tinieblas vio gran luz; los que moraban en tierra de sombra de muerte, luz resplandeció sobre ellos.'}], comment:{author:'D.A. Carson · Mt 4:17',text:'Galilea de los gentiles: región despreciada por los judíos piadosos. Allí comienza la luz. El Reino se acerca a los marginados, cumpliendo la profecía de Isaías. El arrepentimiento es la puerta.'} },
+  { id:'m12', x:1420, y:180, cat:'pacto', title:'Cumplimiento de la luz', ref:'Mateo 4:14-16', mtRef:'4:14', verses:[{ref:'Mateo 4:14-16',text:'Para que se cumpliese lo dicho por el profeta Isaías... Tierra de Zabulón y de Neftalí, camino del mar, al otro lado del Jordán, Galilea de los gentiles. El pueblo asentado en tinieblas vio gran luz.'},{ref:'Isaías 9:1-2',text:'Mas no habrá siempre oscuridad... en la región y última vez, será glorificado el camino del mar.'}], comment:{author:'Jerónimo · Mt 4:15',text:'La geografía es teología. Cristo no elige Jerusalén sino Galilea. La luz llega a los que estaban lejos. La salvación es para los gentiles también, no solo para Israel.'} },
+  { id:'m13', x:1920, y:80, cat:'esperanza', title:'Discurso del Monte de los Olivos', ref:'Mateo 24:1-14', mtRef:'24:14', verses:[{ref:'Mateo 24:14',text:'Y será predicado este evangelio del reino en todo el mundo, para testimonio a todas las naciones; y entonces vendrá el fin.'},{ref:'Daniel 12:7',text:'Cuando sea acabado el quebrantamiento de la fuerza del pueblo santo, todas estas cosas serán cumplidas.'}], comment:{author:'John Owen · Mt 24:14',text:'Jesús combina profecía del 70 d.C. (destrucción del templo) con la consumación final. La predicación del Evangelio a todas las naciones es condición y señal. La Iglesia tiene tarea misionera hasta el fin.'} },
+  { id:'m14', x:2130, y:80, cat:'esperanza', title:'Señales de los tiempos', ref:'Mateo 24:32-35', mtRef:'24:32', verses:[{ref:'Mateo 24:32-33',text:'De la higuera aprended la parábola: Cuando ya su rama está tierna, y brotan las hojas, sabéis que el verano está cerca. Así también vosotros, cuando veáis todas estas cosas, conoced que está cerca, a las puertas.'},{ref:'Isaías 28:4',text:'Y la flor caduca de la hermosura de su gloria, que está en la cabeza del valle fértil, será como la breva temprana.'}], comment:{author:'R.T. France · Mt 24:32',text:'Las señales no son para calcular fechas, sino para discernir tiempos. La higuera simboliza a Israel: cuando vean las señales, el verano está cerca. La vigilancia activa, no la especulación.'} },
+  { id:'m15', x:2340, y:80, cat:'esperanza', title:'El día y la hora nadie sabe', ref:'Mateo 24:36-44', mtRef:'24:36', verses:[{ref:'Mateo 24:36',text:'Pero del día y la hora nadie sabe, ni aun los ángeles de los cielos, sino sólo mi Padre.'},{ref:'1 Tesalonicenses 5:2',text:'Que el día del Señor vendrá como ladrón en la noche.'}], comment:{author:'Crisóstomo · Mt 24:36',text:'Cristo se humilla en su conocimiento, ocultando a los ángeles y a los hombres el día. No es ignorancia, sino pedagogía: si supiéramos el día, viviríamos en negligencia. La incertidumbre es escuela de vigilancia.'} },
+  { id:'m16', x:1920, y:180, cat:'iglesia', title:'Parábola de las diez vírgenes', ref:'Mateo 25:1-13', mtRef:'25:13', verses:[{ref:'Mateo 25:13',text:'Velad, pues, porque no sabéis el día ni la hora en que el Hijo del Hombre ha de venir.'},{ref:'Cantares 5:2',text:'Yo duermo, pero mi corazón vela.'}], comment:{author:'Agustín de Hipona · Mt 25:13',text:'Las cinco vírgenes necias tienen lámpara pero no aceite: la fe sin obras. Las prudentes llevan aceite: caridad, vida interior, Espíritu. El Esposo tarda; solo las preparadas entran a las bodas.'} },
+  { id:'m17', x:2130, y:180, cat:'iglesia', title:'Parábola de los talentos', ref:'Mateo 25:14-30', mtRef:'25:21', verses:[{ref:'Mateo 25:21',text:'Su señor le dijo: Bien, buen siervo y fiel; sobre poco has sido fiel, sobre mucho te pondré; entra en el gozo de tu señor.'},{ref:'Lucas 16:10',text:'El que es fiel en lo muy poco, también en lo más es fiel.'}], comment:{author:'Matthew Henry · Mt 25:21',text:'Cada siervo recibe según su capacidad. No todos igual, pero todos responsables. El talento enterrado es la vida desperdiciada. La fidelidad en lo poco abre puertas a lo mucho: el gozo del Señor.'} },
+  { id:'m18', x:2340, y:180, cat:'esperanza', title:'Juicio de las naciones · Ovejas y cabritos', ref:'Mateo 25:31-46', mtRef:'25:40', verses:[{ref:'Mateo 25:40',text:'Y respondiendo el Rey, les dirá: De cierto os digo que en cuanto lo hicisteis a uno de estos mis hermanos más pequeños, a mí lo hicisteis.'},{ref:'Proverbios 19:17',text:'A Jehová presta el que da al pobre, y él le dará su recompensa.'}], comment:{author:'Juan Calvino · Mt 25:40',text:'Cristo se identifica con sus hermanos más pequeños. Lo que se hace a ellos, a él se hace. El juicio final no es por conocimiento doctrinal, sino por misericordia vivida. La fe verdadera produce obras de amor.'} },
+  { id:'m19', x:1920, y:280, cat:'cristo', title:'Hijo del Hombre · Juez de vivos y muertos', ref:'Mateo 25:31', mtRef:'25:31', verses:[{ref:'Mateo 25:31',text:'Cuando el Hijo del Hombre venga en su gloria, y todos los santos ángeles con él, entonces se sentará en su trono de gloria.'},{ref:'Daniel 7:13-14',text:'Y he aquí con las nubes del cielo venía uno como un hijo de hombre... y se le dio dominio, gloria y reino.'}], comment:{author:'Jerónimo · Mt 25:31',text:'El Hijo del Hombre de Daniel se sienta en trono de gloria. La humillación de Belén y Getsemaní se trueca en exaltación. Cristo es Juez universal; el AT lo anunció, el NT lo confirma.'} },
+  { id:'m20', x:2130, y:280, cat:'esperanza', title:'Cielos nuevos y tierra nueva', ref:'Mateo 19:28', mtRef:'19:28', verses:[{ref:'Mateo 19:28',text:'De cierto os digo que en la regeneración, cuando el Hijo del Hombre se siente en el trono de su gloria, vosotros que me habéis seguido también os sentaréis sobre doce tronos, para juzgar a las doce tribus de Israel.'},{ref:'Isaías 65:17-19',text:'Porque he aquí que yo crearé nuevos cielos y nueva tierra... y formeré alegría y gozo.'}], comment:{author:'D.A. Carson · Mt 19:28',text:'La regeneración es la renovación cósmica. Cristo sienta a sus apóstoles en tronos: la Iglesia juzga a Israel según el cumplimiento. El Reino escatológico incluye restauración de la creación.'} },
+  { id:'m21', x:2340, y:280, cat:'esperanza', title:'Venida del Hijo del Hombre', ref:'Mateo 24:27', mtRef:'24:27', verses:[{ref:'Mateo 24:27',text:'Como el relámpago que sale del oriente y se muestra hasta el occidente, así será también la venida del Hijo del Hombre.'},{ref:'Malaquías 4:2',text:'Mas a vosotros los que teméis mi nombre, nacerá el Sol de justicia, y en sus alas traerá salvación.'}], comment:{author:'Crisóstomo · Mt 24:27',text:'La venida de Cristo será visible como relámpago. No oculta en el desierto ni en cámaras secretas. Su manifestación será universal, no local. Todo ojo le verá.'} },
+  { id:'m22', x:80, y:620, cat:'iglesia', title:'Bienaventuranzas', ref:'Mateo 5:3-12', mtRef:'5:3', verses:[{ref:'Mateo 5:3-4',text:'Bienaventurados los pobres en espíritu, porque de ellos es el reino de los cielos. Bienaventurados los que lloran, porque ellos recibirán consolación.'},{ref:'Salmo 37:11',text:'Pero los mansos heredarán la tierra, y se recrearán en abundancia de paz.'},{ref:'Isaías 61:1-2',text:'Me ha enviado a sanar a los quebrantados de corazón; a pregonar libertad a los cautivos... a consolar a todos los enlutados.'}], comment:{author:'Agustín de Hipona · Sermón Monte',text:'Las bienaventuranzas son siete gradas de subida al Reino. Empiezan en la pobreza (reconocer indigencia espiritual) y terminan en la paz (perfecta conformidad con Dios). Cada una promete lo que la siguiente pide.'} },
+  { id:'m23', x:290, y:620, cat:'iglesia', title:'Sal y luz del mundo', ref:'Mateo 5:13-16', mtRef:'5:14', verses:[{ref:'Mateo 5:14-16',text:'Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder... Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras, y glorifiquen a vuestro Padre que está en los cielos.'},{ref:'Isaías 42:6',text:'Yo Jehová te he llamado en justicia, y te sostendré por tu mano; y te guardaré y te pondré por pacto al pueblo, por luz de las naciones.'}], comment:{author:'Juan Calvino · Mt 5:14',text:'La Iglesia es luz en Cristo y por Cristo. No tiene luz propia; refleja la del Sol de justicia. La luz no se esconde. La santidad secreta contradice el designio de Cristo: el Evangelio debe manifestarse en obras.'} },
+  { id:'m24', x:500, y:620, cat:'cristo', title:'Cumplimiento de la Ley', ref:'Mateo 5:17-20', mtRef:'5:17', verses:[{ref:'Mateo 5:17',text:'No penséis que he venido para abrogar la ley o los profetas; no he venido para abrogar, sino para cumplir.'},{ref:'Mateo 3:15',text:'Porque así conviene que cumplamos toda justicia.'}], comment:{author:'Hilario de Poitiers · Mt 5:17',text:'Cristo no destruye la Ley, sino que la lleva a plenitud. La Ley apuntaba a él; él la llena de sentido. Los tipos se cumplen; la letra se trueca en Espíritu. La justicia del Reino supera la de los fariseos en hondura, no en abolición.'} },
+  { id:'m25', x:80, y:720, cat:'iglesia', title:'Antítesis · "Habéis oído... pero yo os digo"', ref:'Mateo 5:21-48', mtRef:'5:21', verses:[{ref:'Mateo 5:21-22',text:'Oísteis que fue dicho a los antiguos: No matarás... pero yo os digo que cualquiera que se enoje contra su hermano, será culpable de juicio.'},{ref:'Mateo 5:27-28',text:'Oísteis que fue dicho: No cometerás adulterio. Pero yo os digo que cualquiera que mira a una mujer para codiciarla, ya adulteró con ella en su corazón.'}], comment:{author:'Crisóstomo · Mt 5:22',text:'Cristo no contradice a Moisés, sino que va a la raíz. La Ley prohibía el acto; Cristo juzga el deseo. La justicia del Reino es interior. La autoridad con que enseña ("yo digo") supera a la de los profetas.'} },
+  { id:'m26', x:290, y:720, cat:'iglesia', title:'Padre Nuestro', ref:'Mateo 6:9-13', mtRef:'6:9', verses:[{ref:'Mateo 6:9-10',text:'Vosotros, pues, oraréis así: Padre nuestro que estás en los cielos, santificado sea tu nombre. Venga tu reino. Hágase tu voluntad, como en el cielo, así también en la tierra.'},{ref:'Lucas 11:2-4',text:'Cuando oréis, decid: Padre nuestro que estás en los cielos...'}], comment:{author:'Tertuliano · De Oratione',text:'El Padre Nuestro es compendio de todo el Evangelio. Comienza con la paternidad de Dios, sigue con su santificación, pide el Reino, somete la voluntad, y solo después clama por el pan, el perdón y la victoria sobre el mal.'} },
+  { id:'m27', x:500, y:720, cat:'iglesia', title:'Limosna, oración, ayuno · en secreto', ref:'Mateo 6:1-18', mtRef:'6:1', verses:[{ref:'Mateo 6:1',text:'Guardaos de hacer vuestra justicia delante de los hombres, para ser vistos de ellos; de otra manera no tendréis recompensa de vuestro Padre que está en los cielos.'},{ref:'Mateo 6:6',text:'Mas tú, cuando ores, entra en tu aposento, y cerrada la puerta, ora a tu Padre que está en secreto; y tu Padre que ve en lo secreto te recompensará en público.'}], comment:{author:'Matthew Henry · Mt 6:1',text:'Tres pilares de la piedad judía: limosna, oración, ayuno. Cristo no los abole, sino que los purifica. El hipócrita busca aplauso humano; el creyente busca al Padre que ve en secreto. La recompensa celestial supera a la terrenal.'} },
+  { id:'m28', x:80, y:820, cat:'pacto', title:'Tesoros en el cielo', ref:'Mateo 6:19-21', mtRef:'6:20', verses:[{ref:'Mateo 6:20-21',text:'Sino haceos tesoros en el cielo, donde ni la polilla ni el orín corrompen, y donde ladrones no minan ni hurtan. Porque donde esté vuestro tesoro, allí estará también vuestro corazón.'},{ref:'Proverbios 8:21',text:'Para que haga heredar yo verdades, y llenar sus tesoros.'}], comment:{author:'Juan Calvino · Mt 6:21',text:'El corazón sigue al tesoro. Si tu tesoro está en la tierra, tu corazón se hace terrenal; si está en el cielo, tu corazón se eleva. La caridad es la única inversión eterna: lo que damos, lo guardamos.'} },
+  { id:'m29', x:290, y:820, cat:'iglesia', title:'No juzguéis · la viga y la paja', ref:'Mateo 7:1-5', mtRef:'7:1', verses:[{ref:'Mateo 7:1-2',text:'No juzguéis, para que no seáis juzgados. Porque con el juicio con que juzgáis, seréis juzgados, y con la medida con que medís, os será medido.'},{ref:'Romanos 2:1',text:'Por lo cual eres inexcusable, oh hombre, quienquiera que seas tú que juzgas; pues en lo que juzgas a otro, te condenas a ti mismo.'}], comment:{author:'Agustín de Hipona · Mt 7:1',text:'Cristo no prohíbe juzgar con discernimiento (cf. Mt 7:6, 15), sino juzgar con hipocresía. El que tiene una viga en su ojo no puede ver la paja en el del hermano. Sánate primero; luego ayuda al otro.'} },
+  { id:'m30', x:500, y:820, cat:'pacto', title:'Buscad primeramente el Reino', ref:'Mateo 6:33', mtRef:'6:33', verses:[{ref:'Mateo 6:33',text:'Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.'},{ref:'Proverbios 3:9-10',text:'Honra a Jehová con tus bienes, y con las primicias de todos tus frutos; y serán llenos tus graneros con abundancia.'}], comment:{author:'Crisóstomo · Mt 6:33',text:'El orden del Reino invierte el nuestro. Buscamos primero el pan; Cristo nos dice: buscad el Reino y el pan vendrá añadido. Dios no niega lo necesario a los que le buscan primero. La jerarquía libera de la ansiedad.'} },
+  { id:'m31', x:1000, y:620, cat:'cristo', title:'Reino de los cielos', ref:'Mateo 4:17 · 13:11', mtRef:'4:17', verses:[{ref:'Mateo 4:17',text:'Arrepentíos, porque el reino de los cielos se ha acercado.'},{ref:'Mateo 6:10',text:'Venga tu reino. Hágase tu voluntad, como en el cielo, así también en la tierra.'},{ref:'Daniel 2:44',text:'Y el Dios del cielo levantará un reino que no será jamás destruido.'}], comment:{author:'D.A. Carson · Mt 4:17',text:'El Reino es el tema central de Mateo (32 menciones). No es solo escatológico, sino ya presente en Cristo. La basileia es el reinado soberano de Dios manifestado en persona, palabras y obras de Jesús.'} },
+  { id:'m32', x:1210, y:620, cat:'cristo', title:'Hijo del Hombre', ref:'Mateo 8:20 · 16:13', mtRef:'8:20', verses:[{ref:'Mateo 8:20',text:'Jesús le dijo: Las zorras tienen guaridas, y las aves del cielo nidos; mas el Hijo del Hombre no tiene dónde recostar su cabeza.'},{ref:'Daniel 7:13-14',text:'Y he aquí con las nubes del cielo venía uno como un hijo de hombre.'}], comment:{author:'Jerónimo · Mt 8:20',text:'El título favorito de Cristo para sí mismo. Combina humildad (hijo de hombre = ser humano) y gloria (Daniel 7). Jesús evita "Mesías" con sus connotaciones políticas y se define desde la profecía de Daniel.'} },
+  { id:'m33', x:1420, y:620, cat:'cristo', title:'Mesías · Ungido', ref:'Mateo 16:16', mtRef:'16:16', verses:[{ref:'Mateo 16:16',text:'Respondiendo Simón, dijo: Tú eres el Cristo, el Hijo del Dios viviente.'},{ref:'Salmo 2:2',text:'El rey que pusieron Jehová y su Ungido.'},{ref:'Mateo 1:1',text:'Libro de la genealogía de Jesucristo, hijo de David, hijo de Abraham.'}], comment:{author:'Craig Keener · Mt 16:16',text:'La confesión de Pedro es centro del Evangelio. "Cristo" = Mesías, el Ungido prometido. Pero Jesús redefine el mesianismo: no conquistador político, sino Siervo sufriente que irá a la cruz (16:21).'} },
+  { id:'m34', x:1000, y:720, cat:'cristo', title:'Autoridad de perdonar pecados', ref:'Mateo 9:1-8', mtRef:'9:6', verses:[{ref:'Mateo 9:6',text:'Pues para que sepáis que el Hijo del Hombre tiene potestad en la tierra para perdonar pecados —dice entonces al paralítico—: Levántate, toma tu cama, y vete a tu casa.'},{ref:'Isaías 43:25',text:'Yo, yo soy el que borro tus rebeliones por amor de mí mismo.'}], comment:{author:'Hilario de Poitiers · Mt 9:6',text:'Solo Dios puede perdonar pecados. Jesús perdona como Dios, no en nombre de Dios. La sanidad del paralítico es signo visible del perdón invisible. Cristo prueba lo invisible con lo visible.'} },
+  { id:'m35', x:1210, y:720, cat:'cristo', title:'Señor del día de reposo', ref:'Mateo 12:1-8', mtRef:'12:8', verses:[{ref:'Mateo 12:8',text:'Porque el Hijo del Hombre es Señor del día de reposo.'},{ref:'Génesis 2:3',text:'Y bendijo Dios el día séptimo, y lo santificó, porque en él reposó de toda la obra que había hecho en la creación.'}], comment:{author:'Crisóstomo · Mt 12:8',text:'Cristo reclama autoridad sobre el día más sagrado de Israel. El sábado fue hecho para el hombre, no el hombre para el sábado. Cristo es Señor de la Ley misma, porque él es el Dios que dio la Ley.'} },
+  { id:'m36', x:1420, y:720, cat:'cristo', title:'Cristo greater que el templo', ref:'Mateo 12:6', mtRef:'12:6', verses:[{ref:'Mateo 12:6',text:'Pues os digo que uno mayor que el templo está aquí.'},{ref:'Ageo 2:9',text:'La gloria postrera de esta casa será mayor que la primera.'}], comment:{author:'Matthew Henry · Mt 12:6',text:'El templo era el lugar de la presencia de Dios. Cristo es la verdadera presencia, mayor que el edificio. Si los sacerdotes servían en el templo en sábado sin culpa, ¡cuánto más los discípulos del Señor del templo!'} },
+  { id:'m37', x:1000, y:820, cat:'cristo', title:'Cumplimiento de la profecía', ref:'Mateo 11:2-6', mtRef:'11:5', verses:[{ref:'Mateo 11:5',text:'Los ciegos ven, y los cojos andan; los leprosos son limpiados, y los sordos oyen; los muertos son resucitados, y a los pobres es anunciado el evangelio.'},{ref:'Isaías 35:5-6',text:'Entonces los ojos de los ciegos serán abiertos, y los oídos de los sordos se abrirán. Entonces el cojo saltará como un ciervo, y cantará la lengua del mudo.'}], comment:{author:'Agustín de Hipona · Mt 11:5',text:'A Juan en la cárcel, Jesús responde con Isaías 35. Las señales del Mesías son las profetizadas. Cristo no se proclama a sí mismo con palabras; deja que las obras hablen. El AT se cumple visiblemente.'} },
+  { id:'m38', x:1210, y:820, cat:'cristo', title:'Yugo suave', ref:'Mateo 11:28-30', mtRef:'11:29', verses:[{ref:'Mateo 11:29-30',text:'Llevad mi yugo sobre vosotros, y aprended de mí, que soy manso y humilde de corazón; y hallaréis descanso para vuestra alma; porque mi yugo es fácil, y ligera mi carga.'},{ref:'Jeremías 6:16',text:'Paraos en los caminos, y mirad, y preguntad por las sendas antiguas, cuál sea el buen camino, y andad por él, y hallaréis descanso para vuestra alma.'}], comment:{author:'Crisóstomo · Mt 11:29',text:'El yugo de Cristo es suave porque él mismo lo lleva con nosotros. No es ausencia de carga, sino carga compartida. La humildad es el aprendizaje: no ideas nuevas, sino un corazón nuevo.'} },
+  { id:'m39', x:1420, y:820, cat:'pacto', title:'Nuevo pacto en mi sangre', ref:'Mateo 26:26-28', mtRef:'26:28', verses:[{ref:'Mateo 26:28',text:'Porque esto es mi sangre del nuevo pacto, que por muchos es derramada para remisión de los pecados.'},{ref:'Jeremías 31:31',text:'He aquí que vienen días, dice Jehová, en los cuales haré nuevo pacto con la casa de Israel y con la casa de Judá.'},{ref:'Éxodo 24:8',text:'Entonces Moisés tomó la sangre, y roció sobre el pueblo, y dijo: He aquí la sangre del pacto que Jehová ha hecho con vosotros.'}], comment:{author:'Juan Calvino · Mt 26:28',text:'La última cena instituye el nuevo pacto prometido por Jeremías. La sangre de Cristo sustituye a la de los animales. El pacto es "para remisión de pecados": no mejora moral, sino expiación. La Iglesia celebra este memorial.'} },
+  { id:'m40', x:1920, y:620, cat:'iglesia', title:'Parábola del sembrador', ref:'Mateo 13:1-23', mtRef:'13:23', verses:[{ref:'Mateo 13:23',text:'Mas el que fue sembrado en buena tierra, éste es el que oye y entiende la palabra, y da fruto; y produce uno a ciento, y otro a sesenta, y otro a treinta.'},{ref:'Isaías 55:10-11',text:'Porque como desciende de los cielos la lluvia y la nieve, y no vuelve allá, sino que riega la tierra... así será mi palabra que sale de mi boca.'}], comment:{author:'Agustín de Hipona · Mt 13:23',text:'La Palabra es única, pero los corazones son cuatro. La diferencia no está en la semilla, sino en el suelo. La buena tierra no es mérito, sino corazón preparado por la gracia. El fruto varía: treinta, sesenta, ciento.'} },
+  { id:'m41', x:2130, y:620, cat:'pacto', title:'Trigo y cizaña', ref:'Mateo 13:24-30, 36-43', mtRef:'13:30', verses:[{ref:'Mateo 13:30',text:'Dejad crecer juntamente lo uno y lo otro hasta la siega; y al tiempo de la siega yo diré a los segadores: Recoged primero la cizaña, y atadla en manojos para quemarla; pero recoged el trigo en mi granero.'},{ref:'Malaquías 3:18',text:'Entonces os volveréis, y discerniréis la diferencia entre el justo y el malo, entre el que sirve a Dios y el que no le sirve.'}], comment:{author:'Jerónimo · Mt 13:30',text:'El Reino no purga inmediatamente el mal. Convive con la cizaña hasta la siega. Cristo prohíbe el celo inquisitorial: arrancar la cizaña es dañar el trigo. El juicio final separará; la Iglesia es campo mixto.'} },
+  { id:'m42', x:2340, y:620, cat:'pacto', title:'Grano de mostaza', ref:'Mateo 13:31-32', mtRef:'13:32', verses:[{ref:'Mateo 13:32',text:'El cual a la verdad es la más pequeña de todas las semillas; pero cuando ha crecido, es la mayor de las hortalizas, y se hace árbol, de tal manera que vienen las aves del cielo y hacen nidos en sus ramas.'},{ref:'Ezequiel 17:23',text:'En el monte alto de Israel lo plantaré, y echará ramas, y dará fruto, y se hará magnífico cedro; y habitarán debajo de él todas las aves de toda especie.'}], comment:{author:'Crisóstomo · Mt 13:32',text:'El Reino comienza insignificante: una semilla, doce pescadores, una cruz. Crecerá hasta cobijar a las naciones. Las aves (gentiles) anidarán en sus ramas. La pequeñez es signo de grandeza futura.'} },
+  { id:'m43', x:1920, y:720, cat:'pacto', title:'Levadura', ref:'Mateo 13:33', mtRef:'13:33', verses:[{ref:'Mateo 13:33',text:'Otra parábola les dijo: El reino de los cielos es semejante a la levadura que tomó una mujer, y escondió en tres medidas de harina, hasta que todo leudó.'},{ref:'1 Corintios 5:6-7',text:'¿No sabéis que un poco de levadura leuda toda la masa?'}], comment:{author:'Matthew Henry · Mt 13:33',text:'La levadura obra oculta pero transformadora. El Reino no se impone por fuerza, sino que penetra. Tres medidas: mucha harina (cf. Gn 18:6). La Iglesia transforma el mundo desde dentro, no desde fuera.'} },
+  { id:'m44', x:2130, y:720, cat:'iglesia', title:'Tesoro escondido', ref:'Mateo 13:44', mtRef:'13:44', verses:[{ref:'Mateo 13:44',text:'Además, el reino de los cielos es semejante a un tesoro escondido en un campo, el cual un hombre halla, y luego esconde por gozo del mismo; va y vende todo lo que tiene, y compra aquel campo.'},{ref:'Proverbios 2:4',text:'Si como a la plata la buscares, y la escudriñares como a tesoros.'}], comment:{author:'Juan Calvino · Mt 13:44',text:'El Reino vale más que todo lo que se posee. No es mérito encontrarlo, sino gracia. Pero una vez hallado, exige renuncia gozosa. La fe no es cálculo: el que ve el tesoro vende todo sin tristeza.'} },
+  { id:'m45', x:2340, y:720, cat:'iglesia', title:'Perla de gran precio', ref:'Mateo 13:45-46', mtRef:'13:46', verses:[{ref:'Mateo 13:46',text:'Y habiendo hallado una perla preciosa, fue y vendió todo lo que tenía, y la compró.'},{ref:'Job 28:18',text:'No se mencionará el coral ni el cristal; porque la sabiduría es mejor que las piedras preciosas.'}], comment:{author:'Agustín de Hipona · Mt 13:46',text:'La perla es Cristo, o el Reino, o la fe. Una sola cosa necesaria. El mercader la encuentra buscándola, como el tesoro por casualidad: ambas son formas de gracia. Vendlo todo = la conversión entera.'} },
+  { id:'m46', x:1920, y:820, cat:'esperanza', title:'Red echada en el mar', ref:'Mateo 13:47-50', mtRef:'13:49', verses:[{ref:'Mateo 13:49',text:'Así será en el fin del siglo: saldrán los ángeles, y apartarán a los malos de entre los justos.'},{ref:'Mateo 25:32',text:'Y serán reunidas delante de él todas las naciones; y apartará los unos de los otros, como aparta el pastor las ovejas de los cabritos.'}], comment:{author:'R.T. France · Mt 13:49',text:'La red recoge de todo; el juicio separa al final. La Iglesia visible contiene peces buenos y malos. No nos toca a nosotros separar ahora, sino predicar. La separación es escatológica, obra de ángeles, no de hombres.'} },
+  { id:'m47', x:2130, y:820, cat:'pacto', title:'Parábola de los labradores', ref:'Mateo 21:33-46', mtRef:'21:43', verses:[{ref:'Mateo 21:43',text:'Por tanto os digo, que el reino de Dios será quitado de vosotros, y será dado a gente que produzca los frutos de él.'},{ref:'Isaías 5:1-7',text:'Ahora cantaré por mi amado el cantar de mi amado a su viña.'}], comment:{author:'D.A. Carson · Mt 21:43',text:'La viña es Israel (Isaías 5). Los labradores son los líderes. Los siervos son los profetas. El Hijo es Cristo. La piedra rechazada se vuelve cabeza del ángulo. El Reino pasa a los gentiles productores de fruto.'} },
+  { id:'m48', x:2340, y:820, cat:'pacto', title:'Bodas del hijo del rey', ref:'Mateo 22:1-14', mtRef:'22:2', verses:[{ref:'Mateo 22:2',text:'El reino de los cielos es semejante a un rey que hizo fiesta de bodas a su hijo.'},{ref:'Isaías 25:6-9',text:'Jehová de los ejércitos hará a todos los pueblos en este monte banquete de manjares suculentos... y tragará a la muerte para siempre.'}], comment:{author:'Crisóstomo · Mt 22:2',text:'Las bodas del Cordero reúnen a todos: primero los invitados (Israel) que rehusaron; luego los de los caminos (gentiles). Pero no basta entrar: hace falta el vestido de boda (justicia de Cristo). Muchos llamados, pocos escogidos.'} },
+  { id:'m49', x:80, y:1160, cat:'iglesia', title:'Gran Comisión', ref:'Mateo 28:16-20', mtRef:'28:19', verses:[{ref:'Mateo 28:19-20',text:'Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo; enseñándoles que guarden todas las cosas que os he mandado; y he aquí yo estoy con vosotros todos los días, hasta el fin del mundo. Amén.'},{ref:'Daniel 7:14',text:'Y se le dio dominio, gloria y reino, para que todos los pueblos, naciones y lenguas le sirvieran.'}], comment:{author:'Juan Calvino · Mt 28:19',text:'Cristo envía a todas las naciones, cumpliendo Daniel 7. El bautismo trinitario marca la entrada al Reino. La enseñanza es continua: no solo convertir, sino discipular. La presencia de Cristo garantiza la misión hasta el fin.'} },
+  { id:'m50', x:290, y:1160, cat:'iglesia', title:'Comisión de los Doce', ref:'Mateo 10:1-15', mtRef:'10:7', verses:[{ref:'Mateo 10:7-8',text:'Y yendo, predicad, diciendo: El reino de los cielos se ha acercado. Sanad enfermos, limpiad leprosos, resucitad muertos, echad fuera demonios; de gracia recibisteis, dad de gracia.'},{ref:'Números 11:25',text:'Y descendió Jehová en la nube, y le habló; y tomó del espíritu que estaba en él, y lo puso en los setenta varones ancianos.'}], comment:{author:'Hilario de Poitiers · Mt 10:7',text:'Los Doce reciben autoridad para continuar el ministerio de Cristo. Predican el mismo mensaje: Reino cercano. Las señales confirman la Palabra. La gratuidad es ley: nada se cobró, nada se debe cobrar.'} },
+  { id:'m51', x:500, y:1160, cat:'iglesia', title:'Misión de los Setenta', ref:'Mateo 9:35-38', mtRef:'9:37', verses:[{ref:'Mateo 9:37-38',text:'Entonces dijo a sus discípulos: A la verdad la mies es mucha, mas los obreros pocos. Rogad, pues, al Señor de la mies, que envíe obreros a su mies.'},{ref:'Lucas 10:2',text:'La mies es mucha, mas los obreros pocos; rogad, pues, al Señor de la mies que envíe obreros a su mies.'}], comment:{author:'Matthew Henry · Mt 9:37',text:'La mies es abundante; los obreros escasos. La solución no es estratégica, sino de oración. Pedir al Señor de la mies que envíe. La vocación nace de la intercesión. La urgencia espiritual precede al método.'} },
+  { id:'m52', x:80, y:1260, cat:'cristo', title:'Sanidad del leproso', ref:'Mateo 8:1-4', mtRef:'8:3', verses:[{ref:'Mateo 8:3',text:'Jesús extendió la mano y le tocó, diciendo: Quiero; sé limpio. Y al instante su lepra desapareció.'},{ref:'Levítico 14:1-32',text:'Esta es la ley de la plaga de la lepra...'}], comment:{author:'Jerónimo · Mt 8:3',text:'Jesús toca al intocable. La lepra era exclusión total: religiosa, social, familiar. Cristo no solo cura; restaura. El toque impuro no contamina al Santo; el Santo purifica lo impuro. Cumple la Ley enviando al sacerdote.'} },
+  { id:'m53', x:290, y:1260, cat:'cristo', title:'Siervo del centurión', ref:'Mateo 8:5-13', mtRef:'8:10', verses:[{ref:'Mateo 8:10-11',text:'De cierto os digo, que no he hallado tanta fe como ésta en Israel. Y os digo que vendrán muchos del oriente y del occidente, y se sentarán con Abraham e Isaac y Jacob en el reino de los cielos.'},{ref:'Isaías 49:12',text:'He aquí éstos vendrán de lejos; y he aquí éstos del norte y del occidente, y éstos de la tierra de Sinim.'}], comment:{author:'Crisóstomo · Mt 8:10',text:'Un gentil romano enseña a Israel qué es fe. Cristo encuentra más fe en el centurión que en todo Israel. Las naciones entrarán al banquete de Abraham. La gracia no conoce fronteras étnicas.'} },
+  { id:'m54', x:500, y:1260, cat:'cristo', title:'Calma la tempestad', ref:'Mateo 8:23-27', mtRef:'8:27', verses:[{ref:'Mateo 8:27',text:'Y los hombres se maravillaron, diciendo: ¿Qué hombre es éste, que aun los vientos y el mar le obedecen?'},{ref:'Salmo 89:9',text:'Tú tienes dominio sobre la bravura del mar; cuando se levantan sus ondas, tú las sosegas.'},{ref:'Salmo 107:29',text:'El reduce la tempestad a sosiego, y sus ondas se apaciguan.'}], comment:{author:'Agustín de Hipona · Mt 8:27',text:'Los salmos atribuyen a Dios el calmar el mar. Cristo lo hace con una palabra. Los discípulos preguntan: ¿qué hombre es este? La respuesta es teológica: este hombre es Dios. La creación reconoce a su Creador.'} },
+  { id:'m55', x:80, y:1360, cat:'cristo', title:'Libera a los endemoniados', ref:'Mateo 8:28-34', mtRef:'8:29', verses:[{ref:'Mateo 8:29',text:'Y clamaron diciendo: ¿Qué tenemos que ver contigo, Jesús, Hijo de Dios? ¿Has venido aquí para atormentarnos antes de tiempo?'},{ref:'Marcos 5:7',text:'Y clamando a gran voz, dijo: ¿Qué tengo que ver contigo, Jesús, Hijo del Dios Altísimo?'}], comment:{author:'Hilario de Poitiers · Mt 8:29',text:'Los demonios confiesan lo que los hombres tardan en reconocer: Jesús es Hijo de Dios. "Antes de tiempo" indica que hay un día de juicio señalado. Cristo ya tiene autoridad sobre los poderes oscuros.'} },
+  { id:'m56', x:290, y:1360, cat:'cristo', title:'Resurrección de la hija de Jairo', ref:'Mateo 9:18-26', mtRef:'9:25', verses:[{ref:'Mateo 9:25',text:'Pero cuando la gente había sido echada fuera, entró, y tomó de la mano a la niña, y ella se levantó.'},{ref:'1 Reyes 17:21-22',text:'Y se tendió sobre el niño tres veces, y clamó a Jehová... y Jehová oyó la voz de Elías.'}], comment:{author:'Matthew Henry · Mt 9:25',text:'Cristo toma la mano impura (cadáver) y da vida. Como Elías y Eliseo, pero con autoridad propia, no en oración a Dios. La muerte no puede resistir su voz. Es primicia de la resurrección final.'} },
+  { id:'m57', x:500, y:1360, cat:'iglesia', title:'Multiplicación de panes', ref:'Mateo 14:13-21', mtRef:'14:19', verses:[{ref:'Mateo 14:19',text:'Y tomando los cinco panes y los dos peces, y mirando al cielo, bendijo, y partió y dio los panes a los discípulos, y los discípulos a la multitud.'},{ref:'2 Reyes 4:42-44',text:'Y él dijo: Da a la gente para que coma. Porque así ha dicho Jehová: Comerán, y sobrará.'}], comment:{author:'Crisóstomo · Mt 14:19',text:'Cinco panes, cinco mil alimentados. Cristo repite el milagro de Eliseo, pero mayor. La abundancia mesiánica (Sal 23 mesa preparada). Los discípulos son mediadores: reciben de Cristo, dan al pueblo.'} },
+  { id:'m58', x:1000, y:1160, cat:'cristo', title:'Roca · Confesión de Pedro', ref:'Mateo 16:13-20', mtRef:'16:18', verses:[{ref:'Mateo 16:18',text:'Y yo también te digo, que tú eres Pedro, y sobre esta roca edificaré mi iglesia; y las puertas del Hades no prevalecerán contra ella.'},{ref:'Salmo 118:22',text:'La piedra que desecharon los edificadores ha venido a ser cabeza del ángulo.'}], comment:{author:'Agustín de Hipona · Mt 16:18',text:'La confesión de Pedro es la roca: "Tú eres el Cristo". Sobre esta fe, Cristo edifica. Pedro es el primer confesor, no el fundamento único. Las puertas del Hades = poder de la muerte, que no podrá detener a la Iglesia.'} },
+  { id:'m59', x:1210, y:1160, cat:'iglesia', title:'Llaves del Reino · Atar y desatar', ref:'Mateo 16:19', mtRef:'16:19', verses:[{ref:'Mateo 16:19',text:'Y a ti te daré las llaves del reino de los cielos; y todo lo que ates en la tierra será atado en los cielos; y todo lo que desates en la tierra será desatado en los cielos.'},{ref:'Isaías 22:22',text:'Y pondré la llave de la casa de David sobre su hombro; y abrirá, y nadie cerrará; cerrará, y nadie abrirá.'}], comment:{author:'Juan Calvino · Mt 16:19',text:'Las llaves son el ministerio de la Palabra: predicar el Evangelio, retener o remitir pecados. No es poder arbitrario, sino declaración del juicio de Dios. La Iglesia no crea verdad; la reconoce y la administra.'} },
+  { id:'m60', x:1420, y:1160, cat:'cristo', title:'Primera predicción de la pasión', ref:'Mateo 16:21-23', mtRef:'16:21', verses:[{ref:'Mateo 16:21',text:'Desde entonces comenzó Jesús a declarar a sus discípulos que le era necesario ir a Jerusalén y padecer mucho de los ancianos, de los principales sacerdotes y de los escribas; y ser muerto, y resucitar al tercer día.'},{ref:'Salmo 22:1',text:'Dios mío, Dios mío, ¿por qué me has desamparado?'}], comment:{author:'Crisóstomo · Mt 16:21',text:'A partir de la confesión de Pedro, Jesús abre el libro de su pasión. Necesidad: el Mesías debe padecer. Pedro es Pedro según la carne: escandalizado. Satanás = tropiezo. La cruz antes que la corona.'} },
+  { id:'m61', x:1000, y:1260, cat:'iglesia', title:'Tomar la cruz · Negarse a sí mismo', ref:'Mateo 16:24-26', mtRef:'16:24', verses:[{ref:'Mateo 16:24',text:'Entonces Jesús dijo a sus discípulos: Si alguno quiere venir en pos de mí, niéguese a sí mismo, y tome su cruz, y sígame.'},{ref:'Lucas 14:27',text:'Y el que no lleva su cruz y viene en pos de mí, no puede ser mi discípulo.'}], comment:{author:'Matthew Henry · Mt 16:24',text:'La cruz era instrumento de vergüenza y muerte. Cristo la convierte en símbolo de discipulado. Negarse a sí mismo es soltar el yo como centro. Tomar la cruz es aceptar el juicio del yo. Seguir es confiar en quien va delante.'} },
+  { id:'m62', x:1210, y:1260, cat:'cristo', title:'Transfiguración', ref:'Mateo 17:1-9', mtRef:'17:5', verses:[{ref:'Mateo 17:5',text:'Mientras él aún hablaba, una nube de luz los cubrió; y he aquí una voz desde la nube, que decía: Este es mi Hijo amado, en quien tengo complacencia; a él oíd.'},{ref:'Éxodo 24:15-16',text:'Entonces subió Moisés al monte, y una nube cubrió el monte. Y la gloria de Jehová reposó sobre el monte Sinaí.'}], comment:{author:'Jerónimo · Mt 17:5',text:'Cristo muestra su gloria antes de la cruz, para fortalecer a los discípulos. Moisés (Ley) y Elías (Profetas) testifican. La voz del Padre repite el bautismo, añadiendo: oídle. Cristo supera a la Ley y a los Profetas.'} },
+  { id:'m63', x:1420, y:1260, cat:'iglesia', title:'Oveja perdida · 99 justos', ref:'Mateo 18:10-14', mtRef:'18:14', verses:[{ref:'Mateo 18:14',text:'Así, no es la voluntad de vuestro Padre que está en los cielos, que se pierda uno de estos pequeños.'},{ref:'Ezequiel 34:11-16',text:'Porque así ha dicho Jehová el Señor: He aquí yo, yo mismo iré a buscar mis ovejas, y las recaudaré.'}], comment:{author:'Agustín de Hipona · Mt 18:14',text:'La oveja perdida es el pecador. El Pastor no espera que vuelva, sino que sale a buscarla. Las 99 en el monte son los justos. La voluntad del Padre es que ninguno se pierda: el Evangelio es de búsqueda, no de espera.'} },
+  { id:'m64', x:1000, y:1360, cat:'iglesia', title:'Setenta veces siete · Perdón', ref:'Mateo 18:21-35', mtRef:'18:22', verses:[{ref:'Mateo 18:22',text:'Jesús le dijo: No te digo hasta siete, sino aun hasta setenta veces siete.'},{ref:'Génesis 4:24',text:'Si Caín será vengado siete veces, verdaderamente Lamec setenta veces siete.'}], comment:{author:'Crisóstomo · Mt 18:22',text:'Lamec prometió venganza setenta veces siete; Cristo promete perdón setenta veces siete. El Evangelio invierte el orden caído. El perdón no tiene límite, porque el nuestro ha sido infinito. La parábola del siervo cruel lo confirma.'} },
+  { id:'m65', x:1210, y:1360, cat:'iglesia', title:'Disciplina en la Iglesia', ref:'Mateo 18:15-20', mtRef:'18:20', verses:[{ref:'Mateo 18:20',text:'Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.'},{ref:'Deuteronomio 19:15',text:'No se tomará en cuenta a un solo testigo contra ninguno que cometa pecado... en boca de dos o de tres testigos consistirá el asunto.'}], comment:{author:'Juan Calvino · Mt 18:20',text:'La disciplina es proceso de restauración, no de castigo. Testigos, Iglesia, oración. La presencia de Cristo en medio de dos o tres no es genérica: es su presencia judicial en la disciplina. La Iglesia es su tribunal de gracia.'} },
+  { id:'m66', x:1420, y:1360, cat:'iglesia', title:'Niños · el mayor en el Reino', ref:'Mateo 18:1-5', mtRef:'18:3', verses:[{ref:'Mateo 18:3',text:'De cierto os digo, que si no os volvéis y os hacéis como niños, no entraréis en el reino de los cielos.'},{ref:'Salmo 131:2',text:'Ciertamente me he comportado y he acallado mi alma, como un niño destetado de su madre; como un niño destetado está mi alma.'}], comment:{author:'Hilario de Poitiers · Mt 18:3',text:'El niño es figura de dependencia y confianza. El Reino no se entra por mérito, sino por humildad. Volverse como niño es reconocer la propia pobreza espiritual (Bienaventuranza 1). Cristo se identifica con el niño: recibirlo es recibir a Cristo.'} },
+  { id:'m67', x:1920, y:1160, cat:'cristo', title:'Unción en Betania', ref:'Mateo 26:6-13', mtRef:'26:12', verses:[{ref:'Mateo 26:12',text:'Porque derramando este perfume sobre mi cuerpo, lo ha hecho a fin de prepararme para la sepultura.'},{ref:'Cantares 1:3',text:'Tus ungüentos tienen buen olor; tu nombre es ungüento derramado.'}], comment:{author:'Matthew Henry · Mt 26:12',text:'La mujer unge a Jesús para su sepultura sin saberlo. Su amor es profético. Criticada por los discípulos, defendida por Cristo. El Evangelio se predicará y se recordará su obra. La devoción precede a la doctrina.'} },
+  { id:'m68', x:2130, y:1160, cat:'iglesia', title:'Última Cena · Pascua', ref:'Mateo 26:17-30', mtRef:'26:26', verses:[{ref:'Mateo 26:26-28',text:'Y mientras comían, tomó Jesús el pan, y bendijo, y lo partió, y dio a sus discípulos, y dijo: Tomad, comed; esto es mi cuerpo. Y tomando la copa, y habiendo dado gracias, les dio, diciendo: Bebed de ella todos; porque esto es mi sangre del nuevo pacto.'},{ref:'Éxodo 12:11',text:'Y lo comeréis así: ceñidos vuestros lomos, vuestro calzado en vuestros pies, y vuestro bordón en vuestra mano; y lo comeréis apresuradamente. Es la Pascua de Jehová.'}], comment:{author:'Crisóstomo · Mt 26:26',text:'Cristo transforma la Pascua. El pan y la copa son ahora su cuerpo y su sangre. El verdadero Cordero pascual es él. La Cena es memorial de su muerte, pero también banquete anticipado del Reino (cf. 26:29).'} },
+  { id:'m69', x:2340, y:1160, cat:'cristo', title:'Getsemaní · "Hágase tu voluntad"', ref:'Mateo 26:36-46', mtRef:'26:39', verses:[{ref:'Mateo 26:39',text:'Yendo un poco adelante, se postró sobre su rostro, orando y diciendo: Padre mío, si es posible, pase de mí esta copa; pero no sea como yo quiero, sino como tú.'},{ref:'Salmo 42:6',text:'Dios mío, mi alma está abatida en mí; por tanto, de ti me acordaré.'}], comment:{author:'Agustín de Hipona · Mt 26:39',text:'Cristo ora como hombre verdadero. La copa es la ira de Dios sobre el pecado. No rehúsa la voluntad del Padre, sino que la abraza. La oración de Getsemaní es modelo: "no como yo quiero, sino como tú". La obediencia hasta la cruz.'} },
+  { id:'m70', x:1920, y:1260, cat:'iglesia', title:'Negación de Pedro', ref:'Mateo 26:69-75', mtRef:'26:75', verses:[{ref:'Mateo 26:75',text:'Entonces Pedro se acordó de las palabras de Jesús, que le había dicho: Antes que cante el gallo, me negarás tres veces. Y saliendo fuera, lloró amargamente.'},{ref:'Zacarías 13:7',text:'Levántate, oh espada, contra el pastor, y contra el hombre compañero mío, dice Jehová de los ejércitos. Hiere al pastor, y serán dispersadas las ovejas.'}], comment:{author:'Jerónimo · Mt 26:75',text:'El gallo canta y Pedro llora. La caída del apóstol es consuelo para todos los caídos. La mirada de Cristo (Lc 22:61) precede al llanto. La gracia restaurará a Pedro en el mar de Galilea (Jn 21). El pecado no tiene la última palabra.'} },
+  { id:'m71', x:2130, y:1260, cat:'cristo', title:'Juicio ante Pilato', ref:'Mateo 27:11-26', mtRef:'27:11', verses:[{ref:'Mateo 27:11',text:'Jesús, entonces, estaba en pie delante del gobernador; y éste le preguntó, diciendo: ¿Eres tú el Rey de los judíos? Y Jesús le dijo: Tú lo dices.'},{ref:'Isaías 53:7',text:'Angustiado él, y afligido, no abrió su boca; como cordero fue llevado al matadero.'}], comment:{author:'Juan Calvino · Mt 27:11',text:'Cristo ante Pilato es el Siervo silencioso. Confiesa su realeza, pero redefine: "mi reino no es de este mundo" (Jn 18:36). Barrabás es liberado; el Justo condenado. El gran intercambio: culpable libre, inocente muerto.'} },
+  { id:'m72', x:2340, y:1260, cat:'cristo', title:'Crucifixión · "Dios mío, ¿por qué?"', ref:'Mateo 27:27-56', mtRef:'27:46', verses:[{ref:'Mateo 27:46',text:'Cerca de la hora novena, Jesús clamó a gran voz, diciendo: Eli, Eli, ¿lama sabactani? Esto es: Dios mío, Dios mío, ¿por qué me has desamparado?'},{ref:'Salmo 22:1',text:'Dios mío, Dios mío, ¿por qué me has desamparado? ¿Por qué estás tan lejos de mi salvación, de mi clamor y de las palabras de mi garganta?'}], comment:{author:'Crisóstomo · Mt 27:46',text:'Cristo clama el inicio del Salmo 22. No abandono metafísico, sino judicial: carga el pecado de los suyos. El Padre vuelve su rostro para reconciliar al mundo. La oscuridad es santo juicio. En este grito nace la salvación.'} },
+  { id:'m73', x:1920, y:1360, cat:'at', title:'Velo del templo rasgado', ref:'Mateo 27:51', mtRef:'27:51', verses:[{ref:'Mateo 27:51',text:'Y he aquí, el velo del templo se rasgó en dos, de arriba abajo; y la tierra tembló, y las rocas se partieron.'},{ref:'Hebreos 10:19-20',text:'Por el camino nuevo y vivo que él nos abrió a través del velo, esto es, de su carne.'}], comment:{author:'Hilario de Poitiers · Mt 27:51',text:'El velo que separaba el Lugar Santísimo se rasga desde arriba: obra de Dios, no del hombre. La muerte de Cristo abre el acceso al Padre. El templo antiguo caduca; el verdadero Santuario es el cuerpo de Cristo.'} },
+  { id:'m74', x:2130, y:1360, cat:'cristo', title:'Sepultura y resurrección', ref:'Mateo 27:57-28:10', mtRef:'28:6', verses:[{ref:'Mateo 28:6',text:'No está aquí, pues ha resucitado, como dijo. Venid, ved el lugar donde fue puesto el Señor.'},{ref:'Salmo 16:10',text:'Porque no dejarás mi alma en el Hades, ni permitirás que tu Santo vea corrupción.'},{ref:'Jonás 1:17',text:'Y Jehová preparó un gran pez para que tragase a Jonás; y estuvo Jonás en el vientre del pez tres días y tres noches.'}], comment:{author:'Juan Calvino · Mt 28:6',text:'La tumba vacía es prueba de la victoria. Cristo resucita por su propio poder (Jn 10:18), pero el Padre le levanta (Hch 2:24). Cumple el Salmo 16 y la señal de Jonás. Las mujeres son primeras testigos: la gracia invierte el orden social.'} },
+  { id:'m75', x:2340, y:1360, cat:'iglesia', title:'Comisión · "Bautizándolos"', ref:'Mateo 28:16-20', mtRef:'28:18', verses:[{ref:'Mateo 28:18',text:'Y Jesús se acercó y les habló, diciendo: Toda potestad me es dada en el cielo y en la tierra.'},{ref:'Daniel 7:14',text:'Y se le dio dominio, gloria y reino, para que todos los pueblos, naciones y lenguas le sirvieran; su dominio es dominio eterno.'}], comment:{author:'D.A. Carson · Mt 28:18',text:'Cristo resucitado reclama autoridad universal. Cumple Daniel 7. La Gran Comisión fluye de la autoridad: porque tiene todo poder, envía a todas las naciones. La promesa de su presencia acompaña la misión hasta el fin del siglo.'} }
+];
+
+// ============================================================
+// CONNECTIONS: typological / theological relationships
+// ============================================================
+const CONNECTIONS = [
+  ['m1','m2'],
+  ['m2','m3'],
+  ['m3','m4'],
+  ['m4','m5'],
+  ['m5','m6'],
+  ['m7','m8'],
+  ['m8','m9'],
+  ['m9','m10'],
+  ['m10','m11'],
+  ['m11','m12'],
+  ['m13','m14'],
+  ['m14','m15'],
+  ['m15','m16'],
+  ['m16','m17'],
+  ['m17','m18'],
+  ['m18','m19'],
+  ['m19','m20'],
+  ['m20','m21'],
+  ['m22','m23'],
+  ['m23','m24'],
+  ['m24','m25'],
+  ['m25','m26'],
+  ['m26','m27'],
+  ['m27','m28'],
+  ['m28','m29'],
+  ['m29','m30'],
+  ['m31','m32'],
+  ['m32','m33'],
+  ['m33','m34'],
+  ['m34','m35'],
+  ['m35','m36'],
+  ['m36','m37'],
+  ['m37','m38'],
+  ['m38','m39'],
+  ['m40','m41'],
+  ['m41','m42'],
+  ['m42','m43'],
+  ['m43','m44'],
+  ['m44','m45'],
+  ['m45','m46'],
+  ['m46','m47'],
+  ['m47','m48'],
+  ['m49','m50'],
+  ['m50','m51'],
+  ['m51','m52'],
+  ['m52','m53'],
+  ['m53','m54'],
+  ['m54','m55'],
+  ['m55','m56'],
+  ['m56','m57'],
+  ['m58','m59'],
+  ['m59','m60'],
+  ['m60','m61'],
+  ['m61','m62'],
+  ['m62','m63'],
+  ['m63','m64'],
+  ['m64','m65'],
+  ['m65','m66'],
+  ['m67','m68'],
+  ['m68','m69'],
+  ['m69','m70'],
+  ['m70','m71'],
+  ['m71','m72'],
+  ['m72','m73'],
+  ['m73','m74'],
+  ['m74','m75'],
+  ['m10','m27'],
+  ['m9','m28'],
+  ['m36','m45'],
+  ['m36','m47'],
+  ['m38','m54'],
+  ['m27','m54'],
+  ['m34','m58'],
+  ['m53','m62'],
+  ['m21','m65'],
+  ['m23','m66'],
+  ['m1','m38'],
+  ['m2','m40'],
+  ['m8','m37'],
+  ['m9','m41'],
+  ['m46','m57'],
+  ['m67','m51']
+];
+
+// ============================================================
+// LAYOUT & RENDER
+// ============================================================
+const NODE_W = 180;
+const NODE_H = 56;
+const nodesLayer = document.getElementById('nodesLayer');
+const arrowsLayer = document.getElementById('arrowsLayer');
+const nodeMap = Object.fromEntries(NODES.map(n => [n.id, n]));
+const nodePositions = {};
+
+// Render nodes
+NODES.forEach(node => {
+  const pos = { x: node.x, y: node.y, right: node.x + NODE_W, bottom: node.y + NODE_H, cy: node.y + NODE_H/2, cx: node.x + NODE_W/2 };
+  nodePositions[node.id] = pos;
+
+  const el = document.createElement('div');
+  el.className = `node ${node.cat}`;
+  el.style.left = node.x + 'px';
+  el.style.top = node.y + 'px';
+  el.dataset.id = node.id;
+  el.dataset.cat = node.cat;
+  el.dataset.search = (node.title + ' ' + node.ref + ' ' + (node.mtRef||'')).toLowerCase();
+  el.innerHTML = `
+    <h3>${node.title}</h3>
+    <div class="ref">${node.ref}</div>
+    ${node.mtRef ? `<div class="hebrew-ref">${node.mtRef}</div>` : ''}
+  `;
+  el.addEventListener('click', () => showNodeDetails(node));
+  el.addEventListener('mouseenter', () => highlightConnections(node.id, true));
+  el.addEventListener('mouseleave', () => highlightConnections(node.id, false));
+  nodesLayer.appendChild(el);
+});
+
+// Render arrows
+const CAT_COLOR = {
+  at: '#e0a862', cristo: '#ff5c5c', iglesia: '#3ddc84', pacto: '#58a6ff', esperanza: '#b87cff'
+};
+
+function getGradient(from, to) {
+  const fromCat = nodeMap[from].cat;
+  const toCat = nodeMap[to].cat;
+  if (fromCat === toCat) {
+    return CAT_COLOR[fromCat];
+  }
+  const key = [fromCat, toCat].sort().join('-');
+  const map = {
+    'at-cristo': 'grad-at-cristo',
+    'cristo-iglesia': 'grad-cristo-iglesia',
+    'at-pacto': 'grad-at-pacto',
+    'cristo-pacto': 'grad-pacto-cristo',
+    'cristo-esperanza': 'grad-cristo-esperanza',
+    'esperanza-iglesia': 'grad-iglesia-esperanza',
+    'at-iglesia': 'grad-at-cristo',
+    'at-esperanza': 'grad-cristo-esperanza',
+    'iglesia-pacto': 'grad-pacto-cristo',
+    'pacto-esperanza': 'grad-cristo-esperanza'
+  };
+  return map[key] ? `url(#${map[key]})` : CAT_COLOR[toCat];
+}
+
+CONNECTIONS.forEach(([from, to]) => {
+  const p1 = nodePositions[from];
+  const p2 = nodePositions[to];
+  if (!p1 || !p2) return;
+
+  // Determine start/end points based on relative position
+  let startX, startY, endX, endY;
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  const adx = Math.abs(dx);
+  const ady = Math.abs(dy);
+
+  if (adx > ady) {
+    // Horizontal-ish: use right/left
+    if (dx > 0) {
+      startX = p1.right; endX = p2.x;
+    } else {
+      startX = p1.x; endX = p2.right;
+    }
+    startY = p1.cy; endY = p2.cy;
+  } else {
+    // Vertical-ish: use top/bottom
+    if (dy > 0) {
+      startY = p1.bottom; endY = p2.y;
+    } else {
+      startY = p1.y; endY = p2.bottom;
+    }
+    startX = p1.cx; endX = p2.cx;
+  }
+
+  endX = Math.max(2, endX - 4);
+  endY = Math.max(2, endY - 4);
+
+  // Bezier control points
+  const cdx = endX - startX;
+  const cdy = endY - startY;
+  const cp1x = startX + cdx * 0.4;
+  const cp1y = startY + (ady > adx ? cdy * 0.3 : 0);
+  const cp2x = endX - cdx * 0.4;
+  const cp2y = endY - (ady > adx ? cdy * 0.3 : 0);
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`);
+  const grad = getGradient(from, to);
+  path.setAttribute('stroke', grad);
+  path.setAttribute('class', 'arrow-path');
+  path.setAttribute('fill', 'none');
+  path.dataset.from = from;
+  path.dataset.to = to;
+  arrowsLayer.appendChild(path);
+});
+
+// ============================================================
+// HIGHLIGHT
+// ============================================================
+function highlightConnections(nodeId, on) {
+  const connected = new Set([nodeId]);
+  document.querySelectorAll('.arrow-path').forEach(p => {
+    const isConn = p.dataset.from === nodeId || p.dataset.to === nodeId;
+    if (isConn) {
+      p.classList.toggle('highlighted', on);
+      connected.add(p.dataset.from);
+      connected.add(p.dataset.to);
+    } else {
+      p.classList.toggle('dimmed', on);
+    }
+  });
+  document.querySelectorAll('.node').forEach(n => {
+    if (on) {
+      if (connected.has(n.dataset.id)) {
+        if (n.dataset.id !== nodeId) n.classList.add('active');
+        n.classList.remove('dimmed');
+      } else {
+        n.classList.add('dimmed');
+      }
+    } else {
+      n.classList.remove('active', 'dimmed');
+    }
+  });
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+const modal = document.getElementById('modal');
+const modalCatTag = document.getElementById('modalCatTag');
+const modalTitle = document.getElementById('modalTitle');
+const modalRef = document.getElementById('modalRef');
+const modalBody = document.getElementById('modalBody');
+const modalContent = document.querySelector('.modal-content');
+
+const CAT_LABELS = {
+  at: 'AT · Sombra',
+  cristo: 'Cristo · Cumplimiento',
+  iglesia: 'Iglesia · Participación',
+  pacto: 'Pactos / Promesas',
+  esperanza: 'Adoración / Escatología'
+};
+
+function showNodeDetails(node) {
+  modalCatTag.className = `modal-cat-tag ${node.cat}`;
+  modalCatTag.textContent = CAT_LABELS[node.cat];
+  modalTitle.textContent = node.title;
+  modalRef.textContent = node.ref + (node.mtRef ? ` · Hebreos ${node.mtRef}` : '');
+
+  const versesHtml = node.verses.map(v => `
+    <div class="verse-block">
+      <div class="verse-block-header">
+        <span class="verse-ref">${v.ref}</span>
+      </div>
+      <div class="verse-text">"${v.text}"</div>
     </div>
-  </div>
+  `).join('');
 
-  <div class="preview-tags">
-    <span class="preview-tag">Versículos</span>
-    <span class="preview-tag">Referencias cruzadas</span>
-    <span class="preview-tag">Comentarios clásicos</span>
-    <span class="preview-tag">Layout constelar</span>
-    <span class="preview-tag">Funciona offline</span>
-  </div>
+  const commentHtml = `
+    <div class="comment-block">
+      <span class="comment-author">${node.comment.author}</span>
+      <p class="comment-text">${node.comment.text}</p>
+    </div>
+  `;
 
-  <div class="actions">
-    <a href="../index.html" class="btn btn-primary">← Volver al índice</a>
-    <a href="../mapa-heb/index.html" class="btn btn-secondary">Ver mapa de Hebreos (ejemplo)</a>
-  </div>
-</div>
+  // Find related nodes via connections
+  const related = new Set();
+  CONNECTIONS.forEach(([a, b]) => {
+    if (a === node.id) related.add(b);
+    if (b === node.id) related.add(a);
+  });
+  const relatedNodes = [...related].map(id => nodeMap[id]).filter(Boolean);
 
+  const crossRefsHtml = relatedNodes.length ? `
+    <div class="cross-refs">
+      <div class="cross-refs-title">Nodos relacionados (${relatedNodes.length})</div>
+      <div class="cross-ref-list">
+        ${relatedNodes.map(n => `<button class="cross-ref-item" data-id="${n.id}">${n.title}</button>`).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  modalBody.innerHTML = versesHtml + commentHtml + crossRefsHtml;
+
+  // Bind cross-ref clicks
+  modalBody.querySelectorAll('.cross-ref-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = nodeMap[btn.dataset.id];
+      if (target) {
+        showNodeDetails(target);
+        // Center viewport on the target node
+        centerOnNode(target.id);
+      }
+    });
+  });
+
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  const colorMap = {
+    at: 'var(--at)', cristo: 'var(--cristo)', iglesia: 'var(--iglesia)',
+    pacto: 'var(--pacto)', esperanza: 'var(--esperanza)'
+  };
+  modalContent.style.borderTopColor = colorMap[node.cat];
+}
+
+function closeModal() {
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeHelp();
+  }
+});
+
+// ============================================================
+// HELP PANEL
+// ============================================================
+const helpPanel = document.getElementById('helpPanel');
+document.getElementById('helpBtn').addEventListener('click', () => helpPanel.classList.add('show'));
+function closeHelp() { helpPanel.classList.remove('show'); }
+
+// ============================================================
+// LEGEND TOGGLE (mobile)
+// On mobile, the legend is hidden by default and shown via a
+// floating button (bottom-left). Tapping it opens the legend as
+// an overlay with a backdrop, so it doesn't overlap with content.
+// ============================================================
+const legendToggle = document.getElementById('legendToggle');
+const legendPanel = document.getElementById('legendPanel');
+const legendBackdrop = document.getElementById('legendBackdrop');
+
+function toggleMobileLegend(forceState) {
+  const willOpen = typeof forceState === 'boolean'
+    ? forceState
+    : !legendPanel.classList.contains('mobile-open');
+  legendPanel.classList.toggle('mobile-open', willOpen);
+  legendToggle.classList.toggle('active', willOpen);
+  legendBackdrop.classList.toggle('show', willOpen);
+}
+
+legendToggle.addEventListener('click', () => toggleMobileLegend());
+legendBackdrop.addEventListener('click', () => toggleMobileLegend(false));
+
+// Close legend when resizing to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    legendPanel.classList.remove('mobile-open');
+    legendToggle.classList.remove('active');
+    legendBackdrop.classList.remove('show');
+  }
+});
+
+// ============================================================
+// SEARCH & FILTER
+// ============================================================
+const searchInput = document.getElementById('searchInput');
+const filterPills = document.getElementById('filterPills');
+const statsEl = document.getElementById('stats');
+let activeCat = 'all';
+let activeQuery = '';
+
+function applyFilter() {
+  let visible = 0;
+  document.querySelectorAll('.node').forEach(n => {
+    const id = n.dataset.id;
+    const node = nodeMap[id];
+    const catOk = activeCat === 'all' || node.cat === activeCat;
+    const queryOk = !activeQuery || n.dataset.search.includes(activeQuery);
+    if (catOk && queryOk) {
+      n.classList.remove('hidden');
+      visible++;
+    } else {
+      n.classList.add('hidden');
+    }
+  });
+  statsEl.innerHTML = `<b>${visible}</b> nodos visibles`;
+  // Also dim arrows connected to hidden nodes
+  document.querySelectorAll('.arrow-path').forEach(p => {
+    const fromNode = document.querySelector(`.node[data-id="${p.dataset.from}"]`);
+    const toNode = document.querySelector(`.node[data-id="${p.dataset.to}"]`);
+    const visible = fromNode && !fromNode.classList.contains('hidden') && toNode && !toNode.classList.contains('hidden');
+    p.style.display = visible ? '' : 'none';
+  });
+}
+
+searchInput.addEventListener('input', e => {
+  activeQuery = e.target.value.toLowerCase().trim();
+  applyFilter();
+});
+
+filterPills.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-pill');
+  if (!btn) return;
+  filterPills.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  activeCat = btn.dataset.cat;
+  applyFilter();
+});
+
+// ============================================================
+// ZOOM & PAN (with pinch-to-zoom touch support)
+// ============================================================
+const viewport = document.getElementById('viewport');
+const canvas = document.getElementById('canvas');
+const zoomLevelEl = document.getElementById('zoomLevel');
+let zoom = 1;
+let panX = 0;
+let panY = 0;
+
+const MIN_ZOOM = 0.25;
+const MAX_ZOOM = 3.5;
+
+function applyTransform() {
+  canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+  zoomLevelEl.textContent = Math.round(zoom * 100) + '%';
+}
+
+// Wheel zoom (desktop)
+viewport.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = viewport.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+  const oldZoom = zoom;
+  const delta = e.deltaY > 0 ? 0.9 : 1.1;
+  zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * delta));
+  const zoomRatio = zoom / oldZoom;
+  panX = mouseX - (mouseX - panX) * zoomRatio;
+  panY = mouseY - (mouseY - panY) * zoomRatio;
+  applyTransform();
+}, { passive: false });
+
+// Mouse drag-pan (desktop)
+let isPanning = false;
+let panStart = { x: 0, y: 0 };
+let panOrigin = { x: 0, y: 0 };
+
+viewport.addEventListener('mousedown', e => {
+  if (e.target.closest('.node')) return;
+  isPanning = true;
+  panStart = { x: e.clientX, y: e.clientY };
+  panOrigin = { x: panX, y: panY };
+  viewport.classList.add('panning');
+  canvas.classList.add('no-transition');
+});
+
+document.addEventListener('mousemove', e => {
+  if (!isPanning) return;
+  panX = panOrigin.x + (e.clientX - panStart.x);
+  panY = panOrigin.y + (e.clientY - panStart.y);
+  applyTransform();
+});
+
+document.addEventListener('mouseup', () => {
+  isPanning = false;
+  viewport.classList.remove('panning');
+  canvas.classList.remove('no-transition');
+});
+
+document.getElementById('zoomIn').addEventListener('click', () => {
+  zoom = Math.min(MAX_ZOOM, zoom * 1.2);
+  applyTransform();
+});
+document.getElementById('zoomOut').addEventListener('click', () => {
+  zoom = Math.max(MIN_ZOOM, zoom / 1.2);
+  applyTransform();
+});
+document.getElementById('zoomReset').addEventListener('click', () => {
+  fitToViewport();
+});
+
+// ============================================================
+// TOUCH: pinch-to-zoom (2 fingers) + pan (1 finger)
+// ============================================================
+let touchState = null;
+// touchState schema:
+// {
+//   mode: 'pan' | 'pinch' | null,
+//   startPanX, startPanY: pan when gesture started (pan mode)
+//   startTouches: [{x,y}, {x,y}] initial touches
+//   startDist: initial distance between 2 fingers
+//   startMid: initial midpoint (for pinch zoom centering)
+//   startZoom: initial zoom (pinch mode)
+//   startPanX, startPanY: initial pan (pinch mode)
+// }
+
+viewport.addEventListener('touchstart', e => {
+  // Don't hijack touches on UI buttons (zoom, legend toggle) or node cards
+  if (e.target.closest('.zoom-btn, .zoom-level, .legend-toggle, .legend-panel, .modal, .help-panel, .topbar')) return;
+  // Allow touches on nodes for click (don't pan), but still start tracking
+  if (e.target.closest('.node')) {
+    return; // let the click event handle node taps
+  }
+
+  if (e.touches.length === 1) {
+    touchState = {
+      mode: 'pan',
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      startPanX: panX,
+      startPanY: panY
+    };
+    canvas.classList.add('no-transition');
+  } else if (e.touches.length === 2) {
+    const t1 = e.touches[0];
+    const t2 = e.touches[1];
+    const dx = t2.clientX - t1.clientX;
+    const dy = t2.clientY - t1.clientY;
+    const dist = Math.hypot(dx, dy);
+    touchState = {
+      mode: 'pinch',
+      startDist: dist,
+      startZoom: zoom,
+      startMidX: (t1.clientX + t2.clientX) / 2,
+      startMidY: (t1.clientY + t2.clientY) / 2,
+      startPanX: panX,
+      startPanY: panY
+    };
+    canvas.classList.add('no-transition');
+  }
+}, { passive: true });
+
+viewport.addEventListener('touchmove', e => {
+  if (!touchState) return;
+
+  if (touchState.mode === 'pan' && e.touches.length === 1) {
+    e.preventDefault();
+    panX = touchState.startPanX + (e.touches[0].clientX - touchState.startX);
+    panY = touchState.startPanY + (e.touches[0].clientY - touchState.startY);
+    applyTransform();
+  } else if (touchState.mode === 'pinch' && e.touches.length === 2) {
+    e.preventDefault();
+    const t1 = e.touches[0];
+    const t2 = e.touches[1];
+    const dx = t2.clientX - t1.clientX;
+    const dy = t2.clientY - t1.clientY;
+    const newDist = Math.hypot(dx, dy);
+    const newMidX = (t1.clientX + t2.clientX) / 2;
+    const newMidY = (t1.clientY + t2.clientY) / 2;
+
+    // Scale factor based on distance change
+    const scaleFactor = newDist / Math.max(1, touchState.startDist);
+    const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, touchState.startZoom * scaleFactor));
+
+    // Get viewport rect to convert client coords to local coords
+    const rect = viewport.getBoundingClientRect();
+    const localStartMidX = touchState.startMidX - rect.left;
+    const localStartMidY = touchState.startMidY - rect.top;
+    const localNewMidX = newMidX - rect.left;
+    const localNewMidY = newMidY - rect.top;
+
+    // The point under the midpoint should stay roughly stable.
+    // Formula: a point (canvasX, canvasY) on canvas maps to screen as:
+    //   screenX = panX + canvasX * zoom
+    // At start: localStartMidX = startPanX + canvasX * startZoom
+    //   => canvasX = (localStartMidX - startPanX) / startZoom
+    // At end (new pan with new zoom): localNewMidX = newPanX + canvasX * newZoom
+    //   => newPanX = localNewMidX - canvasX * newZoom
+    const canvasX = (localStartMidX - touchState.startPanX) / Math.max(0.01, touchState.startZoom);
+    const canvasY = (localStartMidY - touchState.startPanY) / Math.max(0.01, touchState.startZoom);
+    panX = localNewMidX - canvasX * newZoom;
+    panY = localNewMidY - canvasY * newZoom;
+    zoom = newZoom;
+
+    applyTransform();
+  }
+}, { passive: false });
+
+viewport.addEventListener('touchend', e => {
+  // If touches drop to 0, end gesture. If drops to 1, switch to pan mode from current position
+  if (e.touches.length === 0) {
+    touchState = null;
+    canvas.classList.remove('no-transition');
+  } else if (e.touches.length === 1 && touchState && touchState.mode === 'pinch') {
+    // Transition from pinch to pan
+    touchState = {
+      mode: 'pan',
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      startPanX: panX,
+      startPanY: panY
+    };
+  }
+});
+
+viewport.addEventListener('touchcancel', () => {
+  touchState = null;
+  canvas.classList.remove('no-transition');
+});
+
+// Prevent the browser from doing its own pinch-zoom / double-tap zoom
+// on the canvas area (we want our custom gesture to handle it).
+document.addEventListener('gesturestart', e => e.preventDefault());
+document.addEventListener('gesturechange', e => e.preventDefault());
+document.addEventListener('dblclick', e => {
+  if (e.target.closest('.viewport, .canvas, .node')) e.preventDefault();
+});
+
+// ============================================================
+// fitToViewport: smart initial fit (fits all clusters or current)
+// ============================================================
+function fitToViewport() {
+  const vpRect = viewport.getBoundingClientRect();
+  if (vpRect.height < 50) {
+    setTimeout(fitToViewport, 50);
+    return;
+  }
+  // Canvas is 2400x1700. Fit it inside the viewport.
+  const canvasW = 2600;
+  const canvasH = 1810;
+  const scaleX = vpRect.width / canvasW;
+  const scaleY = vpRect.height / canvasH;
+  zoom = Math.max(MIN_ZOOM, Math.min(scaleX, scaleY) * 0.95);
+  // Center
+  panX = (vpRect.width - canvasW * zoom) / 2;
+  panY = (vpRect.height - canvasH * zoom) / 2;
+  applyTransform();
+}
+
+// Center on a node (used when clicking cross-refs)
+function centerOnNode(nodeId) {
+  const pos = nodePositions[nodeId];
+  if (!pos) return;
+  const vpRect = viewport.getBoundingClientRect();
+  // Use a zoom that's comfortable on mobile: enough to see the node clearly
+  // and 1-2 related neighbors
+  const isMobile = vpRect.width < 768;
+  zoom = isMobile ? 1.1 : 1.4;
+  panX = vpRect.width / 2 - (pos.x + NODE_W/2) * zoom;
+  panY = vpRect.height / 2 - (pos.y + NODE_H/2) * zoom;
+  applyTransform();
+
+  const el = document.querySelector(`.node[data-id="${nodeId}"]`);
+  if (el) {
+    el.classList.add('active');
+    setTimeout(() => el.classList.remove('active'), 1500);
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+applyFilter();
+
+// Smart initial view: on mobile, focus on the first cluster (top-left)
+// so the user sees 1 cluster with comfortable zoom; on desktop, fit the whole canvas.
+function initInitialView() {
+  const vpRect = viewport.getBoundingClientRect();
+  if (vpRect.height < 50) {
+    setTimeout(initInitialView, 50);
+    return;
+  }
+  const isMobile = vpRect.width < 768;
+  if (isMobile) {
+    // On mobile: zoom in enough to read the first cluster (Cristología celestial)
+    // Cluster 1 occupies roughly x:80-680, y:80-350 in canvas coords
+    // Pick a zoom that shows the cluster comfortably
+    const clusterW = 600;
+    const clusterH = 270;
+    const scaleX = vpRect.width / clusterW;
+    const scaleY = vpRect.height / clusterH;
+    zoom = Math.max(0.5, Math.min(scaleX, scaleY) * 0.9);
+    // Center cluster 1 in viewport
+    const clusterCenterX = 380.0;
+    const clusterCenterY = 215.0;
+    panX = vpRect.width / 2 - clusterCenterX * zoom;
+    panY = vpRect.height / 2 - clusterCenterY * zoom;
+    applyTransform();
+  } else {
+    // On desktop: fit whole canvas
+    fitToViewport();
+  }
+}
+requestAnimationFrame(() => {
+  requestAnimationFrame(initInitialView);
+});
+
+// ============================================================
+// PWA: Service Worker registration (for offline use)
+// Only works when served over HTTPS or from localhost.
+// Silently skips on file:// — the app still works as a normal web page.
+// ============================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] Service Worker registrado:', reg.scope))
+      .catch(err => console.warn('[PWA] No se pudo registrar el SW:', err.message));
+  });
+}
+
+// PWA: detect iOS standalone mode and adjust UI
+if (window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches) {
+  document.documentElement.classList.add('standalone-mode');
+}
+
+</script>
 </body>
 </html>
