@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-<title>Hebreos · Mapa Constelar Interactivo</title>
+<title>Hebreos · Mapa Interactivo</title>
 
 <!-- PWA: Manifest -->
 <link rel="manifest" href="manifest.json">
@@ -35,16 +35,16 @@
     --safe-right: env(safe-area-inset-right, 0px);
   }
 
-/* ---------- MOBILE LIST VIEW (overrides constelar) ---------- */
+/* ---------- MOBILE LIST VIEW (overrides canvas) ---------- */
 .mobile-list-view{
   display:none;
   position:fixed;
-  top:var(--topbar-h, 105px);
-  top:calc(var(--topbar-h, 105px) + var(--safe-top, 0px));
+  /* top is set by JS based on actual topbar height */
+  top:60px;
   left:0;right:0;bottom:0;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  padding:calc(14px + var(--safe-bottom, 0px)) 14px 80px;
+  padding:14px 14px 80px;
   background:var(--bg);
   z-index:10;
 }
@@ -171,7 +171,7 @@
 }
 
 @media (max-width:768px){
-  /* Hide the constelar canvas in mobile, show the list view */
+  /* Hide the interactivo canvas in mobile, show the list view */
   .viewport{display:none}
   .mobile-list-view{display:block}
   /* Hide legend toggle (not needed in list view) */
@@ -895,7 +895,7 @@ body{
     <span class="home-label">Inicio</span>
   </a>
   <div class="brand">
-    <h1>Hebreos · Mapa Constelar</h1>
+    <h1>Hebreos · Mapa Interactivo</h1>
     <span class="sub">De la sombra a la realidad · ~100 nodos interconectados</span>
   </div>
   <div class="search-box">
@@ -987,7 +987,13 @@ body{
 <!-- ========== LEGEND ========== -->
 <div class="legend-panel" id="legendPanel">
   <div class="title">Categorías</div>
-  
+  <div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
+  <div class="item"><i class="dot" style="background:var(--cristo)"></i> Cristo · Cumplimiento</div>
+  <div class="item"><i class="dot" style="background:var(--iglesia)"></i> Iglesia · Participación</div>
+  <div class="item"><i class="dot" style="background:var(--pacto)"></i> Pactos / Promesas</div>
+  <div class="item"><i class="dot" style="background:var(--esperanza)"></i> Adoración / Escatología</div>
+</div>
+
 <!-- ========== MOBILE LIST VIEW ========== -->
 <div class="mobile-list-view" id="mobileListView"></div>
 
@@ -997,12 +1003,6 @@ body{
 <div class="cluster-menu-panel" id="clusterMenuPanel">
   <h4>Ir al cluster</h4>
   <div id="clusterMenuList"></div>
-</div>
-<div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
-  <div class="item"><i class="dot" style="background:var(--cristo)"></i> Cristo · Cumplimiento</div>
-  <div class="item"><i class="dot" style="background:var(--iglesia)"></i> Iglesia · Participación</div>
-  <div class="item"><i class="dot" style="background:var(--pacto)"></i> Pactos / Promesas</div>
-  <div class="item"><i class="dot" style="background:var(--esperanza)"></i> Adoración / Escatología</div>
 </div>
 
 <!-- ========== MODAL ========== -->
@@ -2293,7 +2293,21 @@ if (clusterMenuBackdrop) {
 function initMobileView() {
   buildMobileListView();
   buildClusterMenu();
+  positionMobileList();
 }
+
+// Position the mobile list view based on actual topbar height
+function positionMobileList() {
+  const topbar = document.querySelector('.topbar');
+  const mobileList = document.getElementById('mobileListView');
+  if (!topbar || !mobileList) return;
+  const topbarH = topbar.getBoundingClientRect().height;
+  mobileList.style.top = topbarH + 'px';
+}
+
+// Reposition on resize
+window.addEventListener('resize', positionMobileList);
+window.addEventListener('orientationchange', () => setTimeout(positionMobileList, 100));
 
 // Call after a tick to ensure NODES are rendered
 setTimeout(initMobileView, 50);

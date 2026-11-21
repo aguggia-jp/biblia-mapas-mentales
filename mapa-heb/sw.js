@@ -1,4 +1,4 @@
-// Service Worker · Hebreos Mapa Constelar
+// Service Worker · Hebreos Mapa Interactivo
 // Cache-first strategy for offline use
 const CACHE_NAME = 'hebreos-mapa-v1';
 const ASSETS = [

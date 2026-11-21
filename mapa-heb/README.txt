@@ -1,5 +1,5 @@
 ==================================================
-  HEBREOS · MAPA CONSTELAR INTERACTIVO (PWA)
+  HEBREOS · MAPA INTERACTIVO INTERACTIVO (PWA)
 ==================================================
 
 ¿QUÉ ES ESTO?
