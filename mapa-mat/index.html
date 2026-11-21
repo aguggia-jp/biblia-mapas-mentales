@@ -34,6 +34,211 @@
     --safe-left: env(safe-area-inset-left, 0px);
     --safe-right: env(safe-area-inset-right, 0px);
   }
+
+/* ---------- MOBILE LIST VIEW (overrides constelar) ---------- */
+.mobile-list-view{
+  display:none;
+  position:fixed;
+  top:var(--topbar-h, 105px);
+  top:calc(var(--topbar-h, 105px) + var(--safe-top, 0px));
+  left:0;right:0;bottom:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:calc(14px + var(--safe-bottom, 0px)) 14px 80px;
+  background:var(--bg);
+  z-index:10;
+}
+.mobile-list-view .mobile-cluster{
+  margin-bottom:28px;
+  break-inside:avoid;
+}
+.mobile-list-view .mobile-cluster-title{
+  font-size:.78rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:10px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.mobile-list-view .mobile-node-card{
+  background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:.18s;
+}
+.mobile-list-view .mobile-node-card.at{--accent:var(--at);--glow:var(--at-glow)}
+.mobile-list-view .mobile-node-card.cristo{--accent:var(--cristo);--glow:var(--cristo-glow)}
+.mobile-list-view .mobile-node-card.iglesia{--accent:var(--iglesia);--glow:var(--iglesia-glow)}
+.mobile-list-view .mobile-node-card.pacto{--accent:var(--pacto);--glow:var(--pacto-glow)}
+.mobile-list-view .mobile-node-card.esperanza{--accent:var(--esperanza);--glow:var(--esperanza-glow)}
+.mobile-list-view .mobile-node-card:active{
+  transform:scale(.98);
+  border-color:var(--accent);
+}
+.mobile-list-view .mobile-node-card h3{
+  font-size:.95rem;font-weight:600;color:#fff;
+  margin-bottom:3px;line-height:1.3;
+}
+.mobile-list-view .mobile-node-card .ref{
+  font-size:.75rem;color:var(--muted);
+}
+
+/* ---------- CLUSTER MENU (floating button + panel) ---------- */
+.cluster-menu-btn{
+  display:none;
+  position:fixed;
+  top:calc(12px + var(--safe-top, 0px));
+  right:calc(12px + var(--safe-right, 0px));
+  z-index:55;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(20,29,40,.92);
+  border:1px solid var(--border);
+  color:var(--text);
+  cursor:pointer;
+  align-items:center;justify-content:center;
+  font-size:1.1rem;line-height:1;
+  backdrop-filter:blur(8px);
+  font-family:inherit;
+  box-shadow:0 4px 14px -2px rgba(0,0,0,.5);
+}
+.cluster-menu-btn:hover,.cluster-menu-btn:active{
+  background:rgba(30,40,55,.95);
+  border-color:var(--cristo);
+}
+.cluster-menu-btn.active{
+  background:rgba(255,92,92,.18);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.cluster-menu-panel{
+  display:none;
+  position:fixed;
+  top:calc(56px + var(--safe-top, 0px));
+  right:calc(12px + var(--safe-right, 0px));
+  z-index:57;
+  width:240px;max-height:60vh;overflow-y:auto;
+  background:linear-gradient(180deg,#141d28,#0e151d);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow:0 12px 30px -8px rgba(0,0,0,.7);
+  animation:slideUp .2s ease;
+}
+.cluster-menu-panel.show{display:block}
+.cluster-menu-panel h4{
+  font-size:.66rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.cluster-menu-panel .cluster-item{
+  display:block;width:100%;
+  text-align:left;
+  padding:8px 10px;
+  margin-bottom:4px;
+  border:none;
+  background:rgba(255,255,255,.03);
+  border:1px solid transparent;
+  border-radius:7px;
+  color:var(--text);
+  font-size:.78rem;
+  cursor:pointer;
+  font-family:inherit;
+  transition:.15s;
+}
+.cluster-menu-panel .cluster-item:hover,.cluster-menu-panel .cluster-item:active{
+  background:rgba(255,255,255,.06);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.cluster-menu-backdrop{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(5,8,12,.55);
+  z-index:56;
+  opacity:0;
+  transition:opacity .2s;
+}
+.cluster-menu-backdrop.show{
+  display:block;
+  opacity:1;
+}
+
+@media (max-width:768px){
+  /* Hide the constelar canvas in mobile, show the list view */
+  .viewport{display:none}
+  .mobile-list-view{display:block}
+  /* Hide legend toggle (not needed in list view) */
+  .legend-toggle{display:none !important}
+  .legend-panel{display:none !important}
+  /* Hide zoom controls (not needed in list view) */
+  .zoom-controls{display:none !important}
+  /* Show cluster menu button */
+  .cluster-menu-btn{display:flex}
+  /* Adjust topbar: ensure it doesn't take too much vertical space */
+  .topbar{
+    flex-wrap:nowrap;
+    overflow:hidden;
+  }
+  .topbar .filter-pills{
+    display:none;
+  }
+  .topbar .brand h1{
+    font-size:.92rem;
+    flex:1;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .topbar .home-btn{
+    padding:6px 9px;
+    flex-shrink:0;
+  }
+  .topbar .home-btn .home-label{display:none}
+  .topbar .search-box{
+    flex:0 0 auto;
+    width:34px;
+    overflow:hidden;
+  }
+  .topbar .search-box::after{
+    content:"⌕";position:absolute;right:9px;top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);font-size:.95rem;
+    pointer-events:none;
+  }
+  .topbar .search-box input{
+    padding:6px 32px 6px 10px;
+    text-indent:-9999px;
+    width:34px;
+    transition:.2s;
+    cursor:pointer;
+  }
+  .topbar .search-box.expanded{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    width:100%;height:100%;
+    background:rgba(11,15,20,.95);
+    z-index:60;
+    display:flex;
+    align-items:center;
+    padding:6px 12px;
+  }
+  .topbar .search-box.expanded input{
+    text-indent:0;
+    width:100%;
+    padding:6px 32px 6px 32px;
+    cursor:text;
+  }
+  .topbar .help-btn{display:none}
+  .topbar .stats{display:none !important}
+}
+
 </style>
 <style>
 :root{
@@ -308,12 +513,8 @@ body{
   font-size:.68rem;color:var(--muted);
   letter-spacing:.2px;line-height:1.3;
 }
-.node .hebrew-ref{
-  font-size:.62rem;color:var(--accent);
-  margin-top:3px;letter-spacing:.3px;
-  opacity:.85;font-weight:600;
-}
-.node .hebrew-ref::before{content:"He "}
+
+
 
 /* ---------- MODAL ---------- */
 .modal{
@@ -795,7 +996,18 @@ body{
 <!-- ========== LEGEND ========== -->
 <div class="legend-panel" id="legendPanel">
   <div class="title">Categorías</div>
-  <div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
+  
+<!-- ========== MOBILE LIST VIEW ========== -->
+<div class="mobile-list-view" id="mobileListView"></div>
+
+<!-- ========== CLUSTER MENU BUTTON (mobile) ========== -->
+<button class="cluster-menu-btn" id="clusterMenuBtn" title="Ir a un cluster" aria-label="Ir a un cluster">☰</button>
+<div class="cluster-menu-backdrop" id="clusterMenuBackdrop"></div>
+<div class="cluster-menu-panel" id="clusterMenuPanel">
+  <h4>Ir al cluster</h4>
+  <div id="clusterMenuList"></div>
+</div>
+<div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
   <div class="item"><i class="dot" style="background:var(--cristo)"></i> Cristo · Cumplimiento</div>
   <div class="item"><i class="dot" style="background:var(--iglesia)"></i> Iglesia · Participación</div>
   <div class="item"><i class="dot" style="background:var(--pacto)"></i> Pactos / Promesas</div>
@@ -986,20 +1198,55 @@ const CONNECTIONS = [
   ['m74','m75'],
   ['m10','m27'],
   ['m9','m28'],
+  ['m9','m29'],
+  ['m8','m37'],
   ['m36','m45'],
   ['m36','m47'],
-  ['m38','m54'],
-  ['m27','m54'],
-  ['m34','m58'],
+  ['m36','m48'],
+  ['m36','m49'],
+  ['m36','m50'],
+  ['m36','m51'],
+  ['m36','m52'],
+  ['m36','m53'],
+  ['m36','m54'],
+  ['m38','m55'],
+  ['m37','m55'],
+  ['m40','m56'],
+  ['m43','m58'],
+  ['m27','m55'],
+  ['m34','m60'],
+  ['m35','m59'],
+  ['m31','m57'],
+  ['m32','m58'],
   ['m53','m62'],
+  ['m53','m65'],
+  ['m49','m62'],
+  ['m48','m65'],
   ['m21','m65'],
   ['m23','m66'],
+  ['m22','m64'],
+  ['m24','m57'],
+  ['m25','m58'],
   ['m1','m38'],
   ['m2','m40'],
-  ['m8','m37'],
+  ['m3','m46'],
+  ['m4','m9'],
   ['m9','m41'],
+  ['m7','m44'],
   ['m46','m57'],
-  ['m67','m51']
+  ['m53','m55'],
+  ['m54','m57'],
+  ['m67','m51'],
+  ['m44','m65'],
+  ['m55','m61'],
+  ['m33','m23'],
+  ['m27','m24'],
+  ['m37','m19'],
+  ['m37','m20'],
+  ['m37','m21'],
+  ['m9','m45'],
+  ['m3','m17'],
+  ['m65','m19']
 ];
 
 // ============================================================
@@ -1023,11 +1270,11 @@ NODES.forEach(node => {
   el.style.top = node.y + 'px';
   el.dataset.id = node.id;
   el.dataset.cat = node.cat;
-  el.dataset.search = (node.title + ' ' + node.ref + ' ' + (node.mtRef||'')).toLowerCase();
+  el.dataset.search = (node.title + ' ' + node.ref ).toLowerCase();
   el.innerHTML = `
     <h3>${node.title}</h3>
     <div class="ref">${node.ref}</div>
-    ${node.mtRef ? `<div class="hebrew-ref">${node.mtRef}</div>` : ''}
+    
   `;
   el.addEventListener('click', () => showNodeDetails(node));
   el.addEventListener('mouseenter', () => highlightConnections(node.id, true));
@@ -1165,7 +1412,7 @@ function showNodeDetails(node) {
   modalCatTag.className = `modal-cat-tag ${node.cat}`;
   modalCatTag.textContent = CAT_LABELS[node.cat];
   modalTitle.textContent = node.title;
-  modalRef.textContent = node.ref + (node.mtRef ? ` · Hebreos ${node.mtRef}` : '');
+  modalRef.textContent = node.ref;
 
   const versesHtml = node.verses.map(v => `
     <div class="verse-block">
@@ -1615,6 +1862,174 @@ if ('serviceWorker' in navigator) {
 // PWA: detect iOS standalone mode and adjust UI
 if (window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches) {
   document.documentElement.classList.add('standalone-mode');
+}
+
+
+// ============================================================
+// MOBILE LIST VIEW + CLUSTER MENU
+// ============================================================
+const mobileListView = document.getElementById('mobileListView');
+const clusterMenuBtn = document.getElementById('clusterMenuBtn');
+const clusterMenuPanel = document.getElementById('clusterMenuPanel');
+const clusterMenuBackdrop = document.getElementById('clusterMenuBackdrop');
+const clusterMenuList = document.getElementById('clusterMenuList');
+
+// Build the mobile list view (group nodes by cluster, sorted by position)
+function buildMobileListView() {
+  if (!mobileListView) return;
+  // Get cluster labels from the existing .cluster divs
+  const clusterDivs = Array.from(document.querySelectorAll('.cluster'));
+  const clusters = clusterDivs.map((d, i) => ({
+    label: d.textContent.trim(),
+    x: parseInt(d.style.left) || 0,
+    y: parseInt(d.style.top) || 0
+  }));
+  // Sort clusters by position (top to bottom, left to right)
+  clusters.sort((a, b) => a.y - b.y || a.x - b.x);
+
+  // Get all nodes and group them by their nearest cluster
+  const allNodes = Array.from(document.querySelectorAll('.node:not(.hidden)'));
+  const nodesByCluster = {};
+  allNodes.forEach(n => {
+    const nodeData = nodeMap[n.dataset.id];
+    if (!nodeData) return;
+    const nx = nodeData.x;
+    const ny = nodeData.y;
+    // Find nearest cluster
+    let nearestCluster = null;
+    let nearestDist = Infinity;
+    clusters.forEach((c, idx) => {
+      const dx = nx - c.x;
+      const dy = ny - c.y - 30; // cluster label is offset by -30
+      const dist = Math.hypot(dx, dy);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearestCluster = idx;
+      }
+    });
+    if (nearestCluster !== null) {
+      if (!nodesByCluster[nearestCluster]) nodesByCluster[nearestCluster] = [];
+      nodesByCluster[nearestCluster].push(nodeData);
+    }
+  });
+
+  // Sort nodes within each cluster by y, then x
+  Object.keys(nodesByCluster).forEach(k => {
+    nodesByCluster[k].sort((a, b) => a.y - b.y || a.x - b.x);
+  });
+
+  // Build HTML
+  let html = '';
+  clusters.forEach((cluster, idx) => {
+    const nodes = nodesByCluster[idx] || [];
+    if (nodes.length === 0) return;
+    html += '<div class="mobile-cluster" data-cluster-idx="' + idx + '">';
+    html += '<h3 class="mobile-cluster-title">' + cluster.label + '</h3>';
+    nodes.forEach(node => {
+      html += '<div class="mobile-node-card ' + node.cat + '" data-id="' + node.id + '">';
+      html += '<h3>' + node.title + '</h3>';
+      html += '<div class="ref">' + node.ref + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  mobileListView.innerHTML = html;
+
+  // Bind clicks on mobile node cards to open modal
+  mobileListView.querySelectorAll('.mobile-node-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const node = nodeMap[card.dataset.id];
+      if (node) showNodeDetails(node);
+    });
+  });
+}
+
+// Build the cluster menu (lists clusters for quick navigation)
+function buildClusterMenu() {
+  if (!clusterMenuList) return;
+  const clusterDivs = Array.from(document.querySelectorAll('.cluster'));
+  const clusters = clusterDivs.map(d => ({
+    label: d.textContent.trim()
+  }));
+  let html = '';
+  clusters.forEach((c, idx) => {
+    html += '<button class="cluster-item" data-cluster-idx="' + idx + '">' + c.label + '</button>';
+  });
+  clusterMenuList.innerHTML = html;
+
+  // Bind clicks: scroll the mobile list to that cluster
+  clusterMenuList.querySelectorAll('.cluster-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.clusterIdx);
+      const targetCluster = mobileListView.querySelector('[data-cluster-idx="' + idx + '"]');
+      if (targetCluster) {
+        targetCluster.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+      closeClusterMenu();
+    });
+  });
+}
+
+function openClusterMenu() {
+  clusterMenuPanel.classList.add('show');
+  clusterMenuBackdrop.classList.add('show');
+  clusterMenuBtn.classList.add('active');
+}
+function closeClusterMenu() {
+  clusterMenuPanel.classList.remove('show');
+  clusterMenuBackdrop.classList.remove('show');
+  clusterMenuBtn.classList.remove('active');
+}
+if (clusterMenuBtn) {
+  clusterMenuBtn.addEventListener('click', () => {
+    if (clusterMenuPanel.classList.contains('show')) closeClusterMenu();
+    else openClusterMenu();
+  });
+}
+if (clusterMenuBackdrop) {
+  clusterMenuBackdrop.addEventListener('click', closeClusterMenu);
+}
+
+// Initialize mobile view after nodes are rendered
+function initMobileView() {
+  buildMobileListView();
+  buildClusterMenu();
+}
+
+// Call after a tick to ensure NODES are rendered
+setTimeout(initMobileView, 50);
+
+// Rebuild mobile view when filters change
+const _origApplyFilter = applyFilter;
+applyFilter = function() {
+  _origApplyFilter.apply(this, arguments);
+  buildMobileListView();
+};
+
+// Mobile: expand search box on tap (overlay behavior)
+if (window.innerWidth <= 768) {
+  const searchBox = document.querySelector('.search-box');
+  const searchInput = document.getElementById('searchInput');
+  if (searchBox && searchInput) {
+    searchBox.addEventListener('click', (e) => {
+      if (!searchBox.classList.contains('expanded')) {
+        searchBox.classList.add('expanded');
+        setTimeout(() => searchInput.focus(), 100);
+        e.preventDefault();
+      }
+    });
+    // Close on Escape or when input loses focus
+    searchInput.addEventListener('blur', () => {
+      if (!searchInput.value) searchBox.classList.remove('expanded');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchBox.classList.contains('expanded')) {
+        searchBox.classList.remove('expanded');
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+      }
+    });
+  }
 }
 
 </script>

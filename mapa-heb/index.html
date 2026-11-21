@@ -34,6 +34,211 @@
     --safe-left: env(safe-area-inset-left, 0px);
     --safe-right: env(safe-area-inset-right, 0px);
   }
+
+/* ---------- MOBILE LIST VIEW (overrides constelar) ---------- */
+.mobile-list-view{
+  display:none;
+  position:fixed;
+  top:var(--topbar-h, 105px);
+  top:calc(var(--topbar-h, 105px) + var(--safe-top, 0px));
+  left:0;right:0;bottom:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:calc(14px + var(--safe-bottom, 0px)) 14px 80px;
+  background:var(--bg);
+  z-index:10;
+}
+.mobile-list-view .mobile-cluster{
+  margin-bottom:28px;
+  break-inside:avoid;
+}
+.mobile-list-view .mobile-cluster-title{
+  font-size:.78rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:10px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.mobile-list-view .mobile-node-card{
+  background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:.18s;
+}
+.mobile-list-view .mobile-node-card.at{--accent:var(--at);--glow:var(--at-glow)}
+.mobile-list-view .mobile-node-card.cristo{--accent:var(--cristo);--glow:var(--cristo-glow)}
+.mobile-list-view .mobile-node-card.iglesia{--accent:var(--iglesia);--glow:var(--iglesia-glow)}
+.mobile-list-view .mobile-node-card.pacto{--accent:var(--pacto);--glow:var(--pacto-glow)}
+.mobile-list-view .mobile-node-card.esperanza{--accent:var(--esperanza);--glow:var(--esperanza-glow)}
+.mobile-list-view .mobile-node-card:active{
+  transform:scale(.98);
+  border-color:var(--accent);
+}
+.mobile-list-view .mobile-node-card h3{
+  font-size:.95rem;font-weight:600;color:#fff;
+  margin-bottom:3px;line-height:1.3;
+}
+.mobile-list-view .mobile-node-card .ref{
+  font-size:.75rem;color:var(--muted);
+}
+
+/* ---------- CLUSTER MENU (floating button + panel) ---------- */
+.cluster-menu-btn{
+  display:none;
+  position:fixed;
+  top:calc(12px + var(--safe-top, 0px));
+  right:calc(12px + var(--safe-right, 0px));
+  z-index:55;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(20,29,40,.92);
+  border:1px solid var(--border);
+  color:var(--text);
+  cursor:pointer;
+  align-items:center;justify-content:center;
+  font-size:1.1rem;line-height:1;
+  backdrop-filter:blur(8px);
+  font-family:inherit;
+  box-shadow:0 4px 14px -2px rgba(0,0,0,.5);
+}
+.cluster-menu-btn:hover,.cluster-menu-btn:active{
+  background:rgba(30,40,55,.95);
+  border-color:var(--cristo);
+}
+.cluster-menu-btn.active{
+  background:rgba(255,92,92,.18);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.cluster-menu-panel{
+  display:none;
+  position:fixed;
+  top:calc(56px + var(--safe-top, 0px));
+  right:calc(12px + var(--safe-right, 0px));
+  z-index:57;
+  width:240px;max-height:60vh;overflow-y:auto;
+  background:linear-gradient(180deg,#141d28,#0e151d);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow:0 12px 30px -8px rgba(0,0,0,.7);
+  animation:slideUp .2s ease;
+}
+.cluster-menu-panel.show{display:block}
+.cluster-menu-panel h4{
+  font-size:.66rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.cluster-menu-panel .cluster-item{
+  display:block;width:100%;
+  text-align:left;
+  padding:8px 10px;
+  margin-bottom:4px;
+  border:none;
+  background:rgba(255,255,255,.03);
+  border:1px solid transparent;
+  border-radius:7px;
+  color:var(--text);
+  font-size:.78rem;
+  cursor:pointer;
+  font-family:inherit;
+  transition:.15s;
+}
+.cluster-menu-panel .cluster-item:hover,.cluster-menu-panel .cluster-item:active{
+  background:rgba(255,255,255,.06);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.cluster-menu-backdrop{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(5,8,12,.55);
+  z-index:56;
+  opacity:0;
+  transition:opacity .2s;
+}
+.cluster-menu-backdrop.show{
+  display:block;
+  opacity:1;
+}
+
+@media (max-width:768px){
+  /* Hide the constelar canvas in mobile, show the list view */
+  .viewport{display:none}
+  .mobile-list-view{display:block}
+  /* Hide legend toggle (not needed in list view) */
+  .legend-toggle{display:none !important}
+  .legend-panel{display:none !important}
+  /* Hide zoom controls (not needed in list view) */
+  .zoom-controls{display:none !important}
+  /* Show cluster menu button */
+  .cluster-menu-btn{display:flex}
+  /* Adjust topbar: ensure it doesn't take too much vertical space */
+  .topbar{
+    flex-wrap:nowrap;
+    overflow:hidden;
+  }
+  .topbar .filter-pills{
+    display:none;
+  }
+  .topbar .brand h1{
+    font-size:.92rem;
+    flex:1;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .topbar .home-btn{
+    padding:6px 9px;
+    flex-shrink:0;
+  }
+  .topbar .home-btn .home-label{display:none}
+  .topbar .search-box{
+    flex:0 0 auto;
+    width:34px;
+    overflow:hidden;
+  }
+  .topbar .search-box::after{
+    content:"⌕";position:absolute;right:9px;top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);font-size:.95rem;
+    pointer-events:none;
+  }
+  .topbar .search-box input{
+    padding:6px 32px 6px 10px;
+    text-indent:-9999px;
+    width:34px;
+    transition:.2s;
+    cursor:pointer;
+  }
+  .topbar .search-box.expanded{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    width:100%;height:100%;
+    background:rgba(11,15,20,.95);
+    z-index:60;
+    display:flex;
+    align-items:center;
+    padding:6px 12px;
+  }
+  .topbar .search-box.expanded input{
+    text-indent:0;
+    width:100%;
+    padding:6px 32px 6px 32px;
+    cursor:text;
+  }
+  .topbar .help-btn{display:none}
+  .topbar .stats{display:none !important}
+}
+
 </style>
 <style>
 :root{
@@ -69,6 +274,30 @@ body{
   display:flex;
   flex-direction:column;
 }
+
+/* ---------- HOME BUTTON (back to index) ---------- */
+.home-btn{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;gap:6px;
+  text-decoration:none;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:7px 12px;
+  border-radius:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:.3px;
+  transition:.18s;
+  font-family:inherit;
+  line-height:1;
+}
+.home-btn:hover{
+  background:rgba(255,92,92,.10);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.home-btn:active{transform:scale(.97)}
+.home-icon{font-size:.95rem;line-height:1}
+.home-label{font-size:.78rem}
 
 /* ---------- TOP BAR ---------- */
 .topbar{
@@ -284,12 +513,8 @@ body{
   font-size:.68rem;color:var(--muted);
   letter-spacing:.2px;line-height:1.3;
 }
-.node .hebrew-ref{
-  font-size:.62rem;color:var(--accent);
-  margin-top:3px;letter-spacing:.3px;
-  opacity:.85;font-weight:600;
-}
-.node .hebrew-ref::before{content:"He "}
+
+
 
 /* ---------- MODAL ---------- */
 .modal{
@@ -535,6 +760,10 @@ body{
     gap:8px;
     flex-wrap:wrap;
   }
+  /* On mobile: show only the arrow icon, hide the "Inicio" text label */
+  .home-btn{padding:7px 9px}
+  .home-btn .home-label{display:none}
+  .home-btn .home-icon{font-size:1.05rem}
   .brand{
     flex:0 0 auto;
     margin-right:4px;
@@ -661,6 +890,10 @@ body{
 
 <!-- ========== TOP BAR ========== -->
 <div class="topbar">
+  <a href="../index.html" class="home-btn" title="Volver al índice de mapas bíblicos" aria-label="Volver al inicio">
+    <span class="home-icon">←</span>
+    <span class="home-label">Inicio</span>
+  </a>
   <div class="brand">
     <h1>Hebreos · Mapa Constelar</h1>
     <span class="sub">De la sombra a la realidad · ~100 nodos interconectados</span>
@@ -754,7 +987,18 @@ body{
 <!-- ========== LEGEND ========== -->
 <div class="legend-panel" id="legendPanel">
   <div class="title">Categorías</div>
-  <div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
+  
+<!-- ========== MOBILE LIST VIEW ========== -->
+<div class="mobile-list-view" id="mobileListView"></div>
+
+<!-- ========== CLUSTER MENU BUTTON (mobile) ========== -->
+<button class="cluster-menu-btn" id="clusterMenuBtn" title="Ir a un cluster" aria-label="Ir a un cluster">☰</button>
+<div class="cluster-menu-backdrop" id="clusterMenuBackdrop"></div>
+<div class="cluster-menu-panel" id="clusterMenuPanel">
+  <h4>Ir al cluster</h4>
+  <div id="clusterMenuList"></div>
+</div>
+<div class="item"><i class="dot" style="background:var(--at)"></i> AT · Sombra / Figura</div>
   <div class="item"><i class="dot" style="background:var(--cristo)"></i> Cristo · Cumplimiento</div>
   <div class="item"><i class="dot" style="background:var(--iglesia)"></i> Iglesia · Participación</div>
   <div class="item"><i class="dot" style="background:var(--pacto)"></i> Pactos / Promesas</div>
@@ -797,445 +1041,445 @@ body{
 // ============================================================
 const NODES = [
   // ===== CLUSTER 1: CRISTOLOGÍA CELESTIAL (Heb 1-2) — left col, top =====
-  { id:'n1', x:80, y:80, cat:'cristo', title:'Hijo · Heredero', ref:'Hebreos 1:2', heRef:'1:2',
+  { id:'n1', x:80, y:80, cat:'cristo', title:'Hijo · Heredero', ref:'Hebreos 1:2',
     verses:[{ref:'Hebreos 1:2', text:'En estos postreros días nos ha hablado por el Hijo, a quien constituyó heredero de todo, y por quien asimismo hizo el universo.'},
             {ref:'Salmo 2:8', text:'Pídeme, y te daré por herencia las naciones, y como posesión tuya los confines de la tierra.'}],
     comment:{author:'Juan Calvino · Heb 1:2', text:'El Hijo es el heredero universal constituido por el Padre. Esta dignidad no le fue dada en el tiempo, sino desde la eternidad; en su encarnación fue manifestada públicamente. La creación entera le pertenece por derecho de herencia y de creación.'} },
-  { id:'n2', x:290, y:80, cat:'cristo', title:'Resplandor de la Gloria', ref:'Hebreos 1:3', heRef:'1:3',
+  { id:'n2', x:290, y:80, cat:'cristo', title:'Resplandor de la Gloria', ref:'Hebreos 1:3',
     verses:[{ref:'Hebreos 1:3', text:'El cual, siendo el resplandor de su gloria, y la imagen misma de su sustancia, y quien sustenta todas las cosas con la palabra de su poder, habiendo efectuado la purificación de nuestros pecados por medio de sí mismo, se sentó a la diestra de la Majestad en las alturas.'},
             {ref:'Juan 1:18', text:'A Dios nadie le vio jamás; el unigénito Hijo, que está en el seno del Padre, él le ha dado a conocer.'},
             {ref:'Colosenses 1:15', text:'El cual es la imagen del Dios invisible, el primogénito de toda creación.'}],
     comment:{author:'Juan Crisóstomo · Heb 1:3', text:'Observa cómo el apóstol declara la consustancialidad del Hijo con el Padre. "Resplandor de su gloria" no es algo añadido a la esencia divina, sino que brota eternamente de ella, como la luz del sol. Es imagen, no copia; sustancia, no semejanza.'} },
-  { id:'n3', x:500, y:80, cat:'cristo', title:'Mayor que los ángeles', ref:'Hebreos 1:4-14', heRef:'1:4',
+  { id:'n3', x:500, y:80, cat:'cristo', title:'Mayor que los ángeles', ref:'Hebreos 1:4-14',
     verses:[{ref:'Hebreos 1:4', text:'Hecho tanto superior a los ángeles, cuanto heredó más excelente nombre que ellos.'},
             {ref:'Salmo 110:1', text:'Jehová dijo a mi Señor: Siéntate a mi diestra, hasta que ponga a tus enemigos por estrado de tus pies.'}],
     comment:{author:'John Owen · Heb 1:4', text:'La superioridad de Cristo sobre los ángeles se prueba por siete citas del Antiguo Testamento. El apóstol no argumenta por razones filosóficas, sino por la Escritura misma: Dios llama al Hijo "Dios" (Sal 45), le ordena adoración (Sal 97), le atribuye la creación (Sal 102) y la eternidad (Sal 110).'} },
-  { id:'n4', x:80, y:180, cat:'pacto', title:'Angélicos: ministros', ref:'Hebreos 1:7, 14', heRef:'1:7',
+  { id:'n4', x:80, y:180, cat:'pacto', title:'Angélicos: ministros', ref:'Hebreos 1:7, 14',
     verses:[{ref:'Hebreos 1:7, 14', text:'Y ciertamente de los ángeles dice: El que hace a sus ángeles espíritus, y a sus ministros llama de fuego... ¿No son todos espíritus ministradores, enviados para servicio a favor de los que serán herederos de la salvación?'},
             {ref:'Salmo 104:4', text:'Hace a sus ángeles espíritus, y a sus ministros llama de fuego.'}],
     comment:{author:'Matthew Henry · Heb 1:14', text:'Los ángeles son criaturas ministradoras; Cristo es el Señor a quien sirven. Su ministerio está ordenado para los herederos de la salvación, no para sí mismos. Cuanto más altos los ángeles, más deben humillarse ante el Hijo.'} },
-  { id:'n5', x:290, y:180, cat:'iglesia', title:'Hermanos santificados', ref:'Hebreos 2:11', heRef:'2:11',
+  { id:'n5', x:290, y:180, cat:'iglesia', title:'Hermanos santificados', ref:'Hebreos 2:11',
     verses:[{ref:'Hebreos 2:11', text:'Porque el que santifica y los que son santificados, de uno son todos; por lo cual no se avergüenza de llamarlos hermanos.'},
             {ref:'Salmo 22:22', text:'Anunciaré tu nombre a mis hermanos; en medio de la congregación te alabaré.'}],
     comment:{author:'Juan Calvino · Heb 2:11', text:'Cristo no se avergüenza de llamar hermanos a los santificados, porque participatione naturae participan de su santidad. Esta fraternidad no nace de mérito, sino de su condescendencia: el Hijo de Dios se hizo nuestro hermano para hacernos hijos del Padre.'} },
-  { id:'n6', x:500, y:180, cat:'iglesia', title:'Libres del temor de muerte', ref:'Hebreos 2:14-15', heRef:'2:14',
+  { id:'n6', x:500, y:180, cat:'iglesia', title:'Libres del temor de muerte', ref:'Hebreos 2:14-15',
     verses:[{ref:'Hebreos 2:14-15', text:'Así que, por cuanto los hijos participaron de carne y sangre, él también participó de lo mismo, para destruir por medio de la muerte al que tenía el imperio de la muerte, esto es, al diablo, y librar a todos los que por el temor de la muerte estaban durante toda la vida sujetos a servidumbre.'}],
     comment:{author:'Agustín de Hipona · De Civitate Dei', text:'Cristo venció a la muerte no negándola, sino sufriendo. De este modo, lo que parecía la mayor victoria del diablo se convirtió en su ruina. El médico tomó el veneno para quebrarlo desde dentro.'} },
-  { id:'n7', x:80, y:280, cat:'cristo', title:'Sumo Sacerdote misericordioso', ref:'Hebreos 2:17-18', heRef:'2:17',
+  { id:'n7', x:80, y:280, cat:'cristo', title:'Sumo Sacerdote misericordioso', ref:'Hebreos 2:17-18',
     verses:[{ref:'Hebreos 2:17-18', text:'Por lo cual debía ser en todo semejante a sus hermanos, para venir a ser misericordioso y fiel sumo sacerdote en lo que a Dios se refiere, para expiar los pecados del pueblo. Pues en cuanto él mismo padeció siendo tentado, es poderoso para socorrer a los que son tentados.'}],
     comment:{author:'Juan Calvino · Heb 2:17', text:'Cristo no es sacerdote desde lejos. Para ser misericordioso, primero fue tentado; para socorrer, primero padeció. El sacerdocio de Cristo no se ejerce desde el trono, sino desde la cruz y desde la gloria de uno que pasó por nuestra debilidad.'} },
 
   // ===== CLUSTER 2: SACERDOCIO (Heb 4:14–7:28) =====
-  { id:'n8', x:80, y:620, cat:'at', title:'Aarón · primer sumo sacerdote', ref:'Éxodo 28:1', heRef:'5:1-4',
+  { id:'n8', x:80, y:620, cat:'at', title:'Aarón · primer sumo sacerdote', ref:'Éxodo 28:1',
     verses:[{ref:'Éxodo 28:1', text:'Harás llegar delante de ti a Aarón tu hermano, y a sus hijos consigo, de entre los hijos de Israel, para que sean mis sacerdotes.'},
             {ref:'Hebreos 5:1', text:'Porque todo sumo sacerdote tomado de entre los hombres es constituido a favor de los hombres en lo que a Dios se refiere.'}],
     comment:{author:'Juan Calvino · Heb 5:1', text:'El sacerdocio levítico fue la sombra del verdadero. Aarón no fue elegido por dignidad propia, sino como tipo del que había de venir. Su ministerio mostraba que el hombre no puede acercarse a Dios sin mediador.'} },
-  { id:'n9', x:290, y:620, cat:'cristo', title:'Sacerdocio eterno · Melquisedec', ref:'Hebreos 5:6, 7:1-28', heRef:'7:1',
+  { id:'n9', x:290, y:620, cat:'cristo', title:'Sacerdocio eterno · Melquisedec', ref:'Hebreos 5:6, 7:1-28',
     verses:[{ref:'Hebreos 7:1-3', text:'Porque este Melquisedec, rey de Salem, sacerdote del Dios Altísimo... sin padre, sin madre, sin genealogía; que ni tiene principio de días, ni fin de vida, sino que es hecho semejante al Hijo de Dios, permanece sacerdote para siempre.'},
             {ref:'Salmo 110:4', text:'Juró Jehová, y no se arrepentirá: Tú eres sacerdote para siempre según el orden de Melquisedec.'},
             {ref:'Génesis 14:18-20', text:'Entonces Melquisedec, rey de Salem, sacerdote del Dios Altísimo, sacó pan y vino; y le bendijo.'}],
     comment:{author:'John Owen · Heb 7:3', text:'Melquisedec es presentado en la Escritura sin genealogía, sin nacimiento ni muerte registrados. No porque careciera de ellos, sino porque el Espíritu Santo calla estos datos para hacer de él un tipo del Hijo eterno. El silencio del texto es profético.'} },
-  { id:'n10', x:500, y:620, cat:'pacto', title:'Juramento divino del sacerdocio', ref:'Hebreos 7:20-22', heRef:'7:20',
+  { id:'n10', x:500, y:620, cat:'pacto', title:'Juramento divino del sacerdocio', ref:'Hebreos 7:20-22',
     verses:[{ref:'Hebreos 7:20-22', text:'Y ciertamente los que en verdad son sacerdotes, son hechos sin juramento... pero éste, con el juramento del que le dijo: Juró el Señor, y no se arrepentirá: Tú eres sacerdote para siempre. Por tanto, Jesús es también fiador de un mejor pacto.'}],
     comment:{author:'Matthew Henry · Heb 7:22', text:'El sacerdocio de Cristo descansa sobre un juramento divino, cosa que nunca se dijo de Aarón. Dios se comprometió con juramento a perpetuar este sacerdocio. Por eso Cristo es fiador de un pacto mejor, garantía divina, no humana.'} },
-  { id:'n11', x:80, y:720, cat:'at', title:'Leví · sacerdocio mortal', ref:'Hebreos 7:23', heRef:'7:23',
+  { id:'n11', x:80, y:720, cat:'at', title:'Leví · sacerdocio mortal', ref:'Hebreos 7:23',
     verses:[{ref:'Hebreos 7:23-24', text:'Y los otros sacerdotes llegaron a ser muchos, debido a que por la muerte no podían continuar; mas éste, porque permanece para siempre, tiene un sacerdocio inmutable.'}],
     comment:{author:'Juan Calvino · Heb 7:24', text:'La mortalidad de los sacerdotes levíticos era la prueba de la insuficiencia del antiguo pacto. Cada muerte exigía un sucesor. Cristo, por vivir siempre, ejerce un sacerdocio que no necesita relevo: él permanece.'} },
-  { id:'n12', x:290, y:720, cat:'cristo', title:'Santo · Sin mancha', ref:'Hebreos 7:26', heRef:'7:26',
+  { id:'n12', x:290, y:720, cat:'cristo', title:'Santo · Sin mancha', ref:'Hebreos 7:26',
     verses:[{ref:'Hebreos 7:26-28', text:'Porque tal sumo sacerdote nos convenía: santo, inocente, sin mancha, apartado de los pecadores, y hecho más sublime que los cielos; que no tiene necesidad cada día, como aquellos sumos sacerdotes, de ofrecer primero sacrificios por sus propios pecados, y luego por los del pueblo; porque esto lo hizo una vez para siempre, ofreciéndose a sí mismo.'}],
     comment:{author:'John Owen · Heb 7:26', text:'Cristo reúne en sí mismo las cuatro cualidades requeridas: santidad de naturaleza, inocencia de vida, inmunidad de mancha, separación de pecadores. No es solo mejor que Aarón; es de otra especie. El sacerdote y la víctima son uno.'} },
-  { id:'n13', x:500, y:720, cat:'iglesia', title:'Los que se acercan a Dios', ref:'Hebreos 7:25', heRef:'7:25',
+  { id:'n13', x:500, y:720, cat:'iglesia', title:'Los que se acercan a Dios', ref:'Hebreos 7:25',
     verses:[{ref:'Hebreos 7:25', text:'Por lo cual puede también salvar perpetuamente a los que por él se acercan a Dios, viviendo siempre para interceder por ellos.'}],
     comment:{author:'Juan Calvino · Heb 7:25', text:'La intercesión de Cristo es la continuación viva de su sacrificio. No se limitó a morir; vive para siempre intercediendo. Quien se acerca por él encuentra al Padre siempre dispuesto, porque el Hijo está siempre de pie ante el trono.'} },
-  { id:'n14', x:80, y:820, cat:'iglesia', title:'Acerquémonos con confianza', ref:'Hebreos 4:16', heRef:'4:16',
+  { id:'n14', x:80, y:820, cat:'iglesia', title:'Acerquémonos con confianza', ref:'Hebreos 4:16',
     verses:[{ref:'Hebreos 4:14-16', text:'Por tanto, teniendo un gran sumo sacerdote que traspasó los cielos, Jesús el Hijo de Dios, retengamos nuestra profesión... Acerquémonos, pues, confiadamente al trono de la gracia, para alcanzar misericordia y hallar gracia para el oportuno socorro.'}],
     comment:{author:'Matthew Henry · Heb 4:16', text:'El trono de Dios es ahora trono de gracia para los que vienen por Cristo. La confianza no es presunción, sino fe fundada en nuestro Sumo Sacerdote. Acércate cuando necesites, no cuando merezcas; el oportuno socorro llega a tiempo.'} },
 
   // ===== CLUSTER 3: SACRIFICIO (Heb 9-10) =====
-  { id:'n15', x:80, y:1160, cat:'at', title:'Sangre de toros y machos cabríos', ref:'Levítico 16:1-34', heRef:'9:13',
+  { id:'n15', x:80, y:1160, cat:'at', title:'Sangre de toros y machos cabríos', ref:'Levítico 16:1-34',
     verses:[{ref:'Hebreos 9:13-14', text:'Porque si la sangre de los toros y de los machos cabríos, y las cenizas de la becerra rociadas a los inmundos, santifican para la purificación de la carne, ¿cuánto más la sangre de Cristo... limpiará vuestras conciencias de obras muertas para que sirváis al Dios vivo?'},
             {ref:'Levítico 17:11', text:'Porque la vida de la carne en la sangre está, y yo os la he dado para hacer expiación sobre el altar por vuestras almas.'}],
     comment:{author:'John Owen · Heb 9:13', text:'Los sacrificios levíticos santificaban "para la purificación de la carne", es decir, ceremonialmente. No tocaban la conciencia. Eran figuras necesarias pero insuficientes, ordenadas por Dios para apuntar a la sangre verdadera.'} },
-  { id:'n16', x:290, y:1160, cat:'cristo', title:'Sangre de Cristo', ref:'Hebreos 9:14', heRef:'9:14',
+  { id:'n16', x:290, y:1160, cat:'cristo', title:'Sangre de Cristo', ref:'Hebreos 9:14',
     verses:[{ref:'Hebreos 9:14', text:'¿Cuánto más la sangre de Cristo, el cual mediante el Espíritu eterno se ofreció a sí mismo sin mancha a Dios, limpiará vuestras conciencias de obras muertas para que sirváis al Dios vivo?'},
             {ref:'1 Pedro 1:19', text:'Sino con la sangre preciosa de Cristo, como de un cordero sin mancha y sin contaminación.'}],
     comment:{author:'Juan Calvino · Heb 9:14', text:'Cristo no solo ofreció sangre, sino su propia sangre; y se ofreció a sí mismo, no por compulsión externa, sino "mediante el Espíritu eterno". Su sacrificio fue acto divino y humano a la vez: el Hijo eterno ofreciéndose en una naturaleza humana.'} },
-  { id:'n17', x:500, y:1160, cat:'cristo', title:'Una sola ofrenda', ref:'Hebreos 10:10-14', heRef:'10:10',
+  { id:'n17', x:500, y:1160, cat:'cristo', title:'Una sola ofrenda', ref:'Hebreos 10:10-14',
     verses:[{ref:'Hebreos 10:10-14', text:'En esa voluntad somos santificados mediante la ofrenda del cuerpo de Jesucristo hecha una vez para siempre... porque con una sola ofrenda hizo perfectos para siempre a los santificados.'}],
     comment:{author:'John Owen · Heb 10:14', text:'La perfección de los santificados no es de grado, sino de estado. La ofrenda de Cristo los hizo perfectos para siempre ante Dios. Lo que los sacrificios diarios no lograron, una sola ofrenda lo consumó: la expiación eterna.'} },
-  { id:'n18', x:80, y:1260, cat:'at', title:'Sacrificios diarios', ref:'Éxodo 29:38-42', heRef:'10:1',
+  { id:'n18', x:80, y:1260, cat:'at', title:'Sacrificios diarios', ref:'Éxodo 29:38-42',
     verses:[{ref:'Hebreos 10:1-4', text:'Porque la ley, teniendo la sombra de los bienes venideros, no la imagen misma de las cosas, nunca puede, por los mismos sacrificios que se ofrecen continuamente cada año, hacer perfectos a los que se acercan... pero en estos sacrificios cada año se hace memoria de los pecados.'}],
     comment:{author:'Matthew Henry · Heb 10:1', text:'La repetición era la confesión de debilidad. Si el sacrificio hubiera sido perfecto, no habría necesitado repetirse. La ley tenía la sombra, no la sustancia; dibujaba el pecado sin borrarlo.'} },
-  { id:'n19', x:290, y:1260, cat:'iglesia', title:'Santificados para siempre', ref:'Hebreos 10:14', heRef:'10:14',
+  { id:'n19', x:290, y:1260, cat:'iglesia', title:'Santificados para siempre', ref:'Hebreos 10:14',
     verses:[{ref:'Hebreos 10:14', text:'Porque con una sola ofrenda ha hecho perfectos para siempre a los que santificados.'},
             {ref:'1 Corintios 6:11', text:'Y esto erais algunos; mas ya habéis sido lavados, ya habéis sido santificados, ya habéis sido justificados en el nombre del Señor Jesús.'}],
     comment:{author:'Juan Calvino · Heb 10:14', text:'Esta perfección no es de nuestra virtud, sino de la imputación. Cristo nos hace perfectos ante Dios por su sola ofrenda. La santificación crece en nosotros, pero nuestra aceptación ya es completa.'} },
-  { id:'n20', x:500, y:1260, cat:'pacto', title:'Sacrificio de alabanza', ref:'Hebreos 13:15', heRef:'13:15',
+  { id:'n20', x:500, y:1260, cat:'pacto', title:'Sacrificio de alabanza', ref:'Hebreos 13:15',
     verses:[{ref:'Hebreos 13:15-16', text:'Así que, ofrezcamos siempre a Dios, por medio de él, sacrificio de alabanza, es decir, fruto de labios que confiesan su nombre. Y de hacer bien y de la comunicación no os olvidéis; porque de tales sacrificios se agrada Dios.'},
             {ref:'Oseas 14:2', text:'Llevad con vosotros palabras de súplica, y volved a Jehová... y os ofreceremos el sacrificio de nuestros labios.'}],
     comment:{author:'John Owen · Heb 13:15', text:'Los sacrificios espirituales sustituyen a los ceremoniales. Ya no hay altar de animales, sino altar de labios. La alabanza y el bien al prójimo son los sacrificios del nuevo pacto: aceptados no por sí mismos, sino "por medio de él".'} },
 
   // ===== CLUSTER 4: PACTOS (Heb 8) =====
-  { id:'n21', x:1000, y:80, cat:'pacto', title:'Promesa a Abraham', ref:'Génesis 12:1-3', heRef:'6:13-15',
+  { id:'n21', x:1000, y:80, cat:'pacto', title:'Promesa a Abraham', ref:'Génesis 12:1-3',
     verses:[{ref:'Génesis 12:1-3', text:'Haré de ti una nación grande, y te bendeciré, y engrandeceré tu nombre, y serás bendición... y serán benditas en ti todas las familias de la tierra.'},
             {ref:'Hebreos 6:13-15', text:'Porque cuando Dios hizo la promesa a Abraham, no teniendo otro mayor por quien jurar, juró por sí mismo, diciendo: De cierto te bendeciré con abundancia y te multiplicaré grandemente.'}],
     comment:{author:'Juan Calvino · Heb 6:13', text:'Dios juró por sí mismo porque no había mayor. La promesa a Abraham tiene dos garantías: la palabra de Dios y el juramento de Dios. Cristo es el cumplimiento de esta doble garantía inmutable.'} },
-  { id:'n22', x:1210, y:80, cat:'pacto', title:'Pacto con Israel · Sinaí', ref:'Éxodo 24:3-8', heRef:'8:9',
+  { id:'n22', x:1210, y:80, cat:'pacto', title:'Pacto con Israel · Sinaí', ref:'Éxodo 24:3-8',
     verses:[{ref:'Éxodo 24:3-8', text:'Y Moisés vino y contó al pueblo todas las palabras de Jehová... Entonces él tomó el libro del pacto y lo leyó a oídos del pueblo, y dijeron: Haremos todas las cosas que Jehová ha dicho, y obedeceremos. Y Moisés tomó la sangre y roció sobre el pueblo.'},
             {ref:'Hebreos 8:9', text:'No como el pacto que hice con sus padres el día en que los tomé de la mano para sacarlos de la tierra de Egipto.'}],
     comment:{author:'Matthew Henry · Heb 8:9', text:'El pacto del Sinaí fue sellado con sangre de animales y descansaba en obediencia humana. Por eso fue roto. El nuevo pacto descansa en la obediencia de Cristo y la sangre de su sacrificio inmutable.'} },
-  { id:'n23', x:1420, y:80, cat:'pacto', title:'Nuevo Pacto prometido', ref:'Jeremías 31:31-34', heRef:'8:8-12',
+  { id:'n23', x:1420, y:80, cat:'pacto', title:'Nuevo Pacto prometido', ref:'Jeremías 31:31-34',
     verses:[{ref:'Jeremías 31:31-34', text:'He aquí que vienen días, dice Jehová, en los cuales haré nuevo pacto con la casa de Israel y con la casa de Judá... Daré mi ley en su mente, y la escribiré en su corazón; y yo seré a ellos por Dios, y ellos me serán por pueblo.'},
             {ref:'Hebreos 8:8-12', text:'Mas reprendiéndolos dice: He aquí vienen días, dice el Señor, cuando estableceré con la casa de Israel y la casa de Judá un nuevo pacto...'}],
     comment:{author:'Juan Crisóstomo · Heb 8:8', text:'Notad la condescendencia del apóstol. No cita a Moisés, sino a Jeremías, profeta posterior. Así demuestra que aun bajo la ley ya se prometió un pacto nuevo, lo que prueba que el antiguo era insuficiente.'} },
-  { id:'n24', x:1000, y:180, cat:'cristo', title:'Mediador del Nuevo Pacto', ref:'Hebreos 8:6', heRef:'8:6',
+  { id:'n24', x:1000, y:180, cat:'cristo', title:'Mediador del Nuevo Pacto', ref:'Hebreos 8:6',
     verses:[{ref:'Hebreos 8:6', text:'Pero ahora tanto mejor ministerio es el suyo, cuanto es mediador de un mejor pacto, establecido sobre mejores promesas.'},
             {ref:'1 Timoteo 2:5', text:'Porque hay un solo Dios, y un solo mediador entre Dios y los hombres, Jesucristo hombre.'}],
     comment:{author:'Juan Calvino · Heb 8:6', text:'Cristo no es solo mediador de reconciliación, sino mediador de un pacto. Mide la distancia entre Dios y los hombres; hace vigente el pacto nuevo por su sangre. Su oficio de mediador es inseparable de su sacerdocio.'} },
-  { id:'n25', x:1210, y:180, cat:'iglesia', title:'Ley en el corazón', ref:'Hebreos 8:10', heRef:'8:10',
+  { id:'n25', x:1210, y:180, cat:'iglesia', title:'Ley en el corazón', ref:'Hebreos 8:10',
     verses:[{ref:'Hebreos 8:10-12', text:'Por lo cual, este es el pacto que haré con la casa de Israel después de aquellos días, dice el Señor: Pondré mis leyes en la mente de ellos, y sobre su corazón las escribiré; y seré a ellos por Dios, y ellos me serán a mí por pueblo... porque todos me conocerán, desde el menor hasta el mayor.'}],
     comment:{author:'Agustín de Hipona · De Spiritu et Littera', text:'La ley exterior escrita en piedra solo acusaba; la ley interior escrita por el Espíritu en el corazón transforma. El nuevo pacto no es nueva obligación, sino nueva capacidad: Dios mismo obra en nosotros el querer y el hacer.'} },
-  { id:'n26', x:1420, y:180, cat:'iglesia', title:'Perdón definitivo', ref:'Hebreos 8:12', heRef:'8:12',
+  { id:'n26', x:1420, y:180, cat:'iglesia', title:'Perdón definitivo', ref:'Hebreos 8:12',
     verses:[{ref:'Hebreos 8:12', text:'Porque seré propicio a sus injusticias, y nunca más me acordaré de sus pecados y transgresiones.'},
             {ref:'Isaías 43:25', text:'Yo, yo soy el que borro tus rebeliones por amor de mí mismo, y no me acordaré de tus pecados.'}],
     comment:{author:'John Owen · Heb 8:12', text:'El olvido divino es misterio de gracia. Dios no pierde la memoria; decide no recordar. En el nuevo pacto, los pecados no solo son perdonados, sino sepultados en el olvido divino. No hay más recordatorio ni memoria acusadora.'} },
 
   // ===== CLUSTER 5: TABERNÁCULO (Heb 9) =====
-  { id:'n27', x:1000, y:620, cat:'at', title:'Tabernáculo terrenal', ref:'Éxodo 25-27', heRef:'9:1-5',
+  { id:'n27', x:1000, y:620, cat:'at', title:'Tabernáculo terrenal', ref:'Éxodo 25-27',
     verses:[{ref:'Hebreos 9:1-5', text:'Entonces, en efecto, tenía el primer pacto reglas de culto, y un santuario terrenal. Porque un tabernáculo fue preparado: la primera parte, en la cual estaban el candelabro, la mesa y los panes de la proposición...'},
             {ref:'Éxodo 25:8-9', text:'Y harán un santuario para mí, y habitaré en medio de ellos. Conforme a todo lo que yo te muestre... así lo haréis.'}],
     comment:{author:'Juan Calvino · Heb 9:1', text:'El tabernáculo fue una copia visible del cielo. Su disposición misma era enseñanza: el velo, el lugar santo, el santísimo; todo mostraba la distancia entre el hombre y Dios. Cristo es la realidad; el tabernáculo era la lección visible.'} },
-  { id:'n28', x:1210, y:620, cat:'at', title:'Lugar Santísimo', ref:'Hebreos 9:7', heRef:'9:7',
+  { id:'n28', x:1210, y:620, cat:'at', title:'Lugar Santísimo', ref:'Hebreos 9:7',
     verses:[{ref:'Hebreos 9:7-8', text:'Pero en la segunda parte, sólo el sumo sacerdote una vez al año, no sin sangre, la cual ofrece por sí mismo y por los pecados de ignorancia del pueblo; dando el Espíritu Santo a entender con esto que aún no se había manifestado el camino al Lugar Santísimo, mientras se mantenía en pie la primera parte del tabernáculo.'},
             {ref:'Levítico 16:2', text:'Di a Aarón tu hermano, que no en todo tiempo entre en el santuario detrás del velo.'}],
     comment:{author:'John Owen · Heb 9:8', text:'El Espíritu Santo enseñaba con el velo mismo. Mientras estuviera en pie, el camino al santísimo no estaba abierto. Esto no era ley ceremonial accidental, sino profecía visible: la separación perduraría hasta que Cristo abriera el camino.'} },
-  { id:'n29', x:1420, y:620, cat:'cristo', title:'Tabernáculo verdadero', ref:'Hebreos 9:11', heRef:'9:11',
+  { id:'n29', x:1420, y:620, cat:'cristo', title:'Tabernáculo verdadero', ref:'Hebreos 9:11',
     verses:[{ref:'Hebreos 9:11', text:'Pero estando ya presente Cristo, sumo sacerdote de los bienes venideros, por el más amplio y más perfecto tabernáculo, no hecho de manos, es decir, no de esta creación.'},
             {ref:'Juan 1:14', text:'Y aquel Verbo fue hecho carne, y habitó entre nosotros.'}],
     comment:{author:'Juan Calvino · Heb 9:11', text:'Cristo es el tabernáculo verdadero, no hecho de manos. Su cuerpo humano es el santuario donde habita corporalmente toda la plenitud de la Deidad. El tabernáculo de Moisés apuntaba a esta habitación verdadera de Dios entre los hombres.'} },
-  { id:'n30', x:1000, y:720, cat:'cristo', title:'Velo rasgado', ref:'Hebreos 10:19-20', heRef:'10:19',
+  { id:'n30', x:1000, y:720, cat:'cristo', title:'Velo rasgado', ref:'Hebreos 10:19-20',
     verses:[{ref:'Hebreos 10:19-20', text:'Así que, hermanos, teniendo libertad para entrar en el Lugar Santísimo por la sangre de Jesús, por el camino nuevo y vivo que él nos abrió a través del velo, esto es, de su carne.'},
             {ref:'Mateo 27:51', text:'Y he aquí, el velo del templo se rasgó en dos, de arriba abajo.'}],
     comment:{author:'Matthew Henry · Heb 10:20', text:'La carne de Cristo es el velo. Su pasión lo rasgó, abriendo el camino al santísimo. Lo que fue mostrado en figura en el Éxodo se cumplió en el Gólgota: el velo rasgado es el cuerpo herido de Cristo.'} },
-  { id:'n31', x:1210, y:720, cat:'cristo', title:'Entró en el cielo mismo', ref:'Hebreos 9:24', heRef:'9:24',
+  { id:'n31', x:1210, y:720, cat:'cristo', title:'Entró en el cielo mismo', ref:'Hebreos 9:24',
     verses:[{ref:'Hebreos 9:24', text:'Porque no entró Cristo en el santuario hecho de mano, figura del verdadero, sino en el cielo mismo, para presentarse ahora por nosotros ante Dios.'},
             {ref:'Salmo 110:1', text:'Jehová dijo a mi Señor: Siéntate a mi diestra.'}],
     comment:{author:'Juan Crisóstomo · Heb 9:24', text:'Cristo no entró en un santuario terrenal, sino en el cielo mismo. No llevó sangre ajena, sino la suya. No entró para repetir, sino para permanecer. Su entrada es la nuestra: donde está él, allí estamos nosotros por la fe.'} },
-  { id:'n32', x:1420, y:720, cat:'iglesia', title:'Camino nuevo y vivo', ref:'Hebreos 10:20', heRef:'10:20',
+  { id:'n32', x:1420, y:720, cat:'iglesia', title:'Camino nuevo y vivo', ref:'Hebreos 10:20',
     verses:[{ref:'Hebreos 10:19-22', text:'Por lo tanto, hermanos, teniendo libertad para entrar en el Lugar Santísimo por la sangre de Jesús, por el camino nuevo y vivo que él nos abrió a través del velo... acerquémonos con corazón sincero, en plena certidumbre de fe.'}],
     comment:{author:'Juan Calvino · Heb 10:20', text:'Cristo no solo abrió el camino, sino que él es el camino. Es nuevo porque no existía antes de su muerte; es vivo porque él vive siempre. No hay renovación ni sucesión: una vez abierto, permanece abierto.'} },
 
   // ===== CLUSTER 6: ADVERTENCIAS (Heb 2,3,6,10,12) =====
-  { id:'n33', x:1000, y:1160, cat:'iglesia', title:'No descuidar tan gran salvación', ref:'Hebreos 2:1-4', heRef:'2:1',
+  { id:'n33', x:1000, y:1160, cat:'iglesia', title:'No descuidar tan gran salvación', ref:'Hebreos 2:1-4',
     verses:[{ref:'Hebreos 2:1-3', text:'Por tanto, es necesario que con más diligencia atendamos a las cosas que hemos oído, no sea que nos deslicemos. Porque si la palabra dicha por medio de los ángeles fue firme, y toda transgresión y desobediencia recibió justa retribución, ¿cómo escaparemos nosotros, si descuidamos una salvación tan grande?'}],
     comment:{author:'John Owen · Heb 2:3', text:'La advertencia es seria: descuidar la salvación es más peligroso que rechazar la ley. La gracia no ablanda la severidad del juicio; la intensifica. Mayor luz, mayor responsabilidad.'} },
-  { id:'n34', x:1210, y:1160, cat:'at', title:'Endurecimiento en el desierto', ref:'Salmo 95:7-11', heRef:'3:7-11',
+  { id:'n34', x:1210, y:1160, cat:'at', title:'Endurecimiento en el desierto', ref:'Salmo 95:7-11',
     verses:[{ref:'Hebreos 3:7-11', text:'Por lo cual, como dice el Espíritu Santo: Si oyereis hoy su voz, no endurezcáis vuestros corazones, como en la provocación, en el día de la tentación en el desierto... Por lo cual juré en mi ira: No entrarán en mi reposo.'},
             {ref:'Salmo 95:7-11', text:'Ojalá hoy oyereis su voz: No endurezcáis vuestro corazón... Por tanto, juré en mi ira: No entrarán en mi reposo.'}],
     comment:{author:'Juan Calvino · Heb 3:7', text:'El Salmo 95 fue escrito siglos después del desierto, pero el Espíritu habla hoy. La palabra "hoy" hace actual cada advertencia. Lo que Israel hizo en Cades-barnea sigue siendo la tentación permanente del pueblo de Dios.'} },
-  { id:'n35', x:1420, y:1160, cat:'iglesia', title:'Caer · Imposibilidad de renovación', ref:'Hebreos 6:4-6', heRef:'6:4',
+  { id:'n35', x:1420, y:1160, cat:'iglesia', title:'Caer · Imposibilidad de renovación', ref:'Hebreos 6:4-6',
     verses:[{ref:'Hebreos 6:4-6', text:'Porque es imposible que los que una vez fueron iluminados y gustaron del don celestial, y fueron hechos partícipes del Espíritu Santo, y asimismo gustaron de la buena palabra de Dios y los poderes del siglo venidero, y recayeron, sean otra vez renovados para arrepentimiento.'}],
     comment:{author:'John Owen · Heb 6:4', text:'Esta advertencia no va a los débiles, sino a los que han gustado profundamente y luego apostatan. La imposibilidad no es absoluta en Dios, sino moral: no hay otro sacrificio que el de Cristo. Rechazado éste, no queda ofrenda por el pecado.'} },
-  { id:'n36', x:1000, y:1260, cat:'iglesia', title:'Pecado voluntario', ref:'Hebreos 10:26-31', heRef:'10:26',
+  { id:'n36', x:1000, y:1260, cat:'iglesia', title:'Pecado voluntario', ref:'Hebreos 10:26-31',
     verses:[{ref:'Hebreos 10:26-27', text:'Porque si pecáremos voluntariamente después de haber recibido el conocimiento de la verdad, ya no queda más sacrificio por los pecados, sino una horrenda expectación de juicio, y de hervor de fuego que ha de devorar a los adversarios.'}],
     comment:{author:'Matthew Henry · Heb 10:26', text:'No se trata de caídas cotidianas, sino de apostasía deliberada. El que conoce la verdad y la rechaza con soberbia se coloca fuera del único sacrificio. La gracia no tiene sustituto.'} },
-  { id:'n37', x:1210, y:1260, cat:'iglesia', title:'No desechar al que habla', ref:'Hebreos 12:25', heRef:'12:25',
+  { id:'n37', x:1210, y:1260, cat:'iglesia', title:'No desechar al que habla', ref:'Hebreos 12:25',
     verses:[{ref:'Hebreos 12:25-29', text:'Mirad que no desechéis al que habla. Porque si no escaparon aquellos que desecharon al que los amonestaba en la tierra, mucho menos nosotros, si desecháremos al que amonesta desde los cielos... Porque nuestro Dios es fuego consumidor.'},
             {ref:'Deuteronomio 4:24', text:'Porque Jehová tu Dios es fuego consumidor, Dios celoso.'}],
     comment:{author:'Juan Calvino · Heb 12:25', text:'Dios habló en Sinaí con terremoto; habla ahora desde el cielo por su Hijo. Rechazar esta palabra es mayor pecado que el de Israel en el desierto. La gracia no reduce la santidad de Dios; la exalta.'} },
-  { id:'n38', x:1420, y:1260, cat:'esperanza', title:'Disciplina del Padre', ref:'Hebreos 12:5-11', heRef:'12:5',
+  { id:'n38', x:1420, y:1260, cat:'esperanza', title:'Disciplina del Padre', ref:'Hebreos 12:5-11',
     verses:[{ref:'Hebreos 12:5-6', text:'Y habéis ya olvidado la exhortación que como a hijos se os dirige, diciendo: Hijo mío, no menosprecies la disciplina del Señor, ni desmayes cuando eres reprendido por él; porque el Señor al que ama, disciplina, y azota a todo el que recibe por hijo.'},
             {ref:'Proverbios 3:11-12', text:'No menosprecies, hijo mío, el castigo de Jehová, ni te fatigues de su corrección; porque Jehová al que ama castiga, como el padre al hijo a quien quiere.'}],
     comment:{author:'Agustín de Hipona · Enarrationes', text:'La disciplina prueba la filiación. Solo los bastardos escapan a la corrección; los hijos legítimos son disciplinados. El sufrimiento del creyente no es castigo condenatorio, sino educación paternal.'} },
 
   // ===== CLUSTER 7: FE (Heb 11) =====
-  { id:'n39', x:1920, y:80, cat:'pacto', title:'Fe · sustancia y evidencia', ref:'Hebreos 11:1', heRef:'11:1',
+  { id:'n39', x:1920, y:80, cat:'pacto', title:'Fe · sustancia y evidencia', ref:'Hebreos 11:1',
     verses:[{ref:'Hebreos 11:1-3', text:'Es, pues, la fe la sustancia de las cosas que se esperan, la demostración de las cosas que no se ven... Por la fe entendemos haber sido constituido el universo por la palabra de Dios, de modo que lo que se ve fue hecho de lo que no se veía.'},
             {ref:'Habacuc 2:4', text:'Mas el justo por su fe vivirá.'}],
     comment:{author:'John Owen · Heb 11:1', text:'La fe no es opinión, sino sustancia: pone en posesión presente de lo que se espera. Es "demostración" porque da evidencia de lo invisible. El creyente ve lo que el ojo no ve, porque su fe es órgano de realidades eternas.'} },
-  { id:'n40', x:2130, y:80, cat:'at', title:'Abel · sacrificio mejor', ref:'Hebreos 11:4', heRef:'11:4',
+  { id:'n40', x:2130, y:80, cat:'at', title:'Abel · sacrificio mejor', ref:'Hebreos 11:4',
     verses:[{ref:'Hebreos 11:4', text:'Por la fe Abel ofreció a Dios más excelente sacrificio que Caín, por lo cual alcanzó testimonio de que era justo, dando Dios testimonio de sus ofrendas; y muerto, aún habla por ella.'},
             {ref:'Génesis 4:4-5', text:'Y Abel trajo también de los primogénitos de sus ovejas, de lo más gordo de ellas. Y miró Jehová con agrado a Abel y a su ofrenda.'}],
     comment:{author:'Matthew Henry · Heb 11:4', text:'Abel es el primer mártir y el primer creyente. Su fe no estaba en la ofrenda misma, sino en lo que la ofrenda significaba: la sangre del Cordero prometido. Por eso su sacrificio fue "más excelente": miraba por la promesa.'} },
-  { id:'n41', x:2340, y:80, cat:'at', title:'Enoc · agradó a Dios', ref:'Hebreos 11:5-6', heRef:'11:5',
+  { id:'n41', x:2340, y:80, cat:'at', title:'Enoc · agradó a Dios', ref:'Hebreos 11:5-6',
     verses:[{ref:'Hebreos 11:5-6', text:'Por la fe Enoc fue traspuesto para no ver muerte, y no fue hallado, porque lo traspuso Dios. Pero antes de su traspaso, tuvo testimonio de haber agradado a Dios. Pero sin fe es imposible agradar a Dios.'},
             {ref:'Génesis 5:24', text:'Caminó, pues, Enoc con Dios, y desapareció, porque le llevó Dios.'}],
     comment:{author:'Juan Calvino · Heb 11:5', text:'Enoc fue un tipo de la immortalidad futura. Su traslación mostró que el camino a Dios no es la muerte, sino la comunión. Caminar con Dios es el resumen de la vida piadosa; agradarle, la evidencia de la fe.'} },
-  { id:'n42', x:1920, y:180, cat:'at', title:'Noé · heredero de justicia', ref:'Hebreos 11:7', heRef:'11:7',
+  { id:'n42', x:1920, y:180, cat:'at', title:'Noé · heredero de justicia', ref:'Hebreos 11:7',
     verses:[{ref:'Hebreos 11:7', text:'Por la fe Noé, cuando fue advertido por Dios acerca de cosas que aún no se veían, temeroso, preparó un arca en que su casa se salvase; y por esa fe condenó al mundo, y fue hecho heredero de la justicia que viene por la fe.'},
             {ref:'Génesis 6:13-22', text:'Dijo, pues, Dios a Noé: He decidido el fin de todo ser... Hazte un arca de madera de gofer.'}],
     comment:{author:'John Owen · Heb 11:7', text:'Noé creyó lo increible: un diluvio que no se había visto. Su fe condenó al mundo porque mostró que la salvación venía solo por la obediencia a Dios. El arca era tipo de Cristo: refugio único ante el juicio.'} },
-  { id:'n43', x:2130, y:180, cat:'pacto', title:'Abraham · peregrino de la promesa', ref:'Hebreos 11:8-10', heRef:'11:8',
+  { id:'n43', x:2130, y:180, cat:'pacto', title:'Abraham · peregrino de la promesa', ref:'Hebreos 11:8-10',
     verses:[{ref:'Hebreos 11:8-10', text:'Por la fe Abraham, siendo llamado, obedeció para salir al lugar que había de recibir como herencia; y salió sin saber a dónde iba. Por la fe habitó como extranjero en la tierra prometida como en tierra ajena... porque esperaba la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios.'},
             {ref:'Génesis 12:1', text:'Jehová dijo a Abram: Vete de tu tierra y de tu parentela, y de la casa de tu padre, a la tierra que te mostraré.'}],
     comment:{author:'Agustín de Hipona · De Civitate Dei', text:'Abraham buscó la ciudad celestial, no la terrenal. La tierra prometida era figura; la patria verdadera está en los cielos. La peregrinación terrenal del creyente sigue el modelo del patriarca: caminar hacia lo que no se ve.'} },
-  { id:'n44', x:2340, y:180, cat:'pacto', title:'Sara y el hijo de la promesa', ref:'Hebreos 11:11-12', heRef:'11:11',
+  { id:'n44', x:2340, y:180, cat:'pacto', title:'Sara y el hijo de la promesa', ref:'Hebreos 11:11-12',
     verses:[{ref:'Hebreos 11:11-12', text:'Por la fe también la misma Sara, siendo estéril, recibió fuerza para concebir simiente; y dio a luz aun fuera del tiempo de la edad, porque creyó que era fiel quien lo había prometido. Por lo cual también, de uno, y ése ya amortecido, salieron como las estrellas del cielo en multitud.'},
             {ref:'Génesis 18:11-14', text:'Abraham y Sara eran viejos, de edad avanzada; y a Sara le había cesado ya la costumbre de las mujeres. ¿Hay para Dios alguna cosa difícil?'}],
     comment:{author:'Juan Calvino · Heb 11:11', text:'La fe de Sara descansó en la fidelidad del que promete, no en sus propias fuerzas. La concepción milagrosa de Isaac era figura del nacimiento espiritual: vida de la muerte, simiente de la esterilidad, hijo de la promesa.'} },
-  { id:'n45', x:1920, y:280, cat:'at', title:'Moisés · oprobio de Cristo', ref:'Hebreos 11:24-26', heRef:'11:24',
+  { id:'n45', x:1920, y:280, cat:'at', title:'Moisés · oprobio de Cristo', ref:'Hebreos 11:24-26',
     verses:[{ref:'Hebreos 11:24-26', text:'Por la fe Moisés, hecho ya grande, rehusó llamarse hijo de la hija de Faraón, escogiendo antes ser maltratado con el pueblo de Dios que gozar de los deleites temporales del pecado, estimando el oprobio de Cristo como mayores riquezas que los tesoros de los egipcios.'},
             {ref:'Éxodo 2:11-12', text:'En aquellos días sucedió que crecido ya Moisés, salió a sus hermanos.'}],
     comment:{author:'John Owen · Heb 11:26', text:'Moisés sufrió "el oprobio de Cristo" siglos antes de la encarnación. La comunión con el pueblo de Dios es comunión con Cristo. El Mesías estaba presente en su pueblo; el oprobio de Israel era el oprobio del Ungido.'} },
-  { id:'n46', x:2130, y:280, cat:'at', title:'Paso del Mar Rojo · caída de Jericó', ref:'Hebreos 11:29-30', heRef:'11:29',
+  { id:'n46', x:2130, y:280, cat:'at', title:'Paso del Mar Rojo · caída de Jericó', ref:'Hebreos 11:29-30',
     verses:[{ref:'Hebreos 11:29-30', text:'Por la fe pasaron el Mar Rojo como por tierra seca; e intentando los egipcios hacer lo mismo, fueron ahogados. Por la fe cayeron los muros de Jericó después de rodearlos siete días.'},
             {ref:'Éxodo 14:21-22', text:'Y Moisés extendió su mano sobre el mar, e hizo Jehová que el mar se retirara... y los hijos de Israel entraron por en medio del mar, en seco.'}],
     comment:{author:'Matthew Henry · Heb 11:29', text:'La fe divide mares y derriba muros. Lo imposible para la naturaleza es instrumento de la fe. Estos hechos no son leyendas; son testimonios de que Dios pelea por los que confían en su palabra.'} },
-  { id:'n47', x:2340, y:280, cat:'iglesia', title:'Nube de testigos', ref:'Hebreos 12:1', heRef:'12:1',
+  { id:'n47', x:2340, y:280, cat:'iglesia', title:'Nube de testigos', ref:'Hebreos 12:1',
     verses:[{ref:'Hebreos 12:1', text:'Por tanto, nosotros también, teniendo en derredor nuestro tan gran nube de testigos, despojándonos de todo peso y del pecado que nos asedia, corramos con paciencia la carrera que tenemos por delante.'}],
     comment:{author:'Juan Crisóstomo · Heb 12:1', text:'No están muertos los patriarcas; son testigos vivos. Como atletas que ya terminaron su carrera, animan a los que aún corren. La Iglesia del cielo y de la tierra es una sola; los santos del pasado no son espectadores lejanos, sino familia que alienta.'} },
 
   // ===== CLUSTER 8: DESCANSO (Heb 3-4) =====
-  { id:'n48', x:1920, y:620, cat:'pacto', title:'Reposo prometido', ref:'Hebreos 4:1-3', heRef:'4:1',
+  { id:'n48', x:1920, y:620, cat:'pacto', title:'Reposo prometido', ref:'Hebreos 4:1-3',
     verses:[{ref:'Hebreos 4:1-3', text:'Por tanto, puesto que falta aún la promesa de entrar en su reposo, temamos no sea que alguno de vosotros parezca quedarse atrás. Porque también a nosotros se nos ha anunciado la buena nueva como a ellos, pero no les aprovechó el oír la palabra, por no ir acompañada de fe en los que la oyeron. Pero los que hemos creído entramos en el reposo.'},
             {ref:'Salmo 95:11', text:'Por tanto, juré en mi ira: No entrarán en mi reposo.'}],
     comment:{author:'Juan Calvino · Heb 4:1', text:'El reposo no es solo Canaán; es la salvación eterna. La promesa persiste; el peligro persiste. La fe entra, la incredulidad queda fuera. Cada generación tiene su Cades-barnea: la decisión de creer o dudar.'} },
-  { id:'n49', x:2130, y:620, cat:'at', title:'Séptimo día · reposo de Dios', ref:'Hebreos 4:4-5', heRef:'4:4',
+  { id:'n49', x:2130, y:620, cat:'at', title:'Séptimo día · reposo de Dios', ref:'Hebreos 4:4-5',
     verses:[{ref:'Hebreos 4:4-5', text:'Porque en cierto lugar dijo así del séptimo día: Y reposó Dios de todas sus obras en el séptimo día. Y otra vez aquí: No entrarán en mi reposo.'},
             {ref:'Génesis 2:2', text:'Y acabó Dios en el día séptimo la obra que hizo; y reposó el día séptimo de toda la obra que hizo.'}],
     comment:{author:'John Owen · Heb 4:4', text:'El reposo de Dios desde la creación apunta a un reposo más profundo que el de Canaán. Hay un reposo eterno que permanece abierto. La Escritura lo anunció desde el Génesis y lo reitera en el Salmo 95.'} },
-  { id:'n50', x:2340, y:620, cat:'iglesia', title:'Esforcémonos a entrar', ref:'Hebreos 4:11', heRef:'4:11',
+  { id:'n50', x:2340, y:620, cat:'iglesia', title:'Esforcémonos a entrar', ref:'Hebreos 4:11',
     verses:[{ref:'Hebreos 4:11', text:'Procuremos, pues, entrar en aquel reposo, para que ninguno caiga en semejante ejemplo de desobediencia.'}],
     comment:{author:'Matthew Henry · Heb 4:11', text:'El reposo se esfuerza, no se padece. La fe no es pasividad, sino diligencia. La advertencia es real: el ejemplo de Israel es advertencia viva. Entrar al reposo exige creer hoy y no endurecer el corazón.'} },
-  { id:'n51', x:1920, y:720, cat:'cristo', title:'Palabra viva y penetrante', ref:'Hebreos 4:12-13', heRef:'4:12',
+  { id:'n51', x:1920, y:720, cat:'cristo', title:'Palabra viva y penetrante', ref:'Hebreos 4:12-13',
     verses:[{ref:'Hebreos 4:12-13', text:'Porque la palabra de Dios es viva y eficaz, y más cortante que toda espada de dos filos; y penetra hasta partir el alma y el espíritu, las coyunturas y los tuétanos, y discierne los pensamientos y las intenciones del corazón. Y no hay cosa creada que no sea manifiesta en su presencia.'}],
     comment:{author:'Juan Calvino · Heb 4:12', text:'La Palabra de Dios no es letra muerta, sino voz viva. Discierne lo invisible: pensamientos e intenciones. Ante ella el hombre está desnudo. Por eso el reposo solo se entra por fe: la Palabra expone el corazón que simula creer.'} },
 
   // ===== CLUSTER 9: ESPERANZA (Heb 12-13) =====
-  { id:'n52', x:1920, y:1160, cat:'esperanza', title:'Ciudad perpetua', ref:'Hebreos 13:14', heRef:'13:14',
+  { id:'n52', x:1920, y:1160, cat:'esperanza', title:'Ciudad perpetua', ref:'Hebreos 13:14',
     verses:[{ref:'Hebreos 13:14', text:'Porque no tenemos aquí ciudad permanente, sino que buscamos la venidera.'},
             {ref:'Hebreos 11:10', text:'Porque esperaba la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios.'}],
     comment:{author:'Agustín de Hipona · De Civitate Dei', text:'La Ciudad de Dios no es de este mundo. El cristiano es peregrino en la tierra y ciudadano del cielo. Buscar la ciudad venidera no es huir de la tierra, sino vivirla sin idolatrarla.'} },
-  { id:'n53', x:2130, y:1160, cat:'esperanza', title:'Patriarcas · forasteros', ref:'Hebreos 11:13-16', heRef:'11:13',
+  { id:'n53', x:2130, y:1160, cat:'esperanza', title:'Patriarcas · forasteros', ref:'Hebreos 11:13-16',
     verses:[{ref:'Hebreos 11:13-16', text:'Conforme a la fe murieron todos éstos sin haber recibido lo prometido, sino mirándolo de lejos, y creyéndolo, y saludándolo, y confesando que eran extranjeros y peregrinos sobre la tierra... Pero deseaban una mejor, esto es, celestial; por lo cual Dios no se avergüenza de llamarse Dios de ellos; porque les ha preparado una ciudad.'}],
     comment:{author:'John Owen · Heb 11:16', text:'Los patriarcas vivieron y murieron sin recibir la promesa. Pero su fe no fue vana: la vieron de lejos y la saludaron. Dios se avergüenza de ser llamado Dios de los tales. La verdadera fe tiene paciencia eterna.'} },
-  { id:'n54', x:2340, y:1160, cat:'esperanza', title:'Sión celestial · asamblea', ref:'Hebreos 12:22-24', heRef:'12:22',
+  { id:'n54', x:2340, y:1160, cat:'esperanza', title:'Sión celestial · asamblea', ref:'Hebreos 12:22-24',
     verses:[{ref:'Hebreos 12:22-24', text:'Sino que os habéis acercado al monte de Sión, a la ciudad del Dios vivo, Jerusalén la celestial, a la compañía de muchos millares de ángeles, a la congregación de los primogénitos que están inscritos en los cielos, a Dios el Juez de todos, a los espíritus de los justos hechos perfectos, a Jesús el Mediador del nuevo pacto.'}],
     comment:{author:'Juan Crisóstomo · Heb 12:22', text:'No venimos a Sinaí humeante, sino a Sión celestial. La Iglesia en la tierra ya está unida a la del cielo. Por la fe, el culto terrenal se une al celestial. Cada culto es anticipación de la asamblea final.'} },
-  { id:'n55', x:1920, y:1260, cat:'esperanza', title:'Reino inconmovible', ref:'Hebreos 12:28', heRef:'12:28',
+  { id:'n55', x:1920, y:1260, cat:'esperanza', title:'Reino inconmovible', ref:'Hebreos 12:28',
     verses:[{ref:'Hebreos 12:28-29', text:'Así que, recibiendo nosotros un reino inconmovible, tengamos gracia, mediante la cual sirvamos a Dios agradándole con reverencia y temor piadoso.'},
             {ref:'Daniel 7:14', text:'Y le fue dado dominio, gloria y reino, para que todos los pueblos, naciones y lenguas le sirvieran; su dominio es dominio eterno, que no acabará.'}],
     comment:{author:'Juan Calvino · Heb 12:28', text:'El reino que recibimos no puede ser sacudido. Los imperios caen, los cielos y la tierra pasarán; pero el reino de Cristo permanece. Servir a Dios con reverencia no es esclavitud, sino dignidad: el culto del reino eterno.'} },
-  { id:'n56', x:2130, y:1260, cat:'esperanza', title:'Jesús · el mismo', ref:'Hebreos 13:8', heRef:'13:8',
+  { id:'n56', x:2130, y:1260, cat:'esperanza', title:'Jesús · el mismo', ref:'Hebreos 13:8',
     verses:[{ref:'Hebreos 13:8', text:'Jesucristo es el mismo ayer, y hoy, y por los siglos.'},
             {ref:'Salmo 102:27', text:'Pero tú eres el mismo, y tus años no se acabarán.'}],
     comment:{author:'Matthew Henry · Heb 13:8', text:'La inmutabilidad de Cristo es ancla del alma. Cambian las circunstancias, las épocas, las modas; Cristo permanece. Ayer en su encarnación, hoy en su intercesión, por los siglos en su reino. La misma gracia, la misma verdad, el mismo Señor.'} },
-  { id:'n57', x:2340, y:1260, cat:'esperanza', title:'Ciudad futura', ref:'Hebreos 11:10, 16', heRef:'11:10',
+  { id:'n57', x:2340, y:1260, cat:'esperanza', title:'Ciudad futura', ref:'Hebreos 11:10, 16',
     verses:[{ref:'Hebreos 11:10', text:'Porque esperaba la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios.'},
             {ref:'Apocalipsis 21:2', text:'Y yo Juan vi la santa ciudad, la nueva Jerusalén, descender del cielo, de Dios, dispuesta como una esposa ataviada para su marido.'}],
     comment:{author:'Agustín de Hipona · De Civitate Dei XX', text:'La ciudad que tiene fundamentos no es terrenal. Dios es su arquitecto y constructor. Apocalipsis muestra su consumación: la nueva Jerusalén que desciende del cielo. La peregrinación termina en la ciudadanía eterna.'} },
 
   // ===== EXTRA NODES INTRATEXTUALES DE HEBREOS =====
-  { id:'n58', x:80, y:1360, cat:'cristo', title:'Cordero de Dios', ref:'Hebreos 9:14, 26', heRef:'9:26',
+  { id:'n58', x:80, y:1360, cat:'cristo', title:'Cordero de Dios', ref:'Hebreos 9:14, 26',
     verses:[{ref:'Hebreos 9:26', text:'De otra manera le hubiera sido necesario padecer muchas veces desde el principio del mundo; pero ahora, en la consumación de los siglos, se ha presentado una vez para siempre por el sacrificio de sí mismo para quitar el pecado.'},
             {ref:'Juan 1:29', text:'He aquí el Cordero de Dios, que quita el pecado del mundo.'}],
     comment:{author:'Agustín de Hipona · Juan 1:29', text:'Cristo es el verdadero Cordero pascual. Como el cordero del Éxodo debía ser sin mancha y sus huesos no debían ser quebrados, así Cristo cumplió el tipo eterno en su pasión.'} },
-  { id:'n59', x:290, y:1360, cat:'iglesia', title:'Redimidos por su sangre', ref:'1 Pedro 1:19', heRef:'9:14',
+  { id:'n59', x:290, y:1360, cat:'iglesia', title:'Redimidos por su sangre', ref:'1 Pedro 1:19',
     verses:[{ref:'1 Pedro 1:18-19', text:'Sabiendo que fuisteis rescatados de vuestra vana manera de vivir... sino con la sangre preciosa de Cristo, como de un cordero sin mancha y sin contaminación.'},
             {ref:'Hebreos 9:14', text:'¿Cuánto más la sangre de Cristo... limpiará vuestras conciencias de obras muertas?'}],
     comment:{author:'Juan Calvino · 1 Pedro 1:18', text:'El precio de nuestra redención no fue oro o plata, sino la sangre preciosa del Hijo de Dios. Por eso pertenecemos a Dios, no a nosotros mismos. La redención es cambio de señorío.'} },
-  { id:'n60', x:1000, y:280, cat:'at', title:'Sinaí · monte terrible', ref:'Hebreos 12:18-21', heRef:'12:18',
+  { id:'n60', x:1000, y:280, cat:'at', title:'Sinaí · monte terrible', ref:'Hebreos 12:18-21',
     verses:[{ref:'Hebreos 12:18-21', text:'Porque no os habéis acercado al monte que se podía palpar, y que ardía en fuego, y a la oscuridad y a las tinieblas y a la tempestad, y al sonido de la trompeta, y al clamor de las palabras que escucharon los que rogaron que no se les hablara más... Y tan terrible era lo que se veía, que Moisés dijo: Espantado estoy y temblando.'},
             {ref:'Éxodo 19:16-19', text:'Aconteció que al tercer día, cuando vino la mañana, vinieron truenos y relámpagos, y espesa nube sobre el monte, y sonido de bocina muy fuerte.'}],
     comment:{author:'John Owen · Heb 12:18', text:'Sinaí muestra la santidad de Dios bajo la ley: fuego, oscuridad, temblor. La ley no podía salvar; solo mostrar la distancia. El cristiano no viene a Sinaí, sino a Sión. Pero recordar Sinaí es aprender a temer al Dios santo.'} },
 
   // ===== CONEXIONES TEMÁTICAS TRANSVERSALES =====
-  { id:'n61', x:290, y:820, cat:'at', title:'Moisés · fiel en la casa', ref:'Hebreos 3:1-6', heRef:'3:2',
+  { id:'n61', x:290, y:820, cat:'at', title:'Moisés · fiel en la casa', ref:'Hebreos 3:1-6',
     verses:[{ref:'Hebreos 3:1-6', text:'Por tanto, hermanos santos, participantes del llamamiento celestial, considerad al apóstol y sumo sacerdote de nuestra profesión, Cristo Jesús; el cual es fiel al que le constituyó, como también lo fue Moisés en toda la casa de Dios... Y Moisés a la verdad fue fiel en toda la casa de Dios, como siervo, para testimonio de lo que se iba a decir. Pero Cristo como hijo sobre su casa.'},
             {ref:'Números 12:7', text:'No así a mi siervo Moisés, que es fiel en toda mi casa.'}],
     comment:{author:'Juan Calvino · Heb 3:2', text:'Moisés fue fiel como siervo; Cristo lo es como Hijo. La fidelidad es la misma; la dignidad es infinitamente distinta. La casa de Dios pertenece al Hijo, no al siervo. Moisés testimoniaba de Cristo; Cristo es el cumplimiento.'} },
-  { id:'n62', x:1210, y:280, cat:'pacto', title:'Juramento · inmutable consejo', ref:'Hebreos 6:16-19', heRef:'6:17',
+  { id:'n62', x:1210, y:280, cat:'pacto', title:'Juramento · inmutable consejo', ref:'Hebreos 6:16-19',
     verses:[{ref:'Hebreos 6:16-19', text:'Porque los hombres ciertamente juran por uno mayor que ellos, y para ellos el fin de toda controversia es el juramento para confirmación. Por lo cual, queriendo Dios mostrar más abundantemente a los herederos de la promesa la inmutabilidad de su consejo, interpuso juramento; para que por dos cosas inmutables... tengamos un aliento del alma, tanto seguro y firme, y que penetra hasta dentro del velo.'}],
     comment:{author:'Matthew Henry · Heb 6:18', text:'Doble ancla: la promesa y el juramento. Dios no puede mentir; y al jurar por sí mismo, doblemente se compromete. Esta esperanza entra detrás del velo; es decir, llega a la presencia misma de Dios. La fe tiene ancla en el santísimo.'} },
-  { id:'n63', x:1920, y:1360, cat:'esperanza', title:'Ancla del alma', ref:'Hebreos 6:19', heRef:'6:19',
+  { id:'n63', x:1920, y:1360, cat:'esperanza', title:'Ancla del alma', ref:'Hebreos 6:19',
     verses:[{ref:'Hebreos 6:19-20', text:'La cual tenemos como segura y firme ancla del alma, y que penetra hasta dentro del velo, donde Jesús entró por nosotros como precursor, hecho sumo sacerdote para siempre según el orden de Melquisedec.'}],
     comment:{author:'Juan Crisóstomo · Heb 6:19', text:'El ancla no está en la tierra, sino en el cielo. No se lanza al mar, sino detrás del velo. Cristo mismo es quien la sostiene. Mientras el creyente es batido por la tormenta, su alma está firme porque está atada al santísimo.'} },
-  { id:'n64', x:1420, y:280, cat:'pacto', title:'Pacto eterno', ref:'Hebreos 13:20-21', heRef:'13:20',
+  { id:'n64', x:1420, y:280, cat:'pacto', title:'Pacto eterno', ref:'Hebreos 13:20-21',
     verses:[{ref:'Hebreos 13:20-21', text:'Y el Dios de paz que resucitó de los muertos a nuestro Señor Jesucristo, el gran pastor de las ovejas, por la sangre del pacto eterno, os haga aptos en toda obra buena para que hagáis su voluntad, haciendo él en vosotros lo que es agradable delante de él por Jesucristo.'},
             {ref:'Ezequiel 34:23', text:'Y levantaré sobre ellas a un pastor, y él las apacentará; a mi siervo David, él las apacentará, y él les será por pastor.'}],
     comment:{author:'John Owen · Heb 13:20', text:'El pacto es eterno porque descansa en la sangre de Cristo. El Pastor dio su vida por las ovejas. La resurrección es la prueba del pacto cumplido. Por eso el pueblo es santificado y capacitado para hacer la voluntad de Dios.'} },
 
   // ===== CONEXIONES ADICIONALES CON SALMOS Y PROFETAS =====
-  { id:'n65', x:1920, y:380, cat:'at', title:'Salmo 2 · Ungido del Señor', ref:'Salmo 2:6-9', heRef:'1:5',
+  { id:'n65', x:1920, y:380, cat:'at', title:'Salmo 2 · Ungido del Señor', ref:'Salmo 2:6-9',
     verses:[{ref:'Salmo 2:6-9', text:'Yo he puesto mi rey sobre Sion, mi santo monte. Yo publicaré el decreto: Jehová me ha dicho: Mi hijo eres tú; yo te engendré hoy. Pídeme, y te daré por herencia las naciones.'},
             {ref:'Hebreos 1:5', text:'Porque ¿a cuál de los ángeles dijo Dios jamás: Mi Hijo eres tú, yo te he engendrado hoy?'}],
     comment:{author:'Juan Calvino · Salmo 2:7', text:'El Salmo 2 anuncia la institución del Rey-Mesías. La generación eterna del Hijo se manifesta en su resurrección y entronización. Hebreos cita este salmo para probar que Cristo es Hijo por naturaleza, no por adopción.'} },
-  { id:'n66', x:2130, y:380, cat:'at', title:'Salmo 110 · Sacerdote eterno', ref:'Salmo 110:1, 4', heRef:'1:13',
+  { id:'n66', x:2130, y:380, cat:'at', title:'Salmo 110 · Sacerdote eterno', ref:'Salmo 110:1, 4',
     verses:[{ref:'Salmo 110:1', text:'Jehová dijo a mi Señor: Siéntate a mi diestra, hasta que ponga a tus enemigos por estrado de tus pies.'},
             {ref:'Salmo 110:4', text:'Juró Jehová, y no se arrepentirá: Tú eres sacerdote para siempre según el orden de Melquisedec.'},
             {ref:'Hebreos 1:13', text:'Pues, ¿a cuál de los ángeles dijo Dios jamás: Siéntate a mi diestra, hasta que ponga a tus enemigos por estrado de tus pies?'}],
     comment:{author:'John Owen · Heb 1:13', text:'El Salmo 110 es el texto del AT más citado en el NT. Combina realeza y sacerdocio en una sola persona. Cristo es Señor sentado a la diestra, y sacerdote eterno. Ningún ángel, ningún rey terrenal, puede igualarlo.'} },
-  { id:'n67', x:2340, y:380, cat:'at', title:'Salmo 40 · Cuerpo preparado', ref:'Salmo 40:6-8', heRef:'10:5',
+  { id:'n67', x:2340, y:380, cat:'at', title:'Salmo 40 · Cuerpo preparado', ref:'Salmo 40:6-8',
     verses:[{ref:'Hebreos 10:5-7', text:'Por lo cual, entrando en el mundo dice: Sacrificio y ofrenda no quisiste; mas me preparaste cuerpo. Holocaustos y expiaciones por el pecado no te agradaron. Entonces dije: Heme aquí (en el rollo del libro está escrito de mí) para que haga, oh Dios, tu voluntad.'},
             {ref:'Salmo 40:6-8', text:'Sacrificio y ofrenda no te agradan; has abierto mis oídos; holocausto y expiación no has demandado. Entonces dije: He aquí, vengo; en el rollo del libro está escrito de mí.'}],
     comment:{author:'Agustín de Hipona · Enarrationes in Psalmos', text:'El Salmo 40 es la voz profética de Cristo entrando al mundo. Los sacrificios antiguos eran figura; el cuerpo preparado es la realidad. Cristo se ofrece a sí mismo: el Verbo encarnado hecho oblación. Este es el cántico del verdadero Sacerdote.'} },
-  { id:'n68', x:1000, y:820, cat:'at', title:'Salmo 8 · Hijo del Hombre coronado', ref:'Salmo 8:4-6', heRef:'2:6',
+  { id:'n68', x:1000, y:820, cat:'at', title:'Salmo 8 · Hijo del Hombre coronado', ref:'Salmo 8:4-6',
     verses:[{ref:'Hebreos 2:6-9', text:'Mas alguien testificó en cierto lugar, diciendo: ¿Qué es el hombre, para que te acuerdes de él, o el hijo del hombre, para que lo visites? Le hiciste un poco menor que los ángeles, le coronaste de gloria y de honra... pero vemos a aquel que fue hecho un poco menor que los ángeles, a Jesús, coronado de gloria y honra a causa del padecimiento de la muerte.'},
             {ref:'Salmo 8:4-6', text:'Digo: ¿Qué es el hombre, para que tengas de él memoria, y el hijo del hombre, que lo visites? Le has hecho poco menor que los ángeles, y lo coronaste de gloria y de honra.'}],
     comment:{author:'Juan Calvino · Heb 2:6', text:'El Salmo 8 habla del hombre en general, pero solo se cumple en Cristo. Él es el Hijo del Hombre que bajó para ser coronado. La corona viene después de la muerte. La humillación es camino a la gloria.'} },
-  { id:'n69', x:1210, y:820, cat:'at', title:'Salmo 95 · "Hoy"', ref:'Salmo 95:7-8', heRef:'3:7',
+  { id:'n69', x:1210, y:820, cat:'at', title:'Salmo 95 · "Hoy"', ref:'Salmo 95:7-8',
     verses:[{ref:'Salmo 95:7-8', text:'Porque él es nuestro Dios; nosotros el pueblo de su prado, y ovejas de su mano. Si oyereis hoy su voz, no endurezcáis vuestro corazón.'},
             {ref:'Hebreos 3:7-8', text:'Como dice el Espíritu Santo: Si oyereis hoy su voz, no endurezcáis vuestros corazones.'}],
     comment:{author:'Juan Crisóstomo · Heb 3:7', text:'El "hoy" del Salmo 95 no se limitó a una época. Cada generación tiene su hoy. El Espíritu Santo habla en cada lectura. La Palabra es viva; su llamada es presente. Endurecer el corazón es desperdiciar el día de la gracia.'} },
-  { id:'n70', x:1420, y:820, cat:'at', title:'Jeremías 31 · Nuevo Pacto', ref:'Jeremías 31:31-34', heRef:'8:8',
+  { id:'n70', x:1420, y:820, cat:'at', title:'Jeremías 31 · Nuevo Pacto', ref:'Jeremías 31:31-34',
     verses:[{ref:'Jeremías 31:31', text:'He aquí que vienen días, dice Jehová, en los cuales haré nuevo pacto con la casa de Israel y con la casa de Judá.'},
             {ref:'Hebreos 8:8', text:'Mas reprendiéndolos dice: He aquí vienen días, dice el Señor, cuando estableceré con la casa de Israel y la casa de Judá un nuevo pacto.'}],
     comment:{author:'Matthew Henry · Heb 8:8', text:'Jeremías profetizó el nuevo pacto cuando el antiguo aún funcionaba. Eso prueba su insuficiencia: si el primero hubiera sido perfecto, no se buscaría lugar para un segundo. La profecía misma era juicio y promesa.'} },
 
   // ===== NODOS ADICIONALES: SUMO SACERDOTE EN EL SANTUARIO CELESTIAL =====
-  { id:'n71', x:500, y:820, cat:'cristo', title:'Sacerdote sobre el trono', ref:'Hebreos 8:1', heRef:'8:1',
+  { id:'n71', x:500, y:820, cat:'cristo', title:'Sacerdote sobre el trono', ref:'Hebreos 8:1',
     verses:[{ref:'Hebreos 8:1-2', text:'Ahora bien, el punto principal de lo que venimos diciendo es que tenemos tal sumo sacerdote, el cual se sentó a la diestra del trono de la Majestad en los cielos, ministro del santuario, y de aquel verdadero tabernáculo que levantó el Señor, y no el hombre.'},
             {ref:'Zacarías 6:13', text:'El construirá el templo de Jehová, y él llevará gloria, y se sentará y regirá en su trono; y habrá sacerdote en su trono.'}],
     comment:{author:'John Owen · Heb 8:1', text:'Cristo reúne los dos oficios: rey y sacerdote. En Zacarías se profetizó: "habrá sacerdote en su trono". En Cristo, sacerdocio y realeza coinciden: él reina sentándose, y sacerdote se ofrece. Dos oficios en una sola persona.'} },
-  { id:'n72', x:500, y:1360, cat:'cristo', title:'Purificó los cielos', ref:'Hebreos 9:23', heRef:'9:23',
+  { id:'n72', x:500, y:1360, cat:'cristo', title:'Purificó los cielos', ref:'Hebreos 9:23',
     verses:[{ref:'Hebreos 9:23-24', text:'Fue, pues, necesario que las figuras de las cosas celestiales fuesen purificadas con estas cosas; pero las cosas celestiales mismas, con mejores sacrificios que estos. Porque no entró Cristo en el santuario hecho de mano, figura del verdadero, sino en el cielo mismo.'}],
     comment:{author:'Juan Calvino · Heb 9:23', text:'El sacrificio de Cristo tiene eficacia cósmica. No solo purifica a los hombres, sino el santuario celestial mismo. Las figuras se purificaban con sangre animal; la realidad, con la sangre del Hijo. Su muerte santifica el orden cósmico.'} },
 
   // ===== NODOS ADICIONALES: ADVERTENCIAS Y DISCIPLINA =====
-  { id:'n73', x:1000, y:1360, cat:'iglesia', title:'Exhortaos mutuamente', ref:'Hebreos 3:13', heRef:'3:13',
+  { id:'n73', x:1000, y:1360, cat:'iglesia', title:'Exhortaos mutuamente', ref:'Hebreos 3:13',
     verses:[{ref:'Hebreos 3:12-14', text:'Mirad, hermanos, que no haya en ninguno de vosotros corazón malo de incredulidad para apartarse del Dios vivo; antes exhortaos los unos a los otros cada día, entre tanto que se dice: Hoy; para que ninguno de vosotros se endurezca por el engaño del pecado.'}],
     comment:{author:'Matthew Henry · Heb 3:13', text:'La lucha contra la incredulidad es comunitaria. Cada día es "hoy". La exhortación mutua es remedio contra el endurecimiento. El pecado engaña aislando; la comunión desengaña. Nadie se salva solo.'} },
-  { id:'n74', x:1210, y:1360, cat:'iglesia', title:'Considerad al Apóstol', ref:'Hebreos 3:1', heRef:'3:1',
+  { id:'n74', x:1210, y:1360, cat:'iglesia', title:'Considerad al Apóstol', ref:'Hebreos 3:1',
     verses:[{ref:'Hebreos 3:1', text:'Por tanto, hermanos santos, participantes del llamamiento celestial, considerad al apóstol y sumo sacerdote de nuestra profesión, Cristo Jesús.'}],
     comment:{author:'John Owen · Heb 3:1', text:'"Considerad" es acción intensa del pensamiento. Cristo es apóstol (enviado del Padre) y sumo sacerdote (que sube al Padre). Considerarlo es la medicina contra la deserción. La contemplación de Cristo es la mejor exhortación.'} },
 
   // ===== NODOS ADICIONALES: SACERDOCIO ESPIRITUAL DE LA IGLESIA =====
-  { id:'n75', x:2340, y:720, cat:'iglesia', title:'Sacerdocio real', ref:'1 Pedro 2:9', heRef:'2:17',
+  { id:'n75', x:2340, y:720, cat:'iglesia', title:'Sacerdocio real', ref:'1 Pedro 2:9',
     verses:[{ref:'1 Pedro 2:9', text:'Mas vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó de las tinieblas a su luz admirable.'},
             {ref:'Apocalipsis 1:6', text:'Y nos hizo reyes y sacerdotes para Dios, su Padre.'}],
     comment:{author:'Juan Calvino · 1 Pedro 2:9', text:'En Cristo todos los creyentes son sacerdotes. No hay casta sacerdotal en el nuevo pacto; el sacerdocio es universal. Cada cristiano ofrece sacrificios espirituales y tiene acceso directo al Padre por el único Mediador.'} },
-  { id:'n76', x:1920, y:820, cat:'iglesia', title:'Cuerpo · sacrificio vivo', ref:'Romanos 12:1', heRef:'13:16',
+  { id:'n76', x:1920, y:820, cat:'iglesia', title:'Cuerpo · sacrificio vivo', ref:'Romanos 12:1',
     verses:[{ref:'Romanos 12:1', text:'Así que, hermanos, os ruego por las misericordias de Dios, que presentéis vuestros cuerpos en sacrificio vivo, santo, agradable a Dios, que es vuestro culto racional.'}],
     comment:{author:'John Owen · Heb 13:16', text:'Los sacrificios cristianos no son animales muertos, sino vidas vivas. El cuerpo mismo, santificado, es ofrenda. El culto racional es el del entendimiento entregado, no de la sangre derramada externamente.'} },
 
   // ===== NODOS: TEMPLO Y PRESENCIA =====
-  { id:'n77', x:2130, y:720, cat:'iglesia', title:'Templo del Espíritu', ref:'1 Corintios 3:16', heRef:'3:6',
+  { id:'n77', x:2130, y:720, cat:'iglesia', title:'Templo del Espíritu', ref:'1 Corintios 3:16',
     verses:[{ref:'1 Corintios 3:16', text:'¿No sabéis que sois templo de Dios, y que el Espíritu de Dios mora en vosotros?'},
             {ref:'Efesios 2:22', text:'En quien vosotros también sois juntamente edificados para morada de Dios en el Espíritu.'}],
     comment:{author:'Juan Calvino · 1 Corintios 3:16', text:'La Iglesia es ahora el templo de Dios. No hay edificio sagrado en el nuevo pacto; el templo es el pueblo. Donde está el Espíritu, allí habita Dios. Esto es cumplimiento del tabernáculo y del templo.'} },
-  { id:'n78', x:290, y:280, cat:'cristo', title:'Emmanuel · Dios con nosotros', ref:'Mateo 1:23', heRef:'2:14',
+  { id:'n78', x:290, y:280, cat:'cristo', title:'Emmanuel · Dios con nosotros', ref:'Mateo 1:23',
     verses:[{ref:'Mateo 1:23', text:'He aquí, una virgen concebirá y dará a luz un hijo, y llamarás su nombre Emmanuel, que traducido es: Dios con nosotros.'},
             {ref:'Isaías 7:14', text:'Por tanto, el Señor mismo os dará señal: He aquí que la virgen concebirá, y dará a luz un hijo, y llamará su nombre Emanuel.'}],
     comment:{author:'Juan Calvino · Mateo 1:23', text:'El nombre Emmanuel encierra el misterio de la encarnación. Dios se ha hecho hombre para que el hombre pudiera acercarse a Dios. Su presencia ya no es símbolo, sino persona.'} },
 
   // ===== NODOS: ADORACIÓN =====
-  { id:'n79', x:2130, y:820, cat:'iglesia', title:'Adoración en espíritu y verdad', ref:'Juan 4:23-24', heRef:'13:15',
+  { id:'n79', x:2130, y:820, cat:'iglesia', title:'Adoración en espíritu y verdad', ref:'Juan 4:23-24',
     verses:[{ref:'Juan 4:23-24', text:'Mas la hora viene, y ahora es, cuando los verdaderos adoradores adorarán al Padre en espíritu y en verdad; porque también el Padre tales adoradores busca que le adoren. Dios es Espíritu; y los que le adoran, en espíritu y en verdad es necesario que adoren.'}],
     comment:{author:'Agustín de Hipona · Juan 4:24', text:'La verdadera adoración no depende del lugar. No Gerizim ni Jerusalén, sino el espíritu. El Padre busca tales adoradores. El nuevo pacto universaliza y espiritualiza el culto.'} },
-  { id:'n80', x:2340, y:820, cat:'iglesia', title:'Comunión del Cuerpo', ref:'Hebreos 10:24-25', heRef:'10:24',
+  { id:'n80', x:2340, y:820, cat:'iglesia', title:'Comunión del Cuerpo', ref:'Hebreos 10:24-25',
     verses:[{ref:'Hebreos 10:24-25', text:'Y considerémonos unos a otros para estimularnos al amor y a las buenas obras; no dejando de congregarnos, como algunos tienen por costumbre, sino exhortándonos; y tanto más, cuanto veis que aquel día se acerca.'}],
     comment:{author:'Matthew Henry · Heb 10:25', text:'La comunión es necesaria. No se adora a Dios en aislamiento. La congregación es remedio contra el enfriamiento. Cuanto más cerca está el día, más urgente es reunirse: la Iglesia se prepara para su Esposo.'} },
 
   // ===== NODOS: REINO Y ESPERANZA FINAL =====
-  { id:'n81', x:2130, y:1360, cat:'esperanza', title:'Esperanza better', ref:'Hebreos 7:19', heRef:'7:19',
+  { id:'n81', x:2130, y:1360, cat:'esperanza', title:'Esperanza better', ref:'Hebreos 7:19',
     verses:[{ref:'Hebreos 7:19', text:'Pues nada perfeccionó la ley; pero de esto, por el cual nos acercamos a Dios, se introduce una mejor esperanza, por la cual alcanzamos a Dios.'}],
     comment:{author:'Juan Calvino · Heb 7:19', text:'La ley no perfeccionó nada, pero introdujo una mejor esperanza. Cristo no trajo mejora de la ley, sino sustitución. La esperanza cristiana es la de acercarse a Dios directamente, sin velos, sin mediadores terrenales.'} },
-  { id:'n82', x:2340, y:1360, cat:'esperanza', title:'Patria celestial', ref:'Hebreos 11:16', heRef:'11:16',
+  { id:'n82', x:2340, y:1360, cat:'esperanza', title:'Patria celestial', ref:'Hebreos 11:16',
     verses:[{ref:'Hebreos 11:16', text:'Empero deseaban una mejor, es a saber, celestial; por lo cual Dios no se avergüenza de llamarse Dios de ellos; porque les ha preparado una ciudad.'},
             {ref:'Filipenses 3:20', text:'Mas nuestra ciudadanía está en los cielos, de donde también esperamos al Salvador, al Señor Jesucristo.'}],
     comment:{author:'Agustín de Hipona · De Civitate Dei', text:'La patria del cristiano no está en la tierra. Es peregrino mientras vive. Pero su peregrinación tiene destino: la ciudad que Dios preparó. Dios se gloría en ser llamado Dios de los peregrinos, porque ellos tienen fe.'} },
 
   // ===== NODOS: ADVERTENCIA Y FE COMBINADAS =====
-  { id:'n83', x:1420, y:1360, cat:'iglesia', title:'Paciencia en la carrera', ref:'Hebreos 12:1-2', heRef:'12:1',
+  { id:'n83', x:1420, y:1360, cat:'iglesia', title:'Paciencia en la carrera', ref:'Hebreos 12:1-2',
     verses:[{ref:'Hebreos 12:1-2', text:'Despojándonos de todo peso y del pecado que nos asedia, corramos con paciencia la carrera que tenemos por delante, puestos los ojos en Jesús, el autor y consumador de la fe.'},
             {ref:'1 Corintios 9:24', text:'¿No sabéis que los que corren en el estadio, todos a la verdad corren, pero uno solo se lleva el premio? Corred de tal manera que lo obtengáis.'}],
     comment:{author:'Juan Crisóstomo · Heb 12:1', text:'La vida cristiana es carrera, no paseo. Exige despojarse, mirar a Cristo, tener paciencia. Cristo es autor y consumador: empieza la fe en nosotros y la lleva a su perfección. Mirarlo a él, no a las circunstancias.'} },
-  { id:'n84', x:1000, y:1460, cat:'iglesia', title:'Sangre que habla mejor', ref:'Hebreos 12:24', heRef:'12:24',
+  { id:'n84', x:1000, y:1460, cat:'iglesia', title:'Sangre que habla mejor', ref:'Hebreos 12:24',
     verses:[{ref:'Hebreos 12:24', text:'A Jesús el Mediador del nuevo pacto, y a la sangre rociada que habla mejor que la de Abel.'},
             {ref:'Génesis 4:10', text:'La voz de la sangre de tu hermano clama a mí desde la tierra.'}],
     comment:{author:'John Owen · Heb 12:24', text:'La sangre de Abel clamaba venganza; la sangre de Cristo clama perdón. La sangre de Abel acusaba al fratricida; la de Cristo justifica al pecador. La misma sustancia, opuesta palabra: la del nuevo pacto habla mejor.'} },
-  { id:'n85', x:1210, y:1460, cat:'iglesia', title:'Hospitalidad · ángeles', ref:'Hebreos 13:2', heRef:'13:2',
+  { id:'n85', x:1210, y:1460, cat:'iglesia', title:'Hospitalidad · ángeles', ref:'Hebreos 13:2',
     verses:[{ref:'Hebreos 13:2', text:'No os olvidéis de la hospitalidad, porque por ella algunos, sin saberlo, hospedaron ángeles.'},
             {ref:'Génesis 18:2-5', text:'Y levantó Abraham sus ojos y miró, y he aquí tres varones que estaban junto a él.'},
             {ref:'Génesis 19:1-3', text:'Llegaron, pues, los dos ángeles a Sodoma a la caída de la tarde.'}],
     comment:{author:'Matthew Henry · Heb 13:2', text:'Abraham y Lot hospedaron ángeles sin saberlo. La hospitalidad es virtud cristiana porque abre la casa al extraño como a Cristo. En el nuevo pacto, el extranjero es imagen del Señor que un día fue forastero.'} },
 
   // ===== NODOS: OFICIOS DE CRISTO =====
-  { id:'n86', x:1920, y:1460, cat:'cristo', title:'Profeta · última palabra', ref:'Hebreos 1:1-2', heRef:'1:1',
+  { id:'n86', x:1920, y:1460, cat:'cristo', title:'Profeta · última palabra', ref:'Hebreos 1:1-2',
     verses:[{ref:'Hebreos 1:1-2', text:'Dios, habiendo hablado muchas veces y de muchas maneras en otro tiempo a los padres por los profetas, en estos postreros días nos ha hablado por el Hijo.'},
             {ref:'Deuteronomio 18:15', text:'Profeta de en medio de ti, de tus hermanos, como yo, te levantará Jehová tu Dios; a él oiréis.'}],
     comment:{author:'Juan Calvino · Heb 1:1', text:'Cristo es la última palabra del Padre. Toda profecía converge en él. Moisés anunció un profeta como él; los profetas testimoniaron del Mesías. En Cristo, la revelación alcanza su plenitud: ya no hay más palabras que añadir.'} },
-  { id:'n87', x:2130, y:1460, cat:'cristo', title:'Rey entronizado', ref:'Hebreos 1:8-13', heRef:'1:8',
+  { id:'n87', x:2130, y:1460, cat:'cristo', title:'Rey entronizado', ref:'Hebreos 1:8-13',
     verses:[{ref:'Hebreos 1:8', text:'Mas del Hijo dice: Tu trono, oh Dios, por el siglo del siglo; cetro de equidad es el cetro de tu reino.'},
             {ref:'Salmo 45:6', text:'Tu trono, oh Dios, es eterno y para siempre; cetro de equidad es el cetro de tu reino.'}],
     comment:{author:'Juan Crisóstomo · Heb 1:8', text:'El Padre mismo llama al Hijo "Dios" y le atribuye un trono eterno. No hay título más alto. La realeza de Cristo no se conquista; es eterna. Su cetro es equidad: justicia que juzga y salva.'} },
-  { id:'n88', x:500, y:280, cat:'cristo', title:'Creador y Sustentador', ref:'Hebreos 1:3, 10-12', heRef:'1:3',
+  { id:'n88', x:500, y:280, cat:'cristo', title:'Creador y Sustentador', ref:'Hebreos 1:3, 10-12',
     verses:[{ref:'Hebreos 1:3', text:'Y quien sustenta todas las cosas con la palabra de su poder.'},
             {ref:'Hebreos 1:10-12', text:'Tú, oh Señor, en el principio fundaste la tierra, y los cielos son obra de tus manos. Ellos perecerán, mas tú permaneces... como un vestido los envejecerás, y como un vestido los mudarás; pero tú eres el mismo.'},
             {ref:'Salmo 102:25-27', text:'Desde el principio tú fundaste la tierra, y los cielos son obra de tus manos.'}],
     comment:{author:'John Owen · Heb 1:10', text:'El Salmo 102, dirigido a Jehová, se aplica aquí al Hijo. Cristo es el Creador del cielo y la tierra. La creación no es autónoma: es sostenida por la palabra de su poder. Si dejara de sostener, dejaría de ser.'} },
 
   // ===== NODOS: SACRIFICIO Y ALTAR =====
-  { id:'n89', x:1420, y:1460, cat:'iglesia', title:'Altar del cual no comen', ref:'Hebreos 13:10', heRef:'13:10',
+  { id:'n89', x:1420, y:1460, cat:'iglesia', title:'Altar del cual no comen', ref:'Hebreos 13:10',
     verses:[{ref:'Hebreos 13:10', text:'Tenemos un altar, del cual no tienen derecho de comer los que sirven al tabernáculo.'}],
     comment:{author:'Matthew Henry · Heb 13:10', text:'El altar cristiano no es terrenal. Los sacerdotes levíticos comían del altar del santuario; pero ese sistema ha pasado. Nuestro altar es Cristo; nuestra comida, su mesa. Quien sigue en el viejo sistema pierde el nuevo.'} },
-  { id:'n90', x:1000, y:1560, cat:'iglesia', title:'Fuera del campamento', ref:'Hebreos 13:12-13', heRef:'13:12',
+  { id:'n90', x:1000, y:1560, cat:'iglesia', title:'Fuera del campamento', ref:'Hebreos 13:12-13',
     verses:[{ref:'Hebreos 13:12-13', text:'Por lo cual también Jesús, para santificar al pueblo mediante su propia sangre, padeció fuera de la puerta. Salgamos, pues, a él, fuera del campamento, llevando su oprobio.'},
             {ref:'Levítico 16:27', text:'Y sacará fuera del campamento el becerro y el macho cabrío inmolados por el pecado, cuyas sangre fue llevada al santuario.'}],
     comment:{author:'John Owen · Heb 13:13', text:'Cristo padeció fuera de la puerta, como los sacrificios del día de expiación eran quemados fuera del campamento. Salir a él es salir del sistema viejo, llevar su oprobio, identificarse con el Crucificado. La santidad cristiana es extrañamiento del mundo.'} },
-  { id:'n91', x:1210, y:1560, cat:'iglesia', title:'Comunión de bienes', ref:'Hebreos 13:16', heRef:'13:16',
+  { id:'n91', x:1210, y:1560, cat:'iglesia', title:'Comunión de bienes', ref:'Hebreos 13:16',
     verses:[{ref:'Hebreos 13:16', text:'Y de hacer bien y de la comunicación no os olvidéis; porque de tales sacrificios se agrada Dios.'},
             {ref:'Gálatas 6:10', text:'Según tengamos oportunidad, hagamos bien a todos, y mayormente a los de la familia de la fe.'}],
     comment:{author:'Juan Calvino · Heb 13:16', text:'El cristiano ofrece tres sacrificios: alabanza (labios), bien (manos), comunión (bolsa). El nuevo pacto no carece de ofrendas; las transforma. La generosidad es culto aceptable cuando nace de la fe en Cristo.'} },
 
   // ===== NODOS: FAMILIA Y VIDA =====
-  { id:'n92', x:2340, y:1460, cat:'iglesia', title:'Honra del matrimonio', ref:'Hebreos 13:4', heRef:'13:4',
+  { id:'n92', x:2340, y:1460, cat:'iglesia', title:'Honra del matrimonio', ref:'Hebreos 13:4',
     verses:[{ref:'Hebreos 13:4', text:'Honroso sea en todos el matrimonio, y el lecho sin mancilla; pero a los fornicarios y a los adúlteros los juzgará Dios.'}],
     comment:{author:'Matthew Henry · Heb 13:4', text:'La santidad no es solo culto; es vida. El matrimonio es honroso porque Dios lo instituyó. El lecho sin mancilla es altar de pureza. El cristianismo no desprecia el cuerpo: lo santifica en el pacto conyugal.'} },
-  { id:'n93', x:1920, y:1560, cat:'iglesia', title:'Contentamiento', ref:'Hebreos 13:5-6', heRef:'13:5',
+  { id:'n93', x:1920, y:1560, cat:'iglesia', title:'Contentamiento', ref:'Hebreos 13:5-6',
     verses:[{ref:'Hebreos 13:5-6', text:'Sean vuestras costumbres sin avaricia, contentos con lo que tenéis ahora; porque él dijo: No te desampararé, ni te dejaré. De manera que podemos decir confiadamente: El Señor es mi ayudador; no temeré lo que me pueda hacer el hombre.'},
             {ref:'Josué 1:5', text:'No te dejaré, ni te desampararé.'},
             {ref:'Salmo 118:6', text:'Jehová está en mi lado; no temeré lo que me pueda hacer el hombre.'}],
     comment:{author:'Juan Calvino · Heb 13:5', text:'El contentamiento nace de la promesa, no de la abundancia. La fórmula "No te desampararé" recorre toda la Escritura desde Josué. El cristiano la reclama: si Dios está, nada falta. La avaricia es olvido de la promesa.'} },
 
   // ===== NODOS: MEMORIA Y GUÍA =====
-  { id:'n94', x:2130, y:1560, cat:'iglesia', title:'Imitar la fe de los pastores', ref:'Hebreos 13:7', heRef:'13:7',
+  { id:'n94', x:2130, y:1560, cat:'iglesia', title:'Imitar la fe de los pastores', ref:'Hebreos 13:7',
     verses:[{ref:'Hebreos 13:7', text:'Acordaos de vuestros pastores, que os hablaron la palabra de Dios; considerad cuál haya sido el resultado de su conducta, imitad su fe.'}],
     comment:{author:'John Owen · Heb 13:7', text:'La memoria de los pastores fieles no es nostalgia; es imitación. Su fe tiene fruto visible: el resultado de su conducta. La verdad enseñada se verifica en la vida vivida. Imitar la fe es seguir a Cristo a través de sus siervos.'} },
-  { id:'n95', x:2340, y:1560, cat:'iglesia', title:'Someteos a los pastores', ref:'Hebreos 13:17', heRef:'13:17',
+  { id:'n95', x:2340, y:1560, cat:'iglesia', title:'Someteos a los pastores', ref:'Hebreos 13:17',
     verses:[{ref:'Hebreos 13:17', text:'Obedeced a vuestros pastores, y sujetaos a ellos; porque ellos velan por vuestras almas, como quienes han de dar cuenta; para que lo hagan con alegría, y no quejándose, porque esto no os es provechoso.'}],
     comment:{author:'Matthew Henry · Heb 13:17', text:'El gobierno de la Iglesia no es opresión; es cuidado pastoral. Los pastores velan y darán cuenta. El pueblo se sujeta por confianza, no por temor. La alegría del pastor es señal de salud del rebaño.'} },
-  { id:'n96', x:1920, y:1660, cat:'iglesia', title:'Oración por los pastores', ref:'Hebreos 13:18-19', heRef:'13:18',
+  { id:'n96', x:1920, y:1660, cat:'iglesia', title:'Oración por los pastores', ref:'Hebreos 13:18-19',
     verses:[{ref:'Hebreos 13:18-19', text:'Orad por nosotros; pues confiamos en que tenemos buena conciencia, deseando conducirnos bien en todo. Y os ruego con mayor insistencia que lo hagáis así, para que yo os sea restituido más pronto.'}],
     comment:{author:'Juan Calvino · Heb 13:18', text:'El autor pide oración, aun siendo maestro. La intercesión mutua es ley del cuerpo. Nadie, por alto que sea su oficio, está fuera de la dependencia del pueblo. La buena conciencia no exime de la oración; la pide.'} },
 
   // ===== NODOS ADICIONALES: TIPOS DE CRISTO EN EL AT =====
-  { id:'n97', x:1000, y:380, cat:'at', title:'Josué · hijo levantado', ref:'Zacarías 6:11-13', heRef:'4:14',
+  { id:'n97', x:1000, y:380, cat:'at', title:'Josué · hijo levantado', ref:'Zacarías 6:11-13',
     verses:[{ref:'Zacarías 6:11-13', text:'Toma, pues, plata y oro, y haz coronas; y ponlas en la cabeza de Josué hijo de Josadec, sumo sacerdote. Y le hablarás, diciendo: Así habló Jehová de los ejércitos, diciendo: He aquí el varón cuyo nombre es el Vástago... Y él llevará la gloria; se sentará en su trono.'}],
     comment:{author:'John Owen · Heb 4:14', text:'Josué el sumo sacerdote fue coronado en figura de Cristo. El Vástago prometido une el sacerdocio y la realeza. Cristo es el verdadero Josué (Jesús), coronado con gloria después de la pasión.'} },
-  { id:'n98', x:1000, y:920, cat:'at', title:'Maná · pan del cielo', ref:'Éxodo 16:4, 14-15', heRef:'9:4',
+  { id:'n98', x:1000, y:920, cat:'at', title:'Maná · pan del cielo', ref:'Éxodo 16:4, 14-15',
     verses:[{ref:'Éxodo 16:15', text:'Y viendo los hijos de Israel, dijeron uno a otro: ¿Qué es esto? porque no sabían qué era. Entonces Moisés les dijo: Es el pan que Jehová os da para comer.'},
             {ref:'Juan 6:32-33', text:'De cierto, de cierto os digo: No os dio Moisés el pan del cielo, mas mi Padre os da el verdadero pan del cielo. Porque el pan de Dios es aquel que descendió del cielo y da vida al mundo.'}],
     comment:{author:'Juan Calvino · Juan 6:32', text:'El maná fue figura; Cristo es el verdadero pan. El maná saciaba el hambre del cuerpo y los que lo comían morían. Cristo da vida eterna. El Antiguo Testamento apuntaba a este pan verdadero que descendió del cielo.'} },
 
   // ===== NODOS: SANGRE Y ASPERSIÓN =====
-  { id:'n99', x:1210, y:920, cat:'at', title:'Aspersión de sangre', ref:'Hebreos 9:19-22', heRef:'9:19',
+  { id:'n99', x:1210, y:920, cat:'at', title:'Aspersión de sangre', ref:'Hebreos 9:19-22',
     verses:[{ref:'Hebreos 9:19-22', text:'Porque habiendo anunciado Moisés a todo el pueblo todos los mandamientos según la ley, tomó la sangre de los becerros y de los machos cabríos, con agua, lana escarlata e hisopo, y roció al mismo libro y también a todo el pueblo... Y casi todo es purificado con sangre según la ley.'},
             {ref:'Éxodo 24:8', text:'Entonces Moisés tomó la sangre, y roció sobre el pueblo, y dijo: He aquí la sangre del pacto que Jehová ha hecho con vosotros.'}],
     comment:{author:'Matthew Henry · Heb 9:19', text:'La aspersión sellaba el pacto. Sin sangre no hay pacto, sin derramamiento no hay remisión. El libro, el pueblo, el tabernáculo: todo era rociado. Esta sangre era figura; la de Cristo rociada sobre nuestras conciencias, realidad.'} },
-  { id:'n100', x:1420, y:920, cat:'iglesia', title:'Aspersión del corazón', ref:'Hebreos 10:22', heRef:'10:22',
+  { id:'n100', x:1420, y:920, cat:'iglesia', title:'Aspersión del corazón', ref:'Hebreos 10:22',
     verses:[{ref:'Hebreos 10:22', text:'Acerquémonos con corazón sincero, en plena certidumbre de fe, purificados los corazones de mala conciencia, y lavados los cuerpos con agua limpia.'},
             {ref:'Ezequiel 36:25-27', text:'Esparciré sobre vosotros agua limpia, y seréis limpios... Y os daré corazón nuevo, y pondré espíritu nuevo dentro de vosotros.'}],
     comment:{author:'John Owen · Heb 10:22', text:'La aspersión del nuevo pacto es interior. La sangre de Cristo sobre la conciencia, el agua limpia del Espíritu sobre la vida. Ezequiel lo prometió; Cristo lo cumple. La pureza ceremonial se vuelve realidad del alma.'} },
 
   // ===== NODOS: ESPÍRITU ETERNO =====
-  { id:'n101', x:1210, y:380, cat:'pacto', title:'Espíritu eterno', ref:'Hebreos 9:14', heRef:'9:14',
+  { id:'n101', x:1210, y:380, cat:'pacto', title:'Espíritu eterno', ref:'Hebreos 9:14',
     verses:[{ref:'Hebreos 9:14', text:'¿Cuánto más la sangre de Cristo, el cual mediante el Espíritu eterno se ofreció a sí mismo sin mancha a Dios?'},
             {ref:'Romanos 1:4', text:'Que fue declarado Hijo de Dios con poder, según el Espíritu de santidad, por la resurrección de entre los muertos.'}],
     comment:{author:'Juan Calvino · Heb 9:14', text:'Cristo se ofreció "mediante el Espíritu eterno". El Espíritu no es una virtud pasajera, sino el poder divino por el que el Hijo se ofrece al Padre. La Trinidad entera obra en el sacrificio del Calvario: el Padre recibe, el Hijo ofrece, el Espíritu consagra.'} },
 
   // ===== NODOS: HERENCIA Y PROMESA =====
-  { id:'n102', x:1420, y:380, cat:'pacto', title:'Herederos de la promesa', ref:'Hebreos 6:17', heRef:'6:17',
+  { id:'n102', x:1420, y:380, cat:'pacto', title:'Herederos de la promesa', ref:'Hebreos 6:17',
     verses:[{ref:'Hebreos 6:17-18', text:'Por lo cual, queriendo Dios mostrar más abundantemente a los herederos de la promesa la inmutabilidad de su consejo, interpuso juramento.'},
             {ref:'Gálatas 3:29', text:'Y si vosotros sois de Cristo, ciertamente linaje de Abraham sois, y herederos según la promesa.'}],
     comment:{author:'Matthew Henry · Heb 6:17', text:'Los herederos de la promesa somos los creyentes en Cristo. La promesa hecha a Abraham llega a nosotros por la fe. El juramento divino garantiza la herencia. No hay incertidumbre: dos cosas inmutables, promesa y juramento.'} },
-  { id:'n103', x:1000, y:480, cat:'pacto', title:'Herencia eterna', ref:'Hebreos 9:15', heRef:'9:15',
+  { id:'n103', x:1000, y:480, cat:'pacto', title:'Herencia eterna', ref:'Hebreos 9:15',
     verses:[{ref:'Hebreos 9:15', text:'Por lo cual es mediador de un nuevo pacto, para que interviniendo muerte para la remisión de las transgresiones que había bajo el primer pacto, los llamados reciban la promesa de la herencia eterna.'},
             {ref:'1 Pedro 1:4-5', text:'Para una herencia incorruptible, incontaminada e inmarcesible, reservada en los cielos.'}],
     comment:{author:'John Owen · Heb 9:15', text:'La herencia eterna no es terrenal, sino celestial. Cristo la garantiza como mediador del nuevo pacto. Su muerte rescató a los del primer pacto y abrió la herencia a los del nuevo. Una sola salvación en dos dispensaciones.'} },
 
   // ===== NODOS: ADORACIÓN ESCATOLÓGICA =====
-  { id:'n104', x:2130, y:1660, cat:'esperanza', title:'Reino que no se sacude', ref:'Hebreos 12:27-28', heRef:'12:27',
+  { id:'n104', x:2130, y:1660, cat:'esperanza', title:'Reino que no se sacude', ref:'Hebreos 12:27-28',
     verses:[{ref:'Hebreos 12:27-28', text:'Y esta frase: Aún una vez, indica la remoción de las cosas movibles, como cosas hechas, para que queden las cosas que son inconmovibles. Así que, recibiendo nosotros un reino inconmovible, tengamos gracia.'},
             {ref:'Hageo 2:6', text:'Porque así dice Jehová de los ejércitos: De aquí a poco yo haré temblar los cielos y la tierra, el mar y la tierra seca.'}],
     comment:{author:'Juan Calvino · Heb 12:27', text:'Hageo anunció un último temblor. Lo movible será removido: el antiguo sistema, los cielos y la tierra. Lo que queda es el reino inconmovible de Cristo. La gracia es nuestra: sirve con reverencia, porque tu reino permanece.'} }
@@ -1325,11 +1569,11 @@ NODES.forEach(node => {
   el.style.top = node.y + 'px';
   el.dataset.id = node.id;
   el.dataset.cat = node.cat;
-  el.dataset.search = (node.title + ' ' + node.ref + ' ' + (node.heRef||'')).toLowerCase();
+  el.dataset.search = (node.title + ' ' + node.ref ).toLowerCase();
   el.innerHTML = `
     <h3>${node.title}</h3>
     <div class="ref">${node.ref}</div>
-    ${node.heRef ? `<div class="hebrew-ref">${node.heRef}</div>` : ''}
+    
   `;
   el.addEventListener('click', () => showNodeDetails(node));
   el.addEventListener('mouseenter', () => highlightConnections(node.id, true));
@@ -1467,7 +1711,7 @@ function showNodeDetails(node) {
   modalCatTag.className = `modal-cat-tag ${node.cat}`;
   modalCatTag.textContent = CAT_LABELS[node.cat];
   modalTitle.textContent = node.title;
-  modalRef.textContent = node.ref + (node.heRef ? ` · Hebreos ${node.heRef}` : '');
+  modalRef.textContent = node.ref;
 
   const versesHtml = node.verses.map(v => `
     <div class="verse-block">
@@ -1917,6 +2161,174 @@ if ('serviceWorker' in navigator) {
 // PWA: detect iOS standalone mode and adjust UI
 if (window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches) {
   document.documentElement.classList.add('standalone-mode');
+}
+
+
+// ============================================================
+// MOBILE LIST VIEW + CLUSTER MENU
+// ============================================================
+const mobileListView = document.getElementById('mobileListView');
+const clusterMenuBtn = document.getElementById('clusterMenuBtn');
+const clusterMenuPanel = document.getElementById('clusterMenuPanel');
+const clusterMenuBackdrop = document.getElementById('clusterMenuBackdrop');
+const clusterMenuList = document.getElementById('clusterMenuList');
+
+// Build the mobile list view (group nodes by cluster, sorted by position)
+function buildMobileListView() {
+  if (!mobileListView) return;
+  // Get cluster labels from the existing .cluster divs
+  const clusterDivs = Array.from(document.querySelectorAll('.cluster'));
+  const clusters = clusterDivs.map((d, i) => ({
+    label: d.textContent.trim(),
+    x: parseInt(d.style.left) || 0,
+    y: parseInt(d.style.top) || 0
+  }));
+  // Sort clusters by position (top to bottom, left to right)
+  clusters.sort((a, b) => a.y - b.y || a.x - b.x);
+
+  // Get all nodes and group them by their nearest cluster
+  const allNodes = Array.from(document.querySelectorAll('.node:not(.hidden)'));
+  const nodesByCluster = {};
+  allNodes.forEach(n => {
+    const nodeData = nodeMap[n.dataset.id];
+    if (!nodeData) return;
+    const nx = nodeData.x;
+    const ny = nodeData.y;
+    // Find nearest cluster
+    let nearestCluster = null;
+    let nearestDist = Infinity;
+    clusters.forEach((c, idx) => {
+      const dx = nx - c.x;
+      const dy = ny - c.y - 30; // cluster label is offset by -30
+      const dist = Math.hypot(dx, dy);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearestCluster = idx;
+      }
+    });
+    if (nearestCluster !== null) {
+      if (!nodesByCluster[nearestCluster]) nodesByCluster[nearestCluster] = [];
+      nodesByCluster[nearestCluster].push(nodeData);
+    }
+  });
+
+  // Sort nodes within each cluster by y, then x
+  Object.keys(nodesByCluster).forEach(k => {
+    nodesByCluster[k].sort((a, b) => a.y - b.y || a.x - b.x);
+  });
+
+  // Build HTML
+  let html = '';
+  clusters.forEach((cluster, idx) => {
+    const nodes = nodesByCluster[idx] || [];
+    if (nodes.length === 0) return;
+    html += '<div class="mobile-cluster" data-cluster-idx="' + idx + '">';
+    html += '<h3 class="mobile-cluster-title">' + cluster.label + '</h3>';
+    nodes.forEach(node => {
+      html += '<div class="mobile-node-card ' + node.cat + '" data-id="' + node.id + '">';
+      html += '<h3>' + node.title + '</h3>';
+      html += '<div class="ref">' + node.ref + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  mobileListView.innerHTML = html;
+
+  // Bind clicks on mobile node cards to open modal
+  mobileListView.querySelectorAll('.mobile-node-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const node = nodeMap[card.dataset.id];
+      if (node) showNodeDetails(node);
+    });
+  });
+}
+
+// Build the cluster menu (lists clusters for quick navigation)
+function buildClusterMenu() {
+  if (!clusterMenuList) return;
+  const clusterDivs = Array.from(document.querySelectorAll('.cluster'));
+  const clusters = clusterDivs.map(d => ({
+    label: d.textContent.trim()
+  }));
+  let html = '';
+  clusters.forEach((c, idx) => {
+    html += '<button class="cluster-item" data-cluster-idx="' + idx + '">' + c.label + '</button>';
+  });
+  clusterMenuList.innerHTML = html;
+
+  // Bind clicks: scroll the mobile list to that cluster
+  clusterMenuList.querySelectorAll('.cluster-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.clusterIdx);
+      const targetCluster = mobileListView.querySelector('[data-cluster-idx="' + idx + '"]');
+      if (targetCluster) {
+        targetCluster.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+      closeClusterMenu();
+    });
+  });
+}
+
+function openClusterMenu() {
+  clusterMenuPanel.classList.add('show');
+  clusterMenuBackdrop.classList.add('show');
+  clusterMenuBtn.classList.add('active');
+}
+function closeClusterMenu() {
+  clusterMenuPanel.classList.remove('show');
+  clusterMenuBackdrop.classList.remove('show');
+  clusterMenuBtn.classList.remove('active');
+}
+if (clusterMenuBtn) {
+  clusterMenuBtn.addEventListener('click', () => {
+    if (clusterMenuPanel.classList.contains('show')) closeClusterMenu();
+    else openClusterMenu();
+  });
+}
+if (clusterMenuBackdrop) {
+  clusterMenuBackdrop.addEventListener('click', closeClusterMenu);
+}
+
+// Initialize mobile view after nodes are rendered
+function initMobileView() {
+  buildMobileListView();
+  buildClusterMenu();
+}
+
+// Call after a tick to ensure NODES are rendered
+setTimeout(initMobileView, 50);
+
+// Rebuild mobile view when filters change
+const _origApplyFilter = applyFilter;
+applyFilter = function() {
+  _origApplyFilter.apply(this, arguments);
+  buildMobileListView();
+};
+
+// Mobile: expand search box on tap (overlay behavior)
+if (window.innerWidth <= 768) {
+  const searchBox = document.querySelector('.search-box');
+  const searchInput = document.getElementById('searchInput');
+  if (searchBox && searchInput) {
+    searchBox.addEventListener('click', (e) => {
+      if (!searchBox.classList.contains('expanded')) {
+        searchBox.classList.add('expanded');
+        setTimeout(() => searchInput.focus(), 100);
+        e.preventDefault();
+      }
+    });
+    // Close on Escape or when input loses focus
+    searchInput.addEventListener('blur', () => {
+      if (!searchInput.value) searchBox.classList.remove('expanded');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchBox.classList.contains('expanded')) {
+        searchBox.classList.remove('expanded');
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+      }
+    });
+  }
 }
 
 </script>
