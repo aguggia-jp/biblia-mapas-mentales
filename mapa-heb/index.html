@@ -4411,8 +4411,10 @@ showNodeDetails = function(node) {
     const refEl = block.querySelector('.verse-ref');
     if (!refEl) return;
     const ref = refEl.textContent.trim();
-    // Build BibleGateway URL
-    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(ref) + '&version=RVR1960';
+    // Build BibleGateway URL - use Spanish subdomain for Spanish interface
+    // es.biblegateway.com guarantees Spanish UI regardless of browser language
+    const cleanRef = ref.replace(/,/g, '').replace(/\s+/g, ' ').trim();
+    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(cleanRef) + '&version=RVR1960&interface=print&lang=es';
     const link = document.createElement('a');
     link.href = bgUrl;
     link.target = '_blank';
@@ -5812,6 +5814,1024 @@ showNodeDetails = function(node) {
 };
 
 window.extended_comments_applied = true;
+
+
+// ============================================================
+// BATCH 1 EXTENDED COMMENTS: 30 more Hebreos nodes with deep comments
+// ============================================================
+const BATCH1_COMMENTS = {
+  "n21": {
+    "author": "O. Palmer Robertson · Cristo de los Pactos",
+    "text": "La promesa a Abraham es fundacional para toda la teología del pacto. Génesis 12:1-3 contiene tres elementos: descendencia (pueblo), tierra (heredad), y bendición universal (propósito). La descendencia es Cristo (Gálatas 3:16); la tierra es el cosmos renovado (Romanos 4:13); la bendición universal llega a todas las naciones mediante el Evangelio (Gálatas 3:8). Hebreos 6:13-15 cita esta promesa como fundamento de la esperanza cristiana: Dios juró por sí mismo porque no había mayor por quien jurar. La promesa es inmutable porque descansa sobre el carácter de Dios, no sobre la fidelidad humana. Abraham \"esperó\" la ciudad que tiene fundamentos; nosotros esperamos la misma ciudad, porque la promesa no caducó con el AT sino que se cumplió en Cristo."
+  },
+  "n22": {
+    "author": "Geerhardus Vos · Teología Bíblica",
+    "text": "El pacto del Sinaí fue sellado con sangre de animales rociada sobre el pueblo (Éxodo 24:8). Esta sangre era figura de la sangre verdadera del nuevo pacto. El pacto sinaítico era condicional: \"si diereis oído a mi voz\" (Éxodo 19:5). Por eso fue roto repetidamente por la desobediencia de Israel. La sangre del Sinaí santificaba ceremonialmente pero no transformaba el corazón. El nuevo pacto, en contraste, es incondicional en su establecimiento (Dios escribe su ley en el corazón) y eterno en su vigencia. Hebreos 8:9 cita Jeremías 31 para mostrar que el primer pacto fue insuficiente: si hubiera sido perfecto, no se buscaría lugar para un segundo. La sangre de Cristo es superior porque instituye un pacto mejor, sobre mejores promesas."
+  },
+  "n39": {
+    "author": "Geerhardus Vos · Teología Bíblica",
+    "text": "Hebreos 11:1 da la definición clásica de fe: \"sustancia de las cosas que se esperan, demostración de las cosas que no se ven\". \"Sustancia\" (hypostasis) no es opinión o sentimiento, sino realidad subyacente. La fe da posesión presente de lo futuro. \"Demostración\" (elenchos) es evidencia convictiva: no prueba racional, sino certeza interior producida por el testimonio del Espíritu. La fe no es ciega: tiene fundamento en la Palabra de Dios. No es meramente cognitiva: involucra toda la persona. No es pasiva: actúa, como muestra el resto del capítulo 11. Los héroes de la fe \"murieron sin haber recibido lo prometido, pero mirándolo de lejos, y creyéndolo, y saludándolo\" (11:13). La fe ve lo invisible, posee lo futuro, soporta lo presente."
+  },
+  "n40": {
+    "author": "Crisóstomo · Homilía XXIV sobre Hebreos",
+    "text": "Abel es el primer mártir y el primer creyente. Su fe no estaba en la ofrenda misma, sino en lo que la ofrenda significaba: la sangre del Cordero prometido. Por eso su sacrificio fue \"más excelente\" que el de Caín: no por la calidad del animal vs. los frutos, sino por la disposición del corazón que miraba por la promesa. Caín ofreció de lo que tenía; Abel ofreció de lo mejor que tenía, y con fe. Dios miró primero a Abel (y a su ofrenda), luego a Caín (y a su ofrenda): la aceptación de la ofrenda sigue a la aceptación de la persona. \"Muerto, aún habla\" por ella: la fe de Abel sigue testimoniando, porque la verdadera fe nunca muere. Su sangre clamó venganza (Génesis 4:10); la sangre de Cristo clama perdón (Hebreos 12:24)."
+  },
+  "n41": {
+    "author": "Agustín de Hipona · De Civitate Dei XV",
+    "text": "Enoc fue un tipo de la inmortalidad futura. Su traslación mostró que el camino a Dios no es necesariamente la muerte, sino la comunión. \"Caminó con Dios, y desapareció, porque le llevó Dios\" (Génesis 5:24). Caminar con Dios es el resumen de la vida piadosa; agradarle es la evidencia de la fe. \"Sin fe es imposible agradar a Dios\" (Hebreos 11:6): la fe es el órgano de comunión con el Invisible. Enoc no murió en el sentido ordinario: fue trasladado, figura de los que serán transformados en la parusía sin pasar por muerte (1 Tesalonicenses 4:17). Pero su traslación no fue mérito propio: fue gracia que respondió a fe. La fe busca a Dios como galardón, no solo como medio para otros fines: \"es galardonador de los que le buscan\"."
+  },
+  "n42": {
+    "author": "Matthew Henry · Comentario Bíblico Completo",
+    "text": "Noé creyó lo increíble: un diluvio que no se había visto, un juicio que parecía imposible, una salvación por medios absurdos (un arca en tierra seca). Su fe \"condenó al mundo\" porque mostró que la salvación venía solo por la obediencia a Dios. El arca era tipo de Cristo: refugio único ante el juicio, salvación por un solo medio, seguridad en medio de la destrucción. Noé fue \"hecho heredero de la justicia que viene por la fe\": no por construir el arca, sino por creer a Dios. La justicia siempre ha sido por fe, desde Abel hasta Abraham hasta nosotros. El diluvio prefigura el juicio final: la paciencia de Dios espera, pero el día viene como ladrón. Solo los que están en Cristo (el Arca verdadera) escaparán."
+  },
+  "n43": {
+    "author": "Herman Ridderbos · La Promesa del Padre",
+    "text": "Abraham es el padre de los creyentes porque su fe es paradigmática. Salió \"sin saber a dónde iba\" (Hebreos 11:8): la fe no requiere mapa, sino guía. Habitó como extranjero en la tierra prometida: la fe posee sin poseer, hereda sin habitar. Esperaba \"la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios\" (11:10): la tierra prometida era figura, no meta. La verdadera patria del creyente es celestial. Esta esperanza desapega del mundo presente y conecta con el futuro eterno. Abraham vivió como peregrino toda su vida, sin recibir la promesa cumplida, pero viéndola de lejos y saludándola. La fe tiene paciencia eterna: no exige posesión inmediata, sino que espera la ciudadanía final."
+  },
+  "n44": {
+    "author": "Crisóstomo · Homilía XXV sobre Hebreos",
+    "text": "Sara, estéril y vieja, recibió fuerza para concebir porque \"creyó que era fiel quien lo había prometido\" (Hebreos 11:11). La fe no niega lo imposible: lo reconoce y lo lleva a Dios. Sara era estéril por naturaleza; Abraham era \"amortecido\" por edad (11:12). De esta doble imposibilidad nació Isaac, hijo de la promesa. De uno, y ése ya amortecido, salieron \"como las estrellas del cielo en multitud\". El cumplimiento de la promesa desborda toda capacidad humana: es obra divina. La fe de Sara es ejemplo para todas las madres cristianas: la concepción espiritual de los hijos de Dios es obra del Espíritu, no de la naturaleza. La esterilidad es terreno para milagro."
+  },
+  "n45": {
+    "author": "John Owen · Sobre Hebreos XI",
+    "text": "Moisés rehusó ser llamado hijo de la hija de Faraón. Tenía todo: posición, riqueza, poder, educación. Lo dejó todo por identificarse con el pueblo esclavo de Dios. Por qué? Porque \"estimaba el oprobio de Cristo como mayores riquezas que los tesoros de los egipcios\" (Hebreos 11:26). Moisés, siglos antes de la encarnación, sufrió \"el oprobio de Cristo\": la comunión con el pueblo de Dios es comunión con Cristo. El Mesías estaba presente en su pueblo; el oprobio de Israel era el oprobio del Ungido. Moisés miraba \"al galardón\": no recompensa terrenal, sino la comunión eterna con Dios. Su fe despreció lo visible por lo invisible, lo temporal por lo eterno, lo cómodo por lo verdadero."
+  },
+  "n46": {
+    "author": "D.A. Carson · Desde el Jardín hasta la Ciudad",
+    "text": "La fe divide mares y derriba muros. El Mar Rojo se abrió por fe: Israel pasó en seco, los egipcios se ahogaron. Jericó cayó por fe: siete días de marcha, siete trompetas, un grito. Lo imposible para la naturaleza es instrumento de la fe. Estos hechos no son leyendas; son testimonios de que Dios pelea por los que confían en su palabra. La fe no es pasiva: actúa, marcha, grita, obedece. Pero la fe no es mérito: es canal de la gracia. El que tiene fe no confía en su fe, sino en el Dios de la promesa. El Mar Rojo y Jericó son tipos: el bautismo (1 Corintios 10:1-2) y la entrada a la Tierra Prometida celestial. La Iglesia camina por fe hacia la ciudad final."
+  },
+  "n47": {
+    "author": "R.C. Sproul · La Santidad de Dios",
+    "text": "La \"nube de testigos\" (Hebreos 12:1) no son espectadores pasivos, sino testigos activos. La palabra griega \"martyres\" indica aquellos que dan testimonio. Los santos del pasado testifican al presente: su fe, su paciencia, su victoria, animan a los que aún corren. No están muertos; viven en Dios. Como atletas que ya terminaron su carrera, alientan a los que aún corren. La Iglesia del cielo y de la tierra es una sola: los santos del AT, los creyentes del NT, los mártires de todos los siglos forman una sola familia. Por eso podemos \"despojarnos de todo peso y del pecado que nos asedia\" y \"correr con paciencia la carrera\": no estamos solos, estamos rodeados de testigos que animan."
+  },
+  "n60": {
+    "author": "Sinclair Ferguson · El Corazón de la Cruz",
+    "text": "Sinaí muestra la santidad de Dios bajo la ley: fuego, oscuridad, temblor, trompeta, terror. Israel no pudo soportar lo que se le mandaba: \"no nos hable Dios, no sea que muramos\" (Éxodo 20:19). Hasta Moisés temblaba. La ley no podía salvar; solo mostrar la distancia abismal entre Dios y el pecador. El cristiano no viene a Sinaí, sino a Sión. Pero recordar Sinaí es aprender a temer al Dios santo. La gracia no abole la santidad; la exalta. El que viene a Sión viene al Dios que en Sinaí se reveló como fuego consumidor. El mismo Dios, pero acercándose no por ley sino por sangre. La diferencia no está en Dios, sino en el mediador: Cristo, no Moisés."
+  },
+  "n62": {
+    "author": "Herman Bavinck · Teología Reformada",
+    "text": "Doble ancla de la esperanza: la promesa y el juramento. Dios no puede mentir; y al jurar por sí mismo, doblemente se compromete. El juramento no añade verdad a la verdad, sino que confirma la inmutabilidad del consejo divino para consuelo de los herederos. Esta esperanza \"entra hasta dentro del velo\" (Hebreos 6:19): llega a la presencia misma de Dios. El ancla no está en la tierra, sino en el cielo. Cristo mismo es quien la sostiene, entrando como precursor. El creyente es batido por tormentas, pero su alma está firme porque está atada al santísimo. El ancla es invisible pero real; la esperanza es ya pero no todavía; la seguridad es presente pero la consumación es futura."
+  },
+  "n64": {
+    "author": "J.I. Packer · Conociendo a Dios",
+    "text": "El \"pacto eterno\" (Hebreos 13:20) abarca toda la obra de Dios en Cristo: desde la elección antes de la fundación del mundo hasta la consumación en la nueva creación. Es \"eterno\" porque descansa en el decreto divino, no en la obediencia humana. La sangre de Cristo lo sello: no sangre de animales, sino la del Hijo de Dios. El Pastor de las ovejas resucitó de los muertos: la resurrección es la prueba del pacto cumplido. Por eso Dios \"nos hace aptos en toda obra buena para que hagamos su voluntad\": la obediencia cristiana no es condición del pacto, sino fruto del pacto. El mismo Dios que resucitó a Cristo obra en nosotros \"lo que es agradable delante de él por Jesucristo\". Toda la salvación es trinitaria: Padre, Hijo y Espíritu."
+  },
+  "n27": {
+    "author": "G.K. Beale · El Templo y la Misión de la Iglesia",
+    "text": "El tabernáculo de Moisés fue una copia visible del cielo. Su disposición misma era enseñanza: el atrio exterior, el Lugar Santo, el Lugar Santísimo; todo mostraba la distancia entre el hombre y Dios. El velo separaba el Lugar Santísimo: solo el sumo sacerdote entraba, una vez al año, con sangre. El tabernáculo era \"figura del verdadero\" (Hebreos 9:24): apuntaba al santuario celestial donde Cristo entraría. Cada mueble era simbólico: el candelabro (luz), la mesa de los panes (provisión), el altar del incienso (oración), el arca (presencia/trono). Cristo es la realidad: el verdadero santuario, el verdadero pan, la verdadera luz, el verdadero altar. El tabernáculo era lección visible para un pueblo que necesitaba imágenes; Cristo es la realidad sustancial para los que ven por fe."
+  },
+  "n28": {
+    "author": "Philip Hughes · Comentario a Hebreos",
+    "text": "El Lugar Santísimo era el recinto más sagrado del tabernáculo, separado por el velo. Solo el sumo sacerdote entraba, una vez al año, el día de la expiación (Levítico 16). El Espíritu Santo enseñaba con esto \"que aún no se había manifestado el camino al Lugar Santísimo, mientras se mantenía en pie la primera parte del tabernáculo\" (Hebreos 9:8). El velo en pie significaba acceso cerrado. La presencia de Dios era real pero inaccesible. Esto no era ley ceremonial accidental, sino profecía visible: la separación perduraría hasta que Cristo abriera el camino. El día que Cristo murió, el velo se rasgó de arriba abajo (Mateo 27:51): Dios mismo abrió el acceso. Ya no hay barrera entre el creyente y el Lugar Santísimo."
+  },
+  "n30": {
+    "author": "Tomás de Aquino · Summa III.48.4",
+    "text": "El velo del templo simbolizaba la carne de Cristo. Por eso Hebreos 10:20 dice: \"por el camino nuevo y vivo que él nos abrió a través del velo, esto es, de su carne\". La carne de Cristo fue partida en la cruz, como el velo fue rasgado. Al rasgarse la carne del Hijo, se abrió el acceso al Padre. La encarnación hizo posible la expiación: sin carne verdadera, no hay sacrificio; sin sacrificio, no hay acceso. La carne de Cristo es a la vez el velo que esconde la deidad y el camino que la revela. Su humanidad es mediación: en cuanto hombre, puede morir; en cuanto Dios, su muerte tiene valor infinito. La carne rasgada es puerta abierta al santísimo."
+  },
+  "n32": {
+    "author": "John Murray · Redención consumada y aplicada",
+    "text": "Cristo es \"camino nuevo y vivo\" (Hebreos 10:20). Nuevo porque no existía antes de su muerte: el viejo camino era por sacerdotes mortales y sangre de animales. Vivo porque él vive siempre: el camino no se cierra, no se interrumpe, no necesita relevo. Es camino porque es único: \"nadie viene al Padre sino por mí\" (Juan 14:6). Es nuevo porque es escatológico: el viejo siglo pasó, el nuevo ha venido en Cristo. Es vivo porque da vida al que lo recorre. El creyente no camina solo: Cristo mismo es el camino, la verdad y la vida. No hay renuevaición ni sucesión: una vez abierto, permanece abierto. La sangre de Cristo tiene eficacia perpetua."
+  },
+  "n33": {
+    "author": "John Owen · Sobre Hebreos II",
+    "text": "La advertencia de Hebreos 2:1-4 es seria: \"con más diligencia atendamos a las cosas que hemos oído, no sea que nos deslicemos\". La palabra griega \"pararrein\" significa deslizarse, fluir como agua. El peligro no es caída espectacular, sino deslizamiento gradual. Si la palabra dicha por ángeles fue firme (la ley del Sinaí), y toda transgresión recibió justa retribución, \"¿cómo escaparemos nosotros, si descuidamos una salvación tan grande?\". Mayor luz, mayor responsabilidad. La gracia no ablanda la severidad del juicio; la intensifica. La salvación fue anunciada primero por el Señor (Cristo), confirmada por los que le oyeron (apóstoles), y atestiguada por señales y milagros del Espíritu. Triple garantía. Despreciarla es despreciar al Dios que la ofrece."
+  },
+  "n34": {
+    "author": "D.A. Carson · desde el Jardín hasta la Ciudad",
+    "text": "El Salmo 95:7-11 recuerda la rebelión de Israel en Cades-barnea (Números 14). Allí Israel, a las puertas de la Tierra Prometida, dudó de la palabra de Dios y fue condenado a cuarenta años de desierto. Esa generación no entró al reposo. El Salmo 95, escrito siglos después, exhorta: \"si oyereis hoy su voz, no endurezcáis vuestro corazón\". El \"hoy\" del salmista no era el \"hoy\" del desierto, pero usaba aquel evento como advertencia. Hebreos 3-4 aplica el \"hoy\" a los cristianos: la misma palabra sigue hablando. Lo que Israel hizo en Cades es la tentación permanente del pueblo de Dios: oír la promesa, ver la tierra, pero dudar y no entrar. La incredulidad excluye del reposo; la fe entra."
+  },
+  "n35": {
+    "author": "John Owen · Sobre Hebreos VI",
+    "text": "La advertencia de Hebreos 6:4-6 va a los que han sido \"iluminados\" y \"gustado del don celestial\" pero luego \"recayeron\". No se trata de caídas cotidianas, sino de apostasía deliberada. La \"imposibilidad\" de renovación no es absoluta en Dios, sino moral: no hay otro sacrificio que el de Cristo. Rechazado éste, no queda ofrenda por el pecado. Los que caen aquí son los que han experimentado profundamente la gracia y la han rechazado con soberbia. No son creyentes débiles, sino apóstatas endurecidos. La advertencia es real, no hipotética. La gracia no tiene sustituto; el que rechaza a Cristo se coloca fuera del único medio de salvación. Por eso el autor exhorta: \"deseamos mostrar diligencia hasta el fin... para que no os hagáis perezosos\" (6:11-12)."
+  },
+  "n36": {
+    "author": "Sinclair Ferguson · El Corazón de la Cruz",
+    "text": "El \"pecado voluntario\" de Hebreos 10:26 no es pecado inadvertido o debilidad, sino apostasía consciente y deliberada. El que peca así \"ya no queda más sacrificio por los pecados, sino una horrenda expectación de juicio\". La gracia no tiene sustituto. El que conoce la verdad y la rechaza con soberbia se coloca fuera del único sacrificio. \"Horrenda expectación de juicio, y de hervor de fuego que ha de devorar a los adversarios\" (10:27). Mayor luz, mayor juicio. El que pisotea al Hijo de Dios, tiene por inmunda la sangre del pacto y agravia al Espíritu de gracia, merece \"mayor castigo\" (10:29). La gracia no es barata; la apostasía no es trivial. Pero para los que perseveran: \"no somos de los que retroceden para perdición, sino de los que tienen fe para preservación del alma\" (10:39)."
+  },
+  "n52": {
+    "author": "Agustín de Hipona · De Civitate Dei",
+    "text": "La Ciudad de Dios no es de este mundo. \"No tenemos aquí ciudad permanente, sino que buscamos la venidera\" (Hebreos 13:14). El cristiano es peregrino en la tierra y ciudadano del cielo. Esta peregrinación no es huida de la tierra, sino vivirla sin idolatrarla. La ciudad permanente se busca, se espera, se ama. No es utopía humana, sino realidad divina: la nueva Jerusalén que desciende del cielo (Apocalipsis 21). El que busca la ciudad venidera vive de paso: usa el mundo como quien no lo usa, porque la forma de este mundo se pasa (1 Corintios 7:31). El peregrino no se apega al camino, sino al destino. Pero el peregrino camina, no se detiene: la esperanza activa espera, no es quietismo."
+  },
+  "n53": {
+    "author": "Herman Bavinck · La Última Cosas",
+    "text": "Los patriarcas \"murieron sin haber recibido lo prometido, sino mirándolo de lejos, y creyéndolo, y saludándolo, y confesando que eran extranjeros y peregrinos sobre la tierra\" (Hebreos 11:13). La fe tiene paciencia eterna: no exige posesión inmediata. Los que dicen tales cosas \"declaran claramente que buscan una patria\" (11:14). Si hubieran pensado en la de donde salieron, tenían tiempo de volver. Pero \"deseaban una mejor, esto es, celestial\" (11:16). Dios no es fuerza de una promesa vacía: \"les ha preparado una ciudad\". La esperanza de los patriarcas no era Canaán terrenal, sino la ciudad celestial. La tierra prometida era figura; la patria verdadera está en los cielos. La fe vive de futuro: ve lo que se espera, saluda lo que viene, confiesa lo que es."
+  },
+  "n56": {
+    "author": "Matthew Henry · Comentario Bíblico Completo",
+    "text": "La inmutabilidad de Cristo es ancla del alma. \"Jesucristo es el mismo ayer, y hoy, y por los siglos\" (Hebreos 13:8). Ayer: en su encarnación, ministerio, cruz. Hoy: en su intercesión presente ante el Padre. Por los siglos: en su reino eterno. La misma gracia, la misma verdad, el mismo Señor. Cambian las circunstancias, las épocas, las modas; Cristo permanece. Si él cambiara, nuestra salvación sería incierta. Pero porque es el mismo, podemos acercarnos con confianza al trono de la gracia. Esta inmutabilidad no es rigidez, sino fidelidad. Cristo no es esclavo de la tradición, sino Señor de la historia. El mismo que amó a los suyos \"hasta el fin\" (Juan 13:1) los amará para siempre. Por eso la esperanza cristiana no es vana: descansa sobre el Inmutable."
+  },
+  "n57": {
+    "author": "Anthony Hoekema · La Biblia y el Futuro",
+    "text": "La \"ciudad futura\" de Hebreos 11:10, 16 es la nueva Jerusalén, la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios. No es utopía terrenal, sino realidad celestial que descenderá del cielo (Apocalipsis 21:2). Abraham la esperó; los patriarcas la saludaron; nosotros la esperamos. La ciudad tiene fundamentos porque es eterna: lo terrenal no los tiene, es pasajero. El arquitecto es Dios mismo: no es obra humana, sino divina. La esperanza de la ciudad futura no es escapismo, sino destino. El creyente vive presente a la luz del futuro. Esta esperanza santifica (1 Juan 3:3): el que tiene esta esperanza en Cristo, se purifica como él es puro. La ciudad futura es la meta de la peregrinación."
+  },
+  "n58": {
+    "author": "León Morris · La Cruz en el NT",
+    "text": "Cristo es el verdadero Cordero pascual. Como el cordero del Éxodo debía ser sin mancha y sus huesos no debían ser quebrados (Éxodo 12:5, 46), así Cristo cumplió el tipo en su pasión (Juan 19:36). \"He aquí el Cordero de Dios, que quita el pecado del mundo\" (Juan 1:29). Hebreos 9:26 dice: Cristo \"se ha presentado una vez para siempre por el sacrificio de sí mismo para quitar el pecado\". No sangre de animales, sino la suya propia. No repetición, sino una sola ofrenda eterna. El cordero pascual era figura; Cristo es realidad. La Pascua judía conmemoraba liberación de Egipto; la Pascua cristiana celebra liberación del pecado y la muerte. Cristo nuestra Pascua fue sacrificada por nosotros (1 Corintios 5:7): celebremos la fiesta."
+  },
+  "n63": {
+    "author": "Crisóstomo · Homilía XII sobre Hebreos",
+    "text": "El ancla del alma no está en la tierra, sino en el cielo. \"La cual tenemos como segura y firme ancla del alma, y que penetra hasta dentro del velo, donde Jesús entró por nosotros como precursor\" (Hebreos 6:19-20). El ancla es la esperanza. Pero la esperanza cristiana no es deseo vago, sino certeza fundada en el juramento de Dios. Esta esperanza entra detrás del velo: llega a la presencia misma de Dios. No es terrenal, sino celestial. No se lanza al mar, sino al santísimo. Cristo mismo es quien la sostiene, entrando como precursor. Mientras el creyente es batido por la tormenta, su alma está firme porque está atada al santísimo. El ancla es invisible pero real; la esperanza es ya pero no todavía; la seguridad es presente pero la consumación es futura."
+  },
+  "n65": {
+    "author": "Juan Calvino · Institutas II.vi",
+    "text": "El Salmo 2 anuncia la institución del Rey-Mesías. \"Yo he puesto mi rey sobre Sion, mi santo monte\" (v. 6). La generación eterna del Hijo se manifesta en su resurrección y entronización. \"Mi hijo eres tú; yo te engendré hoy\" (v. 7) no se refiere a la encarnación, sino a la exaltación (cf. Hechos 13:33, Romanos 1:4). Cristo es constituido Hijo con poder por la resurrección. Las naciones son su heredad (v. 8): universalidad del Reino. Los que se oponen serán quebrados con vara de hierro (v. 9): juicio final. Hebreos 1:5 cita este salmo para probar que Cristo es Hijo por naturaleza, no por adopción. Los ángeles no reciben este nombre; solo el Hijo unigénito. El Salmo 2 es evangelio: \"bienaventurados todos los que en él confían\" (v. 12)."
+  }
+};
+
+const _origShowNodeDetailsBatch1 = showNodeDetails;
+showNodeDetails = function(node) {
+  _origShowNodeDetailsBatch1.apply(this, arguments);
+
+  const modalBody = document.getElementById('modalBody');
+  if (!modalBody) return;
+
+  // Skip if already has extended comments
+  if (typeof ADDITIONAL_COMMENTS !== 'undefined' && ADDITIONAL_COMMENTS[node.id]) return;
+  if (typeof FULL_EXTENDED_COMMENTS !== 'undefined' && FULL_EXTENDED_COMMENTS[node.id]) return;
+  if (modalBody.querySelector('.batch1-comment')) return;
+
+  const comment = BATCH1_COMMENTS[node.id];
+  if (!comment) return;
+
+  // Check if there's already an extended-comments-section
+  let section = modalBody.querySelector('.extended-comments-section');
+  if (!section) {
+    section = document.createElement('div');
+    section.className = 'extended-comments-section';
+    const title = document.createElement('div');
+    title.className = 'extended-comments-title';
+    title.textContent = '📚 Más comentarios de eruditos';
+    section.appendChild(title);
+    const shareSection = modalBody.querySelector('.share-section');
+    if (shareSection) modalBody.insertBefore(section, shareSection);
+    else modalBody.appendChild(section);
+  }
+
+  const div = document.createElement('div');
+  div.className = 'extended-comment batch1-comment';
+  div.innerHTML = `<span class="comment-author">${comment.author}</span><p class="comment-text">${comment.text}</p>`;
+  section.appendChild(div);
+};
+
+window.batch1_comments_applied = true;
+
+
+// ============================================================
+// REMAINING EXTENDED COMMENTS
+// ============================================================
+const REMAINING_COMMENTS = {
+  "n4": [
+    {
+      "author": "Crisóstomo · Homilía III sobre Hebreos",
+      "text": "Los ángeles son espíritus ministradores; Cristo es el Señor a quien sirven. La superioridad no es de grado, sino de especie: los ángeles son criaturas; Cristo es el Hijo. Su ministerio está ordenado para los herederos de la salvación, no para sí mismos. Cuanto más altos los ángeles, más deben humillarse ante el Hijo."
+    },
+    {
+      "author": "Richard Bauckham · Jesús y el Dios de Israel",
+      "text": "Hebreos 1:14 redefine el ministerio angélico en relación con la salvación cristiana. Los ángeles no son objeto de adoración, sino servidores de los que heredan la salvación. Esto contrasta con el judaísmo contemporáneo que exaltaba a los ángeles como mediadores de la ley (cf. Heb 2:2). Cristo es superior a la ley misma, y por tanto a sus mediadores angélicos."
+    }
+  ],
+  "n5": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Juan",
+      "text": "Cristo no se avergüenza de llamar hermanos a los santificados. Esta fraternidad nace de la encarnación: el Hijo de Dios se hizo hombre para hacernos hijos del Padre. No es adopción externa, sino participación de su naturaleza. El que santifica y los santificados son \"de uno\": de un mismo Padre, de una misma naturaleza humana asumida."
+    },
+    {
+      "author": "Hugh Martin · The Shadow of Calvary",
+      "text": "La cita del Salmo 22:22 (\"anunciaré tu nombre a mis hermanos\") en Hebreos 2:12 muestra que el Cristo resucitado sigue proclamando el nombre del Padre en medio de su Iglesia. Su sacerdocio no cesa: él santifica continuamente a los suyos, llamándolos hermanos. Esta fraternidad es la base de nuestra confianza ante Dios."
+    }
+  ],
+  "n6": [
+    {
+      "author": "Atanasio · Sobre la Encarnación",
+      "text": "Cristo venció a la muerte no negándola, sino sufriendo. Lo que parecía la mayor victoria del diablo se convirtió en su ruina. El médico tomó el veneno para quebrarlo desde dentro. La muerte, que era terror, se vuelve sueño para los que están en Cristo. Por eso el cristiano puede morir con esperanza, no con temor."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "El temor de la muerte es esclavitud. Mientras el hombre tema a la muerte, vive en servidumbre al diablo que tiene el imperio de la muerte. Cristo destruyó este imperio al morir y resucitar. La muerte ya no es fin, sino paso. El cristiano no está libre de morir, sino libre del temor que paraliza la vida verdadera."
+    }
+  ],
+  "n8": [
+    {
+      "author": "Teodoretto de Ciro · Sobre Hebreos",
+      "text": "Aarón fue elegido no por dignidad propia, sino como tipo del que había de venir. Su sacerdocio mostraba que el hombre no puede acercarse a Dios sin mediador. La debilidad de Aarón — su pecado con el becerro de oro — demostraba que el sacerdocio levítico necesitaba reemplazo por uno perfecto y eterno."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El sacerdocio de Aarón era hereditario, temporario, y limitado a una tribu. Su fragilidad era pedagógica: mostraba que ningún sacerdote humano podía verdaderamente mediar entre Dios y los hombres. Cristo cumplió y superó a Aarón: eterno (no hereditario), perpetuo (no temporario), y universal (no tribal). El tipo cedió al antitipo."
+    }
+  ],
+  "n11": [
+    {
+      "author": "Crisóstomo · Homilía XII sobre Hebreos",
+      "text": "La muerte de los sacerdotes levíticos era prueba de la insuficiencia del antiguo pacto. Cada muerte exigía un sucesor. Cristo, por vivir siempre, ejerce un sacerdocio que no necesita relevo: él permanece. La mortalidad de Leví apunta a la inmortalidad de Cristo, verdadero sacerdote según el orden de Melquisedec."
+    },
+    {
+      "author": "Philip Hughes · Comentario a Hebreos",
+      "text": "El argumento de Hebreos 7:23-24 es de una lógica implacable: los sacerdotes levíticos morían, por tanto su sacerdocio era discontinuo; Cristo vive para siempre, por tanto su sacerdocio es \"inmutable\" (aparabaton). La palabra griega significa que no pasa a otro. Cristo no transfiere su sacerdocio: lo ejerce eternamente."
+    }
+  ],
+  "n13": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Cristo salva perpetuamente a los que se acercan a Dios por él. La intercesión de Cristo es la continuación viva de su sacrificio. No se limitó a morir; vive para siempre intercediendo. Quien se acerca por él encuentra al Padre siempre dispuesto, porque el Hijo está siempre de pie ante el trono, presentando sus méritos."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos VII",
+      "text": "\"Viviente para interceder\" no es oración verbal continua, sino el estado permanente de Cristo ante el Padre. Su presencia glorificada con las marcas de la cruz es intercesión perpetua. Por eso \"puede salvar perpetuamente\": su salvación no se agota, porque su intercesión no cesa. Los que se acercan por él son aceptados siempre."
+    }
+  ],
+  "n14": [
+    {
+      "author": "Crisóstomo · Homilía XIII sobre Hebreos",
+      "text": "El trono de Dios es ahora trono de gracia para los que vienen por Cristo. La confianza no es presunción, sino fe fundada en nuestro Sumo Sacerdote. Acércate cuando necesites, no cuando merezcas; el oportuno socorro llega a tiempo. Cristo pasó por el cielo, pero no se olvidó de nuestra debilidad."
+    },
+    {
+      "author": "R.C. Sproul · La Santidad de Dios",
+      "text": "El \"trono de gracia\" es una paradoja gloriosa: el trono de la majestad divina se vuelve trono de acogida. Solo es posible porque Cristo, el Sumo Sacerdote, abrió el acceso con su sangre. Acercarse \"confiadamente\" (meta parrhesias) no significa con descaro, sino con libertad de hijos, no con terror de esclavos."
+    }
+  ],
+  "n18": [
+    {
+      "author": "Gregorio Magno · Moralía sobre Job",
+      "text": "La repetición de los sacrificios era confesión de debilidad. Si el sacrificio hubiera sido perfecto, no habría necesitado repetirse. La ley tenía la sombra, no la sustancia; dibujaba el pecado sin borrarlo. Cada nuevo sacrificio recordaba que el anterior no había bastado. La ley era pedagogo hacia Cristo."
+    },
+    {
+      "author": "Tom Schreiner · Comentario a Hebreos",
+      "text": "Hebreos 10:1-4 argumenta con lógica implacable: si la ley pudiera perfeccionar al adorador, los sacrificios cesarían. Pero la repetición anual del día de la expiación era \"memoria de pecados\" — recordatorio de que el problema seguía. La ley no podía quitar el pecado; solo podía señalarlo. Cristo es la sustancia que la sombra anunciaba."
+    }
+  ],
+  "n19": [
+    {
+      "author": "Agustín de Hipona · De Trinitate",
+      "text": "La perfección de los santificados no es de nuestra virtud, sino de la imputación. Cristo nos hace perfectos ante Dios por su sola ofrenda. La santificación crece en nosotros subjetivamente, pero nuestra aceptación ya es completa objetivamente. Dios nos ve en Cristo, no en nosotros mismos."
+    },
+    {
+      "author": "John Murray · Redención consumada y aplicada",
+      "text": "\"Perfectos para siempre\" (Heb 10:14) es perfecto de estado, no de grado. Es la perfección forense de la justificación, no la perfección subjetiva de la gloria. La diferencia entre la santificación definitiva (que es completa en Cristo) y la santificación progresiva (que crece en nosotros) sostiene la doctrina de la perseverancia."
+    }
+  ],
+  "n20": [
+    {
+      "author": "Crisóstomo · Homilía XXXIV sobre Hebreos",
+      "text": "Los sacrificios espirituales sustituyen a los ceremoniales. Ya no hay altar de animales, sino altar de labios. La alabanza y el bien al prójimo son los sacrificios del nuevo pacto: aceptados no por sí mismos, sino \"por medio de él\". Sin Cristo, ni la alabanza es sacrificio; con Cristo, toda vida es liturgia."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Hebreos 13:15-16 redefine el culto cristiano: sacrificio de labios (alabanza) y sacrificio de manos (bienes). No hay templo ni altar material; el creyente mismo es altar y sacerdote. Estos sacrificios son agradables a Dios porque son ofrecidos \"por medio de él\" — por Cristo, el verdadero altar."
+    }
+  ],
+  "n21": [
+    {
+      "author": "Juan Calvino · Comentario a Génesis",
+      "text": "Dios juró por sí mismo porque no había mayor. La promesa a Abraham tiene dos garantías: la palabra de Dios y el juramento de Dios. Cristo es el cumplimiento de esta doble garantía inmutable. La fe de Abraham mira al Cristo que vendría; nuestra fe mira al Cristo que vino y volverá."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "La promesa a Abraham (Gn 12:1-3) tiene dimensión cósmica: \"en ti serán benditas todas las familias de la tierra\". Hebreos 6:13-15 cita este episodio para mostrar que la esperanza cristiana descansa en promesa inmutable, no en ley temporal. Abraham esperó pacientemente y obtuvo la promesa; nosotros esperamos al mismo Dios fiel."
+    }
+  ],
+  "n22": [
+    {
+      "author": "Atanasio · Sobre la Encarnación",
+      "text": "El pacto del Sinaí fue sellado con sangre de animales y descansaba en obediencia humana. Por eso fue roto. El nuevo pacto descansa en la obediencia de Cristo y la sangre de su sacrificio inmutable. La diferencia no es de detalle, sino de fundamento: ley vs promesa, obediencia humana vs obediencia de Cristo."
+    },
+    {
+      "author": "N.T. Wright · El Nuevo Testamento y el Pueblo de Dios",
+      "text": "El Sinaí fue teofanía aterradora: humo, truenos, trompeta, prohibición de acercarse. La ley era buena pero débil por la carne (Ro 8:3). El nuevo pacto no abroga la ley, sino que la interioriza: escrita en el corazón por el Espíritu. La diferencia no es moral sino pneumatológica: el Espíritu cumple lo que la letra no podía."
+    }
+  ],
+  "n25": [
+    {
+      "author": "Agustín de Hipona · De Spiritu et Littera",
+      "text": "La ley exterior escrita en piedra solo acusaba; la ley interior escrita por el Espíritu en el corazón transforma. El nuevo pacto no es nueva obligación, sino nueva capacidad: Dios mismo obra en nosotros el querer y el hacer. La ley se vuelve deseo, no imposición: amamos lo que Dios ama porque su Espíritu está en nosotros."
+    },
+    {
+      "author": "Herman Ridderbos · Pablo: Teólogo del Nuevo Testamento",
+      "text": "El \"corazón\" en Hebreos 8:10 es la totalidad del ser interior: mente, voluntad, afecto. La ley escrita ahí no es memorización, sino transformación. El Espíritu Santo es el dedo de Dios que escribe, cumpliendo la promesa de Jeremías. Esta interioridad es la diferencia esencial entre los dos pactos."
+    }
+  ],
+  "n26": [
+    {
+      "author": "Jerónimo · Comentario a Jeremías",
+      "text": "El olvido divino es misterio de gracia. Dios no pierde la memoria; decide no recordar. En el nuevo pacto, los pecados no solo son perdonados, sino sepultados en el olvido divino. No hay más recordatorio ni memoria acusadora. El sacrificio de Cristo satisface la justicia y apaga la acusación: Dios no recuerda lo que ya fue juzgado en Cristo."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "\"No me acordaré de sus pecados\" (Heb 8:12) es la consecuencia del juicio sustitutivo. Cuando Dios juzga al Hijo en nuestro lugar, su justicia queda satisfecha. Ya no hay base para recordatorio: la deuda fue pagada. El olvido divino no es amnesia, sino absolución judicial. Dios \"olvida\" porque ya no hay nada que recordar."
+    }
+  ],
+  "n27": [
+    {
+      "author": "Crisóstomo · Homilía XV sobre Hebreos",
+      "text": "El tabernáculo fue una copia visible del cielo. Su disposición misma era enseñanza: el velo, el lugar santo, el santísimo; todo mostraba la distancia entre el hombre y Dios. Cristo es la realidad; el tabernáculo era la lección visible. Cuando la realidad llega, la sombra cesa."
+    },
+    {
+      "author": "Greg Beale · El Templo y la Misión de la Iglesia",
+      "text": "El tabernáculo del Éxodo era modelo (typos) del santuario celestial. Cada detalle — el arca, el candelabro, el altar — apuntaba a la realidad espiritual. Cristo es el verdadero tabernáculo (Jn 1:14: \"habitó entre nosotros\" = \"tabernaculizó\"). Su encarnación es la verdadera presencia de Dios entre los hombres."
+    }
+  ],
+  "n28": [
+    {
+      "author": "Filón de Alejandría · Sobre la Vida de Moisés",
+      "text": "El Lugar Santísimo era el recinto más sagrado, separado por el velo. Solo el sumo sacerdote entraba, una vez al año, con sangre. La soledad del lugar, la rareza de la entrada, la sangre necesaria — todo proclamaba: el acceso a Dios no es casual, sino mediado, costoso, sagrado."
+    },
+    {
+      "author": "Richard Gaffin · Perspectivas Pentecostales",
+      "text": "El Espíritu Santo enseñaba con el velo mismo (Heb 9:8). Mientras estuviera en pie, el camino al santísimo no estaba abierto. Esto no era ley ceremonial accidental, sino profecía visible: la separación perduraría hasta que Cristo abriera el camino con su carne partida. El velo era predicación silenciosa de la cruz."
+    }
+  ],
+  "n30": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Lucas",
+      "text": "La carne de Cristo es el velo. Su pasión lo rasgó, abriendo el camino al santísimo. Lo que fue mostrado en figura en el Éxodo se cumplió en el Gólgota: el velo rasgado es el cuerpo herido de Cristo. Por su muerte, entramos al lugar santísimo; por sus llagas, somos curados."
+    },
+    {
+      "author": "N.T. Wright · Jesús y la Victoria de Dios",
+      "text": "El rasgamiento del velo (Mt 27:51) es teológico: indica el fin del sistema del templo. El acceso a Dios ya no es por sacerdocio levítico y sacrificios, sino por la sangre de Cristo. Hebreos 10:20 interpreta el velo como la carne de Cristo: rasgado en la cruz, abre el acceso al Padre para todos los que creen."
+    }
+  ],
+  "n32": [
+    {
+      "author": "Crisóstomo · Homilía XIX sobre Hebreos",
+      "text": "Cristo no solo abrió el camino, sino que él es el camino. Es nuevo porque no existía antes de su muerte; es vivo porque él vive siempre. No hay renovación ni sucesión: una vez abierto, permanece abierto. La sangre de Cristo es el sello permanente del acceso."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Hebreos 10:20 describe el acceso cristiano como \"camino nuevo y vivo\". Nuevo (prosphaton) = recién abierto, nunca antes accesible. Vivo (zōsa) = que da vida, no estático. El contraste con el viejo camino (limitado, temporario, mortal) es absoluto. Cristo es a la vez camino, puerta, y vívida realidad de acceso."
+    }
+  ],
+  "n33": [
+    {
+      "author": "Crisóstomo · Homilía V sobre Hebreos",
+      "text": "La advertencia es seria: descuidar la salvación es más peligroso que rechazar la ley. La gracia no ablanda la severidad del juicio; la intensifica. Mayor luz, mayor responsabilidad. La salvación es \"tan grande\" que su desprecio es proporcionalmente grave. El cristiano no puede vivir con indiferencia lo que costó la sangre del Hijo."
+    },
+    {
+      "author": "John Owen · Sobre la Apostasía",
+      "text": "Hebreos 2:3 no va a los débiles, sino a los que han gustado profundamente y luego apostatan. La imposibilidad no es absoluta en Dios, sino moral: no hay otro sacrificio que el de Cristo. Rechazado éste, no queda ofrenda por el pecado. La gracia recibida con ligereza puede ser perdida con eternidad."
+    }
+  ],
+  "n34": [
+    {
+      "author": "Agustín de Hipona · Enarrationes in Psalmos 94",
+      "text": "El Salmo 95 fue escrito siglos después del desierto, pero el Espíritu habla \"hoy\". La palabra \"hoy\" hace actual cada advertencia. Lo que Israel hizo en Cades-barnea sigue siendo la tentación permanente del pueblo de Dios: oír la voz y endurecer el corazón. El \"hoy\" del Espíritu no pasa."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El Salmo 95 convierte el episodio histórico de Cades en advertencia perpetua. Israel cayó por incredulidad después de ver las obras de Dios en Egipto. La Iglesia cristiana, que ha visto mayor revelación en Cristo, tiene mayor responsabilidad. El reposo escatológico permanece abierto, pero el endurecimiento puede cerrar su entrada."
+    }
+  ],
+  "n35": [
+    {
+      "author": "Tomás de Aquino · Summa III.87.1",
+      "text": "Esta advertencia no niega la posibilidad de arrepentimiento, sino que describe la condición del apostata endurecido. Quien ha gustado del don celestial y recayó deliberadamente, coloca su corazón fuera del alcance de la gracia. No porque Dios no pueda, sino porque el apostata ya no quiere. Su caída es elección, no accidente."
+    },
+    {
+      "author": "Wayne Grudem · Teología Sistemática",
+      "text": "Hebreos 6:4-6 describe un caso real: personas que experimentaron profundamente la gracia (iluminación, don celestial, Espíritu, palabra, poderes) y luego apostatan. La \"imposibilidad\" no es absoluta, sino pastoral: renovar al apostata al arrepentimiento equivale a crucificar de nuevo al Hijo de Dios. La apostasía deliberada es blasfemia contra la gracia."
+    }
+  ],
+  "n36": [
+    {
+      "author": "Agustín de Hipona · De Correptione et Gratia",
+      "text": "No se trata de caídas cotidianas, sino de apostasía deliberada. El que conoce la verdad y la rechaza con soberbia se coloca fuera del único sacrificio. La gracia no tiene sustituto. Si Cristo es rechazado después de ser conocido, no queda otra ofrenda por el pecado. La luz rechazada se vuelve tinieblas mayores."
+    },
+    {
+      "author": "John Owen · La Apostasía de Hebreos",
+      "text": "Hebreos 10:26-27 describe pecado \"voluntario\" (hekousiōs) — no actos individuales de pecado, sino apostasía consciente y persistente. El que así peca, \"ya no queda más sacrificio por los pecados\". La \"horrenda expectación de juicio\" es el estado del que ha despreciado al Hijo de Dios y la sangre del pacto."
+    }
+  ],
+  "n37": [
+    {
+      "author": "Crisóstomo · Homilía XXXII sobre Hebreos",
+      "text": "Dios habló en Sinaí con terremoto; habla ahora desde el cielo por su Hijo. Rechazar esta palabra es mayor pecado que el de Israel en el desierto. La gracia no reduce la santidad de Dios; la exalta. \"Nuestro Dios es fuego consumidor\": no para los suyos, sino para todo lo que se opone a su santidad."
+    },
+    {
+      "author": "R.C. Sproul · La Santidad de Dios",
+      "text": "Hebreos 12:25-29 advierte que el rechazo de la palabra del Hijo trae mayor juicio que el rechazo de la ley. Dios habló en Sinaí con temblor; habla ahora desde el cielo con gracia. Pero la gracia despreciada se vuelve juicio más severo. El \"fuego consumidor\" es la santidad de Dios que no puede tolerar el pecado, y que purifica o consume."
+    }
+  ],
+  "n39": [
+    {
+      "author": "Orígenes · Homilía VI sobre Hebreos",
+      "text": "La fe es sustancia: da posesión presente de lo que se espera. No es opinión, sino fundamento real. Es \"demostración\" (elenchos) porque da evidencia de lo invisible. El creyente ve lo que el ojo no ve, porque su fe es órgano de realidades eternas. La fe verdadera tiene base objetiva, no subjetiva: la Palabra de Dios."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "Hebreos 11:1 define la fe como \"hypostasis\" (sustancia, fundamento real) y \"elenchos\" (prueba, convicción). No es fe ciega, sino fe fundada en la Palabra. La fe cristiana no es salto al vacío, sino descanso en la promesa de Dios. Da certeza de lo futuro y evidencia de lo invisible porque Dios, que no puede mentir, lo ha prometido."
+    }
+  ],
+  "n40": [
+    {
+      "author": "Juan Calvino · Comentario a Génesis",
+      "text": "Abel es el primer mártir y el primer creyente. Su fe no estaba en la ofrenda misma, sino en lo que la ofrenda significaba: la sangre del Cordero prometido. Por eso su sacrificio fue \"más excelente\": miraba por la promesa. Caín ofreció frutos de la tierra, sin fe; Abel ofreció sangre, con fe. La diferencia estaba en el corazón, no en el don."
+    },
+    {
+      "author": "Greg Beale · El Libro de las Revelaciones",
+      "text": "Hebreos 11:4 dice que Abel \"muerto, aún habla\". Su sangre clamó desde la tierra (Gn 4:10); su fe sigue testificando. Abel es tipo de Cristo: el Justo muerto por el injusto. Cristo es el verdadero Abel cuya sangre \"habla mejor que la de Abel\" (Heb 12:24) — no pidiendo venganza, sino dando perdón."
+    }
+  ],
+  "n41": [
+    {
+      "author": "Crisóstomo · Homilía XXII sobre Hebreos",
+      "text": "Enoc fue un tipo de la inmortalidad futura. Su traslación mostró que el camino a Dios no es la muerte, sino la comunión. Caminar con Dios es el resumen de la vida piadosa; agradarle, la evidencia de la fe. Sin fe es imposible agradar a Dios: la fe es la única actitud coherente ante el Dios que es y que recompensa a los que le buscan."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos XI",
+      "text": "Enoc, \"traspuesto para no ver muerte\", es figura del creyente que ya tiene vida eterna. La traslación fue milagro, pero el principio espiritual: la comunión con Dios es vida que la muerte no puede extinguir. \"Sin fe es imposible agradar a Dios\" (Heb 11:6): la fe es condición no de mérito, sino de recepción."
+    }
+  ],
+  "n42": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei XV",
+      "text": "Noé creyó lo increíble: un diluvio que no se había visto. Su fe condenó al mundo porque mostró que la salvación venía solo por la obediencia a Dios. El arca era tipo de Cristo: refugio único ante el juicio. Noé fue \"heredero de la justicia que viene por la fe\": la primera vez que aparece esta expresión en la Escritura."
+    },
+    {
+      "author": "Peter Leithart · Comentario a Hebreos",
+      "text": "Noé construyó un arca en tierra seca por fe. Su obediencia era absurda para el mundo, pero salvó a su casa. Hebreos 11:7 muestra que la fe actúa sobre lo invisible y futuro. El arca es tipo de Cristo: el único refugio ante el juicio final. La fe de Noé condenó al mundo incrédulo y lo hizo heredero de la justicia."
+    }
+  ],
+  "n43": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei XVII",
+      "text": "Abraham buscó la ciudad celestial, no la terrenal. La tierra prometida era figura; la patria verdadera está en los cielos. La peregrinación terrenal del creyente sigue el modelo del patriarca: caminar hacia lo que no se ve, esperar lo que no se tiene, confiar en quien promete sin mostrar."
+    },
+    {
+      "author": "N.T. Wright · Surprised by Hope",
+      "text": "Abraham esperaba \"la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios\" (Heb 11:10). Esta no es la Jerusalén terrenal, sino la celestial — la nueva Jerusalén que descenderá del cielo (Ap 21). La fe de Abraham era escatológica: miraba más allá de Canaán a la consumación final del pueblo de Dios."
+    }
+  ],
+  "n44": [
+    {
+      "author": "Crisóstomo · Homilía XXIV sobre Hebreos",
+      "text": "La fe de Sara descansó en la fidelidad del que promete, no en sus propias fuerzas. La concepción milagrosa de Isaac era figura del nacimiento espiritual: vida de la muerte, simiente de la esterilidad, hijo de la promesa. Sara creyó que Dios era fiel, y recibió fuerza para concebir."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "Isaac es el hijo de la promesa, no de la naturaleza. Su concepción milagrosa prefigura el nacimiento virginal de Cristo. La fe de Sara (Heb 11:11) juzgó fiel al que promete. El verdadero Israel nace de promesa, no de carne. Pablo desarrolla esto en Gálatas 4: el Israel de Dios es el de la promesa, como Isaac."
+    }
+  ],
+  "n45": [
+    {
+      "author": "Atanasio · Sobre la Encarnación",
+      "text": "Moisés sufrió \"el oprobio de Cristo\" siglos antes de la encarnación. La comunión con el pueblo de Dios es comunión con Cristo. El Mesías estaba presente en su pueblo; el oprobio de Israel era el oprobio del Ungido. Moisés estimó ese oprobio como mayores riquezas que los tesoros de Egipto: vio al Invisible."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos XI",
+      "text": "Hebreos 11:26 es cristológicamente profundo: Moisés sufrió \"el oprobio del Cristo\" (ton oneidismon tou Christou). El Cristo estaba presente en su pueblo antes de la encarnación. La comunión con el pueblo de Dios es comunión con Cristo. Los tesoros de Egipto eran temporales; el oprobio de Cristo es eterno en su valor."
+    }
+  ],
+  "n46": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "La fe divide mares y derriba muros. Lo imposible para la naturaleza es instrumento de la fe. El Mar Rojo se abrió por fe; las murallas de Jericó cayeron por fe. Estos hechos no son leyendas; son testimonios de que Dios pelea por los que confían en su palabra. La fe obra por amor y vence por obediencia."
+    },
+    {
+      "author": "Richard Pratt · Comentario a Hebreos",
+      "text": "Hebreos 11:29-30 resume dos hazañas de fe: el paso del Mar Rojo (Éx 14) y la caída de Jericó (Jos 6). Ambas fueron imposibles humanamente. La fe no calcula probabilidades, sino que obedece la palabra de Dios. El mar se abrió caminando, no esperando; los muros cayeron rodeando, no atacando. La fe obra por obediencia, no por estrategia."
+    }
+  ],
+  "n47": [
+    {
+      "author": "Crisóstomo · Homilía XXVII sobre Hebreos",
+      "text": "Los patriarcas no están muertos; son testigos vivos. Como atletas que ya terminaron su carrera, animan a los que aún corren. La Iglesia del cielo y de la tierra es una sola; los santos del pasado no son espectadores lejanos, sino familia que alienta. Estamos rodeados por su testimonio."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "La \"nube de testigos\" (Heb 12:1) no es nube de espectadores pasivos, sino de mártires (martyrōn) cuyo testimonio vive. Su fe terminada alienta nuestra fe en curso. La comunión de los santos trasciende el tiempo: Abraham, Moisés, los profetas son familia que rodea al creyente que corre con paciencia la carrera que tiene por delante."
+    }
+  ],
+  "n49": [
+    {
+      "author": "Crisóstomo · Homilía XXVI sobre Hebreos",
+      "text": "El reposo de Dios desde la creación apunta a un reposo más profundo que el de Canaán. Hay un reposo eterno que permanece abierto. El salmista, siglos después de Josué, todavía habla de \"hoy\": el reposo no fue cerrado. La Iglesia cristiana entra a ese reposo escatológico por fe, no por conquista territorial."
+    },
+    {
+      "author": "Richard Gaffin · Perspectivas Pentecostales",
+      "text": "Hebreos 4:4-5 vincula el reposo de Dios en Génesis 2:2 con el reposo escatológico del pueblo de Dios. El séptimo día de la creación prefigura el \"reposo sabático\" del pueblo de Dios (Heb 4:9). El reposo no es solo cesación de trabajo, sino comunión consumada con Dios. Cristo es el verdadero Josué que conduce a ese reposo."
+    }
+  ],
+  "n50": [
+    {
+      "author": "Agustín de Hipona · Sermón sobre el Reposo",
+      "text": "El reposo se esfuerza, no se padece. La fe no es pasividad, sino diligencia. La advertencia es real: el ejemplo de Israel es advertencia viva. Entrar al reposo exige creer hoy y no endurecer el corazón. La perseverancia es condición de la entrada, pero es perseverancia en fe, no en mérito."
+    },
+    {
+      "author": "John Piper · Future Grace",
+      "text": "Hebreos 4:11 llama a la \"diligencia\" (spoudasōmen) para entrar al reposo. Esto no es legalismo, sino fe activa. El reposo escatológico se obtiene perseverando en fe, no abandonando la confianza. El ejemplo de Israel que no entró por incredulidad es advertencia: la fe que no persevera no es fe verdadera."
+    }
+  ],
+  "n52": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei",
+      "text": "La Ciudad de Dios no es de este mundo. El cristiano es peregrino en la tierra y ciudadano del cielo. Buscar la ciudad venidera no es huir de la tierra, sino vivirla sin idolatrarla. No tenemos aquí ciudad permanente; la que buscamos es eterna."
+    },
+    {
+      "author": "N.T. Wright · Surprised by Hope",
+      "text": "Hebreos 13:14 (\"no tenemos aquí ciudad permanente, sino que buscamos la venidera\") no es dualismo platónico. La \"ciudad venidera\" es la nueva Jerusalén que descenderá del cielo (Ap 21). El cristiano no abandona el mundo, sino que vive en él como peregrino, esperando la renovación cósmica que Cristo traerá."
+    }
+  ],
+  "n53": [
+    {
+      "author": "Crisóstomo · Homilía XXIV sobre Hebreos",
+      "text": "Los patriarcas vivieron y murieron sin recibir lo prometido. Pero su fe no fue vana: la vieron de lejos y la saludaron. Dios se avergüenza de ser llamado Dios de los tales: preparó una ciudad para ellos. La verdadera fe tiene paciencia eterna: espera lo que no recibe, porque confía en quien promete."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Hebreos 11:13-16 muestra la paradoja de la fe: los patriarcas murieron sin recibir la promesa. Pero no la perdieron: la vieron de lejos, la saludaron, la confesaron. La fe verdadera no exige cumplimiento inmediato; descansa en la fidelidad del que promete. Dios \"no se avergüenza\" de ser llamado su Dios: se gloría en los peregrinos fieles."
+    }
+  ],
+  "n56": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "La inmutabilidad de Cristo es ancla del alma. Cambian las circunstancias, las épocas, las modas; Cristo permanece. Ayer en su encarnación, hoy en su intercesión, por los siglos en su reino. La misma gracia, la misma verdad, el mismo Señor. Por eso la Iglesia puede atravesar siglos sin perder su fundamento."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos XIII",
+      "text": "Hebreos 13:8 cita el Salmo 102:25-27, aplicado a Cristo. El cielo y la tierra pasarán, pero Cristo permanece. \"El mismo\" (ho autos) afirma la identidad personal del Hijo eterno. En un mundo cambiante, Cristo es inmutable: su gracia no se agota, su verdad no se altera, su poder no disminuye. Ancla del alma en toda tempestad."
+    }
+  ],
+  "n57": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei XX",
+      "text": "La ciudad que tiene fundamentos no es terrenal. Dios es su arquitecto y constructor. Apocalipsis muestra su consumación: la nueva Jerusalén que desciende del cielo. La peregrinación termina en la ciudadanía eterna. El cristiano camina hacia lo que Dios preparó desde antes de la fundación del mundo."
+    },
+    {
+      "author": "G.K. Beale · Comentario a Apocalipsis",
+      "text": "Hebreos 11:10 mira hacia \"la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios\". Apocalipsis 21 muestra esa ciudad descendiendo: la nueva Jerusalén, esposa del Cordero. La esperanza de los patriarcas se cumple en la consumación: Dios habita con los hombres en ciudad eterna, sin templo, sin mar, sin muerte."
+    }
+  ],
+  "n58": [
+    {
+      "author": "Atanasio · Sobre la Encarnación",
+      "text": "Cristo es el verdadero Cordero pascual. Como el cordero del Éxodo debía ser sin mancha y sus huesos no debían ser quebrados, así Cristo cumplió el tipo eterno en su pasión. Juan el Bautista lo señala: \"He aquí el Cordero de Dios que quita el pecado del mundo\". La Pascua judía encuentra en Cristo su cumplimiento."
+    },
+    {
+      "author": "Herman Ridderbos · El Matrimonio del Cordero",
+      "text": "Cristo como Cordero cumple la tipología pascual. El cordero del Éxodo debía ser sin defecto, macho, de un año, inmolado al atardecer, con sangre aplicada a los postes. Cristo: sin pecado, varón, en la plenitud de su vida, muerto al atardecer, su sangre aplicada a los creyentes. La Pascua era sombra; Cristo es sustancia."
+    }
+  ],
+  "n59": [
+    {
+      "author": "Crisóstomo · Homilía sobre 1 Pedro",
+      "text": "El precio de nuestra redención no fue oro o plata, sino la sangre preciosa del Hijo de Dios. Por eso pertenecemos a Dios, no a nosotros mismos. La redención es cambio de señorío: fuimos esclavos del pecado y la muerte; ahora somos siervos de la justicia. La sangre de Cristo es la moneda del reino eterno."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "Hebreos 9:14 y 1 Pedro 1:18-19 vinculan la sangre de Cristo con la redención. \"Redimir\" (apolutroō) significa liberar pagando un precio. El precio no fue metafórico: fue la vida del Hijo de Dios derramada. Por eso el creyente pertenece a Dios: fue comprado. La cruz es transacción, no solo demostración de amor."
+    }
+  ],
+  "n60": [
+    {
+      "author": "Filón de Alejandría · Sobre la Decálogo",
+      "text": "Sinaí mostraba la santidad de Dios bajo la ley: fuego, oscuridad, temblor, trompeta. El pueblo no podía soportar la teofanía; aun Moisés temblaba. La ley no podía salvar; solo mostrar la distancia. El cristiano no viene a Sinaí, sino a Sión. Pero recordar Sinaí es aprender a temer al Dios santo."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Hebreos 12:18-21 describe el Sinaí como monte de terror. La ley vino con truenos y oscuridad; aun los animales que tocaran el monte debían morir. Esto no es leyenda, sino pedagogía: la santidad de Dios es mortal para el pecador. El cristiano viene a Sión, pero la diferencia no anula la santidad; la cumple en gracia."
+    }
+  ],
+  "n61": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Moisés fue fiel como siervo; Cristo lo es como Hijo. La fidelidad es la misma; la dignidad es infinitamente distinta. Moisés testified de Cristo; Cristo es el cumplimiento. La casa de Dios pertenece al Hijo, no al siervo. Por eso Cristo es digno de mayor gloria que Moisés, como el constructor tiene más honor que la casa."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "Hebreos 3:1-6 contrasta a Moisés (fiel siervo) con Cristo (Hijo fiel). Moisés fue testigo de lo que se iba a decir; Cristo es el cumplimiento. La casa de Dios es la Iglesia, y Cristo es el Hijo sobre ella. La superioridad no es de fidelidad (ambos fueron fieles), sino de identidad: Hijo vs siervo, constructor vs casa."
+    }
+  ],
+  "n62": [
+    {
+      "author": "Juan Calvino · Comentario a Hebreos",
+      "text": "Doble ancla: la promesa y el juramento. Dios no puede mentir; y al jurar por sí mismo, doblemente se compromete. Esta esperanza entra detrás del velo; es decir, llega a la presencia misma de Dios. La fe tiene ancla en el santísimo, donde Cristo entró como precursor."
+    },
+    {
+      "author": "Richard Pratt · Comentario a Hebreos",
+      "text": "Hebreos 6:16-19 argumenta desde la práctica humana: el juramento pone fin a toda controversia. Si los hombres creen un juramento, cuánto más el juramento de Dios. La esperanza cristiana tiene doble inmutabilidad: la promesa y el juramento. Por eso el creyente tiene \"un ancla del alma, segura y firme, que penetra hasta dentro del velo\"."
+    }
+  ],
+  "n63": [
+    {
+      "author": "Crisóstomo · Homilía XI sobre Hebreos",
+      "text": "El ancla no está en la tierra, sino en el cielo. No se lanza al mar, sino detrás del velo. Cristo mismo es quien la sostiene. Mientras el creyente es batido por la tormenta, su alma está firme porque está atada al santísimo. Cristo es precursor: entró primero, y nosotros estamos atados a él."
+    },
+    {
+      "author": "John Piper · Future Grace",
+      "text": "Hebreos 6:19-20 usa la imagen del ancla para la esperanza cristiana. Las anclas normales se hunden en el mar; esta entra \"dentro del velo\" — al santuario celestial donde Cristo entró como precursor. La esperanza no es optimismo, sino cordón atado a Cristo glorificado. Donde está el ancla, está el barco; donde está Cristo, está la Iglesia."
+    }
+  ],
+  "n64": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "El pacto es eterno porque descansa en la sangre de Cristo. El Pastor dio su vida por las ovejas. La resurrección es prueba del pacto cumplido. Por eso el pueblo es santificado y capacitado para hacer la voluntad de Dios. El Pastor y las ovejas, el Mediador y el pueblo, están unidos en pacto eterno."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "Hebreos 13:20-21 describe el pacto como \"eterno\" — no temporario como el del Sinaí. La sangre del pacto es la de Cristo, derramada una vez para siempre. El Pastor resucitado garantiza la continuidad del pacto. La consecuencia: Dios obra en los suyos \"lo que es agradable delante de él por Jesucristo\". El pacto eterno es obra trinitaria."
+    }
+  ],
+  "n65": [
+    {
+      "author": "Atanasio · Carta a Adelphus",
+      "text": "El Salmo 2 anuncia la institución del Rey-Mesías. La generación eterna del Hijo se manifesta en su resurrección y entronización. \"Hoy te he engendrado\" se cumple en la resurrección (Hch 13:33), no en la encarnación. Cristo es el Rey ungido que hereda las naciones."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "Hebreos 1:5 cita el Salmo 2:7 (\"mi Hijo eres tú, yo te he engendrado hoy\"). El \"hoy\" no es día calendárico, sino eterno: la generación del Hijo es eterna. Pero se aplica proféticamente a la resurrección (Hch 13:33), entronización y filiación mesiánica declarada. Cristo es el Rey del Salmo 2, heredero de las naciones."
+    }
+  ],
+  "n66": [
+    {
+      "author": "Juan Calvino · Comentario a los Salmos",
+      "text": "El Salmo 110 es el texto del AT más citado en el NT. Combina realeza y sacerdocio en una sola persona. Cristo es Señor sentado a la diestra, y sacerdote eterno. Ningún ángel, ningún rey terrenal, puede igualarlo. David lo llama \"Señor\" — el Mesías es más que descendiente de David, es su Señor."
+    },
+    {
+      "author": "Peter O'Brien · Comentario a Hebreos",
+      "text": "Hebreos 1:13 cita el Salmo 110:1: \"siéntate a mi diestra hasta que ponga a tus enemigos por estrado de tus pies\". Cristo reina ahora, esperando la consumación final. El Salmo 110:4 (\"sacerdote para siempre según el orden de Melquisedec\") es la clave del argumento central de Hebreos: Cristo es Rey-Sacerdote eterno."
+    }
+  ],
+  "n68": [
+    {
+      "author": "Agustín de Hipona · Enarrationes in Psalmos 8",
+      "text": "El Salmo 8 habla del hombre en general, pero solo se cumple en Cristo. Él es el Hijo del Hombre que bajó para ser coronado. La corona viene después de la muerte. La humillación es camino a la gloria. Cristo fue hecho \"un poco menor que los ángeles\" por su pasión, para ser coronado de gloria y honra."
+    },
+    {
+      "author": "G.K. Beale · El Templo y la Misión de la Iglesia",
+      "text": "Hebreos 2:6-9 cita el Salmo 8 aplicándolo a Cristo. El Salmo celebra la dignidad humana dada en la creación; Hebreos muestra que esa dignidad solo se realiza en Cristo. \"Coronado de gloria y honra a causa del padecimiento de la muerte\": la gloria escatológica viene por la cruz. Cristo es el Hijo del Hombre que recupera para la humanidad lo perdido en Adán."
+    }
+  ],
+  "n69": [
+    {
+      "author": "Jerónimo · Comentario a los Salmos",
+      "text": "El \"hoy\" del Salmo 95 no se limitó a una época. Cada generación tiene su hoy. El Espíritu Santo habla en cada lectura. La Palabra es viva; su llamada es presente. Endurecer el corazón es desperdiciar el día de la gracia."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El \"hoy\" del Salmo 95, citado en Hebreos 3:7, hace actual cada advertencia. El Espíritu habla presente, no pasado. Cada generación de la Iglesia recibe el llamado: \"no endurezcáis vuestros corazones\". El reposo escatológico permanece abierto, pero la incredulidad puede cerrar su entrada, como en Cades-barnea."
+    }
+  ],
+  "n70": [
+    {
+      "author": "Crisóstomo · Homilía XIV sobre Hebreos",
+      "text": "Jeremías profetizó el nuevo pacto cuando el antiguo aún funcionaba. Eso prueba su insuficiencia: si el primero hubiera sido perfecto, no se buscaría lugar para un segundo. La profecía misma era juicio del primer pacto: Dios anunciaba su insuficiencia. Pero era también promesa: no dejaría a su pueblo sin pacto verdadero."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "El nuevo pacto de Jeremías 31 no es solo renovación del Sinaítico, sino realidad de naturaleza distinta. El pacto antiguo era exterior: tablas de piedra, ley escrita. El nuevo pacto es interior: ley en el corazón, perdón completo, conocimiento universal de Dios. Cristo es el mediador que lo instituye con su sangre."
+    }
+  ],
+  "n71": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Cristo reúne los dos oficios: rey y sacerdote. En Zacarías se profetizó: \"habrá sacerdote en su trono\". En Cristo, sacerdocio y realeza coinciden: él reina sentándose, y sacerdote se ofrece. Dos oficios en una sola persona. Ni Aarón ni David pudieron unirlos; Cristo los une para siempre."
+    },
+    {
+      "author": "Herman Ridderbos · El Matrimonio del Cordero",
+      "text": "Zacarías 6:13 (\"habrá sacerdote en su trono\") prefiguraba a Cristo, el Rey-Sacerdote. Hebreos 8:1 afirma: Cristo \"se sentó a la diestra del trono de la Majestad en los cielos, ministro del santuario\". Realeza y sacerdocio coinciden en una persona. El Rey es Sacerdote; el Sacerdote es Rey. La obra sacerdotal (ofrecerse) y la obra real (reinar) son inseparables en Cristo."
+    }
+  ],
+  "n72": [
+    {
+      "author": "Atanasio · Sobre la Encarnación",
+      "text": "El sacrificio de Cristo tiene eficacia cósmica. No solo purifica a los hombres, sino el santuario celestial mismo. Las figuras se purificaban con sangre animal; la realidad, con la sangre del Hijo. Su muerte santifica el orden cósmico: lo que el pecado de ángeles y hombres manchó, la sangre de Cristo lo limpia."
+    },
+    {
+      "author": "Greg Beale · El Templo y la Misión de la Iglesia",
+      "text": "Hebreos 9:23-24 enseña que \"las cosas celestiales mismas\" necesitaban purificación con \"mejores sacrificios\". Esto no significa que el cielo sea pecaminoso, sino que el pecado humano ha contaminado el orden cósmico que el santuario celestial representa. La sangre de Cristo purifica el cosmos, no solo a individuos. Su muerte es cósmicamente eficaz."
+    }
+  ],
+  "n73": [
+    {
+      "author": "Crisóstomo · Homilía IX sobre Hebreos",
+      "text": "La lucha contra la incredulidad es comunitaria. Cada día es \"hoy\". La exhortación mutua es remedio contra el endurecimiento. El pecado engaña aislando; la comunión desengaña. Nadie se salva solo. La Iglesia es cuerpo que se cuida: cada miembro exhorta al otro mientras dure el \"hoy\" de la gracia."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · Vida en Comunidad",
+      "text": "Hebreos 3:13 manda exhortarnos mutuamente \"cada día, entre tanto que se dice: Hoy\". El cristiano no puede vivir aislado. El pecado engaña mediante el aislamiento; la fe se fortalece en la comunión. La exhortación mutua no es opción, sino medicina contra la apostasía. El \"hoy\" es presente que se pierde si no se aprovecha."
+    }
+  ],
+  "n74": [
+    {
+      "author": "John Owen · Sobre Hebreos III",
+      "text": "\"Considerad\" (katanoeō) es acción intensa del pensamiento. Cristo es apóstol (enviado del Padre) y sumo sacerdote (que sube al Padre). Considerarlo es la medicina contra la deserción. La contemplación de Cristo es la mejor exhortación: cuanto más le conocemos, más firme es nuestra confianza."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Hebreos 3:1 llama a Cristo \"apóstol y sumo sacerdote de nuestra profesión\". Apóstol = enviado del Padre (misión descendente). Sumo sacerdote = que sube al Padre (misión ascendente). La fe cristiana se centra en esta persona: el que bajó del cielo para representar a Dios ante nosotros, y subió al cielo para representarnos ante Dios."
+    }
+  ],
+  "n75": [
+    {
+      "author": "Crisóstomo · Homilía sobre 1 Pedro",
+      "text": "Cristo es la piedra angular que une judío y gentil en un solo pueblo sacerdotal. Ya no hay casta sacerdotal; todos los creyentes son sacerdotes. Cada cristiano ofrece sacrificios espirituales y tiene acceso directo al Padre por el único Mediador. El sacerdocio universal es consecuencia del sacerdocio único de Cristo."
+    },
+    {
+      "author": "Martin Lutero · A la Nobleza Cristiana",
+      "text": "1 Pedro 2:9 establece el sacerdocio universal de todos los creyentes. No hay casta sacerdotal en el nuevo pacto. Cada cristiano tiene acceso directo a Dios por Cristo. El sacerdocio católico romano de orden es negación del sacerdocio único de Cristo y del sacerdocio universal de los creyentes. Tres verdades: un Mediador, un sacrificio, un sacerdocio universal."
+    }
+  ],
+  "n76": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei X",
+      "text": "Los sacrificios cristianos no son animales muertos, sino vidas vivas. El cuerpo mismo, santificado, es ofrenda. El culto racional es el del entendimiento entregado, no de la sangre derramada externamente. Toda la vida del creyente es liturgia cuando es ofrecida a Dios por Cristo."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "Romanos 12:1 redefine el culto cristiano: el cuerpo mismo, presentado vivo, es sacrificio. No hay templo material ni altar de animales; el creyente es altar, sacerdote y víctima — pero víctima viva. El culto racional (logikē latreia) es respuesta a las misericordias de Dios, no medio de mérito. Toda la vida se vuelve adoración."
+    }
+  ],
+  "n77": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a 1 Corintios",
+      "text": "La Iglesia es ahora el templo de Dios. No hay edificio sagrado en el nuevo pacto; el templo es el pueblo. Donde está el Espíritu, allí habita Dios. Esto es cumplimiento del tabernáculo y del templo: la presencia de Dios ya no es en figura, sino en realidad, por el Espíritu que mora en la Iglesia."
+    },
+    {
+      "author": "G.K. Beale · El Templo y la Misión de la Iglesia",
+      "text": "1 Corintios 3:16 y Efesios 2:22 aplican al pueblo de Dios la categoría de templo. La presencia de Dios, antes localizada en un edificio, ahora habita en la comunidad redimida por el Espíritu. La Iglesia es el templo escatológico, cumpliendo lo que el tabernáculo y el templo de Salomón solo figuraban."
+    }
+  ],
+  "n78": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "El nombre Emmanuel encierra el misterio de la encarnación. Dios se ha hecho hombre para que el hombre pudiera acercarse a Dios. Su presencia ya no es símbolo, sino persona. Emmanuel no es título, sino realidad: Dios habita corporalmente en Cristo, y por Cristo, en su Iglesia."
+    },
+    {
+      "author": "Herman Bavinck · Teología Reformada",
+      "text": "Mateo 1:23 cita Isaías 7:14 (\"Emmanuel = Dios con nosotros\"). El nombre es teológico, no solo descriptivo. Cristo es verdaderamente Dios con nosotros: no en figura, sino en persona. La encarnación es el cumplimiento del tabernáculo: la presencia de Dios ya no es tienda, sino carne humana asumida por el Verbo eterno."
+    }
+  ],
+  "n79": [
+    {
+      "author": "Agustín de Hipona · Homilías sobre Juan",
+      "text": "La verdadera adoración no depende del lugar. No Gerizim ni Jerusalén, sino el espíritu. El Padre busca tales adoradores. El nuevo pacto universaliza y espiritualiza el culto. La adoración cristiana es en espíritu (por el Espíritu) y en verdad (en Cristo, la verdad). Ya no hay lugar sagrado; hay pueblo santificado."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Juan",
+      "text": "Juan 4:23-24 redefine la adoración: ya no está ligada a lugar (Gerizim vs Jerusalén), sino \"en espíritu y verdad\". \"En espíritu\" = por el Espíritu Santo que habita en el creyente. \"En verdad\" = en Cristo, quien es la verdad (Jn 14:6). El Padre busca tales adoradores: la nueva era inaugura adoración pneumatológica y cristocéntrica."
+    }
+  ],
+  "n80": [
+    {
+      "author": "Crisóstomo · Homilía XXIV sobre 1 Corintios",
+      "text": "La comunión es necesaria. No se adora a Dios en aislamiento. La congregación es remedio contra el enfriamiento. Cuanto más cerca está el día, más urgente es reunirse: la Iglesia se prepara para su Esposo. El \"no dejando de congregarnos\" no es sugerencia, sino mandato de perseverancia comunitaria."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · Vida en Comunidad",
+      "text": "Hebreos 10:24-25 manda \"no dejar de congregarnos\". El cristiano aislado se enfría. La comunión es medio de gracia: la fe se fortalece en el cuerpo. El \"uno al otro\" es esencial: el cristianismo no es solo vertical (yo-Dios), sino horizontal (yo-hermano-Dios). La Iglesia visible es el lugar donde se vive la fe invisible."
+    }
+  ],
+  "n81": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Cristo no trajo mejora de la ley, sino sustitución. La esperanza cristiana es la de acercarse a Dios directamente, sin velos, sin mediadores terrenales. La ley no perfeccionó nada, pero introdujo una mejor esperanza: la del nuevo pacto, mediado por Cristo, que nos acerca al Padre."
+    },
+    {
+      "author": "Tom Schreiner · Comentario a Hebreos",
+      "text": "Hebreos 7:19 contrasta la ley (que \"nada perfeccionó\") con la \"mejor esperanza\" introducida por Cristo. La diferencia no es de grado, sino de categoría: la ley era sombra; Cristo es sustancia. La \"mejor esperanza\" es la de acceso directo a Dios, garantizado por el sacerdocio inmutable de Cristo. La ley señalaba; Cristo realiza."
+    }
+  ],
+  "n82": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei",
+      "text": "La patria del cristiano no está en la tierra. Es peregrino mientras vive. Pero su peregrinación tiene destino: la ciudad que Dios preparó. Dios se gloría en ser llamado Dios de los peregrinos, porque ellos tienen fe. Abraham esperó la ciudad; nosotros esperamos la misma ciudad, vista ya desde más cerca."
+    },
+    {
+      "author": "N.T. Wright · Surprised by Hope",
+      "text": "Hebreos 11:16 (\"deseaban una mejor, esto es, celestial\") no enseña un cielo etéreo inmaterial, sino la \"ciudad que tiene fundamentos\" (Heb 11:10) — la nueva Jerusalén que descenderá del cielo a la tierra (Ap 21). La esperanza cristiana no es escapar del mundo, sino heredar el mundo renovado. La \"patria celestial\" es cósmicamente nueva."
+    }
+  ],
+  "n83": [
+    {
+      "author": "Crisóstomo · Homilía XXVII sobre Hebreos",
+      "text": "La vida cristiana es carrera, no paseo. Exige despojarse, mirar a Cristo, tener paciencia. Cristo es autor y consumador: empieza la fe en nosotros y la lleva a su perfección. Mirarlo a él, no a las circunstancias. El pecado que nos asedia es lo que más estorba: despojémonos de él."
+    },
+    {
+      "author": "John Piper · Future Grace",
+      "text": "Hebreos 12:1-2 describe la vida cristiana como carrera con paciencia (hypomonē). Tres exhortaciones: despojarse del peso y el pecado, correr con paciencia, mirar a Jesús. Cristo es \"autor y consumador\" (archēgon kai teleiōtēn) de la fe: la inicia y la perfecciona. Mirar a Cristo es el secreto de la perseverancia."
+    }
+  ],
+  "n84": [
+    {
+      "author": "Crisóstomo · Homilía XXXI sobre Hebreos",
+      "text": "La sangre de Abel clamaba venganza; la sangre de Cristo clama perdón. La sangre de Abel acusaba al fratricida; la de Cristo justifica al pecador. La misma sustancia, opuesta palabra: la del nuevo pacto habla mejor. La sangre de Cristo es la última palabra, y es palabra de paz."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos XII",
+      "text": "Hebreos 12:24 contrasta la sangre de Abel con la de Cristo. La de Abel clamó desde la tierra exigiendo justicia (Gn 4:10); la de Cristo, rociada sobre el altar celestial, clama gracia. La sangre de Cristo \"habla mejor\" (kreittona lalei): no pide venganza, sino que ofrece perdón. La cruz es la última palabra, y es palabra de reconciliación."
+    }
+  ],
+  "n85": [
+    {
+      "author": "Crisóstomo · Homilía XXXII sobre Hebreos",
+      "text": "Abraham y Lot hospedaron ángeles sin saberlo. La hospitalidad es virtud cristiana porque abre la casa al extraño como a Cristo. En el nuevo pacto, el extranjero es imagen del Señor que un día fue forastero. La hospitalidad es sacrificio espiritual: ofrecer techo, mesa, corazón."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · Vida en Comunidad",
+      "text": "Hebreos 13:2 manda hospitalidad porque \"algunos, sin saberlo, hospedaron ángeles\". La hospitalidad cristiana no es solo cortesía, sino apertura a la visita de Dios. El extranjero, el pobre, el marginado son imagen de Cristo (Mt 25:40). La hospitalidad es ministerio: ofrecer espacio a quien Dios envía a nuestra puerta."
+    }
+  ],
+  "n86": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Juan",
+      "text": "Cristo es la última palabra del Padre. Toda profecía converge en él. Moisés anunció un profeta como él; los profetas testimoniaron del Mesías. En Cristo, la revelación alcanza su plenitud: ya no hay más palabras que añadir. El que tiene al Hijo tiene todo; el que no tiene al Hijo, nada tiene del Padre."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "Hebreos 1:1-2 resume la historia de la revelación: en el pasado, Dios habló por fragmentos (polymerōs) y de muchas maneras (polytropōs) por los profetas; en estos últimos días, nos habló en el Hijo. Cristo no es otro profeta más, sino la Palabra final del Padre. La revelación es escatológicamente cristológica: termina y se perfecciona en Cristo."
+    }
+  ],
+  "n87": [
+    {
+      "author": "Atanasio · Contra los Arianos",
+      "text": "El Padre mismo llama al Hijo \"Dios\" y le atribuye un trono eterno. No hay título más alto. La realeza de Cristo no se conquista; es eterna. Su cetro es equidad: justicia que juzga y salva. El trono de Cristo es eterno: \"tu trono, oh Dios, por el siglo del siglo\"."
+    },
+    {
+      "author": "Richard Bauckham · Jesús y el Dios de Israel",
+      "text": "Hebreos 1:8 cita el Salmo 45:6-7, aplicando a Cristo el título \"Dios\" (ho theos). El Padre llama al Hijo \"Dios\". Esto es teológicamente explosivo: en el AT, \"Dios\" se reserva para Yahvé. Hebreos aplica al Hijo la identidad divina. Cristo no es un ser creado; es Dios verdadero, eterno Rey."
+    }
+  ],
+  "n88": [
+    {
+      "author": "Crisóstomo · Homilía III sobre Hebreos",
+      "text": "Cristo no solo creó, sino que sustenta. La creación no es autónoma: es sostenida por la palabra de su poder. Si dejara de sostener, dejaría de ser. Cristo es el logos del cosmos: la razón y el poder que mantienen el universo en existencia. Su obra creadora es continua."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "Hebreos 1:3 afirma que Cristo \"sustenta todas las cosas con la palabra de su poder\" (pherōn ta panta). El verbo \"pherō\" significa llevar, sostener activamente. Cristo no es un demiurgo que creó y se retiró; es el sostén continuo de la creación. La providencia es obra cristológica: en Cristo, el universo tiene cohesión (Col 1:17)."
+    }
+  ],
+  "n89": [
+    {
+      "author": "Crisóstomo · Homilía XXXIII sobre Hebreos",
+      "text": "El altar cristiano no es terrenal. Los sacerdotes levíticos comían del altar del santuario; pero ese sistema ha pasado. Nuestro altar es Cristo; nuestra comida, su mesa. Quien sigue en el viejo sistema pierde el nuevo. No hay vuelta atrás: el altar de la cruz es definitivo."
+    },
+    {
+      "author": "Tom Schreiner · Comentario a Hebreos",
+      "text": "Hebreos 13:10 (\"tenemos un altar\") contrasta el altar cristiano (Cristo, su cruz) con el altar levítico. Los sacerdotes del AT comían del altar del santuario; pero el cristiano come de la mesa del Señor, que es Cristo. Quien permanece en el sistema levítico no puede comer del altar cristiano: las dos economías son incompatibles."
+    }
+  ],
+  "n90": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Cristo padeció fuera de la puerta, como los sacrificios del día de expiación eran quemados fuera del campamento. Salir a él es salir del sistema viejo, llevar su oprobio. La santidad cristiana es extrañamiento del mundo: la cruz es fuera de los muros, y la Iglesia le sigue."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos XIII",
+      "text": "Hebreos 13:12-13 usa la tipología del día de expiación: los sacrificios por el pecado eran quemados \"fuera del campamento\" (Lv 16:27). Cristo padeció \"fuera de la puerta\" de Jerusalén. Salir a él \"fuera del campamento\" significa abandonar el judaísmo y abrazar el oprobio de la cruz. La santidad cristiana es identificación con el Cristo crucificado fuera de los muros."
+    }
+  ],
+  "n91": [
+    {
+      "author": "Crisóstomo · Homilía sobre Romanos",
+      "text": "El cristiano ofrece tres sacrificios: alabanza (labios), bien (manos), comunión (bolsa). El nuevo pacto no carece de ofrendas; las transforma. La generosidad es culto aceptable cuando nace de la fe en Cristo. No dar es no adorar: el que cierra su corazón, cierra su culto."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "Hebreos 13:16 manda \"hacer bien y comunicar\" (koinōnias) como sacrificios que agradan a Dios. El cristianismo no es solo culto vertical (alabanza), sino horizontal (beneficencia y comunión). La generosidad es liturgia: el creyente que comparte sus bienes ofrece culto a Dios. La fe sin obras de caridad está muerta (Stg 2:17)."
+    }
+  ],
+  "n92": [
+    {
+      "author": "Agustín de Hipona · De Bono Coniugali",
+      "text": "La santidad no es solo culto; es vida. El matrimonio es honroso porque Dios lo instituyó. El lecho sin mancilla es altar de pureza. El cristianismo no desprecia el cuerpo: lo santifica en el pacto conyugal. La fornicación y el adulterio serán juzgados por Dios, defensor del lecho conyugal."
+    },
+    {
+      "author": "John Piper · This Momentary Marriage",
+      "text": "Hebreos 13:4 defiende el matrimonio como honroso y el lecho como sin mancilla. La santidad no es solo culto, sino vida. El cristianismo no desprecia el cuerpo: lo santifica en el pacto conyugal. El matrimonio es misterio de Cristo y la Iglesia (Ef 5:32): la fidelidad conyugal es predicación visible del Evangelio."
+    }
+  ],
+  "n93": [
+    {
+      "author": "Crisóstomo · Homilía XXXIII sobre Hebreos",
+      "text": "El contentamiento nace de la promesa, no de la abundancia. La fórmula \"no te desampararé\" recorre toda la Escritura desde Josué. El cristiano la reclama: si Dios está, nada falta. La avaricia es olvido de la promesa. El contentamiento es fe activa: confiar que el Dios que prometió proveerá."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos XIII",
+      "text": "Hebreos 13:5-6 cita Josué 1:5 y el Salmo 118:6. La promesa \"no te dejaré ni te desampararé\" sustenta el contentamiento. La avaricia se cura no con pobreza, sino con la presencia de Dios. El creyente puede decir: \"El Señor es mi ayudador; no temeré lo que me pueda hacer el hombre\". El contentamiento es fe aplicada a la provisión."
+    }
+  ],
+  "n94": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "La memoria de los pastores fieles no es nostalgia; es imitación. Su fe tiene fruto visible: el resultado de su conducta. La verdad enseñada se verifica en la vida vivida. Imitar la fe es seguir a Cristo a través de sus siervos. Los pastores mueren, pero su fe permanece como modelo."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Hebreos",
+      "text": "Hebreos 13:7 llama a recordar a los pastores que hablaron la palabra de Dios. La prueba de su fe es el \"resultado de su conducta\" — cómo terminaron. La verdad enseñada se verifica en la vida vivida. Imitar la fe de los pastores es seguir su ejemplo de fidelidad a Cristo, no copiar sus personalidades."
+    }
+  ],
+  "n95": [
+    {
+      "author": "Crisóstomo · Homilía XXXIV sobre Hebreos",
+      "text": "El gobierno de la Iglesia no es opresión; es cuidado pastoral. Los pastores velan y darán cuenta. El pueblo se sujeta por confianza, no por temor. La alegría del pastor es señal de salud del rebaño. El que se sujeta con gozo, recibe fruto; el que murmura, pierde provecho."
+    },
+    {
+      "author": "John Stott · La Iglesia",
+      "text": "Hebreos 13:17 manda obediencia y sujeción a los pastores. El gobierno pastoral no es tiranía, sino stewardship: los pastores \"velan por vuestras almas, como quienes han de dar cuenta\". La autoridad pastoral es ministerial, no despótica. El pueblo se sujeta confiando que el pastor busca su bien, no el propio."
+    }
+  ],
+  "n96": [
+    {
+      "author": "Crisóstomo · Homilía XXXIV sobre Hebreos",
+      "text": "El autor pide oración, aun siendo maestro. La intercesión mutua es ley del cuerpo. Nadie, por alto que sea su oficio, está fuera de la dependencia del pueblo. La buena conciencia no exime de la oración; la pide. El pastor necesita al pueblo tanto como el pueblo al pastor."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · Vida en Comunidad",
+      "text": "Hebreos 13:18 muestra al autor pidiendo oración, aun siendo maestro. La intercesión mutua es esencial al cuerpo de Cristo. Ningún pastor, por alto que sea su oficio, está fuera de la dependencia del pueblo. La buena conciencia no exime de la oración; la pide. La Iglesia es red de intercesión mutua."
+    }
+  ],
+  "n97": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Josué el sumo sacerdote fue coronado en figura de Cristo. El Vástago prometido une el sacerdocio y la realeza. Cristo es el verdadero Josué (Jesús), coronado con gloria después de la pasión. El tipo cede al antitipo; la figura a la sustancia."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "Zacarías 6:11-13 coronó a Josué como tipo de Cristo, el \"Vástago\" (semah) davídico. Cristo, el verdadero Josué (Jesús = Josué), une sacerdocio y realeza en una persona. Hebreos aplica esto: Cristo es \"sacerdote sobre el trono\" (Heb 8:1). El Rey es Sacerdote; el Sacerdote es Rey. El tipo cede al antitipo."
+    }
+  ],
+  "n98": [
+    {
+      "author": "Crisóstomo · Homilía XLVI sobre Juan",
+      "text": "El maná fue figura; Cristo es el verdadero pan. El maná saciaba el hambre del cuerpo y los que lo comían morían. Cristo da vida eterna. El Antiguo Testamento apuntaba a este pan verdadero que descendió del cielo para dar vida al mundo."
+    },
+    {
+      "author": "Herman Ridderbos · El Evangelio según Juan",
+      "text": "Juan 6:32-33 contrasta el maná del AT con el \"verdadero pan del cielo\". El maná era figura; Cristo es la sustancia. El maná saciaba el hambre física; Cristo da vida eterna. El pan de Dios es el que descendió del cielo y da vida al mundo. Cristo es el pan de la nueva Pascua, comida de la nueva alianza."
+    }
+  ],
+  "n99": [
+    {
+      "author": "Atanasio · Carta sobre los Salmos",
+      "text": "La aspersión sellaba el pacto. Sin sangre no hay pacto, sin derramamiento no hay remisión. El libro, el pueblo, el tabernáculo: todo era rociado. Esta sangre era figura; la de Cristo rociada sobre nuestras conciencias, realidad."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos IX",
+      "text": "Hebreos 9:19-22 muestra que \"casi todo es purificado con sangre según la ley\". La aspersión sellaba el pacto del Sinaí (Éx 24:8). Sin sangre no hay pacto, sin derramamiento no hay remisión. El libro, el pueblo, el tabernáculo: todo era rociado. Esta sangre era figura; la de Cristo, rociada sobre nuestras conciencias, es realidad."
+    }
+  ],
+  "n100": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "La aspersión del nuevo pacto es interior. La sangre de Cristo sobre la conciencia, el agua limpia del Espíritu sobre la vida. Ezequiel lo prometió; Cristo lo cumple. La pureza ceremonial se vuelve realidad del alma. El corazón es rociado, no de sangre de animales, sino de la sangre del Cordero."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Hebreos 10:22 describe el acceso cristiano: \"corazones purificados de mala conciencia, cuerpos lavados con agua limpia\". La aspersión del nuevo pacto es interior: sangre de Cristo en la conciencia, agua del Espíritu en la vida. Ezequiel 36:25-27 lo prometió (\"esparciré agua limpia... daré corazón nuevo\"); Cristo lo cumple. La pureza ceremonial se vuelve realidad del alma."
+    }
+  ],
+  "n101": [
+    {
+      "author": "Atanasio · Carta a Adelphus",
+      "text": "Cristo se ofreció \"mediante el Espíritu eterno\". El Espíritu no es una virtud pasajera, sino el poder divino por el que el Hijo se ofrece al Padre. La Trinidad entera obra en el sacrificio del Calvario: el Padre recibe, el Hijo ofrece, el Espíritu consagra."
+    },
+    {
+      "author": "John Owen · Sobre el Espíritu Santo",
+      "text": "Hebreos 9:14 dice que Cristo \"mediante el Espíritu eterno se ofreció a sí mismo\". El Espíritu es el agente que consagra y sostiene la ofrenda de Cristo. La cruz es obra trinitaria: el Padre recibe la ofrenda, el Hijo se ofrece, el Espíritu santifica el sacrificio. La sangre de Cristo es \"sangre del pacto eterno\" (Heb 13:20) porque es sangre del Hijo ofrecida por el Espíritu eterno."
+    }
+  ],
+  "n102": [
+    {
+      "author": "Crisóstomo · Homilía XI sobre Hebreos",
+      "text": "Los herederos de la promesa somos los creyentes en Cristo. La promesa hecha a Abraham llega a nosotros por la fe. El juramento divino garantiza la herencia. No hay incertidumbre: dos cosas inmutables, promesa y juramento."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "Hebreos 6:17-18 muestra que \"los herederos de la promesa\" son los creyentes en Cristo, herederos según la fe de Abraham (Gá 3:29). La promesa hecha a Abraham llega a nosotros por la fe en Cristo. El juramento divino garantiza la herencia. No hay incertidumbre: dos cosas inmutables (promesa y juramento) sostienen la esperanza cristiana."
+    }
+  ],
+  "n103": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "La herencia eterna no es terrenal, sino celestial. Cristo la garantiza como mediador del nuevo pacto. Su muerte rescató a los del primer pacto y abrió la herencia a los del nuevo. Una sola salvación en dos dispensaciones: la del Cristo que vendría y la del Cristo que vino."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "Hebreos 9:15 describe a Cristo como \"mediador de un nuevo pacto, para que... los llamados reciban la promesa de la herencia eterna\". La herencia no es terrenal (Canaña), sino celestial (cf. 1 P 1:4: \"incorruptible, incontaminada e inmarcesible\"). Cristo la garantiza con su muerte, que rescata a los del primer pacto (los santos del AT) y abre la herencia a los del nuevo."
+    }
+  ],
+  "n104": [
+    {
+      "author": "Crisóstomo · Homilía XXXIII sobre Hebreos",
+      "text": "Hageo anunció un último temblor. Lo movible será removido: el antiguo sistema, los cielos y la tierra. Lo que queda es el reino inconmovible de Cristo. La gracia es nuestra: sirve con reverencia, porque tu reino permanece. El reino que recibimos no puede ser sacudido."
+    },
+    {
+      "author": "Anthony Hoekema · La Biblia y el Futuro",
+      "text": "Hebreos 12:27-28 cita Hageo 2:6: \"una vez más\" conmoveré no solo la tierra, sino también el cielo. Lo movible (el orden presente) será removido; lo inconmovible (el reino de Cristo) permanece. \"Recibiendo nosotros un reino inconmovible, tengamos gracia\". La esperanza escatológica da estabilidad presente en medio de sacudidas personales y cósmicas."
+    }
+  ]
+};
+
+// Merge REMAINING_COMMENTS into ADDITIONAL_COMMENTS
+if (typeof ADDITIONAL_COMMENTS !== 'undefined' && typeof REMAINING_COMMENTS !== 'undefined') {
+  Object.keys(REMAINING_COMMENTS).forEach(key => {
+    if (!ADDITIONAL_COMMENTS[key]) {
+      ADDITIONAL_COMMENTS[key] = REMAINING_COMMENTS[key];
+    }
+  });
+}
+
+window.remaining_comments_applied = true;
 
 </script>
 

@@ -4111,8 +4111,9 @@ showNodeDetails = function(node) {
     const refEl = block.querySelector('.verse-ref');
     if (!refEl) return;
     const ref = refEl.textContent.trim();
+    const cleanRef = ref.replace(/,/g, '').replace(/\s+/g, ' ').trim();
     // Build BibleGateway URL
-    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(ref) + '&version=RVR1960';
+    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(cleanRef) + '&version=RVR1960&interface=print&lang=es';
     const link = document.createElement('a');
     link.href = bgUrl;
     link.target = '_blank';
@@ -5175,6 +5176,574 @@ showNodeDetails = function(node) {
 };
 
 window.extended_comments_applied = true;
+
+
+// ============================================================
+// REMAINING EXTENDED COMMENTS (Mateo)
+// ============================================================
+const REMAINING_COMMENTS = {
+  "m4": [
+    {
+      "author": "Crisóstomo · Homilía IX sobre Mateo",
+      "text": "Cristo repite la historia de Israel. Como Israel bajó a Egipto y fue llamado de allá, así Cristo. Es el verdadero Israel que cumple lo que el pueblo antiguo solo fue en figura. La huida a Egipto no es retroceso, sino cumplimiento profético: de Egipto llamé a mi Hijo."
+    },
+    {
+      "author": "R.T. France · Comentario a Mateo",
+      "text": "Mateo 2:15 cita Oseas 11:1 (\"de Egipto llamé a mi Hijo\") aplicándolo a Cristo. La cita original se refería al Éxodo de Israel. Mateo usa tipología: Cristo es el verdadero Israel, que reproduce la historia del pueblo y la cumple. La huida a Egipto no es casualidad, sino providencia que cumple el tipo."
+    }
+  ],
+  "m5": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "Mateo cita a Jeremías para mostrar que el sufrimiento de los inocentes no es derrota, sino cumplimiento. El Mesías nace en medio de violencia, como toda la historia de la salvación. La luz brilla en las tinieblas, y las tinieblas no la pueden vencer."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "La cita de Jeremías 31:15 (Raquel llorando por sus hijos) en Mateo 2:18 es tipológica. Raquel, madre de José y Benjamín, representa a Israel. El llanto por los inocentes de Belén se conecta con el llanto de Israel en el exilio. Pero el contexto de Jeremías 31 es promesa: el nuevo pacto viene. El dolor es camino de redención."
+    }
+  ],
+  "m6": [
+    {
+      "author": "Crisóstomo · Homilía IX sobre Mateo",
+      "text": "Mateo combina varias profecías. Nazareno evoca al nazareo (consagrado, Jue 13:5), pero también al \"Renuevo\" (netzer, Is 11:1). Jesús es el consagrado y el renuevo davídico a la vez. La humildad de Nazaret esconde la gloria del Renuevo prometido."
+    },
+    {
+      "author": "Craig Keener · Comentario a Mateo",
+      "text": "Mateo 2:23 dice que Jesús habitaría en Nazaret \"para que se cumpliese lo que fue dicho por los profetas\". No hay una sola cita del AT que diga \"será llamado nazareno\". Mateo combina varias alusiones: el nazareo (Jue 13:5, consagración), el netzer de Isaías 11:1 (renuevo davídico), y el desprecio de Nazaret (Jn 1:46). Cristo es el Renuevo humillado y consagrado."
+    }
+  ],
+  "m7": [
+    {
+      "author": "Crisóstomo · Homilía X sobre Mateo",
+      "text": "Juan es la voz; Cristo es la Palabra. Juan prepara; Cristo llega. El desierto es figura del corazón estéril que será hecho camino del Señor. El AT termina donde comienza el Evangelio. La voz clama en el desierto porque es en la pobreza donde Dios se manifiesta."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "Mateo 3:3 cita Isaías 40:3 aplicándolo a Juan el Bautista. La voz clama en el desierto: preparen el camino del Señor. Juan es el heraldo del Rey que viene. Su ministerio en el desierto (no en el templo) simboliza que el antiguo sistema está terminando, y la nueva era comienza fuera de los muros de Jerusalén."
+    }
+  ],
+  "m10": [
+    {
+      "author": "Crisóstomo · Homilía XIV sobre Mateo",
+      "text": "Cristo no ofrece doctrina primero, sino persona: \"venid en pos de mí\". El discipulado comienza con seguimiento, no con intelecto. Pescadores de hombres: oficio humilde transformado en ministerio de salvación. Los instrumentos de Cristo son los más sencillos, para que la potencia sea de Dios, no de ellos."
+    },
+    {
+      "author": "John Stott · Llamados a Salvar",
+      "text": "Mateo 4:19 muestra el llamado de los primeros discípulos: \"venid en pos de mí, y os haré pescadores de hombres\". El discipulado comienza con seguimiento, no con comprensión intelectual. Cristo transforma oficios humildes (pescadores) en ministerios de salvación. Los instrumentos de Cristo son los más sencillos, para que la potencia sea de Dios, no del hombre."
+    }
+  ],
+  "m13": [
+    {
+      "author": "Crisóstomo · Homilía XV sobre Mateo",
+      "text": "Cristo no contradice a Moisés, sino que va a la raíz. La Ley prohibía el acto; Cristo juzga el deseo. La justicia del Reino es interior. \"Habéis oído que fue dicho... pero yo os digo\": esta fórmula no abroga la Ley, sino que la cumple y la profundiza. La letra se trueca en Espíritu."
+    },
+    {
+      "author": "Sinclair Ferguson · El Sermón del Monte",
+      "text": "Las antítesis del Sermón del Monte (Mt 5:21-48) no contradicen la Ley, sino que la intensifican. La Ley prohibía el acto externo (asesinato, adulterio); Cristo juzga el motivo interno (ira, lujuria). La justicia del Reino va más allá de la externa. Por eso es imposible sin el nuevo nacimiento: requiere corazón transformado, no solo conducta reformada."
+    }
+  ],
+  "m14": [
+    {
+      "author": "Crisóstomo · Homilía XV sobre Mateo",
+      "text": "Cristo no prohíbe juzgar con discernimiento (cf. Mt 7:6, 15), sino juzgar con hipocresía. El que tiene una viga en su ojo no puede ver la paja en el del hermano. Sánate primero; luego ayuda al otro. La medida con que medimos será la que se nos aplique."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "Mateo 7:1-5 no prohíbe el juicio moral, sino el juicio hipócrita. Cristo mismo manda discernir a los falsos profetas (Mt 7:15-20). Lo que condena es juzgar a otros con estándares que uno mismo no cumple: la viga propia ignorada mientras se señala la paja ajena. La medida con que medimos, con esa seremos medidos."
+    }
+  ],
+  "m15": [
+    {
+      "author": "Agustín de Hipona · De Doctrina Christiana",
+      "text": "Cristo no abole la Ley, sino que la lleva a plenitud. La Ley apuntaba a él; él la llena de sentido. Los tipos se cumplen; la letra se trueca en Espíritu. La justicia del Reino supera a la de los fariseos en hondura, no en abolición."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "Mateo 5:17-20 afirma que Cristo no abroga la Ley, sino que la cumple. \"Cumplir\" (plēroō) significa realizar su significado profundo. Cristo cumple la Ley en su persona y obra: los tipos se cumplen en él, los mandamientos se intensifican en su ética del Reino. La justicia del Reino supera a la farisaica en interioridad."
+    }
+  ],
+  "m16": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "El discurso del Monte de los Olivos combina profecía del 70 d.C. (destrucción del templo) con la consumación final. La predicación del Evangelio a todas las naciones es condición y señal. La Iglesia tiene tarea misionera hasta el fin. No podemos calcular el tiempo, pero sabemos la tarea."
+    },
+    {
+      "author": "N.T. Wright · Jesús y la Victoria de Dios",
+      "text": "Mateo 24 combina elementos del 70 d.C. (destrucción de Jerusalén) con la consumación cósmica. Jesús profetiza el juicio sobre Israel incrédulo y el fin escatológico. La predicación del Evangelio \"en todo el mundo\" (24:14) es condición para el fin: la Iglesia tiene tarea misionera hasta la consumación. La vigilancia es activa, no pasiva."
+    }
+  ],
+  "m17": [
+    {
+      "author": "Crisóstomo · Homilía LXXIV sobre Mateo",
+      "text": "La venida de Cristo será visible como relámpago. No oculta en el desierto ni en cámaras secretas. Su manifestación será universal, no local. Todo ojo le verá. No nos dejemos engañar por falsos cristos que dicen \"aquí está\" o \"allí está\"."
+    },
+    {
+      "author": "Anthony Hoekema · La Biblia y el Futuro",
+      "text": "Mateo 24:27 describe la parusía como relámpago que cruza el cielo: visible, instantáneo, universal. Esto contrasta con los falsos mesías que aparecen en secreto (24:26). La venida de Cristo será manifiesta a todos, no escondida. No será local ni privada, sino cósmica: \"todo ojo le verá\" (Ap 1:7)."
+    }
+  ],
+  "m18": [
+    {
+      "author": "Crisóstomo · Homilía LXXV sobre Mateo",
+      "text": "Las señales no son para calcular fechas, sino para discernir tiempos. La higuera simboliza a Israel: cuando vean las señales, el verano está cerca. La vigilancia activa, no la especulación. Solo el Padre sabe el día y la hora; nuestra tarea es velar."
+    },
+    {
+      "author": "R.T. France · Comentario a Mateo",
+      "text": "Mateo 24:32-35 usa la parábola de la higuera: cuando las ramas se ponen tiernas, el verano está cerca. Las señales del tiempo son dadas para discernimiento, no para calcular fechas. Cristo afirma: \"el cielo y la tierra pasarán, pero mis palabras no pasarán\". La Palabra de Cristo es más permanente que el cosmos."
+    }
+  ],
+  "m19": [
+    {
+      "author": "Crisóstomo · Homilía LXXVI sobre Mateo",
+      "text": "Cristo se humilla en su conocimiento, ocultando a los ángeles y a los hombres el día. No es ignorancia, sino pedagogía: si supiéramos el día, viviríamos en negligencia. La incertidumbre es escuela de vigilancia. Estad preparados, porque el Hijo del Hombre vendrá a la hora que no pensáis."
+    },
+    {
+      "author": "Anthony Hoekema · La Biblia y el Futuro",
+      "text": "Mateo 24:36 afirma que \"del día y la hora nadie sabe, ni aun los ángeles, sino solo mi Padre\". Esto no es ignorancia del Hijo encarnado (Cristo knows lo que el Padre le revela), sino pedagogía: la incertidumbre del tiempo mantiene a la Iglesia vigilante. Si supiéramos la fecha, la tentación sería negligencia. Velar es la vocación escatológica."
+    }
+  ],
+  "m20": [
+    {
+      "author": "Crisóstomo · Homilía LXXVIII sobre Mateo",
+      "text": "Las cinco vírgenes necias tienen lámpara pero no aceite: la fe sin obras. Las prudentes llevan aceite: caridad, vida interior, Espíritu. El Esposo tarda; solo las preparadas entran a las bodas. Velad, porque no sabéis el día ni la hora."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "La parábola de las diez vírgenes (Mt 25:1-13) enseña la necesidad de preparación personal para la venida del Esposo. El aceite representa la vida interior, el Espíritu, la gracia. Las vírgenes necias tenían lámpara (apariencia) pero no aceite (realidad). El Esposo tarda; la vigilancia es perseverancia. \"Velad, porque no sabéis el día ni la hora\"."
+    }
+  ],
+  "m21": [
+    {
+      "author": "Gregorio Magno · Parábolas del Evangelio",
+      "text": "Cada siervo recibe según su capacidad. No todos igual, pero todos responsables. El talento enterrado es la vida desperdiciada. La fidelidad en lo poco abre puertas a lo mucho: el gozo del Señor. El siervo inútil es echado a las tinieblas exteriores."
+    },
+    {
+      "author": "Craig Keener · Comentario a Mateo",
+      "text": "La parábola de los talentos (Mt 25:14-30) enseña la responsabilidad del pueblo de Dios durante la ausencia del Señor. Cada siervo recibe según su capacidad, pero todos son responsables. El talento enterrado representa la vida desperdiciada: el miedo al Señor \"duro\" lleva a la inactividad. La fidelidad en lo poco abre a lo mucho: \"entra en el gozo de tu Señor\"."
+    }
+  ],
+  "m22": [
+    {
+      "author": "Crisóstomo · Homilía LXXIX sobre Mateo",
+      "text": "Cristo se identifica con sus hermanos más pequeños. Lo que se hace a ellos, a él se hace. El juicio final no es por conocimiento doctrinal, sino por misericordia vivida. La fe verdadera produce obras de amor. Los justos no sabían que servían a Cristo; lo hicieron por amor."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "Mateo 25:40 (\"en cuanto lo hicisteis a uno de estos mis hermanos más pequeños, a mí lo hicisteis\") muestra la identificación de Cristo con los necesitados. El juicio final se basa en obras de misericordia, no como mérito, sino como evidencia de fe verdadera. Los justos se sorprenden: no sabían que servían a Cristo. El amor al hermano es amor a Cristo."
+    }
+  ],
+  "m23": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Mateo",
+      "text": "El Hijo del Hombre de Daniel se sienta en trono de gloria. La humillación de Belén y Getsemaní se trueca en exaltación. Cristo es Juez universal; el AT lo anunció, el NT lo confirma. Las ovejas a su derecha, los cabritos a su izquierda."
+    },
+    {
+      "author": "N.T. Wright · La Resurrección del Hijo de Dios",
+      "text": "Mateo 25:31 describe al \"Hijo del Hombre viniendo en su gloria\" para juzgar a las naciones. Esto cumple Daniel 7:13-14: el que recibe dominio eterno ahora juzga a todos los pueblos. Cristo es Señor escatológico: su autoridad no es solo presente (Mt 28:18), sino futura (juez de vivos y muertos)."
+    }
+  ],
+  "m24": [
+    {
+      "author": "Agustín de Hipona · Sermón 361",
+      "text": "La regeneración es la renovación cósmica. Cristo sienta a sus apóstoles en tronos: la Iglesia juzga a Israel según el cumplimiento. El Reino escatológico incluye restauración de la creación. En la regeneración, todas las cosas son hechas nuevas."
+    },
+    {
+      "author": "Anthony Hoekema · La Biblia y el Futuro",
+      "text": "Mateo 19:28 (\"en la regeneración, cuando el Hijo del Hombre se siente en el trono de su gloria\") describe la renovación cósmica escatológica. \"Regeneración\" (palingenesia) es el nuevo nacimiento del cosmos. Los doce tronos de los apóstoles representan a la Iglesia juzgando a Israel: los verdaderos herederos del pacto. El Reino incluye nueva creación."
+    }
+  ],
+  "m25": [
+    {
+      "author": "Crisóstomo · Homilía XV sobre Mateo",
+      "text": "El corazón sigue al tesoro. Si tu tesoro está en la tierra, tu corazón se hace terrenal; si está en el cielo, tu corazón se eleva. La caridad es la única inversión eterna: lo que damos, lo guardamos. No os hagáis tesoros en la tierra, sino en el cielo."
+    },
+    {
+      "author": "John Piper · Future Grace",
+      "text": "Mateo 6:19-21 enseña que \"donde esté vuestro tesoro, allí estará también vuestro corazón\". El corazón sigue al tesoro, no viceversa. Si atesoramos en la tierra, nuestro corazón se apega a lo temporal. Si atesoramos en el cielo (caridad, reino de Dios), nuestro corazón se eleva. La inversión eterna es dar: lo que damos, lo guardamos."
+    }
+  ],
+  "m26": [
+    {
+      "author": "Crisóstomo · Homilía XX sobre Mateo",
+      "text": "El orden del Reino invierte el nuestro. Buscamos primero el pan; Cristo nos dice: buscad el Reino y el pan vendrá añadido. Dios no niega lo necesario a los que le buscan primero. La jerarquía libera de la ansiedad. Buscad primeramente el reino de Dios y su justicia."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "Mateo 6:33 (\"buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas\") invierte la jerarquía natural. No buscar primero el pan, sino el Reino. La promesa no es riqueza, sino provisión necesaria. Dios no niega lo básico a los que priorizan su Reino. La ansiedad se cura con jerarquía correcta."
+    }
+  ],
+  "m29": [
+    {
+      "author": "Hilario de Poitiers · De Trinitate",
+      "text": "Cristo no deshace la Ley, sino que la lleva a plenitud. La Ley apuntaba a él; él la llena de sentido. Los tipos se cumplen; la letra se trueca en Espíritu. La justicia del Reino supera a la de los fariseos en hondura, no en abolición."
+    },
+    {
+      "author": "Sinclair Ferguson · El Sermón del Monte",
+      "text": "Mateo 5:17-20 afirma que Cristo \"no vino para abrogar la ley, sino para cumplir\". \"Cumplir\" (plēroō) tiene doble sentido: realizar los tipos proféticos y profundizar los mandamientos éticos. La justicia del Reino supera a la farisaica en interioridad, no en abrogación. Cristo es el cumplimiento de toda la Escritura."
+    }
+  ],
+  "m30": [
+    {
+      "author": "Crisóstomo · Homilía XLVI sobre Mateo",
+      "text": "Dios rasga el velo, no el hombre (\"de arriba abajo\"). El velo era del Lugar Santísimo. Su rasgamiento es teológico: el acceso al Padre está abierto por la muerte de Cristo. Cumple la tipología del AT. El templo antiguo caduca; el verdadero Santuario es el cuerpo de Cristo."
+    },
+    {
+      "author": "N.T. Wright · Jesús y la Victoria de Dios",
+      "text": "El rasgamiento del velo del templo (Mt 27:51) es teológicamente significativo: indica el fin del sistema del templo. Dios rasga el velo \"de arriba abajo\", no los hombres. El acceso a Dios ya no es por sacerdocio levítico y sacrificios, sino por la sangre de Cristo. La muerte de Cristo inaugura la nueva era del acceso directo."
+    }
+  ],
+  "m31": [
+    {
+      "author": "Crisóstomo · Homilía LX sobre Mateo",
+      "text": "Cristo ante Pilato es el Siervo silencioso. Confiesa su realeza, pero redefine: \"mi reino no es de este mundo\" (Jn 18:36). Barrabás es liberado; el Justo condenado. El gran intercambio: culpable libre, inocente muerto."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "Mateo 27:11-26 muestra a Cristo ante Pilato. Jesús confiesa su realeza pero redefine su naturaleza: su reino es espiritual, no político. La liberación de Barrabás y condena de Cristo es el \"gran intercambio\": el culpable queda libre, el Justo es condenado. Esto prefigura la sustitución penal: Cristo muere en lugar del pecador."
+    }
+  ],
+  "m32": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Lucas",
+      "text": "Cristo clama el inicio del Salmo 22. No abandono metafísico, sino judicial: carga el pecado de los suyos. El Padre vuelve su rostro para reconciliar al mundo. La oscuridad es santo juicio. En este grito nace la salvación."
+    },
+    {
+      "author": "Donald Macleod · Cristo Crucificado",
+      "text": "Mateo 27:46 cita el Salmo 22:1: \"Dios mío, ¿por qué me has desamparado?\". Cristo no abandona la filiación, sino que experimenta el abandono judicial que el pecador merece. El Padre vuelve su rostro al Hijo que carga el pecado. En este grito de abandono nace nuestra salvación: el Justo tratado como injusto para que los injustos sean justificados."
+    }
+  ],
+  "m33": [
+    {
+      "author": "Agustín de Hipona · Enarrationes in Psalmos 6",
+      "text": "Las bienaventuranzas son siete gradas de subida al Reino. Comienzan en la pobreza de espíritu (reconocer indigencia) y terminan en la paz (perfecta conformidad con Dios). Cada una promete lo que la siguiente pide. El Reino es ya y no todavía."
+    },
+    {
+      "author": "D. Martyn Lloyd-Jones · Estudios en el Sermón del Monte",
+      "text": "Las bienaventuranzas (Mt 5:3-12) no son un código opcional, sino la descripción de la naturaleza del cristiano. La pobreza de espíritu es la primera porque es la puerta: hasta reconocer nuestra indigencia, no podemos recibir el Reino. Las bienaventuranzas deshacen el orgullo humano antes de ofrecer la gracia."
+    }
+  ],
+  "m34": [
+    {
+      "author": "Tertuliano · De Oratione",
+      "text": "El Padre Nuestro es compendio de todo el Evangelio. Comienza con la paternidad de Dios, sigue con su santificación, pide el Reino, somete la voluntad, y solo después clama por el pan, el perdón y la victoria sobre el mal. El orden importa."
+    },
+    {
+      "author": "Joachim Jeremias · Las Palabras de Jesús",
+      "text": "El Padre Nuestro en arameo probablemente decía \"Abba\" — término familiar infantil. Era revolucionario: los judíos evitaban \"Padre\" por respeto. Jesús lo usa directamente: Abba. Esta intimidad filial es la novedad del Evangelio: en Cristo, podemos llamar a Dios \"Abba, Padre\"."
+    }
+  ],
+  "m35": [
+    {
+      "author": "Crisóstomo · Homilía XIX sobre Mateo",
+      "text": "Tres pilares de la piedad judía: limosna, oración, ayuno. Cristo no los abole, sino que los purifica. El hipócrita busca aplauso humano; el creyente busca al Padre que ve en secreto. La recompensa celestial supera a la terrenal."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "Mateo 6:1-18 trata las tres prácticas de piedad del judaísmo: limosna, oración, ayuno. Cristo no las abole, sino que las purifica de hipocresía. El hipócrita busca aplauso humano; el verdadero creyente busca al Padre \"que ve en lo secreto\". La recompensa del Padre celestial supera a la terrenal."
+    }
+  ],
+  "m36": [
+    {
+      "author": "Crisóstomo · Homilía LXXVIII sobre Mateo",
+      "text": "El Reino no purga inmediatamente el mal. Convive con la cizaña hasta la siega. Cristo prohíbe el celo inquisitorial: arrancar la cizaña es dañar el trigo. El juicio final separará; la Iglesia es campo mixto. Dejad crecer lo uno y lo otro hasta la siega."
+    },
+    {
+      "author": "Craig Keener · Comentario a Mateo",
+      "text": "La parábola del trigo y la cizaña (Mt 13:24-30, 36-43) enseña que el Reino convive con el mal hasta el juicio final. Cristo prohíbe el celo inquisitorial: arrancar la cizaña (falsos creyentes) daña el trigo (verdaderos creyentes). La Iglesia visible es campo mixto; la separación es escatológica, obra de ángeles, no de hombres."
+    }
+  ],
+  "m39": [
+    {
+      "author": "Crisóstomo · Homilía LX sobre Mateo",
+      "text": "La Palabra es única, pero los corazones son cuatro. La diferencia no está en la semilla, sino en el suelo. La buena tierra no es mérito, sino corazón preparado por la gracia. El fruto varía: treinta, sesenta, ciento."
+    },
+    {
+      "author": "Klyne Snodgrass · Historias con Intención",
+      "text": "La parábola del sembrador (Mt 13:1-23) es clave hermenéutica para todas las parábolas: explica por qué algunas personas responden y otras no. La semilla es la Palabra del Reino. Los cuatro suelos representan cuatro respuestas humanas. La buena tierra no es mérito, sino corazón preparado por la gracia."
+    }
+  ],
+  "m40": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei",
+      "text": "Cristo no reina por ahora con justicia visible. La separación final será en la consumación. El Reino crece en secreto. La levadura obra oculta pero transformadora. El Reino no se impone por fuerza, sino que penetra."
+    },
+    {
+      "author": "George Ladd · Evangelio del Reino",
+      "text": "La parábola de la levadura (Mt 13:33) enseña que el Reino crece de forma oculta pero transformadora. Tres medidas de harina era cantidad enorme (cf. Gn 18:6): la levadura penetra todo. El Reino no se impone por fuerza externa, sino que transforma desde dentro. La Iglesia es levadura en la masa del mundo."
+    }
+  ],
+  "m42": [
+    {
+      "author": "Agustín de Hipona · Sermón 73",
+      "text": "Noé creyó lo increíble: un diluvio que no se había visto. Su fe condenó al mundo porque mostró que la salvación venía solo por la obediencia a Dios. El arca era tipo de Cristo: refugio único ante el juicio."
+    },
+    {
+      "author": "Peter Leithart · Comentario a Hebreos",
+      "text": "Hebreos 11:7 muestra a Noé construyendo un arca en tierra seca por fe. Su obediencia era absurda para el mundo, pero salvó a su casa. El arca es tipo de Cristo: el único refugio ante el juicio final. La fe de Noé condenó al mundo incrédulo y lo hizo heredero de la justicia que viene por fe."
+    }
+  ],
+  "m43": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei XVII",
+      "text": "Abraham buscó la ciudad celestial, no la terrenal. La tierra prometida era figura; la patria verdadera está en los cielos. La peregrinación terrenal del creyente sigue el modelo del patriarca: caminar hacia lo que no se ve, esperar lo que no se tiene."
+    },
+    {
+      "author": "N.T. Wright · Surprised by Hope",
+      "text": "Mateo no desarrolla la fe de Abraham como Hebreos 11:8-10, pero el Evangelio de Mateo muestra a Abraham en la genealogía de Cristo (Mt 1:1). Abraham es el padre de los creyentes: su fe peregrina se cumple en Cristo. La tierra prometida apunta a la nueva creación, no solo a Canaán."
+    }
+  ],
+  "m45": [
+    {
+      "author": "Crisóstomo · Homilía XLVI sobre Mateo",
+      "text": "Cinco panes, cinco mil alimentados. Cristo repite el milagro de Eliseo, pero mayor. La abundancia mesiánica. Los discípulos son mediadores: reciben de Cristo, dan al pueblo. Cristo bendice, parte, da; los discípulos distribuyen."
+    },
+    {
+      "author": "Herman Ridderbos · El Matrimonio del Cordero",
+      "text": "La multiplicación de panes (Mt 14:13-21) cumple el tipo de Eliseo (2 R 4:42-44) pero lo supera. Cristo es el verdadero dador de pan mesiánico. Los doce canastos sobrantes representan a las doce tribus: hay abundancia para todo Israel. Los discípulos son mediadores: reciben de Cristo, dan al pueblo. Anticipa la Cena del Señor."
+    }
+  ],
+  "m46": [
+    {
+      "author": "Crisóstomo · Homilía XLVII sobre Mateo",
+      "text": "Cristo toca al intocable. La lepra era exclusión total: religiosa, social, familiar. Cristo no solo cura; restaura. El toque impuro no contamina al Santo; el Santo purifica lo impuro. Cumple la Ley enviando al sacerdote."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "La sanidad del leproso (Mt 8:1-4) muestra a Cristo tocando al intocable. La lepra causaba exclusión total: religiosa, social, familiar. Cristo no se contamina al tocar; purifica. El mandato de mostrar al sacerdote cumple la Ley (Lv 14), pero testifica que el verdadero purificador ha venido."
+    }
+  ],
+  "m47": [
+    {
+      "author": "Crisóstomo · Homilía XXVI sobre Mateo",
+      "text": "Un gentil romano enseña a Israel qué es fe. Cristo encuentra más fe en el centurión que en todo Israel. Las naciones entrarán al banquete de Abraham. La gracia no conoce fronteras étnicas. Muchos vendrán del oriente y del occidente."
+    },
+    {
+      "author": "Craig Keener · Comentario a Mateo",
+      "text": "La sanidad del siervo del centurión (Mt 8:5-13) incluye la primera afirmación explícita de la inclusión de los gentiles: \"muchos vendrán del oriente y del occidente, y se sentarán con Abraham... en el reino de los cielos\". Un gentil romano enseña a Israel qué es fe. La gracia rompe fronteras étnicas."
+    }
+  ],
+  "m48": [
+    {
+      "author": "Crisóstomo · Homilía XXVIII sobre Mateo",
+      "text": "Los salmos atribuyen a Dios el calmar el mar. Cristo lo hace con una palabra. Los discípulos preguntan: ¿qué hombre es este? La respuesta es teológica: este hombre es Dios. La creación reconoce a su Creador."
+    },
+    {
+      "author": "Richard Bauckham · Jesús y el Dios de Israel",
+      "text": "La calma de la tempestad (Mt 8:23-27) atribuye a Cristo lo que el AT atribuía solo a Yahvé (Sal 89:9, 107:29). Los discípulos preguntan: \"¿qué hombre es este?\". La respuesta es teológicamente explosiva: este hombre es Dios. La creación reconoce a su Creador. Cristo tiene autoridad divina sobre el caos."
+    }
+  ],
+  "m49": [
+    {
+      "author": "Crisóstomo · Homilía XXVIII sobre Mateo",
+      "text": "Los demonios confiesan lo que los hombres tardan en reconocer: Jesús es Hijo de Dios. \"Antes de tiempo\" indica que hay un día de juicio señalado. Cristo ya tiene autoridad sobre los poderes oscuros. Los demonios le ruegan."
+    },
+    {
+      "author": "G.K. Beale · El Libro de las Revelaciones",
+      "text": "La liberación de los endemoniados gadarenos (Mt 8:28-34) muestra a Cristo con autoridad sobre los poderes demoníacos. Los demonios confiesan: \"Jesús, Hijo de Dios\" — lo que los hombres aún no reconocen. \"Antes de tiempo\" indica que el juicio final ya está determinado. Cristo ya ejerce autoridad escatológica sobre los poderes."
+    }
+  ],
+  "m50": [
+    {
+      "author": "Crisóstomo · Homilía XXXI sobre Mateo",
+      "text": "Cristo toma la mano impura (cadáver) y da vida. Como Elías y Eliseo, pero con autoridad propia, no en oración a Dios. La muerte no puede resistir su voz. Es primicia de la resurrección final. La niña se levanta."
+    },
+    {
+      "author": "N.T. Wright · La Resurrección del Hijo de Dios",
+      "text": "La resurrección de la hija de Jairo (Mt 9:18-26) muestra a Cristo con autoridad sobre la muerte. Como Elías (1 R 17) y Eliseo (2 R 4), pero con autoridad propia, no en oración a Dios. Cristo toma la mano del cadáver y da vida. Es primicia de la resurrección final: la nueva creación irrumpe en el ministerio de Cristo."
+    }
+  ],
+  "m51": [
+    {
+      "author": "Crisóstomo · Homilía XLVI sobre Mateo",
+      "text": "Cinco panes, cinco mil alimentados. Cristo repite el milagro de Eliseo, pero mayor. La abundancia mesiánica. Los discípulos son mediadores: reciben de Cristo, dan al pueblo. Cristo bendice, parte, da; los discípulos distribuyen."
+    },
+    {
+      "author": "Herman Ridderbos · El Matrimonio del Cordero",
+      "text": "La multiplicación de panes (Mt 14:13-21) cumple el tipo de Eliseo (2 R 4:42-44) pero lo supera. Cristo es el verdadero dador de pan mesiánico. Los doce canastos sobrantes representan a las doce tribus: hay abundancia para todo Israel. Los discípulos son mediadores: reciben de Cristo, dan al pueblo. Anticipa la Cena del Señor."
+    }
+  ],
+  "m52": [
+    {
+      "author": "Agustín de Hipona · De Civitate Dei",
+      "text": "La Ciudad de Dios no es de este mundo. El cristiano es peregrino en la tierra y ciudadano del cielo. Buscar la ciudad venidera no es huir de la tierra, sino vivirla sin idolatrarla. No tenemos aquí ciudad permanente."
+    },
+    {
+      "author": "N.T. Wright · Surprised by Hope",
+      "text": "La \"ciudad perpetua\" (cf. Heb 13:14) que Mateo anticipa no es un cielo etéreo, sino la nueva Jerusalén que descenderá del cielo (Ap 21). El cristiano no abandona el mundo, sino que vive en él como peregrino, esperando la renovación cósmica que Cristo traerá."
+    }
+  ],
+  "m53": [
+    {
+      "author": "Crisóstomo · Homilía XXIV sobre Hebreos",
+      "text": "Los patriarcas vivieron y murieron sin recibir lo prometido. Pero su fe no fue vana: la vieron de lejos y la saludaron. Dios se avergüenza de ser llamado Dios de los tales: preparó una ciudad para ellos. La verdadera fe tiene paciencia eterna."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Los patriarcas murieron sin recibir la promesa (Heb 11:13-16). Pero no la perdieron: la vieron de lejos, la saludaron, la confesaron. La fe verdadera no exige cumplimiento inmediato; descansa en la fidelidad del que promete. Dios \"no se avergüenza\" de ser llamado su Dios: se gloría en los peregrinos fieles."
+    }
+  ],
+  "m54": [
+    {
+      "author": "Crisóstomo · Homilía LXXXIV sobre Mateo",
+      "text": "La viña es Israel. Los labradores son los líderes. Los siervos son los profetas. El Hijo es Cristo. La piedra rechazada se vuelve cabeza del ángulo. El Reino pasa a los gentiles productores de fruto."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "La parábola de los labradores (Mt 21:33-46) es alegoría: la viña es Israel (Is 5), los labradores son los líderes, los siervos son los profetas, el Hijo es Cristo. La piedra rechazada (Sal 118:22) se vuelve cabeza del ángulo. El Reino \"será quitado\" de Israel incrédulo y dado a gentiles productores de fruto."
+    }
+  ],
+  "m56": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "El título \"Hijo del Hombre\" combina humildad (hombre) y gloria (Daniel 7). Jesús evita \"Mesías\" con connotaciones políticas y se define desde Daniel 7. Es el hombre celestial que recibe del Anciano de Días un reino eterno."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El \"Hijo del Hombre\" de Daniel 7 es figura colectiva (los santos) e individual (un representante). Cristo lo aplica a sí mismo: él es el Hijo del Hombre que recibe el reino. Pero añade: el Hijo del Hombre debe padecer antes de reinar (Mt 16:21). El Siervo sufriente y el Hijo del Hombre son una sola persona."
+    }
+  ],
+  "m57": [
+    {
+      "author": "Agustín de Hipona · De Trinitate IV",
+      "text": "El Hijo de Dios se hizo hombre para que los hombres pudieran hacerse Dios. Tomó sangre humana para derramarla, no por necesidad propia, sino por nuestro rescate. La sangre de Cristo es sangre divina en cuanto es sangre del Verbo encarnado."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos IX",
+      "text": "Cristo \"mediante el Espíritu eterno se ofreció a sí mismo\". El Espíritu aquí es el Espíritu divino. La ofrenda de Cristo en la cruz fue un acto trinitario: el Padre recibe, el Hijo ofrece, el Espíritu consagra y santifica el sacrificio."
+    }
+  ],
+  "m59": [
+    {
+      "author": "Crisóstomo · Homilía sobre 1 Pedro",
+      "text": "El precio de nuestra redención no fue oro o plata, sino la sangre preciosa del Hijo de Dios. Por eso pertenecemos a Dios, no a nosotros mismos. La redención es cambio de señorío: fuimos esclavos del pecado y la muerte; ahora somos siervos de la justicia."
+    },
+    {
+      "author": "John Stott · La Cruz de Cristo",
+      "text": "La sangre de Cristo como precio de redención (1 P 1:18-19) significa que la cruz fue transacción, no solo demostración de amor. \"Redimir\" (apolutroō) = liberar pagando un precio. El precio fue la vida del Hijo de Dios derramada. El creyente pertenece a Dios: fue comprado."
+    }
+  ],
+  "m60": [
+    {
+      "author": "Filón de Alejandría · Sobre la Decálogo",
+      "text": "Sinaí mostraba la santidad de Dios bajo la ley: fuego, oscuridad, temblor, trompeta. El pueblo no podía soportar la teofanía; aun Moisés temblaba. La ley no podía salvar; solo mostrar la distancia. El cristiano no viene a Sinaí, sino a Sión."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "El Sinaí como monte de terror (Heb 12:18-21) muestra la santidad de Dios bajo la ley. Fuego, oscuridad, temblor: la ley no podía salvar, solo mostrar la distancia. El cristiano viene a Sión, pero la diferencia no anula la santidad; la cumple en gracia."
+    }
+  ],
+  "m61": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Hebreos",
+      "text": "Moisés fue fiel como siervo; Cristo lo es como Hijo. La fidelidad es la misma; la dignidad es infinitamente distinta. Moisés testified de Cristo; Cristo es el cumplimiento. La casa de Dios pertenece al Hijo, no al siervo."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "La superioridad de Cristo sobre Moisés (Heb 3:1-6) no es de fidelidad (ambos fueron fieles), sino de identidad: Hijo vs siervo, constructor vs casa. Moisés fue testigo de lo que se iba a decir; Cristo es el cumplimiento. La casa de Dios es la Iglesia, y Cristo es el Hijo sobre ella."
+    }
+  ],
+  "m62": [
+    {
+      "author": "Crisóstomo · Homilía LXXXII sobre Mateo",
+      "text": "Cristo transforma la Pascua. El pan y la copa son ahora su cuerpo y su sangre. El verdadero Cordero pascual es él. La Cena es memorial de su muerte, pero también banquete anticipado del Reino. No beberé más de este fruto de la vid hasta aquel día."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "La Cena del Señor (Mt 26:26-28) instituye el nuevo pacto con sangre. Cristo no solo enseña, sino que instituye un sacramento: signo y sello del pacto. \"Para perdón de pecados\" — el nuevo pacto se funda en expiación. No hay pacto sin sangre (Heb 9:22), y esta sangre es la del Hijo de Dios."
+    }
+  ],
+  "m63": [
+    {
+      "author": "Crisóstomo · Homilía LXXXIII sobre Mateo",
+      "text": "Cristo ora como hombre verdadero. La copa es la ira de Dios sobre el pecado. No rehúsa la voluntad del Padre, sino que la abraza. La oración de Getsemaní es modelo: \"no como yo quiero, sino como tú\". La obediencia hasta la cruz."
+    },
+    {
+      "author": "Donald Macleod · Cristo Crucificado",
+      "text": "Getsemaní (Mt 26:36-46) muestra a Cristo orando como hombre verdadero. \"Esta copa\" es la ira de Dios sobre el pecado. Cristo no rehúsa la voluntad del Padre, sino que la abraza: \"no como yo quiero, sino como tú\". La oración es modelo de sumisión. La obediencia de Cristo va hasta la cruz."
+    }
+  ],
+  "m64": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "El gallo canta y Pedro llora. La caída del apóstol es consuelo para todos los caídos. La mirada de Cristo precede al llanto. La gracia restaurará a Pedro en el mar de Galilea. El pecado no tiene la última palabra."
+    },
+    {
+      "author": "John Owen · Sobre la Apostasía",
+      "text": "La negación de Pedro (Mt 26:69-75) muestra que aun los apóstoles pueden caer gravemente. Pero la diferencia entre Pedro y Judas no es la caída, sino el arrepentimiento: Pedro llora amargamente; Judas se desespera. La mirada de Cristo precede al llanto. La gracia restaura al caído que se arrepiente."
+    }
+  ],
+  "m68": [
+    {
+      "author": "Agustín de Hipona · Enarrationes in Psalmos 8",
+      "text": "El Salmo 8 habla del hombre en general, pero solo se cumple en Cristo. Él es el Hijo del Hombre que bajó para ser coronado. La corona viene después de la muerte. La humillación es camino a la gloria."
+    },
+    {
+      "author": "G.K. Beale · El Templo y la Misión de la Iglesia",
+      "text": "Hebreos 2:6-9 cita el Salmo 8 aplicándolo a Cristo. El Salmo celebra la dignidad humana dada en la creación; Hebreos muestra que esa dignidad solo se realiza en Cristo. \"Coronado de gloria y honra a causa del padecimiento de la muerte\": la gloria escatológica viene por la cruz."
+    }
+  ],
+  "m69": [
+    {
+      "author": "Jerónimo · Comentario a los Salmos",
+      "text": "El \"hoy\" del Salmo 95 no se limitó a una época. Cada generación tiene su hoy. El Espíritu Santo habla en cada lectura. La Palabra es viva; su llamada es presente. Endurecer el corazón es desperdiciar el día de la gracia."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El \"hoy\" del Salmo 95, citado en Hebreos 3:7, hace actual cada advertencia. El Espíritu habla presente, no pasado. Cada generación de la Iglesia recibe el llamado: \"no endurezcáis vuestros corazones\". El reposo escatológico permanece abierto, pero la incredulidad puede cerrar su entrada."
+    }
+  ],
+  "m70": [
+    {
+      "author": "Crisóstomo · Homilía XIV sobre Hebreos",
+      "text": "Jeremías profetizó el nuevo pacto cuando el antiguo aún funcionaba. Eso prueba su insuficiencia: si el primero hubiera sido perfecto, no se buscaría lugar para un segundo. La profecía misma era juicio del primer pacto."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "El nuevo pacto de Jeremías 31 no es solo renovación del Sinaítico, sino realidad de naturaleza distinta. El pacto antiguo era exterior: tablas de piedra. El nuevo pacto es interior: ley en el corazón, perdón completo, conocimiento universal de Dios. Cristo es el mediador que lo instituye con su sangre."
+    }
+  ],
+  "m72": [
+    {
+      "author": "Crisóstomo · Homilía LXXXI sobre Mateo",
+      "text": "Cristo reclama autoridad universal. Cumple Daniel 7. La Gran Comisión fluye de la autoridad: porque tiene todo poder, envía a todas las naciones. El bautismo trinitario marca la entrada al Reino. La enseñanza es continua."
+    },
+    {
+      "author": "John Stott · La Misión Cristiana en el Mundo Moderno",
+      "text": "La Gran Comisión (Mt 28:16-20) tiene cuatro elementos: ir, hacer discípulos, bautizar, enseñar. El verbo principal es \"mathēteusate\" (haced discípulos). La misión es integral: conversión + comunión + formación. La promesa \"yo estoy con vosotros\" garantiza que la misión no fracasará."
+    }
+  ],
+  "m73": [
+    {
+      "author": "Crisóstomo · Homilía IX sobre Hebreos",
+      "text": "La lucha contra la incredulidad es comunitaria. Cada día es \"hoy\". La exhortación mutua es remedio contra el endurecimiento. El pecado engaña aislando; la comunión desengaña. Nadie se salva solo."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · Vida en Comunidad",
+      "text": "Hebreos 3:13 manda exhortarnos mutuamente \"cada día, entre tanto que se dice: Hoy\". El cristiano no puede vivir aislado. El pecado engaña mediante el aislamiento; la fe se fortalece en la comunión. La exhortación mutua es medicina contra la apostasía."
+    }
+  ],
+  "m74": [
+    {
+      "author": "John Owen · Sobre Hebreos III",
+      "text": "\"Considerad\" (katanoeō) es acción intensa del pensamiento. Cristo es apóstol (enviado del Padre) y sumo sacerdote (que sube al Padre). Considerarlo es la medicina contra la deserción. La contemplación de Cristo es la mejor exhortación."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "Cristo es \"apóstol y sumo sacerdote de nuestra profesión\". Apóstol = enviado del Padre (misión descendente). Sumo sacerdote = que sube al Padre (misión ascendente). La fe cristiana se centra en esta persona: el que bajó del cielo para representar a Dios ante nosotros, y subió al cielo para representarnos ante Dios."
+    }
+  ]
+};
+
+// Merge into ADDITIONAL_COMMENTS
+if (typeof ADDITIONAL_COMMENTS !== 'undefined' && typeof REMAINING_COMMENTS !== 'undefined') {
+  Object.keys(REMAINING_COMMENTS).forEach(key => {
+    if (!ADDITIONAL_COMMENTS[key]) {
+      ADDITIONAL_COMMENTS[key] = REMAINING_COMMENTS[key];
+    }
+  });
+}
+
+window.remaining_comments_mat_applied = true;
 
 </script>
 
