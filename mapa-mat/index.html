@@ -436,6 +436,226 @@ body.mobile-map-view .view-toggle-btn{background:rgba(61,220,132,.18);border-col
 .canvas.focus-mode ~ .focus-exit-hint,
 body.focus-active .focus-exit-hint{display:block}
 
+
+/* ---------- STAGE 1: Personal study features ---------- */
+
+/* Progress bar in topbar */
+.progress-bar-container{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.7rem;
+  color:var(--muted);
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:4px 12px;
+  min-width:120px;
+}
+.progress-bar-track{
+  width:60px;height:6px;
+  background:rgba(255,255,255,.06);
+  border-radius:3px;
+  overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--iglesia),var(--pacto));
+  border-radius:3px;
+  transition:width .4s ease;
+}
+.progress-bar-text{
+  font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+}
+
+/* Markers on nodes */
+.node{
+  position:absolute;
+}
+.node-marker{
+  position:absolute;
+  top:6px;right:8px;
+  width:14px;height:14px;
+  border-radius:50%;
+  background:transparent;
+  border:2px solid transparent;
+  cursor:pointer;
+  z-index:3;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;line-height:1;
+  transition:.18s;
+}
+.node-marker.unstudied{
+  border-color:rgba(255,255,255,.15);
+}
+.node-marker.studied{
+  background:var(--iglesia);
+  border-color:var(--iglesia);
+  box-shadow:0 0 8px var(--iglesia-glow);
+}
+.node-marker.studied::before{
+  content:'✓';
+  color:#0b0f14;
+  font-weight:700;
+}
+.node-marker.favorite{
+  background:var(--at);
+  border-color:var(--at);
+  box-shadow:0 0 8px var(--at-glow);
+}
+.node-marker.favorite::before{
+  content:'★';
+  color:#0b0f14;
+  font-weight:700;
+}
+.node-marker:hover{
+  transform:scale(1.2);
+}
+
+/* Markers on mobile cards */
+.mobile-node-card{
+  position:relative;
+}
+.mobile-node-card .node-marker{
+  position:absolute;
+  top:10px;right:10px;
+  width:18px;height:18px;
+  font-size:11px;
+}
+
+/* Modal: notes section + navigation */
+.notes-section{
+  margin-top:20px;
+  padding-top:16px;
+  border-top:1px dashed var(--border);
+}
+.notes-section .notes-label{
+  font-size:.7rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.notes-section .notes-status{
+  font-size:.62rem;font-weight:400;
+  color:var(--iglesia);
+  letter-spacing:.3px;
+  text-transform:none;
+}
+.notes-section textarea{
+  width:100%;
+  min-height:90px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 12px;
+  color:var(--text);
+  font-family:inherit;
+  font-size:.88rem;
+  line-height:1.55;
+  resize:vertical;
+  transition:.18s;
+}
+.notes-section textarea:focus{
+  outline:none;
+  border-color:var(--iglesia);
+  background:rgba(61,220,132,.04);
+}
+.notes-section textarea::placeholder{
+  color:var(--muted);
+  font-style:italic;
+}
+
+/* Marker buttons in modal */
+.modal-markers{
+  display:flex;gap:8px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
+.marker-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 13px;
+  border-radius:20px;
+  font-size:.74rem;font-weight:600;
+  cursor:pointer;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+  font-family:inherit;
+  transition:.18s;
+}
+.marker-btn:hover{
+  background:rgba(255,255,255,.06);
+}
+.marker-btn.active[data-marker="studied"]{
+  background:rgba(61,220,132,.14);
+  color:var(--iglesia);
+  border-color:var(--iglesia);
+}
+.marker-btn.active[data-marker="favorite"]{
+  background:rgba(224,168,98,.14);
+  color:var(--at);
+  border-color:var(--at);
+}
+.marker-btn .dot{
+  width:9px;height:9px;border-radius:50%;
+}
+.marker-btn[data-marker="studied"] .dot{background:var(--iglesia)}
+.marker-btn[data-marker="favorite"] .dot{background:var(--at)}
+
+/* Modal navigation: prev/next */
+.modal-nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  gap:8px;
+}
+.modal-nav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:.78rem;font-weight:600;
+  cursor:pointer;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+  font-family:inherit;
+  transition:.18s;
+  text-decoration:none;
+}
+.modal-nav-btn:hover:not(:disabled){
+  background:rgba(255,255,255,.06);
+  border-color:var(--cristo);
+  color:var(--cristo);
+}
+.modal-nav-btn:disabled{
+  opacity:.3;
+  cursor:not-allowed;
+}
+.modal-nav-position{
+  font-size:.74rem;
+  color:var(--muted);
+  letter-spacing:.4px;
+}
+
+@media (max-width:768px){
+  .progress-bar-container{
+    font-size:.62rem;
+    padding:3px 10px;
+    min-width:90px;
+  }
+  .progress-bar-track{width:50px;height:5px}
+  .notes-section textarea{font-size:.85rem;min-height:80px}
+  .marker-btn{font-size:.7rem;padding:6px 11px}
+  .modal-nav-btn{font-size:.74rem;padding:7px 12px}
+}
+
 </style>
 <style>
 :root{
@@ -1111,6 +1331,11 @@ body{
     <button class="filter-pill" data-cat="esperanza"><i class="dot" style="background:var(--esperanza)"></i> Esperanza</button>
   </div>
   <div class="stats" id="stats">— nodos visibles</div>
+  
+  <div class="progress-bar-container" id="progressBarContainer" title="Progreso de estudio">
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
+    <span class="progress-bar-text" id="progressBarText">0/N</span>
+  </div>
   <button class="help-btn" id="helpBtn" title="Ayuda">?</button>
 </div>
 
@@ -1223,6 +1448,21 @@ body{
     <h2 id="modalTitle" class="modal-title"></h2>
     <div id="modalRef" class="modal-ref"></div>
     <div id="modalBody" class="modal-body"></div>
+
+    <div class="modal-markers" id="modalMarkers"></div>
+    <div class="notes-section" id="notesSection">
+      <div class="notes-label">
+        <span>Mi nota personal</span>
+        <span class="notes-status" id="notesStatus"></span>
+      </div>
+      <textarea id="personalNote" placeholder="Escribe aquí tu reflexión, pregunta o insight sobre este nodo. Se guarda automáticamente en tu dispositivo..." autocomplete="off"></textarea>
+    </div>
+    <div class="modal-nav" id="modalNav">
+      <button class="modal-nav-btn" id="modalPrevBtn">← Anterior</button>
+      <span class="modal-nav-position" id="modalPosition"></span>
+      <button class="modal-nav-btn" id="modalNextBtn">Siguiente →</button>
+    </div>
+
   </div>
 </div>
 
@@ -2737,6 +2977,235 @@ function initFocusMode() {
   });
 }
 setTimeout(initFocusMode, 100);
+
+
+// ============================================================
+// STAGE 1: PERSONAL STUDY FEATURES
+// ============================================================
+const BOOK_ID = 'mat';
+
+// Storage helpers (per book + per node)
+function getStorageKey(nodeId, suffix) {
+  return `biblia-${BOOK_ID}-${nodeId}-${suffix}`;
+}
+function loadNote(nodeId) {
+  try {
+    return localStorage.getItem(getStorageKey(nodeId, 'note')) || '';
+  } catch (e) { return ''; }
+}
+function saveNote(nodeId, text) {
+  try {
+    localStorage.setItem(getStorageKey(nodeId, 'note'), text);
+  } catch (e) {}
+}
+function loadMarker(nodeId) {
+  try {
+    return localStorage.getItem(getStorageKey(nodeId, 'marker')) || 'unstudied';
+  } catch (e) { return 'unstudied'; }
+}
+function saveMarker(nodeId, marker) {
+  try {
+    localStorage.setItem(getStorageKey(nodeId, 'marker'), marker);
+  } catch (e) {}
+}
+
+// Apply markers to all nodes (visual)
+function applyMarkersToNodes() {
+  document.querySelectorAll('.node').forEach(el => {
+    const nodeId = el.dataset.id;
+    if (!nodeId) return;
+    const marker = loadMarker(nodeId);
+    // Remove existing marker
+    const existing = el.querySelector('.node-marker');
+    if (existing) existing.remove();
+    // Create new marker
+    const m = document.createElement('div');
+    m.className = `node-marker ${marker}`;
+    m.dataset.marker = marker;
+    m.title = marker === 'unstudied' ? 'Marcar como estudiado' :
+              marker === 'studied' ? 'Marcar como favorito' :
+              'Quitar marcador';
+    m.addEventListener('click', (e) => {
+      e.stopPropagation();
+      cycleMarker(nodeId);
+    });
+    el.appendChild(m);
+  });
+}
+
+// Apply markers to mobile cards too
+function applyMarkersToMobileCards() {
+  document.querySelectorAll('.mobile-node-card').forEach(el => {
+    const nodeId = el.dataset.id;
+    if (!nodeId) return;
+    const marker = loadMarker(nodeId);
+    const existing = el.querySelector('.node-marker');
+    if (existing) existing.remove();
+    const m = document.createElement('div');
+    m.className = `node-marker ${marker}`;
+    m.dataset.marker = marker;
+    m.title = marker === 'unstudied' ? 'Marcar como estudiado' :
+              marker === 'studied' ? 'Marcar como favorito' :
+              'Quitar marcador';
+    m.addEventListener('click', (e) => {
+      e.stopPropagation();
+      cycleMarker(nodeId);
+    });
+    el.appendChild(m);
+  });
+}
+
+// Cycle through markers: unstudied -> studied -> favorite -> unstudied
+function cycleMarker(nodeId) {
+  const current = loadMarker(nodeId);
+  let next;
+  if (current === 'unstudied') next = 'studied';
+  else if (current === 'studied') next = 'favorite';
+  else next = 'unstudied';
+  saveMarker(nodeId, next);
+  applyMarkersToNodes();
+  applyMarkersToMobileCards();
+  updateProgressBar();
+  // If modal is open, update its markers too
+  if (document.getElementById('modal').classList.contains('show')) {
+    updateModalMarkers(nodeId);
+  }
+}
+
+// Update progress bar
+function updateProgressBar() {
+  const total = NODES.length;
+  let studied = 0;
+  NODES.forEach(n => {
+    const m = loadMarker(n.id);
+    if (m === 'studied' || m === 'favorite') studied++;
+  });
+  const pct = total > 0 ? Math.round((studied / total) * 100) : 0;
+  const fill = document.getElementById('progressBarFill');
+  const text = document.getElementById('progressBarText');
+  if (fill) fill.style.width = pct + '%';
+  if (text) text.textContent = `${studied}/${total}`;
+}
+
+// Get ordered list of node IDs (by cluster position, then slot)
+function getOrderedNodeIds() {
+  return NODES.slice().sort((a, b) => {
+    // Sort by y first, then x
+    if (Math.abs(a.y - b.y) > 50) return a.y - b.y;
+    return a.x - b.x;
+  }).map(n => n.id);
+}
+
+// Update modal markers (the marker buttons at the bottom of modal)
+function updateModalMarkers(nodeId) {
+  const marker = loadMarker(nodeId);
+  const container = document.getElementById('modalMarkers');
+  if (!container) return;
+  container.innerHTML = `
+    <button class="marker-btn ${marker === 'studied' ? 'active' : ''}" data-marker="studied">
+      <span class="dot"></span> Estudiado
+    </button>
+    <button class="marker-btn ${marker === 'favorite' ? 'active' : ''}" data-marker="favorite">
+      <span class="dot"></span> Favorito
+    </button>
+  `;
+  container.querySelectorAll('.marker-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetMarker = btn.dataset.marker;
+      const current = loadMarker(nodeId);
+      // Toggle: if clicking active, set to unstudied; else set to target
+      const newMarker = (current === targetMarker) ? 'unstudied' : targetMarker;
+      saveMarker(nodeId, newMarker);
+      applyMarkersToNodes();
+      applyMarkersToMobileCards();
+      updateProgressBar();
+      updateModalMarkers(nodeId);
+    });
+  });
+}
+
+// Update modal navigation (prev/next buttons)
+function updateModalNav(nodeId) {
+  const orderedIds = getOrderedNodeIds();
+  const currentIdx = orderedIds.indexOf(nodeId);
+  const prevBtn = document.getElementById('modalPrevBtn');
+  const nextBtn = document.getElementById('modalNextBtn');
+  const positionEl = document.getElementById('modalPosition');
+  if (!prevBtn || !nextBtn || !positionEl) return;
+  prevBtn.disabled = currentIdx <= 0;
+  nextBtn.disabled = currentIdx >= orderedIds.length - 1;
+  positionEl.textContent = `${currentIdx + 1} / ${orderedIds.length}`;
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      const prevId = orderedIds[currentIdx - 1];
+      const prevNode = nodeMap[prevId];
+      if (prevNode) showNodeDetails(prevNode);
+    }
+  };
+  nextBtn.onclick = () => {
+    if (currentIdx < orderedIds.length - 1) {
+      const nextId = orderedIds[currentIdx + 1];
+      const nextNode = nodeMap[nextId];
+      if (nextNode) showNodeDetails(nextNode);
+    }
+  };
+}
+
+// Override showNodeDetails to add notes, markers, and nav
+const _origShowNodeDetailsStage1 = showNodeDetails;
+showNodeDetails = function(node) {
+  _origShowNodeDetailsStage1.apply(this, arguments);
+  // Update markers
+  updateModalMarkers(node.id);
+  // Update nav
+  updateModalNav(node.id);
+  // Load note
+  const textarea = document.getElementById('personalNote');
+  const statusEl = document.getElementById('notesStatus');
+  if (textarea) {
+    const note = loadNote(node.id);
+    textarea.value = note;
+    if (note) {
+      statusEl.textContent = '✓ Guardada';
+    } else {
+      statusEl.textContent = '';
+    }
+    // Save on input (debounced)
+    let saveTimer = null;
+    textarea.oninput = () => {
+      statusEl.textContent = 'Guardando...';
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        saveNote(node.id, textarea.value);
+        statusEl.textContent = '✓ Guardada';
+      }, 500);
+    };
+  }
+};
+
+// Initialize on load
+function initStage1() {
+  applyMarkersToNodes();
+  applyMarkersToMobileCards();
+  updateProgressBar();
+}
+
+// Wait for nodes to be rendered
+setTimeout(initStage1, 100);
+
+// Re-apply markers when mobile view is rebuilt (after filter changes)
+const _origApplyFilterStage1 = applyFilter;
+applyFilter = function() {
+  _origApplyFilterStage1.apply(this, arguments);
+  setTimeout(() => {
+    applyMarkersToNodes();
+    applyMarkersToMobileCards();
+    updateProgressBar();
+  }, 50);
+};
+
+// Mark stage1 as applied (for idempotency)
+window.stage1Applied = true;
 
 </script>
 </body>
