@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Acerca de · Mapas Bíblicos</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mapas Bíblicos">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+:root{
+  --bg:#0b0f14;
+  --bg-2:#0f1620;
+  --panel:#121a24;
+  --panel-2:#1a2434;
+  --border:#223040;
+  --text:#e6edf3;
+  --muted:#8b9bb0;
+  --at:#e0a862;
+  --cristo:#ff5c5c;
+  --iglesia:#3ddc84;
+  --pacto:#58a6ff;
+  --esperanza:#b87cff;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(1400px 700px at 5% -10%, rgba(224,168,98,.10), transparent 60%),
+    radial-gradient(1400px 700px at 50% -10%, rgba(255,92,92,.08), transparent 60%),
+    radial-gradient(1400px 700px at 95% -10%, rgba(61,220,132,.10), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  line-height:1.6;
+  min-height:100vh;
+  padding:calc(20px + var(--safe-top)) calc(20px + var(--safe-right)) calc(40px + var(--safe-bottom)) calc(20px + var(--safe-left));
+}
+.topbar{
+  position:sticky;top:0;left:0;right:0;
+  background:rgba(11,15,20,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:12px 18px;
+  padding-top:calc(12px + var(--safe-top));
+  padding-left:calc(18px + var(--safe-left));
+  padding-right:calc(18px + var(--safe-right));
+  margin:-20px -20px 24px;
+  z-index:50;
+  display:flex;align-items:center;gap:14px;
+}
+.topbar a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.78rem;font-weight:600;letter-spacing:.4px;
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:.18s;
+}
+.topbar a:hover{color:var(--text)}
+.topbar h1{
+  font-size:1.15rem;font-weight:700;
+  background:linear-gradient(90deg,var(--at),var(--cristo),var(--iglesia),var(--pacto),var(--esperanza));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  letter-spacing:.3px;
+  flex:1;
+}
+
+.content{
+  max-width:780px;
+  margin:0 auto;
+}
+
+.content h2{
+  font-size:1.5rem;font-weight:700;
+  color:var(--text);
+  margin:36px 0 12px;
+  padding-bottom:8px;
+  border-bottom:2px solid var(--border);
+  letter-spacing:.5px;
+}
+.content h2:first-child{margin-top:0}
+.content h2 .icon{margin-right:8px}
+
+.content h3{
+  font-size:1.05rem;font-weight:600;
+  color:var(--at);
+  margin:20px 0 8px;
+}
+
+.content p{
+  font-size:.92rem;
+  line-height:1.75;
+  color:var(--text);
+  margin-bottom:14px;
+}
+
+.content .lead{
+  font-size:1rem;
+  color:var(--muted);
+  font-style:italic;
+  margin-bottom:24px;
+  padding:14px 18px;
+  background:rgba(255,255,255,.02);
+  border-left:3px solid var(--pacto);
+  border-radius:8px;
+}
+
+.content ul, .content ol{
+  margin:0 0 16px 20px;
+}
+.content li{
+  font-size:.9rem;
+  line-height:1.7;
+  margin-bottom:6px;
+  color:var(--text);
+}
+
+.content blockquote{
+  background:rgba(88,166,255,.06);
+  border-left:3px solid var(--pacto);
+  padding:12px 16px;
+  border-radius:8px;
+  margin:16px 0;
+  font-style:italic;
+  color:#cfe3ff;
+  font-size:.88rem;
+}
+
+.content .callout{
+  background:rgba(255,92,92,.06);
+  border:1px solid rgba(255,92,92,.2);
+  border-left:3px solid var(--cristo);
+  padding:16px 18px;
+  border-radius:10px;
+  margin:20px 0;
+}
+.content .callout-title{
+  font-size:.82rem;font-weight:700;
+  color:var(--cristo);
+  letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.content .callout p{
+  font-size:.86rem;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.content .callout p:last-child{margin-bottom:0}
+
+.content .scripture{
+  font-style:italic;
+  color:#cfe3ff;
+  background:rgba(88,166,255,.06);
+  border-left:3px solid #1f6feb;
+  padding:10px 14px;
+  border-radius:6px;
+  margin:12px 0;
+  font-size:.88rem;
+}
+.content .scripture-ref{
+  display:block;
+  font-style:normal;
+  font-size:.74rem;
+  font-weight:700;
+  color:#79c0ff;
+  margin-top:4px;
+  text-align:right;
+}
+
+.content table{
+  width:100%;
+  border-collapse:collapse;
+  margin:16px 0;
+  font-size:.86rem;
+}
+.content th, .content td{
+  border:1px solid var(--border);
+  padding:8px 12px;
+  text-align:left;
+}
+.content th{
+  background:rgba(255,255,255,.03);
+  font-weight:700;
+  color:var(--at);
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.content td{color:var(--text)}
+
+.content .divider{
+  border:none;
+  border-top:1px dashed var(--border);
+  margin:32px 0;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:.78rem;
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+}
+footer a{
+  color:var(--pacto);
+  text-decoration:none;
+}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:768px){
+  body{padding:10px 10px 30px}
+  .topbar{margin:-10px -10px 16px;padding:8px 10px}
+  .topbar h1{font-size:.95rem}
+  .content h2{font-size:1.2rem}
+  .content p, .content li{font-size:.86rem}
+  .content .lead{font-size:.9rem}
+}
+
+/* Light theme support */
+body.theme-light{
+  --bg:#f8f9fa;
+  --bg-2:#ffffff;
+  --panel:#ffffff;
+  --panel-2:#f1f3f5;
+  --border:#dee2e6;
+  --text:#1a1a1a;
+  --muted:#6c757d;
+}
+body.theme-light{
+  background:
+    radial-gradient(1400px 700px at 5% -10%, rgba(224,168,98,.06), transparent 60%),
+    radial-gradient(1400px 700px at 50% -10%, rgba(255,92,92,.05), transparent 60%),
+    radial-gradient(1400px 700px at 95% -10%, rgba(61,220,132,.06), transparent 60%),
+    var(--bg);
+}
+body.theme-light .topbar{
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid var(--border);
+}
+body.theme-light .content .lead{
+  background:rgba(0,0,0,.02);
+  color:var(--muted);
+}
+body.theme-light .content blockquote{
+  background:rgba(88,166,255,.04);
+  color:#2a4a6a;
+}
+body.theme-light .content .callout{
+  background:rgba(255,92,92,.04);
+}
+body.theme-light .content .scripture{
+  background:rgba(88,166,255,.04);
+  color:#2a4a6a;
+}
+body.theme-light .content th{
+  background:rgba(0,0,0,.03);
+}
+body.theme-light footer{
+  border-top:1px solid var(--border);
+}
+
+.theme-toggle-btn{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+  width:32px;height:32px;
+  border-radius:8px;
+  font-size:.95rem;
+  cursor:pointer;
+  transition:.18s;
+  font-family:inherit;
+}
+.theme-toggle-btn:hover{
+  background:rgba(255,255,255,.08);
+  border-color:var(--at);
+  color:var(--at);
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html">← Inicio</a>
+  <h1>Acerca de este proyecto</h1>
+  <button class="theme-toggle-btn" id="themeToggleBtn" title="Cambiar tema">🌙</button>
+</div>
+
+<div class="content">
+
+<p class="lead">
+Mapas Bíblicos es una herramienta de estudio interactiva que busca ayudar al creyente a profundizar en las Escrituras, libro por libro, mostrando conexiones temáticas entre pasajes del Antiguo y Nuevo Testamento, con comentarios de eruditos de diversas épocas y tradiciones.
+</p>
+
+<h2><span class="icon">📖</span>Posición teológica</h2>
+
+<p>
+Este proyecto se sitúa dentro de la <strong>fe evangélica conservadora</strong>, asumiendo la Escritura como Palabra inspirada de Dios y regla suprema de fe y práctica. Sin embargo, la preocupación de fondo no es defender una etiqueta denominacional, sino apuntar a lo esencial: <strong>una fe genuina, fundada en Cristo y vivida en la comunión de su Iglesia</strong>.
+</p>
+
+<p>
+Entendemos que Cristo vive esencialmente a través de su Iglesia, y que ella subsiste por Él. La religión institucional, las formas y las tradiciones tienen su lugar, pero lo preponderante es la <strong>vida de Cristo expresada en su pueblo</strong>: una fe con fundamentos sólidos, no meramente nominal ni reducida a una sistema doctrinal, sino encarnada en comunidades que viven del Cristo resucitado y ascendido.
+</p>
+
+<div class="scripture">
+Y él es la cabeza del cuerpo que es la iglesia, él que es el principio, el primogénito de entre los muertos, para que en todo tenga la preeminencia.
+<span class="scripture-ref">Colosenses 1:18</span>
+</div>
+
+<p>
+Esta visión se refleja en la selección de versículos, en las conexiones propuestas entre nodos, y en los comentarios elegidos. No buscamos imponer un sistema, sino mostrar cómo toda la Escritura apunta a Cristo y cómo su obra redentora se hace realidad en la vida de su pueblo.
+</p>
+
+<hr class="divider">
+
+<h2><span class="icon">🔍</span>Enfoque hermenéutico</h2>
+
+<p>
+La interpretación bíblica de este proyecto se apoya en tres pilares complementarios:
+</p>
+
+<h3>1. Hermenéutica tipológica</h3>
+<p>
+El Antiguo Testamento se lee como <strong>sombra y figura</strong> de realidades que se cumplen en Cristo. El tabernáculo, el sacerdocio levítico, los sacrificios, el día de la expiación, las fiestas, los reyes y profetas: todo apunta hacia adelante, hacia Aquel que vendría. No se trata de buscar tipos donde no los hay, sino de seguir las líneas que el Nuevo Testamento mismo traza al interpretar el AT.
+</p>
+
+<div class="scripture">
+Porque la ley, teniendo la sombra de los bienes venideros, no la imagen misma de las cosas...
+<span class="scripture-ref">Hebreos 10:1</span>
+</div>
+
+<h3>2. Lectura redencional-cristocéntrica</h3>
+<p>
+Toda la Escritura cuenta la <strong>historia de la redención</strong>: creación, caída, promesa, pacto, ley, tierra, rey, exilio, retorno, Cristo, Iglesia, consumación. Cada libro y cada pasaje ocupa su lugar en esta gran narrativa. Cristo es el centro: todo lo que le precede apunta a él; todo lo que le sigue fluye de él.
+</p>
+
+<div class="scripture">
+Y comenzando desde Moisés, y siguiendo por todos los profetas, les declaraba en todas las Escrituras lo que de él decían.
+<span class="scripture-ref">Lucas 24:27</span>
+</div>
+
+<h3>3. Lectura canónica</h3>
+<p>
+Cada texto se lee a la luz del <strong>canon completo</strong>. Un versículo no se interpreta en aislamiento, sino en diálogo con el resto de la Escritura. Las conexiones entre libros —que este proyecto visualiza como flechas entre nodos— reflejan cómo el NT cita e interpreta al AT, cómo los evangelios se complementan, cómo las cartas apostólicas desarrollan lo que Cristo enseñó y obró.
+</p>
+
+<hr class="divider">
+
+<h2><span class="icon">✂️</span>Criterio de selección de versículos</h2>
+
+<p>
+No todos los versículos de cada libro aparecen en los mapas. La selección sigue estos criterios:
+</p>
+
+<ul>
+<li><strong>Versículos clave teológicamente</strong>: pasajes que expresan el núcleo del mensaje del libro, su Cristo central, sus promesas, sus advertencias.</li>
+<li><strong>Conexiones intertextuales</strong>: versículos que el NT cita del AT o que otros libros bíblicos desarrollan. La tipología se construye sobre textos que el Espíritu Santo mismo vincula.</li>
+<li><strong>Progresión temática</strong>: versículos que muestran el avance del argumento del libro, de modo que el mapa cuente la historia teológica del texto, no solo una colección de citas aisladas.</li>
+<li><strong>Densidad proporcional</strong>: la cantidad de nodos por libro no depende de su longitud, sino de su <strong>densidad teológica</strong>. Hebreos tiene más nodos que algunos libros más largos porque su argumento es más concentrado.</li>
+</ul>
+
+<hr class="divider">
+
+<h2><span class="icon">🔗</span>Criterio de relaciones entre nodos</h2>
+
+<p>
+Las flechas que conectan los nodos no son decorativas: representan <strong>relaciones teológicas reales</strong> entre pasajes. Los tipos de conexión incluyen:
+</p>
+
+<table>
+<tr><th>Tipo</th><th>Descripción</th><th>Ejemplo</th></tr>
+<tr><td>Cumplimiento</td><td>El AT promete/prefigura, el NT cumple</td><td>Jeremías 31 → Hebreos 8 (nuevo pacto)</td></tr>
+<tr><td>Tipología</td><td>Una figura del AT se cumple en Cristo</td><td>Melquisedec (Gn 14) → Cristo (Heb 7)</td></tr>
+<tr><td>Eco temático</td><td>Un concepto se desarrolla a través de libros</td><td>Reino de Dios → Mt → Hechos → Apocalipsis</td></tr>
+<tr><td>Contraste</td><td>La sombra vs. la realidad</td><td>Sangre de animales → Sangre de Cristo</td></tr>
+<tr><td>Aplicación</td><td>De la obra de Cristo a la vida de la Iglesia</td><td>Sacrificio de Cristo → Sacrificios espirituales</td></tr>
+</table>
+
+<hr class="divider">
+
+<h2><span class="icon">📚</span>Comentaristas citados</h2>
+
+<p>
+Los comentarios provienen de diversas épocas y tradiciones, con un criterio: <strong>fidelidad bíblica y profundidad pastoral</strong>. No se excluye a un autor por su tradición, ni se incluye solo por ella. Lo que importa es si su comentario ilumina el texto.
+</p>
+
+<h3>Padres de la Iglesia (siglos I-V)</h3>
+<p>
+Juan Crisóstomo, Agustín de Hipona, Jerónimo, Atanasio, Cirilo de Alejandría, Teodoretto de Ciro, Gregorio Magno, Hilario de Poitiers, León Magno, Gregorio Nacianceno, Orígenes. Su valor: cercanía al mundo bíblico, lectura tipológica, profundidad espiritual.
+</p>
+
+<h3>Reforma y puritanos (siglos XVI-XVII)</h3>
+<p>
+Juan Calvino, Martín Lutero, John Owen, Herman Bavinck (neo-calvinista), Thomas Goodwin, Hugh Martin. Su valor: retorno a la Escritura como autoridad, énfasis en la gracia, profundidad expositiva.
+</p>
+
+<h3>Modernos y contemporáneos</h3>
+<p>
+F.F. Bruce, D.A. Carson, R.T. France, Craig Keener, N.T. Wright, John Stott, R.C. Sproul, Sinclair Ferguson, J.I. Packer, Geerhardus Vos, Herman Ridderbos, G.K. Beale, O. Palmer Robertson, Peter O'Brien, Philip Hughes, Donald Hagner, Leon Morris, Anthony Hoekema, Donald Macleod, D. Martyn Lloyd-Jones, entre otros. Su valor: erudición actualizada, contexto histórico, diálogo con la crítica académica.
+</p>
+
+<p>
+La diversidad de voces no busca eclecticismo, sino <strong>comunión con la Iglesia de todos los siglos</strong>. Cuando un Padre griego, un reformador y un erudito moderno coinciden en su lectura de un texto, tenemos razón para confiar que allí está el sentido de la Escritura.
+</p>
+
+<hr class="divider">
+
+<h2><span class="icon">🎨</span>Sobre la organización visual</h2>
+
+<p>
+Cada libro se organiza en <strong>9 grupos temáticos</strong> dispuestos en una cuadrícula. Esta organización no es la única posible ni pretende imponerse como "la" estructura del libro. Es una herramienta pedagógica: ayuda a ver el panorama, a agrupar temas afines, a no perder el bosque por los árboles.
+</p>
+
+<p>
+El orden de los grupos sigue el movimiento teológico o narrativo del libro, no necesariamente el orden de los capítulos. En Mateo, por ejemplo, la escatología (Mt 24-25) aparece antes que la pasión (Mt 26-28) en la disposición visual, porque el discurso del Monte de los Olivos anticipa la consumación que la cruz inaugura.
+</p>
+
+<hr class="divider">
+
+<h2><span class="icon">⚠️</span>Aclaración importante</h2>
+
+<div class="callout">
+<div class="callout-title">Material elaborado con asistencia de IA</div>
+<p>
+Este proyecto ha sido <strong>elaborado con la asistencia de inteligencia artificial</strong> (modelos de lenguaje) para la organización, redacción y compilación de contenido. La IA ha sido utilizada como herramienta, pero la dirección, selección, criterio teológico y revisión corresponden al autor humano.
+</p>
+<p>
+<strong>La IA es falible.</strong> Puede cometer errores en la atribución de citas, en la interpretación de pasajes, o en la precisión de referencias bíblicas. Aunque se ha procurado verificar la fidelidad de cada comentario a la fuente citada, no se puede garantizar exactitud absoluta.
+</p>
+<p>
+<strong>Este material es falible.</strong> No sustituye la lectura directa de la Escritura ni el discernimiento comunitario bajo el Señorío de Cristo. Es una herramienta de apoyo, no una autoridad. La Palabra de Dios es la única regla infalible de fe y práctica; los mapas, comentarios y conexiones son humanos y, por tanto, revisables.
+</p>
+<p>
+<strong>El material puede modificarse sin previo aviso.</strong> A medida que se detectan errores, se amplían contenidos, o se incorporan nuevos libros, los archivos se actualizan. Recomendamos consultar periódicamente la versión más reciente.
+</p>
+</div>
+
+<p>
+Si encuentras un error —una cita mal atribuida, una referencia incorrecta, un comentario que no corresponde al versículo— te agradecemos comunicarlo. La corrección beneficia a todos los que usan esta herramienta.
+</p>
+
+<hr class="divider">
+
+<h2><span class="icon">🙏</span>Propósito</h2>
+
+<p>
+Este proyecto no tiene fines comerciales ni busca promover una denominación específica. Nace del deseo de que creyentes de trasfondos diversos puedan <strong>profundizar en la Palabra de Dios</strong>, ver la unidad de la Escritura, contemplar a Cristo en toda ella, y vivir una fe más fundada y gozosa.
+</p>
+
+<div class="scripture">
+Escudriñad las Escrituras; porque a vosotros os parece que en ellas tenéis la vida eterna; y ellas son las que dan testimonio de mí.
+<span class="scripture-ref">Juan 5:39</span>
+</div>
+
+<p>
+Que el Señor use esta herramienta —con todas sus limitaciones— para avivar en su pueblo el hambre de su Palabra, la contemplación de su Hijo, y la comunión de su Espíritu.
+</p>
+
+</div>
+
+<footer>
+  Mapas Bíblicos · Estudio interactivo de las Escrituras<br>
+  <a href="index.html">← Volver al índice</a> ·
+  Material elaborado con IA · Falible · Sujeto a revisión
+</footer>
+
+<script>
+// Theme toggle
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const savedTheme = localStorage.getItem('biblia-theme') || 'dark';
+if (savedTheme === 'light') {
+  document.body.classList.add('theme-light');
+  if (themeToggleBtn) themeToggleBtn.textContent = '☀';
+}
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('theme-light');
+    const isLight = document.body.classList.contains('theme-light');
+    localStorage.setItem('biblia-theme', isLight ? 'light' : 'dark');
+    themeToggleBtn.textContent = isLight ? '☀' : '🌙';
+  });
+}
+
+// PWA: register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('[PWA] SW registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW failed:', err.message));
+  });
+}
+</script>
+</body>
+</html>
