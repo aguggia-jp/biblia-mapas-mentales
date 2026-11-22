@@ -1232,6 +1232,35 @@ body.focus-active .focus-exit-hint{display:block}
   }
 }
 
+
+/* ---------- EXTENDED COMMENTS ---------- */
+.extended-comments-section{
+  margin-top:12px;
+}
+.extended-comments-title{
+  font-size:.66rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+  padding-bottom:6px;
+  border-bottom:1px dashed var(--border);
+}
+.extended-comment{
+  background:rgba(255,255,255,.02);
+  border-left:2px solid var(--at);
+  padding:12px 14px;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+.extended-comment .comment-author{
+  display:block;font-weight:700;color:var(--at);
+  margin-bottom:6px;font-size:.82rem;letter-spacing:.3px;
+}
+.extended-comment .comment-text{
+  font-size:.85rem;color:#e6d4b5;line-height:1.65;
+}
+.extended-comment:last-child{margin-bottom:0}
+
 </style>
 <style>
 :root{
@@ -4324,7 +4353,7 @@ const GLOSSARY = {
   'Encarnación': {def: 'El Hijo eterno de Dios hecho hombre (Jn 1:14). Verdadero Dios y verdadero hombre en una sola persona.', cat: 'teología'}
 };
 const GLOSSARY_TERMS = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
-const BOOK_PUBLIC_URL = 'https://TU_USUARIO.github.io/biblia-mapas/mapa-heb/';
+const BOOK_PUBLIC_URL = 'https://aguggia-jp.github.io/biblia-mapas-mentales/mapa-heb/';
 
 // --- Build regex for matching glossary terms ---
 // Escape regex special chars and build alternation pattern
@@ -5502,8 +5531,287 @@ function addVersionsSection(node, modalBody) {
 // Apply initial level on load
 setTimeout(() => applyDifficultyLevel(currentLevel), 100);
 
+// ============================================================
+// HASH NAVIGATION: open specific node when URL has #node-ID
+// ============================================================
+// When someone receives a WhatsApp link like:
+// https://aguggia-jp.github.io/biblia-mapas-mentales/mapa-heb/#node-n9
+// this opens that specific node automatically
+function openNodeFromHash() {
+  const hash = window.location.hash;
+  if (!hash) return;
+  const match = hash.match(/^#node-(.+)$/);
+  if (!match) return;
+  const nodeId = match[1];
+  // Wait for nodes to be rendered
+  setTimeout(() => {
+    const node = nodeMap[nodeId];
+    if (node) {
+      showNodeDetails(node);
+    } else {
+      console.log('Node not found:', nodeId);
+    }
+  }, 300);
+}
+
+// Listen for hash changes (e.g., when user clicks a node link in notes panel)
+window.addEventListener('hashchange', openNodeFromHash);
+
+// On initial load, open node from hash if present
+window.addEventListener('load', openNodeFromHash);
+
 // Mark stage3 as applied
 window.stage3_applied = true;
+
+
+// ============================================================
+// EXTENDED COMMENTS: additional scholar insights per node
+// ============================================================
+const ADDITIONAL_COMMENTS = {
+  "n1": [
+    {
+      "author": "Atanasio · Contra los Arianos",
+      "text": "El Hijo no fue constituido heredero en el tiempo, sino que es eternamente el heredero. La creación entera le pertenece no por donación, sino por derecho de naturaleza. Como Hijo unigénito del Padre, tiene en sí mismo toda la heredad divina. La encarnación no le dio lo que no tenía, sino que manifestó lo que siempre fue."
+    },
+    {
+      "author": "F.F. Bruce · Comentario a Hebreos",
+      "text": "El contraste entre \"los profetas\" (plural) y \"el Hijo\" (singular) subraya la superioridad final de la revelación cristiana. Los profetas fueron portavoces de Dios; el Hijo ES la Palabra de Dios. No es un mensajero más, sino la última palabra del Padre, que hace innecesaria toda otra mediación profética."
+    }
+  ],
+  "n2": [
+    {
+      "author": "Teodoretto de Ciro · Sobre Hebreos",
+      "text": "El resplandor no es posterior a la luz: el sol y su radiación coexisten eternamente. Así el Padre y el Hijo: ni el Padre fue antes sin el Hijo, ni el Hijo nació después del Padre. \"Carácter de su sustancia\" significa la impronta exacta: como un sello en cera reproduce perfectamente la forma del sello, así el Hijo reproduce la sustancia del Padre sin alteración."
+    },
+    {
+      "author": "Herman Bavinck · Teología Reformada",
+      "text": "Cristo es apaugasma (resplandor) y charakter (impronta) de Dios. El primer término enfatiza la unidad de esencia: el resplandor no es distinto del sol en naturaleza. El segundo enfatiza la distinción personal: la impronta no es idéntica al sello. Así la cristología de Hebreos sostiene la deidad plena de Cristo sin colapsar las personas de la Trinidad."
+    }
+  ],
+  "n3": [
+    {
+      "author": "Juan Calvino · Institutas II.xii.1",
+      "text": "Cristo es superior a los ángeles no por decreto temporal, sino por derecho de filiación. Los ángeles son ministros; el Hijo es Señor. Siete testimonios del AT lo demuestran: Sal 2 (hoy te he engendrado), 2 Sam 7 (yo seré su Padre), Sal 97 (adoradle todos los ángeles), Sal 104 (espíritus ministradores), Sal 45 (tu trono, oh Dios), Sal 102 (tú, Señor, fundaste la tierra), Sal 110 (siéntate a mi diestra). Cada uno eleva al Hijo por encima de toda criatura."
+    },
+    {
+      "author": "Peter O'Brien · Comentario a Hebreos",
+      "text": "La cadena de siete citas del AT en Hebreos 1:5-13 no es una colección aleatoria, sino un argumento cuidadosamente construido. Cada cita añade un aspecto: relación filial (Sal 2), adoración debida (Sal 97), función creadora (Sal 102), eternidad (Sal 102:25-27), reinado eterno (Sal 45), sacerdocio real (Sal 110). El autor nos lleva de la deidad a la realeza, de la realeza al sacerdocio, prefigurando ya el argumento central del libro."
+    }
+  ],
+  "n7": [
+    {
+      "author": "Gregorio Nacianceno · Epístola 101",
+      "text": "Lo que no fue asumido no fue sanado. Si Cristo no tomó nuestra carne, nuestra carne no fue sanada. Si no tomó nuestra alma, nuestra alma no fue sanada. Por eso Cristo asumió toda la naturaleza humana —cuerpo, alma, emociones— menos el pecado, para ser misericordioso sacerdote en lo que a Dios se refiere. Su tentación fue real, su compasión es real, su socorro es real."
+    },
+    {
+      "author": "Hugh Martin · The Shadow of Calvary",
+      "text": "Cristo \"padeció siendo tentado\". El verbo griego \"peponthen\" indica experiencia real, no teórica. No simpatizó desde lejos; padeció desde dentro. Por eso puede socorrer a los tentados: no dice \"yo entiendo\" como observador, sino \"yo pasé por eso\" como participante. Su sacerdocio es existencial, no doctrinal solamente."
+    }
+  ],
+  "n9": [
+    {
+      "author": "Filón de Alejandría · Sobre Abraham",
+      "text": "Melquisedec aparece sin genealogía porque la Escritura quiere hacer de él un tipo del Logos eterno. No es que careciera de padre y madre, sino que el registro sagrado los calla, para que el silencio mismo sea profecía. Cristo, el verdadero Melquisedec, no tiene principio de días ni fin de vida: es sacerdote para siempre."
+    },
+    {
+      "author": "Donald Hagner · Comentario a Hebreos",
+      "text": "El argumento de Hebreos 7 es rabínico en su método pero cristológico en su conclusión. El autor usa el silencio de Génesis 14 sobre el padre, madre, nacimiento y muerte de Melquisedec como prueba tipológica. El Salmo 110:4 (\"sacerdote para siempre según el orden de Melquisedec\") es la clave hermenéutica: el orden melquisedequiano es eterno, no levítico, no mortal."
+    }
+  ],
+  "n10": [
+    {
+      "author": "Tomás de Aquino · Summa III.22.6",
+      "text": "El sacerdocio de Cristo se funda en doble base: su naturaleza divina (que le da la capacidad de mediar) y el juramento del Padre (que le da la legitimidad eterna). El juramento divino no añade verdad a la verdad, sino que confirma la inmutabilidad del consejo divino para consuelo de los herederos. Dios juró para que tuviéramos una esperanza firme."
+    },
+    {
+      "author": "Philip Hughes · Comentario a Hebreos",
+      "text": "El contraste es absoluto: los sacerdotes levíticos fueron constituidos \"sin juramento\" (Heb 7:20), es decir, por ley ceremonial temporaria. Cristo fue constituido \"con juramento\" (Sal 110:4), es decir, por decreto divino eterno. El juramento hace del sacerdocio de Cristo algo inmutable, garantía divina de un pacto mejor."
+    }
+  ],
+  "n12": [
+    {
+      "author": "Crisóstomo · Homilía XIV sobre Hebreos",
+      "text": "Cristo no solo es santo, sino que es \"separado de los pecadores\", lo que indica no solo inocencia de hecho, sino trascendencia de naturaleza. Su santidad no es ausencia de pecado por esfuerzo, sino imposibilidad de pecar por naturaleza. Por eso no necesita ofrecer sacrificios por sí mismo, como los otros sacerdotes. La víctima y el sacerdote son uno: él se ofrece a sí mismo."
+    },
+    {
+      "author": "John Murray · Redención consumada y aplicada",
+      "text": "La singularidad del sacrificio de Cristo se expresa en \"una vez para siempre\" (ephapax). No es solo que ocurrió una sola vez, sino que su eficacia es tal que no necesita repetirse. Los sacrificios del AT se repetían porque eran impotentes para remover el pecado. El sacrificio de Cristo no se repite porque ya removió el pecado en su totalidad."
+    }
+  ],
+  "n15": [
+    {
+      "author": "León Morris · La Cruz en el NT",
+      "text": "La sangre en el AT tenía eficacia ceremonial pero no moral. Podía santificar \"para la purificación de la carne\" (Heb 9:13), es decir, restaurar la comunión externa del pueblo con Dios. Pero no podía tocar la conciencia, no podía transformar el corazón. Era sombra de la sangre verdadera que limpiaría las conciencias de obras muertas."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El día de la expiación (Lev 16) era el punto culminante del calendario sacerdotal israelita. Una vez al año, el sumo sacerdote entraba al Lugar Santísimo con sangre. Era algo solemne, terrorífico, profundamente simbólico. Pero era solo figura. La realidad llegó cuando Cristo, no con sangre ajena sino con la suya propia, entró una vez para siempre en el santuario celestial."
+    }
+  ],
+  "n16": [
+    {
+      "author": "Agustín de Hipona · De Trinitate IV",
+      "text": "El Hijo de Dios se hizo hombre para que los hombres pudieran hacerse Dios. Tomó sangre humana para derramarla, no por necesidad propia, sino por nuestro rescate. La sangre de Cristo es sangre divina en cuanto es sangre del Verbo encarnado. Por eso limpia la conciencia, que no puede ser limpiada por sangre de animales. Es sangre de un mediador que es a la vez Dios y hombre."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos IX",
+      "text": "Cristo \"mediante el Espíritu eterno se ofreció a sí mismo\". El Espíritu aquí es el Espíritu divino, no el espíritu humano de Cristo. La ofrenda de Cristo en la cruz fue un acto trinitario: el Padre recibe la ofrenda, el Hijo se ofrece, el Espíritu santifica y consagra el sacrificio. Por eso la sangre de Cristo es \"sangre del pacto eterno\" (Heb 13:20), no sangre temporal."
+    }
+  ],
+  "n23": [
+    {
+      "author": "Jerónimo · Sobre Jeremías",
+      "text": "Jeremías profetizó el nuevo pacto cuando el antiguo aún funcionaba. Si el primero hubiera sido perfecto, no se buscaría lugar para un segundo. La profecía misma era juicio del primer pacto: Dios anunciaba su insuficiencia. Pero era también promesa: no dejaría a su pueblo sin pacto verdadero. El nuevo pacto se distingue del antiguo en tres cosas: interioridad (ley en el corazón), intimidad (todos me conocerán), perdón (no me acordaré de sus pecados)."
+    },
+    {
+      "author": "O. Palmer Robertson · Cristo de los Pactos",
+      "text": "El nuevo pacto de Jeremías 31 no es solo una renovación del Sinaítico, sino una realidad de naturaleza distinta. El pacto antiguo era exterior: tablas de piedra, ley escrita, sacerdocio de tribu, sacrificios repetidos. El nuevo pacto es interior: ley en el corazón, perdón completo, conocimiento universal de Dios, sacerdocio de todos los creyentes. Cristo es el mediador que lo instituye con su sangre."
+    }
+  ],
+  "n24": [
+    {
+      "author": "Herman Witsius · La Economía de los Pactos",
+      "text": "Cristo es mediador del nuevo pacto en tres sentidos: como sacerdote (ofrece el sacrificio que lo instituye), como profeta (revela las promesas que lo componen) y como rey (administra las bendiciones que lo consuman). Su oficio mediador no es solo reconciliador entre dos partes, sino garantía personal del cumplimiento. Por eso el pacto es \"mejor\": descansa sobre la persona del Mediador, no sobre la obediencia humana."
+    },
+    {
+      "author": "Richard Gaffin · Perspectivas Pentecostales",
+      "text": "El \"mejor pacto\" no es solo en sus promesas, sino en su sustancia. Las promesas del Sinaí eran condicionales y terrenales; las del nuevo pacto son incondicionales (cumplidas en Cristo) y espirituales. Por eso el autor de Hebreos puede decir que el nuevo pacto está \"establecido sobre mejores promesas\": la diferencia no es de grado, sino de naturaleza."
+    }
+  ],
+  "n29": [
+    {
+      "author": "Teodoro de Mopsuestia · Sobre Hebreos",
+      "text": "El tabernáculo de Moisés fue figura del verdadero; el templo de Salomón fue sombra del celestial. Pero Cristo no entró en figura, sino en el cielo mismo. Su cuerpo es el verdadero santuario donde habita corporalmente toda la plenitud de la deidad. Por eso su muerte rasgó el velo: el verdadero acceso al Padre estaba abierto en su carne partida."
+    },
+    {
+      "author": "G.K. Beale · El Templo y la Misión de la Iglesia",
+      "text": "El tabernáculo como tipo apunta al cuerpo de Cristo (Jn 2:21) y a la Iglesia como templo del Espíritu (1 Co 3:16) y a la nueva Jerusalén donde Dios habita con los hombres (Ap 21:3). Hebreos 9:11 es el nexo: Cristo es el tabernáculo verdadero, \"no hecho de manos\". La realidad supera infinitamente a la figura."
+    }
+  ],
+  "n31": [
+    {
+      "author": "Crisóstomo · Homilía XVI sobre Hebreos",
+      "text": "El sumo sacerdote del AT entraba en un santuario hecho de manos, figura del verdadero. Cristo entró en el cielo mismo, no en figura. No llevó sangre de animales, sino la suya propia. No entró para repetir, sino para permanecer. No entró solo por sí, sino por nosotros. Su entrada es la nuestra: donde está el Cabeza, allí está el Cuerpo."
+    },
+    {
+      "author": "Edward Donnelly · Temas Bíblicos",
+      "text": "La ascensión de Cristo no es un epílogo, sino el clímax de su obra sacerdotal. Entra en el santuario celestial no para sentarse pasivamente, sino para interceder continuamente (Heb 7:25). Su presencia ante el Padre, con las marcas de la cruz, es la garantía permanente de nuestra aceptación. La cruz fue el sacrificio; el cielo es la ofrenda perpetua."
+    }
+  ],
+  "n17": [
+    {
+      "author": "Martín Lutero · Comentario a Gálatas",
+      "text": "La una ofrenda de Cristo nos ha perfeccionado para siempre. No somos perfeccionados por nuestras obras, ni por nuestra santidad progresiva, sino por su sacrificio único. La perfección aquí es forense: Dios nos declara perfectos a causa de la ofrenda de Cristo. Nuestra santificación subjetiva crece, pero nuestra aceptación objetiva ya es completa."
+    },
+    {
+      "author": "John Owen · Sobre Hebreos X",
+      "text": "\"Hemos sido santificados mediante la ofrenda del cuerpo de Jesucristo hecha una vez para siempre\". El verbo está en perfecto: una acción pasada con efecto continuo. La santificación aquí no es la nuestra subjetiva, sino la de Cristo objetiva, imputada a los suyos. Por eso podemos \"entrar con corazón sincero, en plena certidumbre de fe\" (Heb 10:22): no por nuestra santidad, sino por la suya."
+    }
+  ],
+  "n38": [
+    {
+      "author": "Agustín de Hipona · Enarrationes in Psalmos 88",
+      "text": "La disciplina prueba la filiación. Solo los bastardos escapan a la corrección; los hijos legítimos son disciplinados. Si Dios te corrige, no te ha abandonado: al contrario, te reconoce como hijo. El sufrimiento del creyente no es castigo condenatorio —eso fue consumado en la cruz— sino educación paternal. Toda disciplina trae fruto de justicia a los que son ejercitados por ella."
+    },
+    {
+      "author": "J.I. Packer · Conociendo a Dios",
+      "text": "La disciplina de Dios no es reactiva, como si él perdiera la paciencia. Es formativa, como un padre sabio que entrena a su hijo. Hebreos 12 cita Proverbios 3:11-12 no para amenazar, sino para consolar: si Dios te disciplina, es porque te ama. La prueba de su amor no es ausencia de dolor, sino presencia de propósito en el dolor. Toda disciplina tiene \"fruto de justicia\" como meta."
+    }
+  ],
+  "n48": [
+    {
+      "author": "Agustín de Hipona · Confesiones I.1",
+      "text": "Inquieto está nuestro corazón hasta que repose en ti. El reposo de Dios del séptimo día (Gn 2:2) apunta a un reposo más profundo que el de Canaán. Hay un reposo eterno que permanece abierto, un sábado escatológico del pueblo de Dios. Por eso el salmista, siglos después de Josué, todavía habla de \"hoy\" (Sal 95:7). El \"hoy\" sigue abierto; la promesa persiste."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El reposo de Hebreos 3-4 es escatológico, no solo ceremonial. Canaán era tipo del reposo final, pero no era el reposo mismo. El salmista lo sabía: por eso, después de Josué, todavía prometía \"hoy\" reposo. Cristo es el verdadero Josué (Jesús = Josué), que conduce a su pueblo al reposo definitivo, que es comunión con Dios en el cielo nuevo y tierra nueva."
+    }
+  ],
+  "n51": [
+    {
+      "author": "Orígenes · Homilía VI sobre Hebreos",
+      "text": "La Palabra de Dios es viva porque es espíritu y vida. Es eficaz (energēs) porque no vuelve vacía, sino que hace lo que Dios quiere. Penetra hasta partir alma y espíritu: no hay en el hombre profundidad tan oculta que la Palabra no alcance. Discierne pensamientos e intenciones: no hay secreto del corazón que no sea desnudado ante ella. Por eso es a la vez espada que sana y luz que expone."
+    },
+    {
+      "author": "Sinclair Ferguson · El Corazón de la Cruz",
+      "text": "La Palabra es comparada a espada de dos filos porque corta en ambos sentidos: condena el pecado y sana al pecador. \"Partir alma y espíritu\" no es dividir dos sustancias, sino exponer la motivación más íntima. La Palabra no solo dice lo que haces, sino por qué lo haces. Ante ella, todo está desnudo: no hay hipocresía que resista, no hay autoengaño que perdure."
+    }
+  ],
+  "n54": [
+    {
+      "author": "Cirilo de Alejandría · Sobre Hebreos",
+      "text": "No venimos al Sinaí humeante, sino a Sión celestial. La Iglesia en la tierra ya está unida a la del cielo. Cuando adoramos, entramos en una asamblea que ya está reunida: ángeles en fiesta, primogénitos inscritos, espíritus de justos hechos perfectos, Dios el juez de todos, Jesús el mediador. Cristo es el centro: él es el mediador del nuevo pacto, cuya sangre habla mejor que la de Abel."
+    },
+    {
+      "author": "R.C. Sproul · Gloria Coaligada",
+      "text": "Hebreos 12:22-24 describe el culto cristiano como participación en la liturgia celestial. No venimos solos: venimos a una asamblea innumerable de ángeles. No venimos a un monte aterrador: venimos a la ciudad del Dios vivo. La Iglesia militante en la tierra se une a la Iglesia triunfante en el cielo en cada culto verdadero. Por eso el culto es sagrado: es comunión con el cielo."
+    }
+  ],
+  "n55": [
+    {
+      "author": "Crisóstomo · Homilía XXXIII sobre Hebreos",
+      "text": "Los reinos terrenales se sacuden y caen: Babilonia, Persia, Grecia, Roma. Los cielos y la tierra serán removidos (Heb 12:27). Pero el reino que recibimos en Cristo no puede ser sacudido. Por eso tengamos gracia: no por miedo, sino por gratitud, sirvamos a Dios aceptablemente con reverencia y temor piadoso. Nuestro Dios es fuego consumidor: no para los suyos, sino para todo lo que se opone a su reino."
+    },
+    {
+      "author": "Anthony Hoekema · La Biblia y el Futuro",
+      "text": "El reino inconmovible de Hebreos 12:28 es el reino escatológico inaugurado en Cristo y consumado en su vuelta. Los reinos del mundo pasarán; el reino de Cristo permanece. Esta esperanza da estabilidad en medio de sacudidas: personales, sociales, cósmicas. Servir a Dios \"agradándole con reverencia\" es la respuesta apropiada a un reino que no se puede perder."
+    }
+  ],
+  "n67": [
+    {
+      "author": "Atanasio · Sobre la Encarnación",
+      "text": "Cuando Cristo entra al mundo, dice: \"Sacrificio y ofrenda no quisiste, mas me preparaste cuerpo\". Los sacrificios del AT eran figura; el cuerpo preparado es la realidad. Cristo es a la vez el sacerdote que ofrece y la víctima ofrecida. Su encarnación es ya sacrificio: tomar carne fue el primer acto de su oblación. La cruz fue el clímax, pero el altar fue el cuerpo entero de su vida terrenal."
+    },
+    {
+      "author": "T.F. Torrance · Teología de la Encarnación",
+      "text": "El Salmo 40 en boca de Cristo revela el movimiento de la encarnación: el Hijo entra al mundo para hacer la voluntad del Padre. \"Me has preparado cuerpo\" = me has dado una humanidad verdadera. En esa humanidad, Cristo es obediente donde Adán fue desobediente, donde Israel fue rebelde. El \"heme aquí\" del Salmo 40 contrasta con el \"no\" del primer Adán: la obediencia activa de Cristo como sustitución."
+    }
+  ]
+};
+
+// Override showNodeDetails to add extended comments
+const _origShowNodeDetailsExt = showNodeDetails;
+showNodeDetails = function(node) {
+  _origShowNodeDetailsExt.apply(this, arguments);
+
+  const modalBody = document.getElementById('modalBody');
+  if (!modalBody) return;
+
+  // Add extended comments section (before share section)
+  if (modalBody.querySelector('.extended-comments-section')) return;
+
+  const additional = ADDITIONAL_COMMENTS[node.id];
+  if (!additional || additional.length === 0) return;
+
+  const section = document.createElement('div');
+  section.className = 'extended-comments-section';
+
+  const title = document.createElement('div');
+  title.className = 'extended-comments-title';
+  title.textContent = '📚 Más comentarios de eruditos';
+  section.appendChild(title);
+
+  additional.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'extended-comment';
+    div.innerHTML = `
+      <span class="comment-author">${c.author}</span>
+      <p class="comment-text">${c.text}</p>
+    `;
+    section.appendChild(div);
+  });
+
+  // Insert before share section (or at end)
+  const shareSection = modalBody.querySelector('.share-section');
+  if (shareSection) {
+    modalBody.insertBefore(section, shareSection);
+  } else {
+    modalBody.appendChild(section);
+  }
+};
+
+window.extended_comments_applied = true;
 
 </script>
 

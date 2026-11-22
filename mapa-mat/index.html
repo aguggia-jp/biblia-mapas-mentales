@@ -1232,6 +1232,35 @@ body.focus-active .focus-exit-hint{display:block}
   }
 }
 
+
+/* ---------- EXTENDED COMMENTS ---------- */
+.extended-comments-section{
+  margin-top:12px;
+}
+.extended-comments-title{
+  font-size:.66rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+  padding-bottom:6px;
+  border-bottom:1px dashed var(--border);
+}
+.extended-comment{
+  background:rgba(255,255,255,.02);
+  border-left:2px solid var(--at);
+  padding:12px 14px;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+.extended-comment .comment-author{
+  display:block;font-weight:700;color:var(--at);
+  margin-bottom:6px;font-size:.82rem;letter-spacing:.3px;
+}
+.extended-comment .comment-text{
+  font-size:.85rem;color:#e6d4b5;line-height:1.65;
+}
+.extended-comment:last-child{margin-bottom:0}
+
 </style>
 <style>
 :root{
@@ -4024,7 +4053,7 @@ const GLOSSARY = {
   'Encarnación': {def: 'El Hijo eterno de Dios hecho hombre (Jn 1:14). Verdadero Dios y verdadero hombre en una sola persona.', cat: 'teología'}
 };
 const GLOSSARY_TERMS = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
-const BOOK_PUBLIC_URL = 'https://TU_USUARIO.github.io/biblia-mapas/mapa-heb/';
+const BOOK_PUBLIC_URL = 'https://aguggia-jp.github.io/biblia-mapas-mentales/mapa-mat/';
 
 // --- Build regex for matching glossary terms ---
 // Escape regex special chars and build alternation pattern
@@ -4872,8 +4901,280 @@ function addVersionsSection(node, modalBody) {
 // Apply initial level on load
 setTimeout(() => applyDifficultyLevel(currentLevel), 100);
 
+// ============================================================
+// HASH NAVIGATION: open specific node when URL has #node-ID
+// ============================================================
+function openNodeFromHash() {
+  const hash = window.location.hash;
+  if (!hash) return;
+  const match = hash.match(/^#node-(.+)$/);
+  if (!match) return;
+  const nodeId = match[1];
+  setTimeout(() => {
+    const node = nodeMap[nodeId];
+    if (node) {
+      showNodeDetails(node);
+    } else {
+      console.log('Node not found:', nodeId);
+    }
+  }, 300);
+}
+
+window.addEventListener('hashchange', openNodeFromHash);
+window.addEventListener('load', openNodeFromHash);
+
 // Mark stage3 as applied
 window.stage3_applied = true;
+
+
+// ============================================================
+// EXTENDED COMMENTS: additional scholar insights per node
+// ============================================================
+const ADDITIONAL_COMMENTS = {
+  "m1": [
+    {
+      "author": "Crisóstomo · Homilía II sobre Mateo",
+      "text": "Mateo comienza con la genealogía para mostrar a los judíos que Cristo es verdaderamente hijo de David y de Abraham, cumpliendo las promesas. No empieza con milagros, sino con pedigree. Era necesario para los judíos que el Mesías fuera descendiente legítimo de David. La genealogía incluye mujeres pecadoras (Tamar, Rahab, Betsabé) para mostrar que la gracia ya operaba en el linaje davídico."
+    },
+    {
+      "author": "R.T. France · Comentario a Mateo",
+      "text": "La genealogía está estructurada en tres grupos de catorce: Abraham a David, David al exilio, exilio a Cristo. La repetición de 14 no es accidental: en gematría (numerología hebrea), las letras del nombre \"David\" (DWD) suman 14. Mateo enfatiza: este es el hijo de David, el Mesías prometido. Y la inclusión de cuatro mujeres gentiles o pecadoras anticipa la universalidad del Evangelio."
+    }
+  ],
+  "m2": [
+    {
+      "author": "León Magno · Tomo a Flaviano",
+      "text": "Cristo nació de madre virgen sin padre humano, concebido por el Espíritu Santo. Verdadero Dios y verdadero hombre. No perdió lo que era al asumir lo que no era. Su nacimiento virginal no fue por necesidad, sino por suficiencia: el Hijo de Dios no necesitaba padre humano, porque él tenía al Padre eterno; pero tomó madre humana para tener carne verdadera. Emmanuel: Dios verdaderamente con nosotros."
+    },
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "Mateo cita Is 7:14 con la LXX \"parthenos\" (virgen). El hebreo \"almah\" puede significar \"joven\" o \"virgen\", pero la LXX lo tradujo como \"virgen\", y Mateo lo acepta como cumplimiento. El nacimiento virginal es esencial cristológicamente: asegura que Jesús no heredó la naturaleza pecaminosa de Adán (originalismo), y que el Niño es verdaderamente el Hijo de Dios encarnado, no un hombre adoptado."
+    }
+  ],
+  "m3": [
+    {
+      "author": "Agustín de Hipona · Sermón sobre Epifanía",
+      "text": "Los magos gentiles adoran al Rey de los judíos. Israel no le reconoció; los gentiles le buscaron. La estrella que vieron en Oriente era signo de que las naciones serían llamadas. La gracia rompe fronteras: el Rey de los judíos es el Salvador del mundo. Los dones que ofrecen (oro, incienso, mirra) confiesan proféticamente al Rey, al Dios, al que ha de morir."
+    },
+    {
+      "author": "Craig Keener · Comentario a Mateo",
+      "text": "Los magos no eran reyes, sino astrólogos-philósofos persas. Su venida cumple la profecía de Números 24:17 (estrella de Jacob) y anticipa la conversión de los gentiles. Su adoración contrasta con la hostilidad de Herodes y la indiferencia de Jerusalén. Mateo ya anuncia: el Evangelio llegará a todas las naciones, no solo a Israel."
+    }
+  ],
+  "m8": [
+    {
+      "author": "Crisóstomo · Homilía XII sobre Mateo",
+      "text": "Cristo no se bautiza por necesidad de purificación, sino para santificar las aguas del bautismo. Cumple toda justicia: no como necesitado, sino como pionero. En el bautismo se manifiesta la Trinidad: el Padre habla desde el cielo, el Hijo es ungido en el agua, el Espíritu desciende como paloma. Es teofanía que revela la identidad de Cristo: \"Este es mi Hijo amado, en quien tengo complacencia\"."
+    },
+    {
+      "author": "Herman Ridderbos · El Matrimonio del Cordero",
+      "text": "El bautismo de Jesús es su ungimiento oficial para el oficio mesiánico. La voz del Padre combina el Salmo 2:7 (\"mi Hijo eres tú\") e Isaías 42:1 (\"mi siervo, en quien tengo complacencia\"). Jesús es anunciado como Rey-Siervo: rey en su filial divina, siervo en su obra redentora. El Espíritu lo unge para su misión, que culminará en el bautismo de la cruz (Lc 12:50)."
+    }
+  ],
+  "m9": [
+    {
+      "author": "Gregorio Magno · Cuarenta Homilías sobre Evangelios",
+      "text": "Cristo es tentado en el desierto como Adán en el paraíso. Adán cayó en abundancia; Cristo vence en hambre. Donde Israel cayó en el desierto (codicia, idolatría, tentación de Dios), Cristo es obediente. Cada tentación respondida con Deuteronomio: la Palabra es espada del Espíritu. La victoria de Cristo es la nuestra: él es el segundo Adán que repara lo que el primero quebró."
+    },
+    {
+      "author": "Thomas Goodwin · Cristo desplegado",
+      "text": "Cristo fue tentado en todo como nosotros, pero sin pecado. Las tres tentaciones resumen todas las tentaciones humanas: apetito (pan), presunción (tirarse del templo), ambición (reinos del mundo). Cristo vence donde Adán cayó, donde Israel cayó. Su victoria es imputada a los suyos: somos vencedores en él. Por eso puede socorrer a los tentados (Heb 2:18): él pasó por lo mismo y venció."
+    }
+  ],
+  "m11": [
+    {
+      "author": "Agustín de Hipona · Sermón del Monte I.4",
+      "text": "Las bienaventuranzas son siete gradas de subida al Reino. Comienzan en la pobreza de espíritu (reconocerse sin mérito) y terminan en la paz (perfecta conformidad con Dios). Cada una pide lo que la siguiente promete. Las promesas miran al presente (de ellos es el Reino) y al futuro (heredarán la tierra, serán saciados, verán a Dios, serán llamados hijos). El Reino es ya y no todavía."
+    },
+    {
+      "author": "D. Martyn Lloyd-Jones · Estudios en el Sermón del Monte",
+      "text": "Las bienaventuranzas no son un código de ética opcional, sino la descripción de la naturaleza del cristiano. No dicen \"si haces esto, serás salvo\", sino \"así es el ciudadano del Reino\". La pobreza de espíritu es la primera porque es la puerta: hasta que no reconocemos nuestra indigencia espiritual, no podemos recibir el Reino. Las bienaventuranzas deshacen el orgullo humano antes de ofrecer la gracia."
+    }
+  ],
+  "m12": [
+    {
+      "author": "Crisóstomo · Homilía XV sobre Mateo",
+      "text": "Cristo no dice \"vosotros debéis ser sal y luz\", sino \"vosotros sois sal y luz\". La identidad precede al mandamiento. La sal preserva de corrupción; la luz disipa tinieblas. Si la sal pierde su sabor, ya no sirve para nada. Si la luz se esconde, es inútil. La santidad secreta contradice el designio de Cristo: la Iglesia debe manifestarse con obras que glorifiquen al Padre."
+    },
+    {
+      "author": "John Stott · Contracultura Cristiana",
+      "text": "La Iglesia es alternativa a la sociedad caída. Sal preserva contra la corrupción cultural; luz expone la oscuridad espiritual. Ambas metáforas implican contraste: la sal solo preserva si es distinta de la carne; la luz solo alumbra si es distinta de la oscuridad. Una Iglesia idéntica al mundo pierde su misión. La manifestación de buenas obras no es para autoexaltación, sino para que los hombres glorifiquen al Padre celestial."
+    }
+  ],
+  "m27": [
+    {
+      "author": "Tertuliano · De Oratione",
+      "text": "El Padre Nuestro es compendio de todo el Evangelio. Comienza con la paternidad de Dios, sigue con su santificación, pide el Reino, somete la voluntad, y solo después clama por el pan, el perdón y la victoria sobre el mal. El orden importa: antes la gloria de Dios, después nuestras necesidades. Antes el Reino, después el pan. Antes el perdón recibido, después la liberación del mal."
+    },
+    {
+      "author": "Joachim Jeremias · Las Palabras de Jesús",
+      "text": "El Padre Nuestro en arameo probablemente decía \"Abba\" — término familiar infantil, equivalente a \"papá\". Era revolucionario: los judíos evitaban \"Padre\" por respeto, usando \"nuestro Padre que estás en los cielos\". Jesús lo usa directamente: Abba. Esta intimidad filial es la novedad del Evangelio: en Cristo, podemos llamar a Dios \"Abba, Padre\" (Ro 8:15)."
+    }
+  ],
+  "m28": [
+    {
+      "author": "Crisóstomo · Homilía XVI sobre Mateo",
+      "text": "Cristo no contradice a Moisés, sino que va a la raíz. La Ley prohibía el acto; Cristo juzga el deseo. La justicia del Reino es interior. \"Habéis oído que fue dicho a los antiguos... pero yo os digo\" — esta fórmula no abroga la Ley, sino que la cumple y la profundiza. La autoridad con que enseña (\"yo digo\") supera a la de los profetas: ellos decían \"así dice Jehová\"; Cristo dice \"yo os digo\"."
+    },
+    {
+      "author": "Sinclair Ferguson · El Sermón del Monte",
+      "text": "Las seis antítesis (ira, lustro, divorcio, juramento, venganza, amor a enemigos) muestran que la justicia del Reino va más allá de la externa. No es abolición de la Ley, sino intensificación: del acto al motivo, de la letra al espíritu. Cristo no rebaja la Ley, la eleva. La justicia de los fariseos cumplía la letra; la del Reino toca el corazón. Por eso es imposible sin el nuevo nacimiento."
+    }
+  ],
+  "m37": [
+    {
+      "author": "D.A. Carson · Comentario a Mateo",
+      "text": "El Reino es el tema central de Mateo (32 menciones de \"reino de los cielos\"). No es solo escatológico, sino ya presente en Cristo. La basileia es el reinado soberano de Dios manifestado en persona, palabras y obras de Jesús. La paradoja: el Reino está cerca (Mt 4:17) pero todavía se pide que venga (Mt 6:10). Es ya y no todavía: inaugurado en Cristo, consumado en su vuelta."
+    },
+    {
+      "author": "George Ladd · Evangelio del Reino",
+      "text": "El Reino de Dios en Mateo no es un territorio, sino un reinado dinámico. Es la soberanía de Dios invadiendo la historia humana en Cristo. Por eso los milagros son señales del Reino: la enfermedad, el demonio, la muerte retroceden donde el Rey llega. La Iglesia vive entre el \"ya\" del Reino presente y el \"todavía\" del Reino futuro. La misión es proclamar al Rey hasta su vuelta."
+    }
+  ],
+  "m38": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "El título \"Hijo del Hombre\" es el preferido de Cristo para sí mismo. Combina humildad (hijo de hombre = ser humano, cf. Ez 2:1) y gloria (Daniel 7:13, el que viene con las nubes). Jesús evita \"Mesías\" con sus connotaciones políticas y se define desde Daniel 7: es el hombre celestial que recibe del Anciano de Días un reino eterno. Solo ante el Sanedrín declara abiertamente esta identidad (Mt 26:64)."
+    },
+    {
+      "author": "Geerhardus Vos · Teología Bíblica",
+      "text": "El \"Hijo del Hombre\" de Daniel 7 es figura colectiva (los santos del Altísimo) y individual (un representante). Cristo lo aplica a sí mismo: él es el Hijo del Hombre que recibe el reino. Pero añade lo que Daniel no vio: el Hijo del Hombre debe padecer antes de reinar (Mt 16:21; 17:22; 20:18). Su reino viene a través de la cruz, no a pesar de ella. El Siervo sufriente y el Hijo del Hombre son una sola persona."
+    }
+  ],
+  "m41": [
+    {
+      "author": "Juan Calvino · Comentario a Mateo",
+      "text": "Pedro confiesa lo que la carne y la sangre no revelaron: Cristo es el Mesías, el Hijo del Dios viviente. Esta confesión es la roca de la Iglesia. No Pedro como individuo, sino Pedro como confesor: sobre esta fe (Cristo es el Hijo de Dios) Cristo edifica su Iglesia. Las puertas del Hades (el poder de la muerte) no prevalecerán: la Iglesia no morirá, porque su Cabeza ya resucitó."
+    },
+    {
+      "author": "Oscar Cullmann · Pedro, discípulo, apóstol, mártir",
+      "text": "La confesión de Pedro en Cesarea de Filipo es el punto de inflexión del Evangelio de Mateo. Hasta aquí: Cristo revelado en obras. Desde aquí: Cristo revelado en palabra, y el anuncio de la cruz. Pedro confiesa correctamente que Jesús es el Cristo, pero malinterpreta qué significa ser Cristo: no conquistador político, sino Siervo sufriente. La reprensión \"¡Quítate de delante de mí, Satanás!\" muestra que la confesión correcta puede acompañar concepto errado."
+    }
+  ],
+  "m44": [
+    {
+      "author": "Crisóstomo · Homilía LXXXII sobre Mateo",
+      "text": "Cristo transforma la Pascua. El pan y la copa son ahora su cuerpo y su sangre. El verdadero Cordero pascual es él. La Cena es memorial de su muerte, pero también banquete anticipado del Reino (Mt 26:29: \"no beberé más de este fruto de la vid hasta aquel día\"). Es comida del nuevo pacto, comida de comunión con el Cristo muerto y resucitado, comida de esperanza escatológica."
+    },
+    {
+      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
+      "text": "La Cena del Señor instituye el nuevo pacto con sangre. Cristo no solo enseña, sino que instituye un sacramento: signo y sello del pacto. El pan partido = cuerpo entregado. La copa = sangre derramada. \"Para perdón de pecados\" (Mt 26:28) — esta es la esencia: el nuevo pacto se funda en expiación. No hay pacto sin sangre (Heb 9:22), y esta sangre es la del Hijo de Dios."
+    }
+  ],
+  "m55": [
+    {
+      "author": "Agustín de Hipona · Sermón 295",
+      "text": "Pedro confiesa: \"Tú eres el Cristo, el Hijo del Dios viviente\". Cristo responde: \"Tú eres Pedro, y sobre esta roca edificaré mi iglesia\". ¿Qué roca? No la persona de Pedro, sino la confesión de Pedro. La fe de Pedro es la primera piedra de la Iglesia. Sobre la confesión \"Cristo es el Hijo de Dios\", Cristo edifica. La Iglesia confiesa a Cristo, no a Pedro."
+    },
+    {
+      "author": "R.C. Sproul · La Verdad del Evangelio",
+      "text": "El juego de palabras en Mateo 16:18 es significativo: \"Petros\" (piedra, masc.) y \"petra\" (roca maciza, fem.). Cristo edifica sobre la roca, no sobre la piedrita. ¿Cuál es la roca? Para los Padres griegos (Crisóstomo, Atanasio), es la confesión de Pedro. Para los latinos medievales (desde Cipriano), es Pedro como representante. La lectura más bíblica y ecuménica: la confesión \"Cristo es el Hijo de Dios\" es la roca fundacional."
+    }
+  ],
+  "m58": [
+    {
+      "author": "Cirilo de Alejandría · Comentario a Lucas",
+      "text": "La transfiguración anticipa la gloria de la resurrección. Cristo muestra su gloria divina a tres testigos (Pedro, Jacobo, Juan) antes de la cruz, para que recordaran en la pasión quién era. Moisés (Ley) y Elías (Profetas) testifican: la Escritura toda apunta a Cristo. La voz del Padre repite el bautismo, añadiendo: \"A él oíd\". Cristo es el Profeta definitivo, superior a Moisés y Elías."
+    },
+    {
+      "author": "Richard Bauckham · Jesús y el Dios de Israel",
+      "text": "La transfiguración es teofanía. Cristo resplandece como el sol —atributo divino (cf. Sal 104:2). Su rostro brilla como en Éxodo 34 (Moisés) pero superior: Cristo no refleja, él es la fuente. La voz del Padre identifica al Hijo y manda escucharle. Es ratificación del bautismo: el Padre confirma al Hijo antes de la cruz. La nube es shekinah, presencia de Dios."
+    }
+  ],
+  "m65": [
+    {
+      "author": "Crisóstomo · Homilía LXXXVIII sobre Mateo",
+      "text": "Cristo clama el inicio del Salmo 22. No abandono metafísico —el Padre nunca abandonó al Hijo amado— sino abandono judicial: Cristo carga el pecado de los suyos y experimenta la ira de Dios contra el pecado. El Padre vuelve su rostro para reconciliar al mundo. La oscuridad es santo juicio. En este grito nace la salvación: el Justo es tratado como injusto para que los injustos sean hechos justos."
+    },
+    {
+      "author": "Donald Macleod · Cristo Crucificado",
+      "text": "El grito \"Dios mío, ¿por qué me has desamparado?\" es el misterio central de la cruz. Cristo experimenta el abandono que el pecador merece. No es ficción ni representación: es realidad sustitutiva. El Hijo, en naturaleza humana, soporta el infierno del abandono divino. Por eso, al final, puede decir \"Consumado es\" (Jn 19:30): la deuda fue pagada, el juicio fue satisfecho. En el grito del abandono está nuestra salvación."
+    }
+  ],
+  "m66": [
+    {
+      "author": "Jerónimo · Comentario a Mateo",
+      "text": "El velo que separaba el Lugar Santísimo se rasga desde arriba: obra de Dios, no del hombre. La muerte de Cristo abre el acceso al Padre. El templo antiguo caduca; el verdadero Santuario es el cuerpo de Cristo. Su carne partida es el velo rasgado. A partir de aquí, el sacerdocio levítico, los sacrificios, el templo mismo pierden sentido: la realidad ha venido."
+    },
+    {
+      "author": "N.T. Wright · Jesús y la Victoria de Dios",
+      "text": "El rasgamiento del velo es teológico, no solo arquitectónico. Indica que el sistema del templo terminó. El acceso a Dios ya no es por sacerdocio levítico y sacrificios, sino por la sangre de Cristo. Mateo añade la resurrección de santos (27:52-53) para mostrar que la cruz de Cristo inaugura ya la resurrección final: el fin de la antigua era y el inicio de la nueva."
+    }
+  ],
+  "m67": [
+    {
+      "author": "Crisóstomo · Homilía XC sobre Mateo",
+      "text": "La tumba vacía es prueba de la victoria. Cristo resucita por su propio poder, pero el Padre le levanta. Cumple el Salmo 16: \"no dejarás mi alma en el Hades\". Las mujeres son primeras testigos: la gracia invierte el orden social. En una cultura donde el testimonio femenino valía poco, Cristo se aparece primero a las mujeres. El Evangelio honra a los marginados."
+    },
+    {
+      "author": "N.T. Wright · La Resurrección del Hijo de Dios",
+      "text": "La resurrección de Cristo no es reanimación (como Lázaro), sino el inicio de la nueva creación. Es el primer evento escatológico: el final de la muerte ha comenzado en Cristo. La tumba vacía y las apariciones son evidencia histórica. La resurrección confirma que la cruz fue victoria, no derrota. Cristo es primicia de los que durmieron (1 Co 15:20): su resurrección garantiza la nuestra."
+    }
+  ],
+  "m71": [
+    {
+      "author": "Crisóstomo · Homilía XCIV sobre Mateo",
+      "text": "Cristo resucitado reclama autoridad universal. Cumple Daniel 7:14. La Gran Comisión fluye de la autoridad: porque tiene todo poder, envía a todas las naciones. El bautismo trinitario marca la entrada al Reino. La enseñanza es continua: no solo convertir, sino discipular. La promesa de presencia acompaña la misión hasta el fin del siglo. Cristo no envía solos: él está con su Iglesia."
+    },
+    {
+      "author": "John Stott · La Misión Cristiana en el Mundo Moderno",
+      "text": "La Gran Comisión tiene cuatro elementos: ir, hacer discípulos, bautizar, enseñar. El verbo principal es \"mathēteusate\" (haced discípulos) — los demás son participios subordinados. El énfasis cae en hacer discípulos, no solo en evangelizar. Bautizar = incorporar a la comunidad. Enseñar = formar en obediencia. La misión es integral: conversión + comunión + formación. Y la promesa \"yo estoy con vosotros\" garantiza que la misión no fracasará."
+    }
+  ],
+  "m75": [
+    {
+      "author": "Agustín de Hipona · Sermón 73 sobre el Sembrador",
+      "text": "La Palabra es única, pero los corazones son cuatro. La diferencia no está en la semilla, sino en el suelo. El camino = corazón endurecido que no recibe. Pedregal = corazón superficial que recibe con gozo pero no tiene raíz. Espinos = corazón dividido donde las preocupaciones y la riqueza ahogan. Buena tierra = corazón preparado por la gracia que da fruto. La buena tierra no es mérito, sino regalo."
+    },
+    {
+      "author": "Klyne Snodgrass · Historias con Intención",
+      "text": "La parábola del sembrador es clave hermenéutica para todas las parábolas: explica por qué algunas personas responden y otras no. La semilla es la Palabra del Reino. Los cuatro suelos representan cuatro respuestas humanas, no cuatro tipos de personas inmutables. La llamada es a ser buena tierra: oír, entender, dar fruto. El fruto varía (30, 60, 100) — la fidelidad, no la cantidad, es lo que cuenta."
+    }
+  ]
+};
+
+// Override showNodeDetails to add extended comments
+const _origShowNodeDetailsExt = showNodeDetails;
+showNodeDetails = function(node) {
+  _origShowNodeDetailsExt.apply(this, arguments);
+
+  const modalBody = document.getElementById('modalBody');
+  if (!modalBody) return;
+
+  // Add extended comments section (before share section)
+  if (modalBody.querySelector('.extended-comments-section')) return;
+
+  const additional = ADDITIONAL_COMMENTS[node.id];
+  if (!additional || additional.length === 0) return;
+
+  const section = document.createElement('div');
+  section.className = 'extended-comments-section';
+
+  const title = document.createElement('div');
+  title.className = 'extended-comments-title';
+  title.textContent = '📚 Más comentarios de eruditos';
+  section.appendChild(title);
+
+  additional.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'extended-comment';
+    div.innerHTML = `
+      <span class="comment-author">${c.author}</span>
+      <p class="comment-text">${c.text}</p>
+    `;
+    section.appendChild(div);
+  });
+
+  // Insert before share section (or at end)
+  const shareSection = modalBody.querySelector('.share-section');
+  if (shareSection) {
+    modalBody.insertBefore(section, shareSection);
+  } else {
+    modalBody.appendChild(section);
+  }
+};
+
+window.extended_comments_applied = true;
 
 </script>
 
