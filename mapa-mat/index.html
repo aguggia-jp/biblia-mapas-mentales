@@ -1843,11 +1843,12 @@ body{
 .cluster{
   position:absolute;
   pointer-events:none;
-  font-size:.7rem;font-weight:700;
+  font-size:.85rem;font-weight:700;
   letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,.18);
+  color:rgba(255,255,255,.55);
   white-space:nowrap;
   z-index:0;
+  text-shadow:0 0 8px rgba(0,0,0,.5);
 }
 
 /* ---------- ARROWS ---------- */
@@ -1872,6 +1873,21 @@ body{
   filter:drop-shadow(0 0 5px currentColor);
 }
 .arrow-path.dimmed{opacity:.05}
+
+/* Light theme: arrows need higher opacity to be visible on white background */
+body.theme-light .arrow-path{
+  opacity:.5;
+  stroke-width:1.8;
+}
+body.theme-light .arrow-path.highlighted{
+  opacity:1;stroke-width:3;
+  filter:drop-shadow(0 0 4px currentColor);
+}
+body.theme-light .arrow-path.dimmed{opacity:.12}
+body.theme-light .cluster{
+  color:rgba(0,0,0,.55);
+  text-shadow:0 0 8px rgba(255,255,255,.5);
+}
 
 /* ---------- NODES ---------- */
 .nodes-layer{
@@ -2553,18 +2569,6 @@ body{
     </ul>
     <h3>¿Por qué este orden?</h3>
     <div class="why-order">El orden sigue el movimiento narrativo del Evangelio: comienza con la infancia (cumplimiento de profecías), pasa por la preparación (Juan Bautista y tentación), desarrolla el ministerio (Sermón, milagros, parábolas), llega a la confesión de Pedro y el nacimiento de la Iglesia, y culmina con la pasión, resurrección y comisión. La escatología se coloca estratégicamente cerca de la pasión porque el discurso del Monte de los Olivos se relaciona con la consumación.</div>
-  </div>
-</div>
-
-
-<!-- ========== NOTES PANEL ========== -->
-<div id="notesPanel" class="notes-panel" onclick="if(event.target===this)closeNotesPanel()">
-  <div class="notes-content">
-    <button class="close-btn" onclick="closeNotesPanel()" aria-label="Cerrar">×</button>
-    <h2>Mis notas personales</h2>
-    <div class="notes-subtitle">Notas guardadas en este dispositivo</div>
-    <ul class="notes-list" id="notesList"></ul>
-  </div>
 
     <h3>Recursos externos</h3>
     <div class="bp-section">
@@ -2586,6 +2590,17 @@ body{
         </a>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- ========== NOTES PANEL ========== -->
+<div id="notesPanel" class="notes-panel" onclick="if(event.target===this)closeNotesPanel()">
+  <div class="notes-content">
+    <button class="close-btn" onclick="closeNotesPanel()" aria-label="Cerrar">×</button>
+    <h2>Mis notas personales</h2>
+    <div class="notes-subtitle">Notas guardadas en este dispositivo</div>
+    <ul class="notes-list" id="notesList"></ul>
   </div>
 </div>
 
