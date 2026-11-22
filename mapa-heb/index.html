@@ -1261,6 +1261,393 @@ body.focus-active .focus-exit-hint{display:block}
 }
 .extended-comment:last-child{margin-bottom:0}
 
+
+/* ---------- V4: Legibilidad mejorada ---------- */
+/* Aumentar contraste de refs y subtítulos */
+.node .ref,
+.mobile-node-card .ref,
+.verse-ref,
+.modal-ref,
+.note-item-ref,
+.cross-ref-item,
+.context-link,
+.version-label,
+.glossary-term,
+.original-text-title,
+.versions-title,
+.notes-content .notes-subtitle,
+.intro-content .intro-subtitle,
+.cluster-menu-panel h4,
+.notes-section .notes-label,
+.extended-comments-title,
+.marker-btn,
+.modal-nav-btn,
+.modal-cluster-badge,
+.cat-tag,
+.status-pill,
+.book-card .ref,
+.book-summary,
+.division-title .count,
+.hero .stats,
+.legend-panel,
+.progress-bar-text{
+  opacity:1;
+}
+.node .ref{
+  color:#b0c4d8;
+  font-size:.74rem;
+  font-weight:500;
+}
+.mobile-node-card .ref{
+  color:#b0c4d8;
+  font-size:.76rem;
+  font-weight:500;
+}
+.verse-ref{
+  color:#79c0ff;
+  font-weight:700;
+  font-size:.78rem;
+}
+.modal-ref{
+  color:#a8b8cc;
+  font-size:.86rem;
+}
+.comment-author{
+  color:#e0a862;
+  font-weight:700;
+  font-size:.86rem;
+}
+.extended-comment .comment-author{
+  color:#e0a862;
+  font-weight:700;
+  font-size:.84rem;
+}
+.muted-text, .text-muted{
+  color:#a8b8cc !important;
+}
+
+/* ---------- V4: Tema claro/oscuro ---------- */
+:root{
+  --bg-light:#f8f9fa;
+  --bg-2-light:#ffffff;
+  --panel-light:#ffffff;
+  --panel-2-light:#f1f3f5;
+  --border-light:#dee2e6;
+  --text-light:#1a1a1a;
+  --muted-light:#6c757d;
+}
+
+body.theme-light{
+  --bg:#f8f9fa;
+  --bg-2:#ffffff;
+  --panel:#ffffff;
+  --panel-2:#f1f3f5;
+  --border:#dee2e6;
+  --text:#1a1a1a;
+  --muted:#6c757d;
+  --at-glow:rgba(224,168,98,.25);
+  --cristo-glow:rgba(255,92,92,.25);
+  --iglesia-glow:rgba(61,220,132,.25);
+  --pacto-glow:rgba(88,166,255,.25);
+  --esperanza-glow:rgba(184,124,255,.25);
+}
+body.theme-light{
+  background:
+    radial-gradient(1400px 700px at 5% -10%, rgba(224,168,98,.06), transparent 60%),
+    radial-gradient(1400px 700px at 50% -10%, rgba(255,92,92,.05), transparent 60%),
+    radial-gradient(1400px 700px at 95% -10%, rgba(61,220,132,.06), transparent 60%),
+    var(--bg);
+}
+body.theme-light .node{
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid var(--border);
+  box-shadow:0 2px 8px -2px rgba(0,0,0,.08);
+}
+body.theme-light .node h3{
+  color:var(--text);
+}
+body.theme-light .node .ref{
+  color:var(--muted);
+}
+body.theme-light .topbar{
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid var(--border);
+}
+body.theme-light .modal-content{
+  background:linear-gradient(180deg,#ffffff,#f8f9fa);
+  color:var(--text);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.2);
+}
+body.theme-light .modal-title{
+  color:var(--text);
+}
+body.theme-light .modal-ref{
+  color:var(--muted);
+}
+body.theme-light .verse-text{
+  color:#2a2a2a;
+  background:rgba(88,166,255,.04);
+  border-left:3px solid #1f6feb;
+}
+body.theme-light .comment-text{
+  color:#4a4a4a;
+  background:rgba(224,168,98,.04);
+}
+body.theme-light .comment-author{
+  color:#c08850;
+}
+body.theme-light .extended-comment{
+  background:rgba(255,255,255,.5);
+  border-left:2px solid var(--at);
+}
+body.theme-light .extended-comment .comment-text{
+  color:#4a4a4a;
+}
+body.theme-light .intro-content,
+body.theme-light .notes-content,
+body.theme-light .help-content{
+  background:linear-gradient(180deg,#ffffff,#f8f9fa);
+  color:var(--text);
+}
+body.theme-light .intro-content h2,
+body.theme-light .notes-content h2,
+body.theme-light .help-content h2{
+  color:var(--text);
+}
+body.theme-light .intro-content .intro-subtitle,
+body.theme-light .notes-content .notes-subtitle{
+  color:var(--muted);
+}
+body.theme-light .intro-content .intro-summary{
+  color:var(--text);
+}
+body.theme-light .cluster-name{
+  color:var(--text) !important;
+}
+body.theme-light .cluster-desc{
+  color:var(--muted) !important;
+}
+body.theme-light .why-order{
+  color:#2a4a6a;
+  background:rgba(88,166,255,.05);
+}
+body.theme-light .mobile-node-card{
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid var(--border);
+  box-shadow:0 2px 8px -2px rgba(0,0,0,.08);
+}
+body.theme-light .mobile-node-card h3{
+  color:var(--text);
+}
+body.theme-light .mobile-node-card .ref{
+  color:var(--muted);
+}
+body.theme-light .mobile-cluster-title{
+  color:var(--muted);
+}
+body.theme-light .search-box input{
+  background:rgba(0,0,0,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+body.theme-light .filter-pill,
+body.theme-light .marker-filter-pill{
+  background:rgba(0,0,0,.04);
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+body.theme-light .home-btn,
+body.theme-light .info-btn,
+body.theme-light .view-toggle-btn,
+body.theme-light .notes-btn,
+body.theme-light .help-btn,
+body.theme-light .cluster-menu-btn,
+body.theme-light .zoom-btn{
+  background:rgba(0,0,0,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+body.theme-light .difficulty-selector{
+  background:rgba(0,0,0,.04);
+  border:1px solid var(--border);
+}
+body.theme-light .difficulty-btn{
+  color:var(--muted);
+}
+body.theme-light .difficulty-btn:hover{
+  background:rgba(0,0,0,.06);
+  color:var(--text);
+}
+body.theme-light .original-text-greek{
+  color:#6a4a8a;
+  background:rgba(184,124,255,.05);
+}
+body.theme-light .original-text-section{
+  background:rgba(184,124,255,.03);
+  border:1px solid rgba(184,124,255,.15);
+}
+body.theme-light .versions-section{
+  border-top:1px dashed var(--border);
+}
+body.theme-light .version-text{
+  color:var(--text);
+}
+body.theme-light .versions-note{
+  color:#2a4a6a;
+  background:rgba(88,166,255,.04);
+}
+body.theme-light .glossary-term{
+  color:#1f6feb;
+  border-bottom:1px dotted #1f6feb;
+}
+body.theme-light .glossary-tooltip{
+  background:#ffffff;
+  border:1px solid var(--border);
+  color:var(--text);
+  box-shadow:0 8px 24px -4px rgba(0,0,0,.15);
+}
+body.theme-light .glossary-tooltip .gt-term{
+  color:#1f6feb;
+}
+body.theme-light .notes-section textarea{
+  background:rgba(0,0,0,.02);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+body.theme-light .progress-bar-container{
+  background:rgba(0,0,0,.04);
+  border:1px solid var(--border);
+}
+body.theme-light .progress-bar-text{
+  color:var(--text);
+}
+body.theme-light .legend-panel{
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--border);
+}
+body.theme-light .legend-panel .title,
+body.theme-light .legend-panel .item{
+  color:var(--text);
+}
+body.theme-light .cluster-menu-panel{
+  background:linear-gradient(180deg,#ffffff,#f8f9fa);
+  border:1px solid var(--border);
+}
+body.theme-light .cluster-menu-panel h4{
+  color:var(--muted);
+}
+body.theme-light .cluster-menu-panel .cluster-item{
+  background:rgba(0,0,0,.03);
+  color:var(--text);
+}
+body.theme-light .focus-exit-hint{
+  background:rgba(255,255,255,.92);
+  color:var(--cristo);
+  border:1px solid var(--cristo);
+}
+body.theme-light .toast{
+  background:rgba(255,255,255,.95);
+  border:1px solid var(--iglesia);
+  color:var(--iglesia);
+}
+
+/* Theme toggle button */
+.theme-toggle-btn{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+  width:32px;height:32px;
+  border-radius:8px;
+  font-size:.95rem;
+  cursor:pointer;
+  transition:.18s;
+  font-family:inherit;
+}
+.theme-toggle-btn:hover{
+  background:rgba(255,255,255,.08);
+  border-color:var(--at);
+  color:var(--at);
+}
+
+/* BibleProject section in intro */
+.bp-section{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px dashed var(--border);
+}
+.bp-title{
+  font-size:.66rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.bp-links{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.bp-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-left:3px solid #e8473c;
+  border-radius:8px;
+  text-decoration:none;
+  color:var(--text);
+  transition:.18s;
+}
+.bp-link:hover{
+  background:rgba(232,71,60,.10);
+  border-color:#e8473c;
+  transform:translateX(2px);
+}
+.bp-link .bp-icon{
+  font-size:1.2rem;
+  flex-shrink:0;
+}
+.bp-link .bp-info{
+  flex:1;
+}
+.bp-link .bp-label{
+  font-size:.86rem;
+  font-weight:600;
+  color:#e8473c;
+  display:block;
+  margin-bottom:1px;
+}
+.bp-link .bp-desc{
+  font-size:.74rem;
+  color:var(--muted);
+}
+body.theme-light .bp-link{
+  background:rgba(0,0,0,.02);
+  border:1px solid var(--border);
+  border-left:3px solid #e8473c;
+}
+body.theme-light .bp-link:hover{
+  background:rgba(232,71,60,.08);
+}
+body.theme-light .bp-link .bp-desc{
+  color:var(--muted);
+}
+
+@media (max-width:768px){
+  .theme-toggle-btn{
+    width:30px;height:30px;
+    font-size:.85rem;
+  }
+  .bp-link{
+    padding:8px 12px;
+  }
+  .bp-link .bp-label{font-size:.82rem}
+  .bp-link .bp-desc{font-size:.7rem}
+}
+
 </style>
 <style>
 :root{
@@ -1954,6 +2341,8 @@ body{
   </div>
   
   <button class="notes-btn" id="notesBtn" title="Mis notas personales" aria-label="Mis notas">📝<span class="notes-badge" id="notesBadge">0</span></button>
+  
+  <button class="theme-toggle-btn" id="themeToggleBtn" title="Cambiar tema (claro/oscuro)" aria-label="Cambiar tema">🌙</button>
   <button class="help-btn" id="helpBtn" title="Ayuda">?</button>
 </div>
 
@@ -2167,6 +2556,28 @@ body{
     <h2>Mis notas personales</h2>
     <div class="notes-subtitle">Notas guardadas en este dispositivo</div>
     <ul class="notes-list" id="notesList"></ul>
+  </div>
+
+    <h3>Recursos externos</h3>
+    <div class="bp-section">
+      <div class="bp-title">Proyecto Biblia (BibleProject)</div>
+      <div class="bp-links">
+        <a href="https://bibleproject.com/es/videos/hebreos" target="_blank" rel="noopener noreferrer" class="bp-link">
+          <span class="bp-icon">🎬</span>
+          <div class="bp-info">
+            <span class="bp-label">Ver video resumen</span>
+            <span class="bp-desc">Animación explicando el libro de Hebreos</span>
+          </div>
+        </a>
+        <a href="https://bibleproject.com/es/guides/libro-de-hebreos" target="_blank" rel="noopener noreferrer" class="bp-link">
+          <span class="bp-icon">📖</span>
+          <div class="bp-info">
+            <span class="bp-label">Guía de estudio</span>
+            <span class="bp-desc">Recursos y temas clave de Hebreos</span>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -4411,10 +4822,11 @@ showNodeDetails = function(node) {
     const refEl = block.querySelector('.verse-ref');
     if (!refEl) return;
     const ref = refEl.textContent.trim();
-    // Build BibleGateway URL - use Spanish subdomain for Spanish interface
-    // es.biblegateway.com guarantees Spanish UI regardless of browser language
-    const cleanRef = ref.replace(/,/g, '').replace(/\s+/g, ' ').trim();
-    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(cleanRef) + '&version=RVR1960&interface=print&lang=es';
+    // Extract just the book and chapter (e.g., "Hebreos 1:3" -> "Hebreos 1")
+    // so BibleGateway shows the whole chapter as context
+    const chapterMatch = ref.match(/^([^\d]+\d+):/);
+    const contextRef = chapterMatch ? chapterMatch[1].trim() : ref.replace(/,/g, '').replace(/\s+/g, ' ').trim();
+    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(contextRef) + '&version=RVR1960&interface=print&lang=es';
     const link = document.createElement('a');
     link.href = bgUrl;
     link.target = '_blank';
@@ -6832,6 +7244,27 @@ if (typeof ADDITIONAL_COMMENTS !== 'undefined' && typeof REMAINING_COMMENTS !== 
 }
 
 window.remaining_comments_applied = true;
+
+
+// ============================================================
+// V4: THEME TOGGLE (light/dark)
+// ============================================================
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const savedTheme = localStorage.getItem('biblia-theme') || 'dark';
+if (savedTheme === 'light') {
+  document.body.classList.add('theme-light');
+  if (themeToggleBtn) themeToggleBtn.textContent = '☀';
+}
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('theme-light');
+    const isLight = document.body.classList.contains('theme-light');
+    localStorage.setItem('biblia-theme', isLight ? 'light' : 'dark');
+    themeToggleBtn.textContent = isLight ? '☀' : '🌙';
+  });
+}
+
+window.v4_improvements_applied = true;
 
 </script>
 
