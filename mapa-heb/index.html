@@ -656,6 +656,169 @@ body.focus-active .focus-exit-hint{display:block}
   .modal-nav-btn{font-size:.74rem;padding:7px 12px}
 }
 
+
+/* ---------- STAGE 1.5: Notes panel + marker filters ---------- */
+
+/* Notes panel */
+.notes-panel{
+  display:none;
+  position:fixed;inset:0;z-index:1100;
+  background:rgba(5,8,12,.78);backdrop-filter:blur(8px);
+  justify-content:center;align-items:center;padding:22px;
+}
+.notes-panel.show{display:flex;animation:fadeIn .2s ease}
+.notes-content{
+  background:linear-gradient(180deg,#141d28,#0e151d);
+  border:1px solid var(--border);
+  border-top:3px solid var(--at);
+  border-radius:14px;
+  padding:28px 32px;
+  max-width:680px;width:100%;max-height:84vh;overflow-y:auto;
+  position:relative;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.95);
+  animation:slideUp .22s ease;
+}
+.notes-content h2{
+  font-size:1.3rem;color:var(--at);
+  margin-bottom:4px;
+  text-shadow:0 0 18px var(--at-glow);
+}
+.notes-content .notes-subtitle{
+  font-size:.78rem;color:var(--muted);font-style:italic;
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+.notes-content .notes-list{
+  list-style:none;padding:0;margin:0;
+}
+.notes-content .note-item{
+  padding:14px 0;
+  border-bottom:1px solid rgba(34,48,64,.5);
+  cursor:pointer;
+  transition:.15s;
+}
+.notes-content .note-item:last-child{border-bottom:none}
+.notes-content .note-item:hover{
+  background:rgba(255,255,255,.02);
+  margin:0 -10px;
+  padding-left:10px;
+  padding-right:10px;
+  border-radius:6px;
+}
+.notes-content .note-item-header{
+  display:flex;justify-content:space-between;align-items:start;gap:10px;
+  margin-bottom:6px;
+}
+.notes-content .note-item-title{
+  font-size:.92rem;font-weight:600;color:#fff;
+  line-height:1.3;
+  flex:1;
+}
+.notes-content .note-item-ref{
+  font-size:.72rem;color:var(--muted);
+  font-style:italic;
+  flex-shrink:0;
+}
+.notes-content .note-item-text{
+  font-size:.84rem;color:#cfe3ff;
+  line-height:1.55;
+  background:rgba(88,166,255,.05);
+  border-left:2px solid var(--pacto);
+  padding:8px 10px;
+  border-radius:6px;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+}
+.notes-content .notes-empty{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--muted);
+  font-style:italic;
+}
+.notes-content::-webkit-scrollbar{width:8px}
+.notes-content::-webkit-scrollbar-thumb{background:#2a3a4d;border-radius:4px}
+
+/* Notes button in topbar */
+.notes-btn{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+  width:32px;height:32px;
+  border-radius:8px;
+  font-size:.9rem;
+  cursor:pointer;
+  transition:.18s;
+  font-family:inherit;
+  position:relative;
+}
+.notes-btn:hover{
+  background:rgba(224,168,98,.10);
+  border-color:var(--at);
+  color:var(--at);
+}
+.notes-btn .notes-badge{
+  position:absolute;
+  top:-4px;right:-4px;
+  background:var(--at);
+  color:#0b0f14;
+  font-size:.58rem;font-weight:700;
+  min-width:14px;height:14px;
+  border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 3px;
+  display:none;
+}
+.notes-btn .notes-badge.show{display:flex}
+
+/* Marker filter pills (added next to existing category filters) */
+.marker-filters{
+  display:flex;gap:6px;flex-wrap:wrap;
+  align-items:center;
+}
+.marker-filter-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:.72rem;font-weight:600;letter-spacing:.3px;
+  cursor:pointer;transition:.18s;
+  font-family:inherit;
+}
+.marker-filter-pill .dot{width:8px;height:8px;border-radius:50%}
+.marker-filter-pill:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.06);
+}
+.marker-filter-pill.active[data-marker="studied"]{
+  background:rgba(61,220,132,.14);
+  border-color:var(--iglesia);
+  color:var(--iglesia);
+}
+.marker-filter-pill.active[data-marker="favorite"]{
+  background:rgba(224,168,98,.14);
+  border-color:var(--at);
+  color:var(--at);
+}
+
+@media (max-width:768px){
+  .notes-content{
+    padding:22px 18px;
+    max-width:100%;
+  }
+  .notes-content h2{font-size:1.15rem}
+  .notes-btn{
+    width:30px;height:30px;
+    font-size:.82rem;
+  }
+  /* On mobile, hide marker filters in topbar (use notes panel instead) */
+  .marker-filters{display:none}
+}
+
 </style>
 <style>
 :root{
@@ -1330,12 +1493,19 @@ body{
     <button class="filter-pill" data-cat="pacto"><i class="dot" style="background:var(--pacto)"></i> Pactos</button>
     <button class="filter-pill" data-cat="esperanza"><i class="dot" style="background:var(--esperanza)"></i> Esperanza</button>
   </div>
+
+  <div class="marker-filters" id="markerFilters">
+    <button class="marker-filter-pill" data-marker="studied"><i class="dot" style="background:var(--iglesia)"></i> Estudiados</button>
+    <button class="marker-filter-pill" data-marker="favorite"><i class="dot" style="background:var(--at)"></i> Favoritos</button>
+  </div>
   <div class="stats" id="stats">— nodos visibles</div>
   
   <div class="progress-bar-container" id="progressBarContainer" title="Progreso de estudio">
     <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
     <span class="progress-bar-text" id="progressBarText">0/N</span>
   </div>
+  
+  <button class="notes-btn" id="notesBtn" title="Mis notas personales" aria-label="Mis notas">📝<span class="notes-badge" id="notesBadge">0</span></button>
   <button class="help-btn" id="helpBtn" title="Ayuda">?</button>
 </div>
 
@@ -1541,15 +1711,26 @@ body{
   </div>
 </div>
 
+
+<!-- ========== NOTES PANEL ========== -->
+<div id="notesPanel" class="notes-panel" onclick="if(event.target===this)closeNotesPanel()">
+  <div class="notes-content">
+    <button class="close-btn" onclick="closeNotesPanel()" aria-label="Cerrar">×</button>
+    <h2>Mis notas personales</h2>
+    <div class="notes-subtitle">Notas guardadas en este dispositivo</div>
+    <ul class="notes-list" id="notesList"></ul>
+  </div>
+</div>
+
 <!-- ========== HELP PANEL ========== -->
 <div id="helpPanel" class="help-panel" onclick="if(event.target===this)closeHelp()">
   <div class="help-content">
     <button class="close-btn" onclick="closeHelp()" aria-label="Cerrar">×</button>
     <h2>Cómo usar el mapa</h2>
-    <p>Un mapa interactivo para profundizar en la Carta a los Hebreos, organizado en <b>nueve constelaciones temáticas</b> que conectan el Antiguo Testamento con Cristo, la Iglesia y la esperanza escatológica.</p>
+    <p>Un mapa interactivo para profundizar en la Carta a los Hebreos, organizado en <b>nueve grupos temáticos</b> que conectan el Antiguo Testamento con Cristo, la Iglesia y la esperanza escatológica.</p>
     <ul>
       <li><b>Clic</b> en cualquier nodo → versículos + comentario clásico + referencias cruzadas</li>
-      <li><b>Hover</b> sobre un nodo → resalta sus conexiones (flechas luminosas)</li>
+      <li><b>Pasar el cursor</b> sobre un nodo → resalta sus conexiones (flechas luminosas)</li>
       <li><b>Arrastrar</b> el canvas para desplazarte · <b>Rueda del ratón</b> para zoom</li>
       <li><b>Botones +/−</b> abajo a la derecha para zoom controlado</li>
       <li><b>Buscar</b> en la caja superior por título, referencia bíblica o tema</li>
@@ -2766,6 +2947,11 @@ function buildMobileListView() {
       if (node) showNodeDetails(node);
     });
   });
+
+  // Apply markers to the newly built mobile cards
+  if (typeof applyMarkersToMobileCards === 'function') {
+    applyMarkersToMobileCards();
+  }
 }
 
 // Build the cluster menu (lists clusters for quick navigation)
@@ -3506,6 +3692,173 @@ applyFilter = function() {
 
 // Mark stage1 as applied (for idempotency)
 window.stage1Applied = true;
+
+
+// ============================================================
+// STAGE 1.5: NOTES PANEL + MARKER FILTERS
+// ============================================================
+
+// --- Notes panel ---
+const notesBtn = document.getElementById('notesBtn');
+const notesPanel = document.getElementById('notesPanel');
+const notesList = document.getElementById('notesList');
+const notesBadge = document.getElementById('notesBadge');
+
+function openNotesPanel() {
+  buildNotesList();
+  notesPanel.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeNotesPanel() {
+  notesPanel.classList.remove('show');
+  document.body.style.overflow = '';
+}
+if (notesBtn) {
+  notesBtn.addEventListener('click', openNotesPanel);
+}
+
+// Build the list of all notes saved in localStorage
+function buildNotesList() {
+  if (!notesList) return;
+  const notes = [];
+  NODES.forEach(node => {
+    const note = loadNote(node.id);
+    if (note && note.trim()) {
+      notes.push({node, note});
+    }
+  });
+  // Update badge count
+  if (notesBadge) {
+    if (notes.length > 0) {
+      notesBadge.textContent = notes.length;
+      notesBadge.classList.add('show');
+    } else {
+      notesBadge.classList.remove('show');
+    }
+  }
+  if (notes.length === 0) {
+    notesList.innerHTML = '<div class="notes-empty">Aún no has escrito notas.<br>Abre cualquier nodo y escribe tu reflexión en el área "Mi nota personal".</div>';
+    return;
+  }
+  notesList.innerHTML = notes.map(({node, note}) => `
+    <li class="note-item" data-node-id="${node.id}">
+      <div class="note-item-header">
+        <div class="note-item-title">${node.title}</div>
+        <div class="note-item-ref">${node.ref}</div>
+      </div>
+      <div class="note-item-text">${escapeHtml(note)}</div>
+    </li>
+  `).join('');
+  // Bind clicks to open the node
+  notesList.querySelectorAll('.note-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const nodeId = item.dataset.nodeId;
+      const node = nodeMap[nodeId];
+      if (node) {
+        closeNotesPanel();
+        setTimeout(() => showNodeDetails(node), 200);
+      }
+    });
+  });
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Update notes badge when a note is saved
+const _origSaveNote = saveNote;
+saveNote = function(nodeId, text) {
+  _origSaveNote(nodeId, text);
+  updateNotesBadge();
+};
+function updateNotesBadge() {
+  let count = 0;
+  NODES.forEach(n => {
+    const note = loadNote(n.id);
+    if (note && note.trim()) count++;
+  });
+  if (notesBadge) {
+    if (count > 0) {
+      notesBadge.textContent = count;
+      notesBadge.classList.add('show');
+    } else {
+      notesBadge.classList.remove('show');
+    }
+  }
+}
+
+// --- Marker filters ---
+let activeMarkerFilter = null;
+const markerFilterPills = document.querySelectorAll('.marker-filter-pill');
+markerFilterPills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    const marker = pill.dataset.marker;
+    if (activeMarkerFilter === marker) {
+      // Toggle off
+      activeMarkerFilter = null;
+      pill.classList.remove('active');
+    } else {
+      // Toggle on
+      activeMarkerFilter = marker;
+      markerFilterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    }
+    applyMarkerFilter();
+  });
+});
+
+function applyMarkerFilter() {
+  // Apply to canvas nodes
+  document.querySelectorAll('.node').forEach(el => {
+    const nodeId = el.dataset.id;
+    if (!nodeId) return;
+    if (activeMarkerFilter === null) {
+      el.classList.remove('hidden');
+    } else {
+      const marker = loadMarker(nodeId);
+      if (marker === activeMarkerFilter) {
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
+    }
+  });
+  // Apply to mobile cards
+  document.querySelectorAll('.mobile-node-card').forEach(el => {
+    const nodeId = el.dataset.id;
+    if (!nodeId) return;
+    if (activeMarkerFilter === null) {
+      el.style.display = '';
+    } else {
+      const marker = loadMarker(nodeId);
+      el.style.display = (marker === activeMarkerFilter) ? '' : 'none';
+    }
+  });
+  // Hide arrows connected to hidden nodes
+  document.querySelectorAll('.arrow-path').forEach(p => {
+    const fromNode = document.querySelector(`.node[data-id="${p.dataset.from}"]`);
+    const toNode = document.querySelector(`.node[data-id="${p.dataset.to}"]`);
+    const visible = fromNode && !fromNode.classList.contains('hidden') &&
+                   toNode && !toNode.classList.contains('hidden');
+    p.style.display = visible ? '' : 'none';
+  });
+  // Update mobile list (rebuild to reflect filter)
+  if (typeof buildMobileListView === 'function') {
+    setTimeout(buildMobileListView, 50);
+  }
+}
+
+// Initialize
+function initStage1_5() {
+  updateNotesBadge();
+}
+setTimeout(initStage1_5, 200);
+
+// Mark stage1.5 as applied
+window.stage1_5_applied = true;
 
 </script>
 </body>
