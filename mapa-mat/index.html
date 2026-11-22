@@ -1011,6 +1011,227 @@ body.focus-active .focus-exit-hint{display:block}
   }
 }
 
+
+/* ---------- STAGE 3: Original text + versions + difficulty levels ---------- */
+
+/* Difficulty selector */
+.difficulty-selector{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:3px;
+}
+.difficulty-btn{
+  padding:4px 10px;
+  border-radius:6px;
+  font-size:.68rem;font-weight:600;
+  cursor:pointer;
+  border:none;
+  background:transparent;
+  color:var(--muted);
+  font-family:inherit;
+  transition:.18s;
+  white-space:nowrap;
+}
+.difficulty-btn:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.05);
+}
+.difficulty-btn.active{
+  background:rgba(184,124,255,.18);
+  color:var(--esperanza);
+  border:1px solid var(--esperanza);
+}
+.difficulty-btn[data-level="beginner"].active{
+  background:rgba(61,220,132,.18);
+  color:var(--iglesia);
+  border-color:var(--iglesia);
+}
+.difficulty-btn[data-level="intermediate"].active{
+  background:rgba(88,166,255,.18);
+  color:var(--pacto);
+  border-color:var(--pacto);
+}
+
+/* Original text section (Greek + interlinear) */
+.original-text-section{
+  margin-top:14px;
+  padding:14px 16px;
+  background:rgba(184,124,255,.04);
+  border:1px solid rgba(184,124,255,.2);
+  border-left:3px solid var(--esperanza);
+  border-radius:8px;
+}
+.original-text-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+}
+.original-text-title{
+  font-size:.66rem;font-weight:700;
+  color:var(--esperanza);
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+.original-text-greek{
+  font-family:'Segoe UI',system-ui;
+  font-size:.95rem;
+  line-height:1.6;
+  color:#e6d4ff;
+  background:rgba(184,124,255,.06);
+  padding:8px 10px;
+  border-radius:6px;
+  margin-bottom:8px;
+  direction:ltr;
+}
+.original-text-translit{
+  font-size:.78rem;
+  font-style:italic;
+  color:var(--muted);
+  margin-bottom:10px;
+  padding-left:6px;
+  border-left:2px solid rgba(184,124,255,.3);
+}
+.interlinear-table{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(80px,1fr));
+  gap:6px;
+  margin-top:8px;
+}
+.interlinear-word{
+  background:rgba(255,255,255,.03);
+  border-radius:5px;
+  padding:5px 6px;
+  text-align:center;
+  cursor:help;
+  transition:.15s;
+}
+.interlinear-word:hover{
+  background:rgba(184,124,255,.10);
+}
+.interlinear-greek{
+  font-size:.82rem;
+  color:#e6d4ff;
+  font-weight:600;
+  margin-bottom:2px;
+}
+.interlinear-translit{
+  font-size:.62rem;
+  color:var(--muted);
+  font-style:italic;
+  margin-bottom:2px;
+}
+.interlinear-gloss{
+  font-size:.7rem;
+  color:var(--text);
+  font-weight:500;
+}
+.interlinear-parse{
+  font-size:.58rem;
+  color:var(--esperanza);
+  margin-top:2px;
+  opacity:.8;
+}
+.original-text-note{
+  margin-top:10px;
+  padding:8px 10px;
+  background:rgba(255,255,255,.03);
+  border-radius:6px;
+  font-size:.76rem;
+  color:var(--muted);
+  font-style:italic;
+  line-height:1.5;
+  border-left:2px solid var(--esperanza);
+}
+
+/* Parallel versions */
+.versions-section{
+  margin-top:12px;
+  padding:10px 0;
+  border-top:1px dashed var(--border);
+}
+.versions-title{
+  font-size:.66rem;font-weight:700;
+  color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.version-row{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  gap:10px;
+  align-items:start;
+  margin-bottom:8px;
+  font-size:.85rem;
+  line-height:1.55;
+}
+.version-label{
+  font-size:.7rem;font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  text-align:center;
+  letter-spacing:.5px;
+  white-space:nowrap;
+}
+.version-label.rvr1960{
+  background:rgba(224,168,98,.14);
+  color:var(--at);
+  border:1px solid rgba(224,168,98,.3);
+}
+.version-label.nvi{
+  background:rgba(61,220,132,.14);
+  color:var(--iglesia);
+  border:1px solid rgba(61,220,132,.3);
+}
+.version-label.lbla{
+  background:rgba(88,166,255,.14);
+  color:var(--pacto);
+  border:1px solid rgba(88,166,255,.3);
+}
+.version-text{
+  color:var(--text);
+  font-style:italic;
+}
+.versions-note{
+  margin-top:8px;
+  padding:8px 10px;
+  background:rgba(255,255,255,.03);
+  border-left:2px solid var(--pacto);
+  border-radius:6px;
+  font-size:.74rem;
+  color:#cfe3ff;
+  line-height:1.5;
+}
+
+@media (max-width:768px){
+  .difficulty-selector{
+    padding:2px;
+  }
+  .difficulty-btn{
+    padding:3px 7px;
+    font-size:.62rem;
+  }
+  .original-text-section{
+    padding:10px 12px;
+  }
+  .original-text-greek{
+    font-size:.88rem;
+  }
+  .interlinear-table{
+    grid-template-columns:repeat(auto-fit,minmax(70px,1fr));
+    gap:4px;
+  }
+  .version-row{
+    grid-template-columns:1fr;
+    gap:3px;
+  }
+  .version-label{
+    display:inline-block;
+    width:fit-content;
+  }
+}
+
 </style>
 <style>
 :root{
@@ -1692,6 +1913,12 @@ body{
   </div>
   <div class="stats" id="stats">— nodos visibles</div>
   
+  
+  <div class="difficulty-selector" id="difficultySelector">
+    <button class="difficulty-btn" data-level="beginner" title="Solo versículos y comentarios">Básico</button>
+    <button class="difficulty-btn active" data-level="intermediate" title="Versículos, comentarios, glosario y referencias cruzadas">Intermedio</button>
+    <button class="difficulty-btn" data-level="advanced" title="Todo + texto original griego + versiones en paralelo">Avanzado</button>
+  </div>
   <div class="progress-bar-container" id="progressBarContainer" title="Progreso de estudio">
     <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
     <span class="progress-bar-text" id="progressBarText">0/N</span>
@@ -3360,7 +3587,7 @@ setTimeout(initFocusMode, 100);
 // ============================================================
 // STAGE 1: PERSONAL STUDY FEATURES
 // ============================================================
-const BOOK_ID = 'mat';
+const BOOK_ID = 'heb';
 
 // Storage helpers (per book + per node)
 function getStorageKey(nodeId, suffix) {
@@ -3797,7 +4024,7 @@ const GLOSSARY = {
   'Encarnación': {def: 'El Hijo eterno de Dios hecho hombre (Jn 1:14). Verdadero Dios y verdadero hombre en una sola persona.', cat: 'teología'}
 };
 const GLOSSARY_TERMS = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
-const BOOK_PUBLIC_URL = 'https://TU_USUARIO.github.io/biblia-mapas/mapa-mat/';
+const BOOK_PUBLIC_URL = 'https://TU_USUARIO.github.io/biblia-mapas/mapa-heb/';
 
 // --- Build regex for matching glossary terms ---
 // Escape regex special chars and build alternation pattern
@@ -3937,6 +4164,716 @@ function buildShareText(node) {
 
 // Mark stage2 as applied
 window.stage2_applied = true;
+
+
+// ============================================================
+// STAGE 3: ORIGINAL TEXT + VERSIONS + DIFFICULTY LEVELS
+// ============================================================
+const ORIGINAL_TEXTS = {
+  "mt-1:23": {
+    "greek": "Ἰδοὺ, ἡ παρθένος ἐν γαστρὶ ἕξει καὶ τέξεται υἱόν, καὶ καλέσουσιν τὸ ὄνομα αὐτοῦ Ἐμμανουήλ",
+    "translit": "Idou, hē parthenos en gastri hexei kai texetai huion, kai kalesousin to onoma autou Emmanouēl",
+    "interlinear": [
+      {
+        "greek": "Ἰδοὺ",
+        "translit": "Idou",
+        "gloss": "He aquí",
+        "parse": "interjección"
+      },
+      {
+        "greek": "ἡ παρθένος",
+        "translit": "hē parthenos",
+        "gloss": "la virgen",
+        "parse": "sustantivo, nominativo, femenino, singular"
+      },
+      {
+        "greek": "ἐν γαστρὶ ἕξει",
+        "translit": "en gastri hexei",
+        "gloss": "en vientre tendrá",
+        "parse": "preposición + sustantivo + verbo futuro"
+      },
+      {
+        "greek": "τέξεται",
+        "translit": "texetai",
+        "gloss": "dará a luz",
+        "parse": "verbo futuro, indicativo, medio, 3a persona singular"
+      },
+      {
+        "greek": "υἱόν",
+        "translit": "huion",
+        "gloss": "hijo",
+        "parse": "sustantivo, acusativo, masculino, singular"
+      },
+      {
+        "greek": "καλέσουσιν",
+        "translit": "kalesousin",
+        "gloss": "llamarán",
+        "parse": "verbo futuro, indicativo, activo, 3a persona plural"
+      },
+      {
+        "greek": "τὸ ὄνομα αὐτοῦ",
+        "translit": "to onoma autou",
+        "gloss": "su nombre",
+        "parse": "sustantivo + pronombre, acusativo"
+      },
+      {
+        "greek": "Ἐμμανουήλ",
+        "translit": "Emmanouēl",
+        "gloss": "Emmanuel = Dios con nosotros",
+        "parse": "nombre propio"
+      }
+    ],
+    "note": "Mateo cita la LXX (Septuaginta) de Isaías 7:14. \"Parthenos\" en la LXX traduce el hebreo \"almah\" (joven). Solo en Cristo el parto es verdaderamente virginal. \"Emmanouēl\" es nombre-teológico: Dios habita con nosotros."
+  },
+  "mt-3:16-17": {
+    "greek": "καὶ ἰδοὺ ἠνεῴχθησαν [αὐτῷ] οἱ οὐρανοί, καὶ εἶδεν τὸ πνεῦμα τοῦ θεοῦ καταβαῖνον ὡσεὶ περιστερὰν... καὶ ἰδοὺ φωνὴ ἐκ τῶν οὐρανῶν λέγουσα· Οὗτός ἐστιν ὁ υἱός μου ὁ ἀγαπητός, ἐν ᾧ εὐδόκησα",
+    "translit": "kai idou ēneōchthēsan [autō] hoi ouranoi, kai eiden to pneuma tou theou katabainon hōsei peristeran... kai idou phōnē ek tōn ouranōn legousa; Houtos estin ho huios mou ho agapētos, en hō eudokēsa",
+    "interlinear": [
+      {
+        "greek": "ἠνεῴχθησαν",
+        "translit": "ēneōchthēsan",
+        "gloss": "fueron abiertos",
+        "parse": "verbo aoristo, indicativo, pasivo, 3a persona plural"
+      },
+      {
+        "greek": "οἱ οὐρανοί",
+        "translit": "hoi ouranoi",
+        "gloss": "los cielos",
+        "parse": "sustantivo, nominativo, masculino, plural"
+      },
+      {
+        "greek": "τὸ πνεῦμα τοῦ θεοῦ",
+        "translit": "to pneuma tou theou",
+        "gloss": "el Espíritu de Dios",
+        "parse": "sustantivos, nominativo y genitivo"
+      },
+      {
+        "greek": "καταβαῖνον",
+        "translit": "katabainon",
+        "gloss": "descendiendo",
+        "parse": "participio presente, acusativo, neutro, singular"
+      },
+      {
+        "greek": "ὡσεὶ περιστερὰν",
+        "translit": "hōsei peristeran",
+        "gloss": "como paloma",
+        "parse": "adverbio + sustantivo, acusativo"
+      },
+      {
+        "greek": "Οὗτός ἐστιν",
+        "translit": "Houtos estin",
+        "gloss": "Este es",
+        "parse": "pronombre demostrativo + verbo presente"
+      },
+      {
+        "greek": "ὁ υἱός μου",
+        "translit": "ho huios mou",
+        "gloss": "mi Hijo",
+        "parse": "sustantivo + pronombre posesivo"
+      },
+      {
+        "greek": "ὁ ἀγαπητός",
+        "translit": "ho agapētos",
+        "gloss": "el amado",
+        "parse": "adjetivo, nominativo, masculino, singular"
+      },
+      {
+        "greek": "ἐν ᾧ εὐδόκησα",
+        "translit": "en hō eudokēsa",
+        "gloss": "en quien me he complacido",
+        "parse": "preposición + pronombre relativo + verbo aoristo"
+      }
+    ],
+    "note": "La Trinidad se manifiesta simultáneamente: Hijo en el agua, Espíritu descendiendo, Padre hablando. \"Agapētos\" = amado en grado único, no solo \"amado\" en general. \"Eudokēsa\" = tuve complacencia, del verbo \"dokeō\" (parecer bien)."
+  },
+  "mt-4:17": {
+    "greek": "Ἀπὸ τότε ἤρξατο ὁ Ἰησοῦς κηρύσσειν καὶ λέγειν· Μετανοεῖτε, ἤγγικεν γὰρ ἡ βασιλεία τῶν οὐρανῶν",
+    "translit": "Apo tote ērxato ho Iēsous kērussein kai legein; Metanoeite, ēngiken gar hē basileia tōn ouranōn",
+    "interlinear": [
+      {
+        "greek": "Ἀπὸ τότε",
+        "translit": "Apo tote",
+        "gloss": "Desde entonces",
+        "parse": "preposición + adverbio"
+      },
+      {
+        "greek": "ἤρξατο",
+        "translit": "ērxato",
+        "gloss": "comenzó",
+        "parse": "verbo aoristo, indicativo, medio, 3a persona singular"
+      },
+      {
+        "greek": "κηρύσσειν",
+        "translit": "kērussein",
+        "gloss": "a predicar",
+        "parse": "verbo presente, infinitivo, activo"
+      },
+      {
+        "greek": "Μετανοεῖτε",
+        "translit": "Metanoeite",
+        "gloss": "Arrepentíos",
+        "parse": "verbo presente, imperativo, activo, 2a persona plural"
+      },
+      {
+        "greek": "ἤγγικεν",
+        "translit": "ēngiken",
+        "gloss": "se ha acercado",
+        "parse": "verbo perfecto, indicativo, activo, 3a persona singular"
+      },
+      {
+        "greek": "ἡ βασιλεία τῶν οὐρανῶν",
+        "translit": "hē basileia tōn ouranōn",
+        "gloss": "el reino de los cielos",
+        "parse": "sustantivos, nominativo y genitivo"
+      }
+    ],
+    "note": "\"Metanoeō\" = cambiar de mente (nous) y dirección. No solo pesar, sino vuelta. \"Ēngiken\" = perfecto: ya está cerca, con implicaciones presentes. \"Basileia\" = reinado, no solo territorio. Mateo usa \"cielos\" por reverencia judía al nombre de Dios."
+  },
+  "mt-5:3-4": {
+    "greek": "Μακάριοι οἱ πτωχοὶ τῷ πνεύματι, ὅτι αὐτῶν ἐστιν ἡ βασιλεία τῶν οὐρανῶν. Μακάριοι οἱ πενθοῦντες, ὅτι αὐτοὶ παρακληθήσονται",
+    "translit": "Makarioi hoi ptōchoi tō pneumati, hoti autōn estin hē basileia tōn ouranōn. Makarioi hoi penthountes, hoti autoi paraklēthēsontai",
+    "interlinear": [
+      {
+        "greek": "Μακάριοι",
+        "translit": "Makarioi",
+        "gloss": "Bienaventurados",
+        "parse": "adjetivo, nominativo, masculino, plural"
+      },
+      {
+        "greek": "οἱ πτωχοὶ",
+        "translit": "hoi ptōchoi",
+        "gloss": "los pobres",
+        "parse": "sustantivo/adjetivo, nominativo, masculino, plural"
+      },
+      {
+        "greek": "τῷ πνεύματι",
+        "translit": "tō pneumati",
+        "gloss": "en espíritu",
+        "parse": "sustantivo, dativo, neutro, singular"
+      },
+      {
+        "greek": "αὐτῶν ἐστιν",
+        "translit": "autōn estin",
+        "gloss": "de ellos es",
+        "parse": "pronombre + verbo"
+      },
+      {
+        "greek": "οἱ πενθοῦντες",
+        "translit": "hoi penthountes",
+        "gloss": "los que lloran",
+        "parse": "participio presente, nominativo, masculino, plural"
+      },
+      {
+        "greek": "παρακληθήσονται",
+        "translit": "paraklēthēsontai",
+        "gloss": "serán consolados",
+        "parse": "verbo futuro, indicativo, pasivo, 3a persona plural"
+      }
+    ],
+    "note": "\"Makarios\" = bienaventurado, no solo feliz. Es el favor de Dios, no circunstancia humana. \"Ptōchos\" = mendigo, sin recursos. La pobreza espiritual es reconocerse sin mérito ante Dios. \"Parakaleō\" = llamar al lado, consolar (de donde \"Paracleto\")."
+  },
+  "mt-6:9-10": {
+    "greek": "Πάτερ ἡμῶν ὁ ἐν τοῖς οὐρανοῖς· ἁγιασθήτω τὸ ὄνομά σου... ἐλθέτω ἡ βασιλεία σου... γενηθήτω τὸ θέλημά σου",
+    "translit": "Pater hēmōn ho en tois ouranois; hagiasthētō to onoma sou... elthetō hē basileia sou... genēthētō to thelēma sou",
+    "interlinear": [
+      {
+        "greek": "Πάτερ ἡμῶν",
+        "translit": "Pater hēmōn",
+        "gloss": "Padre nuestro",
+        "parse": "sustantivo + pronombre posesivo, vocativo"
+      },
+      {
+        "greek": "ἁγιασθήτω",
+        "translit": "hagiasthētō",
+        "gloss": "santificado sea",
+        "parse": "verbo aoristo, imperativo, pasivo, 3a persona singular"
+      },
+      {
+        "greek": "ἐλθέτω",
+        "translit": "elthetō",
+        "gloss": "venga",
+        "parse": "verbo aoristo, imperativo, activo, 3a persona singular"
+      },
+      {
+        "greek": "γενηθήτω",
+        "translit": "genēthētō",
+        "gloss": "hágase",
+        "parse": "verbo aoristo, imperativo, pasivo, 3a persona singular"
+      }
+    ],
+    "note": "Tres aoristos imperativos pasivos: santificado, venga, hágase. La voz pasiva deja a Dios como agente: Él santifica, Él viene, Él hace. \"Pater\" era \"Abba\" en arameo: intimidad sin precedentes."
+  },
+  "mt-16:16": {
+    "greek": "Σὺ εἶ ὁ Χριστὸς ὁ υἱὸς τοῦ θεοῦ τοῦ ζῶντος",
+    "translit": "Su ei ho Christos ho huios tou theou tou zōntos",
+    "interlinear": [
+      {
+        "greek": "Σὺ εἶ",
+        "translit": "Su ei",
+        "gloss": "Tú eres",
+        "parse": "pronombre + verbo presente, indicativo, 2a persona singular"
+      },
+      {
+        "greek": "ὁ Χριστὸς",
+        "translit": "ho Christos",
+        "gloss": "el Cristo/Mesías",
+        "parse": "sustantivo, nominativo, masculino, singular"
+      },
+      {
+        "greek": "ὁ υἱὸς τοῦ θεοῦ",
+        "translit": "ho huios tou theou",
+        "gloss": "el Hijo de Dios",
+        "parse": "sustantivos, nominativo y genitivo"
+      },
+      {
+        "greek": "τοῦ ζῶντος",
+        "translit": "tou zōntos",
+        "gloss": "del [Dios] viviente",
+        "parse": "participio presente, genitivo, masculino, singular"
+      }
+    ],
+    "note": "Doble confesión: Cristo (mesianismo davídico) e Hijo de Dios (filiación única). \"Tou zōntos\" = del viviente, contrasta con los ídolos muertos. La confesión de Pedro es roc de la Iglesia."
+  },
+  "mt-16:18": {
+    "greek": "σὺ Πέτρος, καὶ ἐπὶ ταύτῃ τῇ πέτρᾳ οἰκοδομήσω μου τὴν ἐκκλησίαν, καὶ πύλαι ᾅδου οὐ κατισχύσουσιν αὐτῆς",
+    "translit": "su Petros, kai epi tautē tē petra oikodomēsō mou tēn ekklēsian, kai pulai hadou ou katischusousin autēs",
+    "interlinear": [
+      {
+        "greek": "σὺ Πέτρος",
+        "translit": "su Petros",
+        "gloss": "tú [eres] Pedro (petros = piedra pequeña)",
+        "parse": "pronombre + nombre propio"
+      },
+      {
+        "greek": "ἐπὶ ταύτῃ τῇ πέτρᾳ",
+        "translit": "epi tautē tē petra",
+        "gloss": "sobre esta roca (petra = peña/macizo rocoso)",
+        "parse": "preposición + demostrativo + sustantivo, dativo"
+      },
+      {
+        "greek": "οἰκοδομήσω",
+        "translit": "oikodomēsō",
+        "gloss": "edificaré",
+        "parse": "verbo futuro, indicativo, activo, 1a persona singular"
+      },
+      {
+        "greek": "τὴν ἐκκλησίαν μου",
+        "translit": "tēn ekklēsian mou",
+        "gloss": "mi iglesia",
+        "parse": "sustantivo + pronombre, acusativo"
+      },
+      {
+        "greek": "πύλαι ᾅδου",
+        "translit": "pulai hadou",
+        "gloss": "puertas del Hades",
+        "parse": "sustantivos, nominativo y genitivo"
+      },
+      {
+        "greek": "οὐ κατισχύσουσιν",
+        "translit": "ou katischusousin",
+        "gloss": "no prevalecerán",
+        "parse": "negación + verbo futuro, indicativo, activo, 3a persona plural"
+      }
+    ],
+    "note": "Juego de palabras: \"Petros\" (piedra suelta, masc.) vs \"petra\" (roca maciza, fem.). Cristo edifica sobre la roca (la confesión de Pedro, según los Padres griegos) o sobre Pedro mismo (según la lectura católica romana). En ambos casos, Cristo es quien edifica. \"Hades\" = morada de los muertos, no infierno final."
+  },
+  "mt-26:26-28": {
+    "greek": "τοῦτό ἐστιν τὸ σῶμά μου... τοῦτο γάρ ἐστιν τὸ αἷμά μου τῆς διαθήκης τὸ περὶ πολλῶν ἐκχυννόμενον εἰς ἄφεσιν ἁμαρτιῶν",
+    "translit": "touto estin to sōma mou... touto gar estin to haima mou tēs diathēkēs to peri pollōn ekchynnomenon eis aphesin hamartiōn",
+    "interlinear": [
+      {
+        "greek": "τοῦτό ἐστιν",
+        "translit": "touto estin",
+        "gloss": "esto es",
+        "parse": "pronombre demostrativo + verbo presente"
+      },
+      {
+        "greek": "τὸ σῶμά μου",
+        "translit": "to sōma mou",
+        "gloss": "mi cuerpo",
+        "parse": "sustantivo + pronombre posesivo, nominativo"
+      },
+      {
+        "greek": "τὸ αἷμά μου",
+        "translit": "to haima mou",
+        "gloss": "mi sangre",
+        "parse": "sustantivo + pronombre, nominativo"
+      },
+      {
+        "greek": "τῆς διαθήκης",
+        "translit": "tēs diathēkēs",
+        "gloss": "del pacto",
+        "parse": "sustantivo, genitivo, femenino, singular"
+      },
+      {
+        "greek": "περὶ πολλῶν",
+        "translit": "peri pollōn",
+        "gloss": "por muchos",
+        "parse": "preposición + adjetivo, genitivo"
+      },
+      {
+        "greek": "ἐκχυννόμενον",
+        "translit": "ekchynnomenon",
+        "gloss": "derramada",
+        "parse": "participio presente, nominativo, neutro, singular"
+      },
+      {
+        "greek": "εἰς ἄφεσιν ἁμαρτιῶν",
+        "translit": "eis aphesin hamartiōn",
+        "gloss": "para perdón de pecados",
+        "parse": "sustantivos, acusativo y genitivo"
+      }
+    ],
+    "note": "Cristo instituye el nuevo pacto con lenguaje de Éxodo 24:8 (sangre del pacto) y de Isaías 53 (siervo que justifica a muchos). \"Ekchynnomenon\" = siendo derramada, presente continuo: sacrificio en acto."
+  },
+  "mt-27:51": {
+    "greek": "καὶ ἰδοὺ τὸ καταπέτασμα τοῦ ναοῦ ἐσχίσθη ἀπ' ἄνωθεν ἕως κάτω εἰς δύο",
+    "translit": "kai idou to katapetasma tou naou eschisthē ap' anōthen heōs katō eis duo",
+    "interlinear": [
+      {
+        "greek": "τὸ καταπέτασμα",
+        "translit": "to katapetasma",
+        "gloss": "el velo",
+        "parse": "sustantivo, nominativo, neutro, singular"
+      },
+      {
+        "greek": "τοῦ ναοῦ",
+        "translit": "tou naou",
+        "gloss": "del templo",
+        "parse": "sustantivo, genitivo, masculino, singular"
+      },
+      {
+        "greek": "ἐσχίσθη",
+        "translit": "eschisthē",
+        "gloss": "se rasgó",
+        "parse": "verbo aoristo, indicativo, pasivo, 3a persona singular"
+      },
+      {
+        "greek": "ἀπ' ἄνωθεν ἕως κάτω",
+        "translit": "ap' anōthen heōs katō",
+        "gloss": "de arriba abajo",
+        "parse": "adverbios"
+      },
+      {
+        "greek": "εἰς δύο",
+        "translit": "eis duo",
+        "gloss": "en dos",
+        "parse": "preposición + numeral"
+      }
+    ],
+    "note": "Dios rasga el velo, no el hombre (\"de arriba abajo\"). El velo era el del Lugar Santísimo. Su rasgamiento es teológico: el acceso al Padre está abierto por la muerte de Cristo. Cumple la tipología del AT."
+  },
+  "mt-28:19-20": {
+    "greek": "πορευθέντες οὖν μαθητεύσατε πάντα τὰ ἔθνη, βαπτίζοντες αὐτοὺς εἰς τὸ ὄνομα τοῦ πατρὸς καὶ τοῦ υἱοῦ καὶ τοῦ ἁγίου πνεύματος",
+    "translit": "poreuthentes oun mathēteusate panta ta ethnē, baptizontes autous eis to onoma tou patros kai tou huiou kai tou hagiou pneumatos",
+    "interlinear": [
+      {
+        "greek": "πορευθέντες",
+        "translit": "poreuthentes",
+        "gloss": "habiendo ido",
+        "parse": "participio aoristo, nominativo, masculino, plural"
+      },
+      {
+        "greek": "μαθητεύσατε",
+        "translit": "mathēteusate",
+        "gloss": "haced discípulos",
+        "parse": "verbo aoristo, imperativo, activo, 2a persona plural"
+      },
+      {
+        "greek": "πάντα τὰ ἔθνη",
+        "translit": "panta ta ethnē",
+        "gloss": "todas las naciones",
+        "parse": "adjetivo + sustantivo, acusativo, neutro, plural"
+      },
+      {
+        "greek": "βαπτίζοντες",
+        "translit": "baptizontes",
+        "gloss": "bautizándolos",
+        "parse": "participio presente, nominativo, masculino, plural"
+      },
+      {
+        "greek": "εἰς τὸ ὄνομα",
+        "translit": "eis to onoma",
+        "gloss": "en el nombre",
+        "parse": "sustantivo, acusativo, neutro, singular"
+      },
+      {
+        "greek": "τοῦ πατρὸς καὶ τοῦ υἱοῦ καὶ τοῦ ἁγίου πνεύματος",
+        "translit": "tou patros kai tou huiou kai tou hagiou pneumatos",
+        "gloss": "del Padre y del Hijo y del Espíritu Santo",
+        "parse": "sustantivos en genitivo"
+      }
+    ],
+    "note": "El mandato central: 4 participios subordinados al imperativo \"mathēteusate\". Bautismo trinitario = fórmula bautismal primitiva. \"Eis to onoma\" = en posesión del nombre (no solo \"en nombre de\")."
+  }
+};
+const VERSIONS = {
+  "mt-1:23": {
+    "rvr1960": "He aquí que una virgen concebirá y dará a luz un hijo, y llamarás su nombre Emmanuel, que traducido es: Dios con nosotros",
+    "nvi": "La virgen concebirá y dará a luz un hijo, y lo llamarán Emanuel (que significa \"Dios con nosotros\")",
+    "lbla": "He aquí, la virgen concebirá y dará a luz un hijo, y llamarán Su nombre Emmanuel, que traducido significa: Dios con nosotros",
+    "note": "Las tres versiones coinciden en \"virgen\" (parthenos). Diferencia menor: RVR1960 \"llamarás\" (2a sing.) vs NVI/LBLA \"llamarán\" (3a plur.). El griego \"kalesousin\" es 3a plural, así que NVI/LBLA son más fieles."
+  },
+  "mt-5:3": {
+    "rvr1960": "Bienaventurados los pobres en espíritu, porque de ellos es el reino de los cielos",
+    "nvi": "Dichosos los pobres en espíritu, porque el reino de los cielos les pertenece",
+    "lbla": "Bienaventurados los pobres en espíritu, pues de ellos es el reino de los cielos",
+    "note": "NVI traduce \"makarioi\" como \"dichosos\" (más coloquial), RVR/LBLA \"bienaventurados\" (más solemne). Ambos válidos; \"makarioi\" tiene connotación de bendición divina, no solo felicidad humana."
+  },
+  "mt-6:9": {
+    "rvr1960": "Padre nuestro que estás en los cielos, santificado sea tu nombre",
+    "nvi": "Padre nuestro que estás en el cielo, santificado sea tu nombre",
+    "lbla": "Padre nuestro que estás en los cielos, santificado sea tu nombre",
+    "note": "Diferencia menor: RVR/LBLA \"cielos\" (plural, refleja el griego \"ouranois\" plural), NVI \"cielo\" (singular). El plural enfatiza la trascendencia judía."
+  },
+  "mt-16:18": {
+    "rvr1960": "tú eres Pedro, y sobre esta roca edificaré mi iglesia",
+    "nvi": "tú eres Pedro, y sobre esta piedra edificaré mi iglesia",
+    "lbla": "tú eres Pedro, y sobre esta roca edificaré mi iglesia",
+    "note": "RVR/LBLA distinguen \"Petros\" (Pedro) y \"petra\" (roca) traduciendo ambos como \"piedra\" (NVI) o \"roca\" (RVR/LBLA). El juego de palabras griego se pierde en español. La mayoría de los eruditos ven la confesión de Pedro como la roca."
+  },
+  "mt-28:19": {
+    "rvr1960": "Por tanto, id, y haced discípulos a todas las naciones",
+    "nvi": "Por tanto, vayan y hagan discípulos de todas las naciones",
+    "lbla": "Id, pues, y haced discípulos de todas las naciones",
+    "note": "El griego tiene un solo imperativo: \"mathēteusate\" (haced discípulos). \"Id\" es participio subordinado. NVI capta mejor este flujo: el énfasis cae en \"haced discípulos\" mientras se va."
+  }
+};
+let currentLevel = localStorage.getItem('biblia-difficulty-level') || 'intermediate';
+
+// Apply difficulty level on initial load
+function applyDifficultyLevel(level) {
+  currentLevel = level;
+  localStorage.setItem('biblia-difficulty-level', level);
+  // Update buttons
+  document.querySelectorAll('.difficulty-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.level === level);
+  });
+  // Update body class for CSS
+  document.body.classList.remove('level-beginner', 'level-intermediate', 'level-advanced');
+  document.body.classList.add('level-' + level);
+  // Re-render modal if open
+  if (document.getElementById('modal').classList.contains('show')) {
+    // Trigger re-render by calling showNodeDetails on current node
+    // (We need to track the current node)
+  }
+}
+
+// Initialize difficulty buttons
+document.querySelectorAll('.difficulty-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const level = btn.dataset.level;
+    applyDifficultyLevel(level);
+    // If modal is open, re-render it with new level
+    if (document.getElementById('modal').classList.contains('show') && window.currentNodeId) {
+      const node = nodeMap[window.currentNodeId];
+      if (node) {
+        // Force re-render by clearing glossaryApplied flags
+        const modalBody = document.getElementById('modalBody');
+        modalBody.querySelectorAll('[data-glossary-applied]').forEach(el => {
+          delete el.dataset.glossaryApplied;
+        });
+        modalBody.querySelectorAll('[data-context-link-added]').forEach(el => {
+          delete el.dataset.contextLinkAdded;
+        });
+        modalBody.querySelectorAll('.original-text-section, .versions-section').forEach(el => el.remove());
+        // Re-show
+        showNodeDetails(node);
+      }
+    }
+  });
+});
+
+// Track current node
+const _origShowNodeDetailsStage3 = showNodeDetails;
+showNodeDetails = function(node) {
+  window.currentNodeId = node.id;
+  _origShowNodeDetailsStage3.apply(this, arguments);
+
+  const modalBody = document.getElementById('modalBody');
+  if (!modalBody) return;
+
+  // Add original text section (only in advanced level)
+  if (currentLevel === 'advanced') {
+    addOriginalTextSection(node, modalBody);
+    addVersionsSection(node, modalBody);
+  } else if (currentLevel === 'intermediate') {
+    addVersionsSection(node, modalBody);
+  }
+  // Beginner: only RVR1960 (already shown) + comments
+};
+
+// Helper: build a key for ORIGINAL_TEXTS lookup
+function buildLookupKey(node) {
+  // Try to match node.ref to a key like 'heb-1:3' or 'mt-1:23'
+  const ref = node.ref;
+  // Extract book abbreviation and chapter:verse
+  // Examples: 'Hebreos 1:2', 'Mateo 1:23', 'Hebreos 4:14-16', 'Hebreos 9:11-14'
+  let bookAbbr = '';
+  if (ref.startsWith('Hebreos')) bookAbbr = 'heb';
+  else if (ref.startsWith('Mateo') || ref.startsWith('Mt')) bookAbbr = 'mt';
+  if (!bookAbbr) return null;
+
+  // Extract chapter and verse range (e.g., '1:18-25' or '1:23')
+  const match = ref.match(/([0-9]+):([0-9]+)(?:-([0-9]+))?/);
+  if (!match) return null;
+  const chapter = match[1];
+  const startVerse = match[2];
+  const endVerse = match[3] || startVerse;
+
+  // Try each verse in the range
+  for (let v = parseInt(startVerse); v <= parseInt(endVerse); v++) {
+    // Try exact key first: heb-chapter:verse
+    const exactKey = `${bookAbbr}-${chapter}:${v}`;
+    if (ORIGINAL_TEXTS[exactKey]) return exactKey;
+
+    // Try ranges: look for keys like 'heb-chapter:verse-X' or 'heb-chapter:X-verse'
+    for (const k of Object.keys(ORIGINAL_TEXTS)) {
+      const keyMatch = k.match(new RegExp(`^${bookAbbr}-${chapter}:([0-9]+)(?:-([0-9]+))?$`));
+      if (keyMatch) {
+        const kStartVerse = parseInt(keyMatch[1]);
+        const kEndVerse = keyMatch[2] ? parseInt(keyMatch[2]) : kStartVerse;
+        if (v >= kStartVerse && v <= kEndVerse) return k;
+      }
+    }
+  }
+
+  return null;
+}
+
+// Add original text section
+function addOriginalTextSection(node, modalBody) {
+  if (modalBody.querySelector('.original-text-section')) return;
+
+  const key = buildLookupKey(node);
+  if (!key) return;
+
+  const data = ORIGINAL_TEXTS[key];
+  if (!data) return;
+
+  const section = document.createElement('div');
+  section.className = 'original-text-section';
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'original-text-header';
+  header.innerHTML = '<span class="original-text-title">📜 Texto original (griego)</span>';
+  section.appendChild(header);
+
+  // Greek text
+  const greek = document.createElement('div');
+  greek.className = 'original-text-greek';
+  greek.textContent = data.greek;
+  section.appendChild(greek);
+
+  // Transliteration
+  if (data.translit) {
+    const translit = document.createElement('div');
+    translit.className = 'original-text-translit';
+    translit.textContent = data.translit;
+    section.appendChild(translit);
+  }
+
+  // Interlinear table
+  if (data.interlinear && data.interlinear.length > 0) {
+    const table = document.createElement('div');
+    table.className = 'interlinear-table';
+    data.interlinear.forEach(word => {
+      const w = document.createElement('div');
+      w.className = 'interlinear-word';
+      w.title = word.parse;
+      w.innerHTML = `
+        <div class="interlinear-greek">${word.greek}</div>
+        <div class="interlinear-translit">${word.translit}</div>
+        <div class="interlinear-gloss">${word.gloss}</div>
+        <div class="interlinear-parse">${word.parse}</div>
+      `;
+      table.appendChild(w);
+    });
+    section.appendChild(table);
+  }
+
+  // Note
+  if (data.note) {
+    const note = document.createElement('div');
+    note.className = 'original-text-note';
+    note.textContent = '💭 ' + data.note;
+    section.appendChild(note);
+  }
+
+  // Insert before share section (or at end)
+  const shareSection = modalBody.querySelector('.share-section');
+  if (shareSection) {
+    modalBody.insertBefore(section, shareSection);
+  } else {
+    modalBody.appendChild(section);
+  }
+}
+
+// Add parallel versions section
+function addVersionsSection(node, modalBody) {
+  if (modalBody.querySelector('.versions-section')) return;
+
+  const key = buildLookupKey(node);
+  if (!key) return;
+
+  const data = VERSIONS[key];
+  if (!data) return;
+
+  const section = document.createElement('div');
+  section.className = 'versions-section';
+
+  const title = document.createElement('div');
+  title.className = 'versions-title';
+  title.textContent = '📚 Comparación de versiones';
+  section.appendChild(title);
+
+  // RVR1960
+  if (data.rvr1960) {
+    const row = document.createElement('div');
+    row.className = 'version-row';
+    row.innerHTML = '<span class="version-label rvr1960">RVR1960</span><span class="version-text">' + data.rvr1960 + '</span>';
+    section.appendChild(row);
+  }
+  // NVI
+  if (data.nvi) {
+    const row = document.createElement('div');
+    row.className = 'version-row';
+    row.innerHTML = '<span class="version-label nvi">NVI</span><span class="version-text">' + data.nvi + '</span>';
+    section.appendChild(row);
+  }
+  // LBLA
+  if (data.lbla) {
+    const row = document.createElement('div');
+    row.className = 'version-row';
+    row.innerHTML = '<span class="version-label lbla">LBLA</span><span class="version-text">' + data.lbla + '</span>';
+    section.appendChild(row);
+  }
+  // Note
+  if (data.note) {
+    const note = document.createElement('div');
+    note.className = 'versions-note';
+    note.textContent = '🔍 ' + data.note;
+    section.appendChild(note);
+  }
+
+  // Insert after the first verse block (or before share section)
+  const firstVerse = modalBody.querySelector('.verse-block');
+  const shareSection = modalBody.querySelector('.share-section');
+  if (firstVerse && firstVerse.nextSibling) {
+    modalBody.insertBefore(section, firstVerse.nextSibling);
+  } else if (shareSection) {
+    modalBody.insertBefore(section, shareSection);
+  } else {
+    modalBody.appendChild(section);
+  }
+}
+
+// Apply initial level on load
+setTimeout(() => applyDifficultyLevel(currentLevel), 100);
+
+// Mark stage3 as applied
+window.stage3_applied = true;
 
 </script>
 
