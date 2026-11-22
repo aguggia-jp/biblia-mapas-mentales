@@ -819,6 +819,198 @@ body.focus-active .focus-exit-hint{display:block}
   .marker-filters{display:none}
 }
 
+
+/* ---------- STAGE 2: Glossary tooltips + context links + share ---------- */
+
+/* Glossary tooltip */
+.glossary-term{
+  border-bottom:1px dotted var(--pacto);
+  cursor:help;
+  position:relative;
+  color:#aaddff;
+}
+.glossary-term:hover{
+  color:var(--pacto);
+}
+.glossary-tooltip{
+  position:absolute;
+  bottom:100%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#0e151d;
+  border:1px solid var(--pacto);
+  border-radius:8px;
+  padding:10px 12px;
+  width:280px;
+  max-width:280px;
+  font-size:.74rem;
+  line-height:1.5;
+  color:var(--text);
+  box-shadow:0 8px 24px -4px rgba(0,0,0,.8);
+  z-index:100;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+  margin-bottom:6px;
+  font-style:normal;
+  font-weight:400;
+  text-align:left;
+}
+.glossary-tooltip::after{
+  content:'';
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border:6px solid transparent;
+  border-top-color:var(--pacto);
+}
+.glossary-term:hover .glossary-tooltip{
+  opacity:1;
+}
+.glossary-tooltip .gt-term{
+  font-weight:700;
+  color:var(--pacto);
+  text-transform:capitalize;
+  display:block;
+  margin-bottom:3px;
+  font-size:.78rem;
+}
+.glossary-tooltip .gt-category{
+  display:inline-block;
+  font-size:.58rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:6px;
+  padding:1px 6px;
+  background:rgba(255,255,255,.05);
+  border-radius:4px;
+}
+
+/* Context link (BibleGateway) */
+.verse-text{
+  position:relative;
+}
+.verse-block{
+  position:relative;
+}
+.context-link{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:.66rem;
+  font-weight:600;
+  color:#79c0ff;
+  background:rgba(88,166,255,.08);
+  border:1px solid rgba(88,166,255,.2);
+  border-radius:6px;
+  padding:2px 8px;
+  margin-left:8px;
+  text-decoration:none;
+  transition:.18s;
+  font-style:normal;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  vertical-align:middle;
+}
+.context-link:hover{
+  background:rgba(88,166,255,.18);
+  color:#fff;
+  border-color:var(--pacto);
+}
+.context-link::before{
+  content:'↗';
+  font-size:.78rem;
+}
+
+/* Share button (WhatsApp) */
+.share-section{
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.share-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:.76rem;
+  font-weight:600;
+  cursor:pointer;
+  border:1px solid;
+  font-family:inherit;
+  transition:.18s;
+  text-decoration:none;
+}
+.share-btn.whatsapp{
+  background:rgba(37,211,102,.10);
+  color:#25d366;
+  border-color:rgba(37,211,102,.3);
+}
+.share-btn.whatsapp:hover{
+  background:rgba(37,211,102,.20);
+  color:#25d366;
+  border-color:#25d366;
+}
+.share-btn.copy{
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  border-color:var(--border);
+}
+.share-btn.copy:hover{
+  background:rgba(255,255,255,.08);
+  color:var(--text);
+}
+.share-btn .icon{
+  font-size:.85rem;
+}
+
+/* Toast notification */
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:rgba(20,29,40,.95);
+  border:1px solid var(--iglesia);
+  color:var(--iglesia);
+  padding:10px 18px;
+  border-radius:24px;
+  font-size:.78rem;
+  font-weight:600;
+  z-index:2000;
+  opacity:0;
+  transition:opacity .3s, transform .3s;
+  backdrop-filter:blur(8px);
+  box-shadow:0 8px 24px -4px rgba(0,0,0,.5);
+  pointer-events:none;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media (max-width:768px){
+  .glossary-tooltip{
+    width:220px;
+    max-width:220px;
+    font-size:.7rem;
+  }
+  .share-section{
+    justify-content:stretch;
+  }
+  .share-btn{
+    flex:1;
+    justify-content:center;
+  }
+}
+
 </style>
 <style>
 :root{
@@ -3860,6 +4052,196 @@ setTimeout(initStage1_5, 200);
 // Mark stage1.5 as applied
 window.stage1_5_applied = true;
 
+
+// ============================================================
+// STAGE 2: GLOSSARY + CONTEXT LINKS + SHARE
+// ============================================================
+const GLOSSARY = {
+  'propiciación': {def: 'Acto por el cual la ira de Dios es apartada mediante un sacrificio sustitutivo. Cristo es la propiciación por nuestros pecados (1 Jn 2:2).', cat: 'sacrificio'},
+  'expiación': {def: 'Remoción o cubrimiento del pecado mediante sacrificio. En el AT, la sangre rociada en el día de la expiación (Lev 16).', cat: 'sacrificio'},
+  'sacrificio': {def: 'Ofrenda a Dios que implica entrega de algo valioso. En el AT, animales; en Cristo, entrega de sí mismo una vez para siempre.', cat: 'sacrificio'},
+  'holocausto': {def: 'Sacrificio en el que todo el animal era quemado sobre el altar, simbolizando entrega total a Dios (Lev 1).', cat: 'sacrificio'},
+  'ofrenda': {def: 'Don presentado a Dios: grano, vino, animales. Las ofrendas expresaban adoración, gratitud o expiación.', cat: 'sacrificio'},
+  'sacerdote': {def: 'Mediador entre Dios y los hombres. En el AT, de la tribu de Leví; Cristo es el Sumo Sacerdote eterno según el orden de Melquisedec.', cat: 'sacerdocio'},
+  'sumo sacerdote': {def: 'Principal sacerdote en Israel, único que entraba al Lugar Santísimo en el día de la expiación. Cristo es el verdadero Sumo Sacerdote.', cat: 'sacerdocio'},
+  'Melquisedec': {def: 'Rey de Salem y sacerdote del Dios Altísimo (Gn 14). Tipo de Cristo: sacerdocio eterno, sin genealogía registrada.', cat: 'sacerdocio'},
+  'Leví': {def: 'Tribu sacerdotal de Israel. Aarón y sus descendientes eran de Leví. El sacerdocio levítico fue sombra del de Cristo.', cat: 'sacerdocio'},
+  'Aarón': {def: 'Primer sumo sacerdote de Israel, hermano de Moisés. Su sacerdocio era tipo del eterno sacerdocio de Cristo.', cat: 'sacerdocio'},
+  'pacto': {def: 'Acuerdo solemne entre Dios y los hombres. Dios establece los pactos: con Noé, Abraham, Israel (Sinaí), David, y el Nuevo Pacto en Cristo.', cat: 'pacto'},
+  'nuevo pacto': {def: 'Pacto prometido por Jeremías (31:31-34), cumplido en la sangre de Cristo. Interior: ley escrita en el corazón, perdón definitivo.', cat: 'pacto'},
+  'mediador': {def: 'Aquel que interviene entre dos partes para reconciliarlas. Cristo es el único mediador entre Dios y los hombres (1 Ti 2:5).', cat: 'pacto'},
+  'promesa': {def: 'Compromiso de Dios de dar o hacer algo. Las promesas a Abraham (Gn 12) se cumplen en Cristo.', cat: 'pacto'},
+  'tabernáculo': {def: 'Tienda santuario donde Dios habitó entre los israelitas en el desierto (Éx 25-27). Figura del verdadero tabernáculo celestial.', cat: 'santuario'},
+  'templo': {def: 'Lugar sagrado de la presencia de Dios. El de Salomón, el de Zorobabel, el de Herodes. Cristo es el verdadero templo (Jn 2:19).', cat: 'santuario'},
+  'Lugar Santísimo': {def: 'Recinto más sagrado del tabernáculo, separado por el velo. Solo el sumo sacerdote entraba una vez al año (Lev 16).', cat: 'santuario'},
+  'velo': {def: 'Cortina que separaba el Lugar Santo del Santísimo. Se rasgó a la muerte de Cristo (Mt 27:51), abriendo el acceso a Dios.', cat: 'santuario'},
+  'altar': {def: 'Lugar de sacrificio. En el AT, altar de bronce para animales; en el NT, Cristo es nuestro altar (Heb 13:10).', cat: 'santuario'},
+  'sangre': {def: 'En la Biblia, la sangre es la vida (Lv 17:11). Derramada en sacrificio, hace expiación. La sangre de Cristo limpia de todo pecado.', cat: 'sacrificio'},
+  'cordero': {def: 'Animal sacrificial inocente. Cristo es el Cordero de Dios que quita el pecado del mundo (Jn 1:29). Cumple la Pascua (Éx 12).', cat: 'sacrificio'},
+  'Pascua': {def: 'Fiesta judía que conmemora la liberación de Egipto (Éx 12). Cristo es nuestra Pascua sacrificada (1 Co 5:7).', cat: 'sacrificio'},
+  'reino de los cielos': {def: 'Expresión preferida de Mateo (32 veces) para el reinado de Dios. Ya presente en Cristo, se consumará al final.', cat: 'reino'},
+  'reino de Dios': {def: 'El reinado soberano de Dios sobre su pueblo y el mundo. Cristo lo inaugura y lo consumará.', cat: 'reino'},
+  'Mesías': {def: 'Del hebreo mashiaj = "ungido". El Rey-Salvador prometido. En griego: Cristo. Jesús es el Mesías.', cat: 'reino'},
+  'Cristo': {def: 'Del griego christos = "ungido". Equivalente de Mesías. Título de Jesús: el Rey-Salvador prometido.', cat: 'reino'},
+  'fe': {def: 'Confianza en Dios y en su palabra. La fe es "sustancia de lo que se espera" (Heb 11:1). Por la fe somos justificados.', cat: 'fe'},
+  'justificación': {def: 'Acto por el cual Dios declara justo al pecador que cree en Cristo. No por obras, sino por gracia mediante la fe.', cat: 'fe'},
+  'redención': {def: 'Rescate o liberación mediante pago. Cristo nos redime con su sangre, comprándonos para Dios.', cat: 'fe'},
+  'gracia': {def: 'Favor inmerecido de Dios. La salvación es por gracia, no por obras (Ef 2:8-9).', cat: 'fe'},
+  'arrepentimiento': {def: 'Cambio de mente y dirección. Volverse del pecado hacia Dios. Condición para entrar al Reino (Mt 4:17).', cat: 'fe'},
+  'escatología': {def: 'Estudio de las últimas cosas. La venida de Cristo, el juicio, la consumación del Reino, los cielos nuevos.', cat: 'esperanza'},
+  'consumación': {def: 'Cumplimiento final. Cristo "consumó" la obra de salvación en la cruz (Jn 19:30); la consumación final será su vuelta.', cat: 'esperanza'},
+  'parusía': {def: 'Del griego = "presencia" o "venida". La segunda venida de Cristo en gloria.', cat: 'esperanza'},
+  'día del Señor': {def: 'Día del juicio y salvación final. Viene como ladrón en la noche (1 Ts 5:2).', cat: 'esperanza'},
+  'Trinidad': {def: 'Doctrina bíblica de un solo Dios en tres personas: Padre, Hijo y Espíritu Santo. Distintas pero un mismo Dios.', cat: 'teología'},
+  'Espíritu Santo': {def: 'Tercera persona de la Trinidad. Inspiró las Escrituras, convence de pecado, regenera, santifica, habita en la Iglesia.', cat: 'teología'},
+  'Encarnación': {def: 'El Hijo eterno de Dios hecho hombre (Jn 1:14). Verdadero Dios y verdadero hombre en una sola persona.', cat: 'teología'}
+};
+const GLOSSARY_TERMS = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+const BOOK_PUBLIC_URL = 'https://TU_USUARIO.github.io/biblia-mapas/mapa-heb/';
+
+// --- Build regex for matching glossary terms ---
+// Escape regex special chars and build alternation pattern
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+const glossaryPattern = new RegExp(
+  '\\b(' + GLOSSARY_TERMS.map(escapeRegex).join('|') + ')\\b',
+  'gi'
+);
+
+// --- Wrap glossary terms in HTML with tooltip ---
+function wrapGlossaryTerms(text) {
+  return text.replace(glossaryPattern, (match) => {
+    const key = match.toLowerCase();
+    const entry = GLOSSARY[key];
+    if (!entry) return match;
+    return `<span class="glossary-term">${match}<span class="glossary-tooltip"><span class="gt-term">${match}</span><span class="gt-category">${entry.cat}</span>${entry.def}</span></span>`;
+  });
+}
+
+// --- Toast notification ---
+function showToast(message, duration = 2500) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+// --- Override showNodeDetails to apply glossary + context links + share ---
+const _origShowNodeDetailsStage2 = showNodeDetails;
+showNodeDetails = function(node) {
+  _origShowNodeDetailsStage2.apply(this, arguments);
+
+  const modalBody = document.getElementById('modalBody');
+  if (!modalBody) return;
+
+  // 1. Apply glossary terms to verse texts and comment text
+  modalBody.querySelectorAll('.verse-text').forEach(el => {
+    // Skip if already processed
+    if (el.dataset.glossaryApplied) return;
+    el.innerHTML = wrapGlossaryTerms(el.innerHTML);
+    el.dataset.glossaryApplied = 'true';
+  });
+  modalBody.querySelectorAll('.comment-text').forEach(el => {
+    if (el.dataset.glossaryApplied) return;
+    el.innerHTML = wrapGlossaryTerms(el.innerHTML);
+    el.dataset.glossaryApplied = 'true';
+  });
+
+  // 2. Add "Ver en contexto" link to each verse block
+  modalBody.querySelectorAll('.verse-block').forEach(block => {
+    if (block.dataset.contextLinkAdded) return;
+    const refEl = block.querySelector('.verse-ref');
+    if (!refEl) return;
+    const ref = refEl.textContent.trim();
+    // Build BibleGateway URL
+    const bgUrl = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(ref) + '&version=RVR1960';
+    const link = document.createElement('a');
+    link.href = bgUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'context-link';
+    link.textContent = 'Contexto';
+    refEl.appendChild(link);
+    block.dataset.contextLinkAdded = 'true';
+  });
+
+  // 3. Add share section (WhatsApp + copy)
+  if (!modalBody.querySelector('.share-section')) {
+    const shareSection = document.createElement('div');
+    shareSection.className = 'share-section';
+
+    // WhatsApp button
+    const waBtn = document.createElement('a');
+    waBtn.className = 'share-btn whatsapp';
+    waBtn.innerHTML = '<span class="icon">💬</span> WhatsApp';
+    waBtn.href = buildWhatsAppUrl(node);
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener noreferrer';
+    shareSection.appendChild(waBtn);
+
+    // Copy button
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'share-btn copy';
+    copyBtn.innerHTML = '<span class="icon">📋</span> Copiar';
+    copyBtn.addEventListener('click', () => {
+      const text = buildShareText(node);
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Copiado al portapapeles');
+      }).catch(() => {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); showToast('✓ Copiado al portapapeles'); }
+        catch (e) { showToast('No se pudo copiar'); }
+        document.body.removeChild(ta);
+      });
+    });
+    shareSection.appendChild(copyBtn);
+
+    modalBody.appendChild(shareSection);
+  }
+};
+
+// --- Build WhatsApp share URL ---
+function buildWhatsAppUrl(node) {
+  const text = buildShareText(node);
+  return 'https://wa.me/?text=' + encodeURIComponent(text);
+}
+
+// --- Build share text ---
+function buildShareText(node) {
+  let text = '';
+  text += '📖 ' + node.title + '\n';
+  text += node.ref + '\n\n';
+  // Add first verse (the main one)
+  if (node.verses && node.verses.length > 0) {
+    const v = node.verses[0];
+    text += '"' + v.text + '"\n';
+    text += '— ' + v.ref + '\n\n';
+  }
+  // Add comment (truncated if too long)
+  if (node.comment) {
+    const comment = node.comment.text;
+    const maxLen = 400;
+    text += '💭 ' + (comment.length > maxLen ? comment.substring(0, maxLen) + '...' : comment) + '\n';
+    text += '— ' + node.comment.author + '\n\n';
+  }
+  // Add link to the node
+  text += '🔗 Ver nodo completo: ' + BOOK_PUBLIC_URL + '#node-' + node.id;
+  return text;
+}
+
+// Mark stage2 as applied
+window.stage2_applied = true;
+
 </script>
+
+<!-- ========== TOAST ========== -->
+<div class="toast" id="toast"></div>
+
 </body>
 </html>
