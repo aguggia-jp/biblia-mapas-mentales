@@ -1650,27 +1650,63 @@ body.theme-light .bp-link .bp-desc{
 }
 
 
-/* ---------- LEVEL FEEDBACK ---------- */
 
-/* Highlight animation for newly appearing content */
-@keyframes highlightFade {
-  0% { background-color: rgba(184, 124, 255, 0.3); box-shadow: 0 0 16px rgba(184, 124, 255, 0.4); }
-  100% { background-color: transparent; box-shadow: none; }
+
+
+/* ---------- LEVEL FEEDBACK V2 ---------- */
+
+/* Node markers for higher-level content */
+.node.has-versions {
+  border-color: rgba(88, 166, 255, 0.4);
+  box-shadow: 0 0 6px -2px rgba(88, 166, 255, 0.3);
 }
-@keyframes highlightFadeVersions {
-  0% { background-color: rgba(88, 166, 255, 0.2); box-shadow: 0 0 16px rgba(88, 166, 255, 0.4); }
-  100% { background-color: transparent; box-shadow: none; }
+.node.has-greek {
+  border-color: rgba(184, 124, 255, 0.4);
+  box-shadow: 0 0 6px -2px rgba(184, 124, 255, 0.3);
 }
-.highlight-new {
-  animation: highlightFade 1.8s ease-out;
-  border-radius: 8px;
+.node.has-versions.has-greek {
+  border-color: rgba(184, 124, 255, 0.4);
+  box-shadow: 0 0 6px -2px rgba(184, 124, 255, 0.3);
 }
-.highlight-new-versions {
-  animation: highlightFadeVersions 1.8s ease-out;
-  border-radius: 8px;
+.level-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  gap: 2px;
+  z-index: 3;
+}
+.level-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.level-dot.versions {
+  background: var(--pacto);
+  box-shadow: 0 0 4px var(--pacto-glow);
+}
+.level-dot.greek {
+  background: var(--esperanza);
+  box-shadow: 0 0 4px var(--esperanza-glow);
 }
 
-/* Difficulty selector tooltips */
+/* Mobile cards: same markers */
+.mobile-node-card.has-versions {
+  border-color: rgba(88, 166, 255, 0.4);
+}
+.mobile-node-card.has-greek {
+  border-color: rgba(184, 124, 255, 0.4);
+}
+.mobile-node-card .level-indicator {
+  top: 8px;
+  right: 8px;
+}
+.mobile-node-card .level-dot {
+  width: 10px;
+  height: 10px;
+}
+
+/* Difficulty button tooltips with counts */
 .difficulty-btn {
   position: relative;
   overflow: visible;
@@ -1685,7 +1721,7 @@ body.theme-light .bp-link .bp-desc{
   color: var(--text);
   padding: 6px 10px;
   border-radius: 6px;
-  font-size: .66rem;
+  font-size: .64rem;
   font-weight: 400;
   letter-spacing: .3px;
   text-transform: none;
@@ -1706,11 +1742,11 @@ body.theme-light .bp-link .bp-desc{
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: .62rem;
+  font-size: .6rem;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 11px;
-  margin-bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
   letter-spacing: .5px;
   text-transform: uppercase;
 }
@@ -1730,29 +1766,26 @@ body.theme-light .bp-link .bp-desc{
   border: 1px solid rgba(184, 124, 255, 0.3);
 }
 
-/* "Available at higher level" indicator */
-.higher-level-hint {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  margin-top: 12px;
-  background: rgba(184, 124, 255, 0.06);
-  border: 1px dashed rgba(184, 124, 255, 0.25);
-  border-radius: 8px;
-  font-size: .76rem;
-  color: var(--muted);
-  font-style: italic;
+/* Highlight animation for newly appearing content */
+@keyframes highlightFade {
+  0% { background-color: rgba(184, 124, 255, 0.25); }
+  100% { background-color: transparent; }
 }
-.higher-level-hint .hint-icon {
-  font-size: .9rem;
-  flex-shrink: 0;
+@keyframes highlightFadeVersions {
+  0% { background-color: rgba(88, 166, 255, 0.2); }
+  100% { background-color: transparent; }
+}
+.highlight-new {
+  animation: highlightFade 1.8s ease-out;
+  border-radius: 8px;
+}
+.highlight-new-versions {
+  animation: highlightFadeVersions 1.8s ease-out;
+  border-radius: 8px;
 }
 
 @media (max-width: 768px) {
-  .difficulty-btn::after {
-    display: none;
-  }
+  .difficulty-btn::after { display: none; }
 }
 
 </style>
@@ -3611,6 +3644,9 @@ function buildMobileListView() {
   // Apply markers to the newly built mobile cards
   if (typeof applyMarkersToMobileCards === 'function') {
     applyMarkersToMobileCards();
+  }
+  if (typeof updateNodeMarkers === 'function') {
+    updateNodeMarkers();
   }
 }
 
@@ -6344,63 +6380,149 @@ if (themeToggleBtn) {
 window.v4_improvements_applied = true;
 
 
+
+
+
 // ============================================================
-// LEVEL FEEDBACK: visual feedback when changing difficulty level
+// LEVEL FEEDBACK V2: visual markers + tooltips + badge
 // ============================================================
 
-const LEVEL_DESCRIPTIONS = {
-  beginner: 'Nivel Básico: versículos y comentarios únicamente',
-  intermediate: 'Nivel Intermedio: añadidas versiones comparativas y glosario teológico',
-  advanced: 'Nivel Avanzado: añadido texto griego original con análisis interlineal'
-};
+// Count nodes with higher-level content
+function countHigherLevelNodes() {
+  let versionsCount = 0;
+  let greekCount = 0;
+  NODES.forEach(n => {
+    const key = buildLookupKey(n);
+    if (key && typeof VERSIONS !== 'undefined' && VERSIONS[key]) versionsCount++;
+    if (key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key]) greekCount++;
+  });
+  return { versionsCount, greekCount };
+}
 
-// Enhanced applyDifficultyLevel with toast
-const _origApplyDifficultyLevelFeedback = applyDifficultyLevel;
+// Update difficulty button tooltips with counts
+function updateDifficultyTooltips() {
+  const { versionsCount, greekCount } = countHigherLevelNodes();
+  const beginnerBtn = document.querySelector('.difficulty-btn[data-level="beginner"]');
+  const intermediateBtn = document.querySelector('.difficulty-btn[data-level="intermediate"]');
+  const advancedBtn = document.querySelector('.difficulty-btn[data-level="advanced"]');
+
+  if (beginnerBtn) beginnerBtn.setAttribute('data-tooltip', 'Solo versículos y comentarios');
+  if (intermediateBtn) intermediateBtn.setAttribute('data-tooltip', '+ Comentarios extendidos, glosario y ' + versionsCount + ' nodos con versiones comparativas');
+  if (advancedBtn) advancedBtn.setAttribute('data-tooltip', '+ ' + greekCount + ' nodos con texto griego original');
+}
+
+// Apply/remove visual markers on canvas nodes and mobile cards
+function updateNodeMarkers() {
+  document.querySelectorAll('.node').forEach(el => {
+    const nodeId = el.dataset.id;
+    if (!nodeId) return;
+    const node = nodeMap[nodeId];
+    if (!node) return;
+    const key = buildLookupKey(node);
+
+    const hasVersions = key && typeof VERSIONS !== 'undefined' && VERSIONS[key];
+    const hasGreek = key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key];
+
+    // Remove existing markers
+    el.classList.remove('has-versions', 'has-greek');
+    const existingIndicator = el.querySelector('.level-indicator');
+    if (existingIndicator) existingIndicator.remove();
+
+    // Add markers based on current level
+    if (currentLevel === 'beginner') {
+      // Show both markers
+      if (hasVersions || hasGreek) {
+        el.classList.add(hasVersions ? 'has-versions' : '');
+        el.classList.add(hasGreek ? 'has-greek' : '');
+        const indicator = document.createElement('div');
+        indicator.className = 'level-indicator';
+        if (hasVersions) indicator.innerHTML += '<span class="level-dot versions" title="Tiene versiones comparativas"></span>';
+        if (hasGreek) indicator.innerHTML += '<span class="level-dot greek" title="Tiene texto griego"></span>';
+        el.appendChild(indicator);
+      }
+    } else if (currentLevel === 'intermediate') {
+      // Only show greek markers (versions already visible)
+      if (hasGreek) {
+        el.classList.add('has-greek');
+        const indicator = document.createElement('div');
+        indicator.className = 'level-indicator';
+        indicator.innerHTML = '<span class="level-dot greek" title="Tiene texto griego"></span>';
+        el.appendChild(indicator);
+      }
+    }
+    // Advanced: no markers (everything visible)
+  });
+
+  // Same for mobile cards
+  document.querySelectorAll('.mobile-node-card').forEach(el => {
+    const nodeId = el.dataset.id;
+    if (!nodeId) return;
+    const node = nodeMap[nodeId];
+    if (!node) return;
+    const key = buildLookupKey(node);
+
+    const hasVersions = key && typeof VERSIONS !== 'undefined' && VERSIONS[key];
+    const hasGreek = key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key];
+
+    el.classList.remove('has-versions', 'has-greek');
+    const existingIndicator = el.querySelector('.level-indicator');
+    if (existingIndicator) existingIndicator.remove();
+
+    if (currentLevel === 'beginner') {
+      if (hasVersions || hasGreek) {
+        el.classList.add(hasVersions ? 'has-versions' : '');
+        el.classList.add(hasGreek ? 'has-greek' : '');
+        const indicator = document.createElement('div');
+        indicator.className = 'level-indicator';
+        if (hasVersions) indicator.innerHTML += '<span class="level-dot versions" title="Versiones comparativas"></span>';
+        if (hasGreek) indicator.innerHTML += '<span class="level-dot greek" title="Texto griego"></span>';
+        el.appendChild(indicator);
+      }
+    } else if (currentLevel === 'intermediate') {
+      if (hasGreek) {
+        el.classList.add('has-greek');
+        const indicator = document.createElement('div');
+        indicator.className = 'level-indicator';
+        indicator.innerHTML = '<span class="level-dot greek" title="Texto griego"></span>';
+        el.appendChild(indicator);
+      }
+    }
+  });
+}
+
+// Override applyDifficultyLevel to update markers
+const _origApplyDifficultyLevelV2 = applyDifficultyLevel;
 applyDifficultyLevel = function(level) {
   const previousLevel = currentLevel;
-  _origApplyDifficultyLevelFeedback.apply(this, arguments);
+  _origApplyDifficultyLevelV2.apply(this, arguments);
 
-  // Show toast describing what changed
-  if (previousLevel !== level) {
-    showToast(LEVEL_DESCRIPTIONS[level] || 'Nivel cambiado', 3000);
-  }
+  // Update markers on canvas
+  updateNodeMarkers();
 
-  // If modal is open, re-render with highlight on new content
+  // If modal is open, re-render with highlight
   if (document.getElementById('modal').classList.contains('show') && window.currentNodeId) {
     const node = nodeMap[window.currentNodeId];
     if (node) {
-      // Clear flags so content gets re-rendered
+      // Clear flags
       const modalBody = document.getElementById('modalBody');
-      modalBody.querySelectorAll('[data-glossary-applied]').forEach(el => {
-        delete el.dataset.glossaryApplied;
-      });
-      modalBody.querySelectorAll('[data-context-link-added]').forEach(el => {
-        delete el.dataset.contextLinkAdded;
-      });
-      modalBody.querySelectorAll('.original-text-section, .versions-section, .extended-comments-section, .share-section').forEach(el => el.remove());
-      modalBody.querySelectorAll('.focus-btn').forEach(el => el.remove());
+      modalBody.querySelectorAll('[data-glossary-applied]').forEach(el => delete el.dataset.glossaryApplied);
+      modalBody.querySelectorAll('[data-context-link-added]').forEach(el => delete el.dataset.contextLinkAdded);
+      modalBody.querySelectorAll('.original-text-section, .versions-section, .extended-comments-section, .share-section, .focus-btn, .level-badge, .higher-level-hint').forEach(el => el.remove());
 
-      // Re-show node details
       setTimeout(() => {
         showNodeDetails(node);
 
         // Highlight newly added content
         if (level === 'intermediate' || level === 'advanced') {
           setTimeout(() => {
-            const versionsSection = document.querySelector('.versions-section');
-            if (versionsSection) {
-              versionsSection.classList.add('highlight-new-versions');
-              setTimeout(() => versionsSection.classList.remove('highlight-new-versions'), 2000);
-            }
+            const vs = document.querySelector('.versions-section');
+            if (vs) { vs.classList.add('highlight-new-versions'); setTimeout(() => vs.classList.remove('highlight-new-versions'), 2000); }
           }, 200);
         }
         if (level === 'advanced') {
           setTimeout(() => {
-            const originalSection = document.querySelector('.original-text-section');
-            if (originalSection) {
-              originalSection.classList.add('highlight-new');
-              setTimeout(() => originalSection.classList.remove('highlight-new'), 2000);
-            }
+            const ot = document.querySelector('.original-text-section');
+            if (ot) { ot.classList.add('highlight-new'); setTimeout(() => ot.classList.remove('highlight-new'), 2000); }
           }, 400);
         }
       }, 100);
@@ -6409,9 +6531,9 @@ applyDifficultyLevel = function(level) {
 };
 
 // Add level badge to modal
-const _origShowNodeDetailsLevelFeedback = showNodeDetails;
+const _origShowNodeDetailsLevelV2 = showNodeDetails;
 showNodeDetails = function(node) {
-  _origShowNodeDetailsLevelFeedback.apply(this, arguments);
+  _origShowNodeDetailsLevelV2.apply(this, arguments);
 
   const modalContent = document.querySelector('.modal-content');
   if (!modalContent) return;
@@ -6422,58 +6544,34 @@ showNodeDetails = function(node) {
 
   // Add current level badge
   const badge = document.createElement('div');
-  badge.className = `level-badge ${currentLevel}`;
-  const levelIcons = {
-    beginner: '🌿',
-    intermediate: '🌊',
-    advanced: '🔮'
-  };
-  const levelNames = {
-    beginner: 'Nivel Básico',
-    intermediate: 'Nivel Intermedio',
-    advanced: 'Nivel Avanzado'
-  };
-  badge.innerHTML = `${levelIcons[currentLevel]} ${levelNames[currentLevel]}`;
+  badge.className = 'level-badge ' + currentLevel;
+  const icons = { beginner: '🌿', intermediate: '🌊', advanced: '🔮' };
+  const names = { beginner: 'Básico', intermediate: 'Intermedio', advanced: 'Avanzado' };
+  badge.innerHTML = (icons[currentLevel] || '') + ' ' + (names[currentLevel] || '');
 
-  // Insert before the cluster badge (or title if no cluster badge)
   const clusterBadge = modalContent.querySelector('.modal-cluster-badge');
   const title = document.getElementById('modalTitle');
-  if (clusterBadge) {
-    modalContent.insertBefore(badge, clusterBadge);
-  } else if (title) {
-    modalContent.insertBefore(badge, title);
-  }
-
-  // Add "higher level" hint if applicable
-  const modalBody = document.getElementById('modalBody');
-  if (modalBody) {
-    // Remove existing hint
-    const existingHint = modalBody.querySelector('.higher-level-hint');
-    if (existingHint) existingHint.remove();
-
-    // Check if this node has higher-level content
-    const hasVersions = typeof buildLookupKey === 'function' && buildLookupKey(node) && typeof VERSIONS !== 'undefined' && VERSIONS[buildLookupKey(node)];
-    const hasGreek = typeof buildLookupKey === 'function' && buildLookupKey(node) && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[buildLookupKey(node)];
-
-    if (currentLevel === 'beginner' && (hasVersions || hasGreek)) {
-      const hint = document.createElement('div');
-      hint.className = 'higher-level-hint';
-      let hintText = '💡 Este nodo tiene contenido adicional: ';
-      if (hasVersions) hintText += 'versiones comparativas (Intermedio)';
-      if (hasVersions && hasGreek) hintText += ', ';
-      if (hasGreek) hintText += 'texto griego (Avanzado)';
-      hint.innerHTML = `<span class="hint-icon">💡</span> ${hintText}. Cambia el nivel para verlo.`;
-      modalBody.appendChild(hint);
-    } else if (currentLevel === 'intermediate' && hasGreek) {
-      const hint = document.createElement('div');
-      hint.className = 'higher-level-hint';
-      hint.innerHTML = `<span class="hint-icon">💡</span> Este nodo tiene texto griego original disponible en Nivel Avanzado.`;
-      modalBody.appendChild(hint);
-    }
-  }
+  if (clusterBadge) modalContent.insertBefore(badge, clusterBadge);
+  else if (title) modalContent.insertBefore(badge, title);
 };
 
-window.level_feedback_applied = true;
+// Initialize
+function initLevelFeedbackV2() {
+  updateDifficultyTooltips();
+  updateNodeMarkers();
+}
+
+// Wait for nodes to be rendered
+setTimeout(initLevelFeedbackV2, 200);
+
+// Re-apply markers when mobile list is rebuilt
+const _origApplyFilterLevelV2 = applyFilter;
+applyFilter = function() {
+  _origApplyFilterLevelV2.apply(this, arguments);
+  setTimeout(updateNodeMarkers, 100);
+};
+
+window.level_feedback_v2 = true;
 
 </script>
 
