@@ -4609,242 +4609,40 @@ window.stage2_applied = true;
 // STAGE 3: ORIGINAL TEXT + VERSIONS + DIFFICULTY LEVELS
 // ============================================================
 const ORIGINAL_TEXTS = {
-  "mt-1:23": {
-    "greek": "Ἰδοὺ, ἡ παρθένος ἐν γαστρὶ ἕξει καὶ τέξεται υἱόν, καὶ καλέσουσιν τὸ ὄνομα αὐτοῦ Ἐμμανουήλ",
-    "translit": "Idou, hē parthenos en gastri hexei kai texetai huion, kai kalesousin to onoma autou Emmanouēl",
+  "mar-1:1": {
+    "greek": "Ἀρχὴ τοῦ εὐαγγελίου Ἰησοῦ Χριστοῦ υἱοῦ θεοῦ",
+    "translit": "Archē tou euangeliou Iēsou Christou huiou theou",
     "interlinear": [
       {
-        "greek": "Ἰδοὺ",
-        "translit": "Idou",
-        "gloss": "He aquí",
-        "parse": "interjección"
-      },
-      {
-        "greek": "ἡ παρθένος",
-        "translit": "hē parthenos",
-        "gloss": "la virgen",
+        "greek": "Ἀρχὴ",
+        "translit": "Archē",
+        "gloss": "Principio",
         "parse": "sustantivo, nominativo, femenino, singular"
       },
       {
-        "greek": "ἐν γαστρὶ ἕξει",
-        "translit": "en gastri hexei",
-        "gloss": "en vientre tendrá",
-        "parse": "preposición + sustantivo + verbo futuro"
+        "greek": "τοῦ εὐαγγελίου",
+        "translit": "tou euangeliou",
+        "gloss": "del evangelio",
+        "parse": "sustantivo, genitivo, neutro, singular"
       },
       {
-        "greek": "τέξεται",
-        "translit": "texetai",
-        "gloss": "dará a luz",
-        "parse": "verbo futuro, indicativo, medio, 3a persona singular"
+        "greek": "Ἰησοῦ Χριστοῦ",
+        "translit": "Iēsou Christou",
+        "gloss": "de Jesucristo",
+        "parse": "sustantivos, genitivo, masculino, singular"
       },
       {
-        "greek": "υἱόν",
-        "translit": "huion",
-        "gloss": "hijo",
-        "parse": "sustantivo, acusativo, masculino, singular"
-      },
-      {
-        "greek": "καλέσουσιν",
-        "translit": "kalesousin",
-        "gloss": "llamarán",
-        "parse": "verbo futuro, indicativo, activo, 3a persona plural"
-      },
-      {
-        "greek": "τὸ ὄνομα αὐτοῦ",
-        "translit": "to onoma autou",
-        "gloss": "su nombre",
-        "parse": "sustantivo + pronombre, acusativo"
-      },
-      {
-        "greek": "Ἐμμανουήλ",
-        "translit": "Emmanouēl",
-        "gloss": "Emmanuel = Dios con nosotros",
-        "parse": "nombre propio"
+        "greek": "υἱοῦ θεοῦ",
+        "translit": "huiou theou",
+        "gloss": "Hijo de Dios",
+        "parse": "sustantivos, genitivo, masculino, singular"
       }
     ],
-    "note": "Mateo cita la LXX (Septuaginta) de Isaías 7:14. \"Parthenos\" en la LXX traduce el hebreo \"almah\" (joven). Solo en Cristo el parto es verdaderamente virginal. \"Emmanouēl\" es nombre-teológico: Dios habita con nosotros."
+    "note": "\"Archē\" evoca Génesis 1:1 (LXX): el Evangelio es nueva creación. \"Euangelion\" = buena noticia, en el mundo romano era el anuncio del nacimiento o victoria del emperador; Marcos lo aplica a Cristo. \"Huiou theou\" sin artículo: filiación única, no genérica."
   },
-  "mt-3:16-17": {
-    "greek": "καὶ ἰδοὺ ἠνεῴχθησαν [αὐτῷ] οἱ οὐρανοί, καὶ εἶδεν τὸ πνεῦμα τοῦ θεοῦ καταβαῖνον ὡσεὶ περιστερὰν... καὶ ἰδοὺ φωνὴ ἐκ τῶν οὐρανῶν λέγουσα· Οὗτός ἐστιν ὁ υἱός μου ὁ ἀγαπητός, ἐν ᾧ εὐδόκησα",
-    "translit": "kai idou ēneōchthēsan [autō] hoi ouranoi, kai eiden to pneuma tou theou katabainon hōsei peristeran... kai idou phōnē ek tōn ouranōn legousa; Houtos estin ho huios mou ho agapētos, en hō eudokēsa",
-    "interlinear": [
-      {
-        "greek": "ἠνεῴχθησαν",
-        "translit": "ēneōchthēsan",
-        "gloss": "fueron abiertos",
-        "parse": "verbo aoristo, indicativo, pasivo, 3a persona plural"
-      },
-      {
-        "greek": "οἱ οὐρανοί",
-        "translit": "hoi ouranoi",
-        "gloss": "los cielos",
-        "parse": "sustantivo, nominativo, masculino, plural"
-      },
-      {
-        "greek": "τὸ πνεῦμα τοῦ θεοῦ",
-        "translit": "to pneuma tou theou",
-        "gloss": "el Espíritu de Dios",
-        "parse": "sustantivos, nominativo y genitivo"
-      },
-      {
-        "greek": "καταβαῖνον",
-        "translit": "katabainon",
-        "gloss": "descendiendo",
-        "parse": "participio presente, acusativo, neutro, singular"
-      },
-      {
-        "greek": "ὡσεὶ περιστερὰν",
-        "translit": "hōsei peristeran",
-        "gloss": "como paloma",
-        "parse": "adverbio + sustantivo, acusativo"
-      },
-      {
-        "greek": "Οὗτός ἐστιν",
-        "translit": "Houtos estin",
-        "gloss": "Este es",
-        "parse": "pronombre demostrativo + verbo presente"
-      },
-      {
-        "greek": "ὁ υἱός μου",
-        "translit": "ho huios mou",
-        "gloss": "mi Hijo",
-        "parse": "sustantivo + pronombre posesivo"
-      },
-      {
-        "greek": "ὁ ἀγαπητός",
-        "translit": "ho agapētos",
-        "gloss": "el amado",
-        "parse": "adjetivo, nominativo, masculino, singular"
-      },
-      {
-        "greek": "ἐν ᾧ εὐδόκησα",
-        "translit": "en hō eudokēsa",
-        "gloss": "en quien me he complacido",
-        "parse": "preposición + pronombre relativo + verbo aoristo"
-      }
-    ],
-    "note": "La Trinidad se manifiesta simultáneamente: Hijo en el agua, Espíritu descendiendo, Padre hablando. \"Agapētos\" = amado en grado único, no solo \"amado\" en general. \"Eudokēsa\" = tuve complacencia, del verbo \"dokeō\" (parecer bien)."
-  },
-  "mt-4:17": {
-    "greek": "Ἀπὸ τότε ἤρξατο ὁ Ἰησοῦς κηρύσσειν καὶ λέγειν· Μετανοεῖτε, ἤγγικεν γὰρ ἡ βασιλεία τῶν οὐρανῶν",
-    "translit": "Apo tote ērxato ho Iēsous kērussein kai legein; Metanoeite, ēngiken gar hē basileia tōn ouranōn",
-    "interlinear": [
-      {
-        "greek": "Ἀπὸ τότε",
-        "translit": "Apo tote",
-        "gloss": "Desde entonces",
-        "parse": "preposición + adverbio"
-      },
-      {
-        "greek": "ἤρξατο",
-        "translit": "ērxato",
-        "gloss": "comenzó",
-        "parse": "verbo aoristo, indicativo, medio, 3a persona singular"
-      },
-      {
-        "greek": "κηρύσσειν",
-        "translit": "kērussein",
-        "gloss": "a predicar",
-        "parse": "verbo presente, infinitivo, activo"
-      },
-      {
-        "greek": "Μετανοεῖτε",
-        "translit": "Metanoeite",
-        "gloss": "Arrepentíos",
-        "parse": "verbo presente, imperativo, activo, 2a persona plural"
-      },
-      {
-        "greek": "ἤγγικεν",
-        "translit": "ēngiken",
-        "gloss": "se ha acercado",
-        "parse": "verbo perfecto, indicativo, activo, 3a persona singular"
-      },
-      {
-        "greek": "ἡ βασιλεία τῶν οὐρανῶν",
-        "translit": "hē basileia tōn ouranōn",
-        "gloss": "el reino de los cielos",
-        "parse": "sustantivos, nominativo y genitivo"
-      }
-    ],
-    "note": "\"Metanoeō\" = cambiar de mente (nous) y dirección. No solo pesar, sino vuelta. \"Ēngiken\" = perfecto: ya está cerca, con implicaciones presentes. \"Basileia\" = reinado, no solo territorio. Mateo usa \"cielos\" por reverencia judía al nombre de Dios."
-  },
-  "mt-5:3-4": {
-    "greek": "Μακάριοι οἱ πτωχοὶ τῷ πνεύματι, ὅτι αὐτῶν ἐστιν ἡ βασιλεία τῶν οὐρανῶν. Μακάριοι οἱ πενθοῦντες, ὅτι αὐτοὶ παρακληθήσονται",
-    "translit": "Makarioi hoi ptōchoi tō pneumati, hoti autōn estin hē basileia tōn ouranōn. Makarioi hoi penthountes, hoti autoi paraklēthēsontai",
-    "interlinear": [
-      {
-        "greek": "Μακάριοι",
-        "translit": "Makarioi",
-        "gloss": "Bienaventurados",
-        "parse": "adjetivo, nominativo, masculino, plural"
-      },
-      {
-        "greek": "οἱ πτωχοὶ",
-        "translit": "hoi ptōchoi",
-        "gloss": "los pobres",
-        "parse": "sustantivo/adjetivo, nominativo, masculino, plural"
-      },
-      {
-        "greek": "τῷ πνεύματι",
-        "translit": "tō pneumati",
-        "gloss": "en espíritu",
-        "parse": "sustantivo, dativo, neutro, singular"
-      },
-      {
-        "greek": "αὐτῶν ἐστιν",
-        "translit": "autōn estin",
-        "gloss": "de ellos es",
-        "parse": "pronombre + verbo"
-      },
-      {
-        "greek": "οἱ πενθοῦντες",
-        "translit": "hoi penthountes",
-        "gloss": "los que lloran",
-        "parse": "participio presente, nominativo, masculino, plural"
-      },
-      {
-        "greek": "παρακληθήσονται",
-        "translit": "paraklēthēsontai",
-        "gloss": "serán consolados",
-        "parse": "verbo futuro, indicativo, pasivo, 3a persona plural"
-      }
-    ],
-    "note": "\"Makarios\" = bienaventurado, no solo feliz. Es el favor de Dios, no circunstancia humana. \"Ptōchos\" = mendigo, sin recursos. La pobreza espiritual es reconocerse sin mérito ante Dios. \"Parakaleō\" = llamar al lado, consolar (de donde \"Paracleto\")."
-  },
-  "mt-6:9-10": {
-    "greek": "Πάτερ ἡμῶν ὁ ἐν τοῖς οὐρανοῖς· ἁγιασθήτω τὸ ὄνομά σου... ἐλθέτω ἡ βασιλεία σου... γενηθήτω τὸ θέλημά σου",
-    "translit": "Pater hēmōn ho en tois ouranois; hagiasthētō to onoma sou... elthetō hē basileia sou... genēthētō to thelēma sou",
-    "interlinear": [
-      {
-        "greek": "Πάτερ ἡμῶν",
-        "translit": "Pater hēmōn",
-        "gloss": "Padre nuestro",
-        "parse": "sustantivo + pronombre posesivo, vocativo"
-      },
-      {
-        "greek": "ἁγιασθήτω",
-        "translit": "hagiasthētō",
-        "gloss": "santificado sea",
-        "parse": "verbo aoristo, imperativo, pasivo, 3a persona singular"
-      },
-      {
-        "greek": "ἐλθέτω",
-        "translit": "elthetō",
-        "gloss": "venga",
-        "parse": "verbo aoristo, imperativo, activo, 3a persona singular"
-      },
-      {
-        "greek": "γενηθήτω",
-        "translit": "genēthētō",
-        "gloss": "hágase",
-        "parse": "verbo aoristo, imperativo, pasivo, 3a persona singular"
-      }
-    ],
-    "note": "Tres aoristos imperativos pasivos: santificado, venga, hágase. La voz pasiva deja a Dios como agente: Él santifica, Él viene, Él hace. \"Pater\" era \"Abba\" en arameo: intimidad sin precedentes."
-  },
-  "mt-16:16": {
-    "greek": "Σὺ εἶ ὁ Χριστὸς ὁ υἱὸς τοῦ θεοῦ τοῦ ζῶντος",
-    "translit": "Su ei ho Christos ho huios tou theou tou zōntos",
+  "mar-1:11": {
+    "greek": "Σὺ εἶ ὁ υἱός μου ὁ ἀγαπητός, ἐν σοὶ εὐδόκησα",
+    "translit": "Su ei ho huios mou ho agapētos, en soi eudokēsa",
     "interlinear": [
       {
         "greek": "Σὺ εἶ",
@@ -4853,90 +4651,349 @@ const ORIGINAL_TEXTS = {
         "parse": "pronombre + verbo presente, indicativo, 2a persona singular"
       },
       {
-        "greek": "ὁ Χριστὸς",
-        "translit": "ho Christos",
-        "gloss": "el Cristo/Mesías",
+        "greek": "ὁ υἱός μου",
+        "translit": "ho huios mou",
+        "gloss": "mi Hijo",
+        "parse": "sustantivo + pronombre posesivo, nominativo"
+      },
+      {
+        "greek": "ὁ ἀγαπητός",
+        "translit": "ho agapētos",
+        "gloss": "el amado",
+        "parse": "adjetivo, nominativo, masculino, singular"
+      },
+      {
+        "greek": "ἐν σοὶ",
+        "translit": "en soi",
+        "gloss": "en ti",
+        "parse": "preposición + pronombre, dativo"
+      },
+      {
+        "greek": "εὐδόκησα",
+        "translit": "eudokēsa",
+        "gloss": "tuve complacencia",
+        "parse": "verbo aoristo, indicativo, activo, 1a persona singular"
+      }
+    ],
+    "note": "Combina el Salmo 2:7 (filiación real) e Isaías 42:1 (Siervo sufriente). \"Agapētos\" = amado en grado único, no solo querido. \"Eudokēsa\" (aoristo): complacencia puntual y decisiva, no continua."
+  },
+  "mar-1:15": {
+    "greek": "Πεπλήρωται ὁ καιρὸς καὶ ἤγγικεν ἡ βασιλεία τοῦ θεοῦ· μετανοεῖτε καὶ πιστεύετε ἐν τῷ εὐαγγελίῳ",
+    "translit": "Peplērōtai ho kairos kai ēngiken hē basileia tou theou; metanoeite kai pisteuete en tō euangeliō",
+    "interlinear": [
+      {
+        "greek": "Πεπλήρωται",
+        "translit": "Peplērōtai",
+        "gloss": "se ha cumplido",
+        "parse": "verbo perfecto, indicativo, pasivo, 3a persona singular"
+      },
+      {
+        "greek": "ὁ καιρὸς",
+        "translit": "ho kairos",
+        "gloss": "el tiempo",
         "parse": "sustantivo, nominativo, masculino, singular"
       },
       {
-        "greek": "ὁ υἱὸς τοῦ θεοῦ",
-        "translit": "ho huios tou theou",
-        "gloss": "el Hijo de Dios",
+        "greek": "ἤγγικεν",
+        "translit": "ēngiken",
+        "gloss": "se ha acercado",
+        "parse": "verbo perfecto, indicativo, activo, 3a persona singular"
+      },
+      {
+        "greek": "ἡ βασιλεία τοῦ θεοῦ",
+        "translit": "hē basileia tou theou",
+        "gloss": "el reino de Dios",
         "parse": "sustantivos, nominativo y genitivo"
       },
       {
-        "greek": "τοῦ ζῶντος",
-        "translit": "tou zōntos",
-        "gloss": "del [Dios] viviente",
-        "parse": "participio presente, genitivo, masculino, singular"
+        "greek": "μετανοεῖτε",
+        "translit": "metanoeite",
+        "gloss": "arrepentíos",
+        "parse": "verbo presente, imperativo, activo, 2a persona plural"
+      },
+      {
+        "greek": "πιστεύετε",
+        "translit": "pisteuete",
+        "gloss": "creed",
+        "parse": "verbo presente, imperativo, activo, 2a persona plural"
       }
     ],
-    "note": "Doble confesión: Cristo (mesianismo davídico) e Hijo de Dios (filiación única). \"Tou zōntos\" = del viviente, contrasta con los ídolos muertos. La confesión de Pedro es roc de la Iglesia."
+    "note": "Dos tiempos perfectos: \"peplērōtai\" (se ha cumplido) y \"ēngiken\" (se ha acercado) — acciones pasadas con efectos presentes. \"Kairos\" = tiempo decisivo, no \"chronos\" (tiempo cronológico). El Reino ya está aquí en Cristo."
   },
-  "mt-16:18": {
-    "greek": "σὺ Πέτρος, καὶ ἐπὶ ταύτῃ τῇ πέτρᾳ οἰκοδομήσω μου τὴν ἐκκλησίαν, καὶ πύλαι ᾅδου οὐ κατισχύσουσιν αὐτῆς",
-    "translit": "su Petros, kai epi tautē tē petra oikodomēsō mou tēn ekklēsian, kai pulai hadou ou katischusousin autēs",
+  "mar-4:39": {
+    "greek": "καὶ διεγερθεὶς ἐπετίμησεν τῷ ἀνέμῳ καὶ εἶπεν τῇ θαλάσσῃ· Σιώπα, πεφίμωσο",
+    "translit": "kai diegertheis epetimēsen tō anemō kai eipen tē thalassē; Siōpa, pephimōso",
     "interlinear": [
       {
-        "greek": "σὺ Πέτρος",
-        "translit": "su Petros",
-        "gloss": "tú [eres] Pedro (petros = piedra pequeña)",
-        "parse": "pronombre + nombre propio"
+        "greek": "διεγερθεὶς",
+        "translit": "diegertheis",
+        "gloss": "despertándose",
+        "parse": "participio aoristo, nominativo, masculino, singular"
       },
       {
-        "greek": "ἐπὶ ταύτῃ τῇ πέτρᾳ",
-        "translit": "epi tautē tē petra",
-        "gloss": "sobre esta roca (petra = peña/macizo rocoso)",
-        "parse": "preposición + demostrativo + sustantivo, dativo"
+        "greek": "ἐπετίμησεν",
+        "translit": "epetimēsen",
+        "gloss": "reprendió",
+        "parse": "verbo aoristo, indicativo, activo, 3a persona singular"
       },
       {
-        "greek": "οἰκοδομήσω",
-        "translit": "oikodomēsō",
-        "gloss": "edificaré",
-        "parse": "verbo futuro, indicativo, activo, 1a persona singular"
+        "greek": "τῷ ἀνέμῳ",
+        "translit": "tō anemō",
+        "gloss": "al viento",
+        "parse": "sustantivo, dativo, masculino, singular"
       },
       {
-        "greek": "τὴν ἐκκλησίαν μου",
-        "translit": "tēn ekklēsian mou",
-        "gloss": "mi iglesia",
-        "parse": "sustantivo + pronombre, acusativo"
+        "greek": "Σιώπα",
+        "translit": "Siōpa",
+        "gloss": "Calla",
+        "parse": "verbo presente, imperativo, activo, 2a persona singular"
       },
       {
-        "greek": "πύλαι ᾅδου",
-        "translit": "pulai hadou",
-        "gloss": "puertas del Hades",
+        "greek": "πεφίμωσο",
+        "translit": "pephimōso",
+        "gloss": "enmudece",
+        "parse": "verbo perfecto, imperativo, medio/pasivo, 2a persona singular"
+      }
+    ],
+    "note": "Jesús reprende (epetimēsen) al viento como a un demonio. \"Siōpa, pephimōso\" — imperativos con fuerza de exorcismo. El mar obedece como los demonios: Cristo tiene autoridad sobre el caos cósmico, atributo solo de Yahvé (Salmo 89:9)."
+  },
+  "mar-4:41": {
+    "greek": "καὶ ἐφοβήθησαν φόβον μέγαν καὶ ἔλεγον πρὸς ἀλλήλους· Τίς ἄρα οὗτός ἐστιν, ὅτι καὶ ὁ ἄνεμος καὶ ἡ θάλασσα ὑπακούουσιν αὐτῷ;",
+    "translit": "kai ephobēthēsan phobon mega kai elegon pros allēlous; Tis ara houtos estin, hoti kai ho anemos kai hē thalassa hypakouousin autō?",
+    "interlinear": [
+      {
+        "greek": "ἐφοβήθησαν",
+        "translit": "ephobēthēsan",
+        "gloss": "temieron",
+        "parse": "verbo aoristo, indicativo, pasivo, 3a persona plural"
+      },
+      {
+        "greek": "φόβον μέγαν",
+        "translit": "phobon mega",
+        "gloss": "gran temor",
+        "parse": "sustantivo + adjetivo, acusativo, masculino, singular"
+      },
+      {
+        "greek": "Τίς ἄρα οὗτός ἐστιν",
+        "translit": "Tis ara houtos estin",
+        "gloss": "¿Quién pues es éste?",
+        "parse": "pronombre + partícula + demostrativo + verbo"
+      },
+      {
+        "greek": "ὑπακούουσιν αὐτῷ",
+        "translit": "hypakouousin autō",
+        "gloss": "le obedecen",
+        "parse": "verbo presente, indicativo, activo, 3a persona plural"
+      }
+    ],
+    "note": "La pregunta central de Marcos: \"¿Quién es éste?\". \"Phobos megas\" = temor reverente, no terror. La pregunta retórica espera respuesta teológica: solo Dios manda al mar. Los discípulos aún no comprenden."
+  },
+  "mar-8:29": {
+    "greek": "καὶ αὐτὸς ἐπηρώτησεν αὐτούς· Ὑμεῖς δὲ τίνα με λέγετε εἶναι; ἀποκριθεὶς δὲ ὁ Πέτρος λέγει αὐτῷ· Σὺ εἶ ὁ Χριστός",
+    "translit": "kai autos epērōtēsen autous; Hymeis de tina me legete einai? apokritheis de ho Petros legei autō; Su ei ho Christos",
+    "interlinear": [
+      {
+        "greek": "Ὑμεῖς δὲ",
+        "translit": "Hymeis de",
+        "gloss": "Pero vosotros",
+        "parse": "pronombre + conjunción"
+      },
+      {
+        "greek": "τίνα με λέγετε εἶναι",
+        "translit": "tina me legete einai",
+        "gloss": "¿quién decís que soy?",
+        "parse": "pronombre + pronombre + verbo + infinitivo"
+      },
+      {
+        "greek": "Σὺ εἶ ὁ Χριστός",
+        "translit": "Su ei ho Christos",
+        "gloss": "Tú eres el Cristo",
+        "parse": "pronombre + verbo + artículo + sustantivo, nominativo"
+      }
+    ],
+    "note": "Punto de inflexión de Marcos. Hasta aquí: \"¿quién es éste?\" (4:41). Desde aquí: el Cristo debe padecer. \"Christos\" = Ungido, Mesías. Pedro confiesa correctamente pero no comprende que el Cristo es el Siervo que da su vida (10:45)."
+  },
+  "mar-8:31": {
+    "greek": "ἤρξατο διδάσκειν αὐτοὺς ὅτι δεῖ τὸν υἱὸν τοῦ ἀνθρώπου πολλὰ παθεῖν... καὶ ἀποκτανθῆναι καὶ μετὰ τρεῖς ἡμέρας ἀναστῆναι",
+    "translit": "ērxato didaskein autous hoti dei ton huion tou anthrōpou polla pathein... kai apoktanthēnai kai meta treis hēmeras anastēnai",
+    "interlinear": [
+      {
+        "greek": "ἤρξατο",
+        "translit": "ērxato",
+        "gloss": "comenzó",
+        "parse": "verbo aoristo, indicativo, medio, 3a persona singular"
+      },
+      {
+        "greek": "διδάσκειν",
+        "translit": "didaskein",
+        "gloss": "a enseñar",
+        "parse": "verbo presente, infinitivo, activo"
+      },
+      {
+        "greek": "δεῖ",
+        "translit": "dei",
+        "gloss": "es necesario",
+        "parse": "verbo presente, indicativo, impersonal, 3a persona singular"
+      },
+      {
+        "greek": "τὸν υἱὸν τοῦ ἀνθρώπου",
+        "translit": "ton huion tou anthrōpou",
+        "gloss": "al Hijo del Hombre",
+        "parse": "sustantivos, acusativo y genitivo"
+      },
+      {
+        "greek": "πολλὰ παθεῖν",
+        "translit": "polla pathein",
+        "gloss": "padecer mucho",
+        "parse": "adjetivo + verbo aoristo, infinitivo, activo"
+      },
+      {
+        "greek": "ἀναστῆναι",
+        "translit": "anastēnai",
+        "gloss": "resucitar",
+        "parse": "verbo aoristo, infinitivo, activo"
+      }
+    ],
+    "note": "\"Dei\" = es necesario: decreto divino, no destino ciego. \"Hijo del Hombre\" (Daniel 7) debe padecer: combina gloria y sufrimiento. Tres infinitivos: padecer, ser muerto, resucitar. La cruz es decreto divino."
+  },
+  "mar-8:34": {
+    "greek": "Εἴ τις θέλει ὀπίσω μου ἀκολουθεῖν, ἀπαρνησάσθω ἑαυτὸν καὶ ἀράτω τὸν σταυρὸν αὐτοῦ καὶ ἀκολουθείτω μοι",
+    "translit": "Ei tis thelei opisō mou akolouthein, aparnēsasthō heauton kai aratō ton stauron autou kai akoloutheitō moi",
+    "interlinear": [
+      {
+        "greek": "Εἴ τις θέλει",
+        "translit": "Ei tis thelei",
+        "gloss": "Si alguno quiere",
+        "parse": "condición + pronombre + verbo presente, subjuntivo"
+      },
+      {
+        "greek": "ἀπαρνησάσθω",
+        "translit": "aparnēsasthō",
+        "gloss": "niéguese",
+        "parse": "verbo aoristo, imperativo, medio, 3a persona singular"
+      },
+      {
+        "greek": "ἀράτω",
+        "translit": "aratō",
+        "gloss": "tome",
+        "parse": "verbo aoristo, imperativo, activo, 3a persona singular"
+      },
+      {
+        "greek": "τὸν σταυρὸν",
+        "translit": "ton stauron",
+        "gloss": "la cruz",
+        "parse": "sustantivo, acusativo, masculino, singular"
+      },
+      {
+        "greek": "ἀκολουθείτω",
+        "translit": "akoloutheitō",
+        "gloss": "sígame",
+        "parse": "verbo presente, imperativo, activo, 3a persona singular"
+      }
+    ],
+    "note": "Tres imperativos: niéguese, tome, sígame. \"Aparnēsasthō\" = negar completamente (apa = intensivo). El \"stauron\" era instrumento de vergüenza y muerte, no joya religiosa. Discipulado es muerte al yo y seguimiento al Crucificado."
+  },
+  "mar-9:7": {
+    "greek": "καὶ ἐγένετο φωνὴ ἐκ τῆς νεφέλης· Οὗτός ἐστιν ὁ υἱός μου ὁ ἀγαπητός, αὐτοῦ ἀκούετε",
+    "translit": "kai egeneto phōnē ek tēs nephelēs; Houtos estin ho huios mou ho agapētos, autou akouete",
+    "interlinear": [
+      {
+        "greek": "φωνὴ",
+        "translit": "phōnē",
+        "gloss": "voz",
+        "parse": "sustantivo, nominativo, femenino, singular"
+      },
+      {
+        "greek": "ἐκ τῆς νεφέλης",
+        "translit": "ek tēs nephelēs",
+        "gloss": "de la nube",
+        "parse": "preposición + sustantivo, genitivo, femenino, singular"
+      },
+      {
+        "greek": "Οὗτός ἐστιν",
+        "translit": "Houtos estin",
+        "gloss": "Este es",
+        "parse": "demostrativo + verbo presente"
+      },
+      {
+        "greek": "ὁ υἱός μου ὁ ἀγαπητός",
+        "translit": "ho huios mou ho agapētos",
+        "gloss": "mi Hijo amado",
+        "parse": "sustantivo + pronombre + adjetivo"
+      },
+      {
+        "greek": "αὐτοῦ ἀκούετε",
+        "translit": "autou akouete",
+        "gloss": "a él oíd",
+        "parse": "pronombre + verbo presente, imperativo"
+      }
+    ],
+    "note": "La voz añade \"a él oíd\" (no presente en el bautismo). Cristo supera a Moisés y Elías: ya no es \"oid la Ley y los Profetas\", sino \"oid al Hijo\". La nube es shekinah, presencia de Dios (Éxodo 24:16)."
+  },
+  "mar-10:45": {
+    "greek": "καὶ γὰρ ὁ υἱὸς τοῦ ἀνθρώπου οὐκ ἦλθεν διακονηθῆναι ἀλλὰ διακονῆσαι καὶ δοῦναι τὴν ψυχὴν αὐτοῦ λύτρον ἀντὶ πολλῶν",
+    "translit": "kai gar ho huios tou anthrōpou ouk ēlthen diakonēthēnai alla diakonēsai kai dounai tēn psychēn autou lytron anti pollōn",
+    "interlinear": [
+      {
+        "greek": "ὁ υἱὸς τοῦ ἀνθρώπου",
+        "translit": "ho huios tou anthrōpou",
+        "gloss": "el Hijo del Hombre",
         "parse": "sustantivos, nominativo y genitivo"
       },
       {
-        "greek": "οὐ κατισχύσουσιν",
-        "translit": "ou katischusousin",
-        "gloss": "no prevalecerán",
-        "parse": "negación + verbo futuro, indicativo, activo, 3a persona plural"
+        "greek": "οὐκ ἦλθεν",
+        "translit": "ouk ēlthen",
+        "gloss": "no vino",
+        "parse": "negación + verbo aoristo, indicativo, activo"
+      },
+      {
+        "greek": "διακονηθῆναι",
+        "translit": "diakonēthēnai",
+        "gloss": "para ser servido",
+        "parse": "verbo aoristo, infinitivo, pasivo"
+      },
+      {
+        "greek": "ἀλλὰ διακονῆσαι",
+        "translit": "alla diakonēsai",
+        "gloss": "sino servir",
+        "parse": "verbo aoristo, infinitivo, activo"
+      },
+      {
+        "greek": "δοῦναι τὴν ψυχὴν αὐτοῦ",
+        "translit": "dounai tēn psychēn autou",
+        "gloss": "dar su vida",
+        "parse": "verbo aoristo, infinitivo + sustantivo, acusativo"
+      },
+      {
+        "greek": "λύτρον ἀντὶ πολλῶν",
+        "translit": "lytron anti pollōn",
+        "gloss": "en rescate por muchos",
+        "parse": "sustantivo + preposición + adjetivo, genitivo"
       }
     ],
-    "note": "Juego de palabras: \"Petros\" (piedra suelta, masc.) vs \"petra\" (roca maciza, fem.). Cristo edifica sobre la roca (la confesión de Pedro, según los Padres griegos) o sobre Pedro mismo (según la lectura católica romana). En ambos casos, Cristo es quien edifica. \"Hades\" = morada de los muertos, no infierno final."
+    "note": "Versículo clave de Marcos. \"Lytron\" = precio de rescate, libera al esclavo. \"Anti\" = en lugar de, sustitución. \"Pollōn\" = muchos (sentido semítico de totalidad, no exclusión). El Señor es Siervo; el rescate es la cruz. Cumple Isaías 53:10-11."
   },
-  "mt-26:26-28": {
-    "greek": "τοῦτό ἐστιν τὸ σῶμά μου... τοῦτο γάρ ἐστιν τὸ αἷμά μου τῆς διαθήκης τὸ περὶ πολλῶν ἐκχυννόμενον εἰς ἄφεσιν ἁμαρτιῶν",
-    "translit": "touto estin to sōma mou... touto gar estin to haima mou tēs diathēkēs to peri pollōn ekchynnomenon eis aphesin hamartiōn",
+  "mar-14:22-24": {
+    "greek": "Τοῦτό ἐστιν τὸ σῶμά μου... Τοῦτό ἐστιν τὸ αἷμά μου τῆς διαθήκης τὸ ἐκχυννόμενον ὑπὲρ πολλῶν",
+    "translit": "Touto estin to sōma mou... Touto estin to haima mou tēs diathēkēs to ekchynnomenon hyper pollōn",
     "interlinear": [
       {
-        "greek": "τοῦτό ἐστιν",
-        "translit": "touto estin",
-        "gloss": "esto es",
-        "parse": "pronombre demostrativo + verbo presente"
+        "greek": "Τοῦτό ἐστιν",
+        "translit": "Touto estin",
+        "gloss": "Esto es",
+        "parse": "demostrativo + verbo presente"
       },
       {
         "greek": "τὸ σῶμά μου",
         "translit": "to sōma mou",
         "gloss": "mi cuerpo",
-        "parse": "sustantivo + pronombre posesivo, nominativo"
+        "parse": "sustantivo + pronombre, nominativo, neutro"
       },
       {
         "greek": "τὸ αἷμά μου",
         "translit": "to haima mou",
         "gloss": "mi sangre",
-        "parse": "sustantivo + pronombre, nominativo"
+        "parse": "sustantivo + pronombre, nominativo, neutro"
       },
       {
         "greek": "τῆς διαθήκης",
@@ -4945,41 +5002,158 @@ const ORIGINAL_TEXTS = {
         "parse": "sustantivo, genitivo, femenino, singular"
       },
       {
-        "greek": "περὶ πολλῶν",
-        "translit": "peri pollōn",
+        "greek": "τὸ ἐκχυννόμενον",
+        "translit": "to ekchynnomenon",
+        "gloss": "derramada",
+        "parse": "participio presente, pasivo, nominativo, neutro, singular"
+      },
+      {
+        "greek": "ὑπὲρ πολλῶν",
+        "translit": "hyper pollōn",
         "gloss": "por muchos",
+        "parse": "preposición + adjetivo, genitivo"
+      }
+    ],
+    "note": "\"Diathēkē\" = pacto (no testamento). Eco de Éxodo 24:8 (sangre del Sinaí) y Jeremías 31 (nuevo pacto). \"Ekchynnomenon\" = siendo derramada, presente continuo: sacrificio en acto. \"Hyper pollōn\" = a favor de muchos (sustitución)."
+  },
+  "mar-14:36": {
+    "greek": "καὶ ἔλεγεν· Ἀββά ὁ πατήρ, πάντα δυνατά σοι· παρένεγκε τοῦτο τὸ ποτήριον ἀπ' ἐμοῦ· ἀλλ' οὐ τί ἐγὼ θέλω ἀλλὰ τί σύ",
+    "translit": "kai egen; Abba ho patēr, panta dynata soi; parenegke touto to potērion ap' emou; all' ou ti egō thelō alla ti sy",
+    "interlinear": [
+      {
+        "greek": "Ἀββά ὁ πατήρ",
+        "translit": "Abba ho patēr",
+        "gloss": "Abba, Padre",
+        "parse": "arameo + griego, vocativo"
+      },
+      {
+        "greek": "πάντα δυνατά σοι",
+        "translit": "panta dynata soi",
+        "gloss": "todo es posible para ti",
+        "parse": "adjetivo + verbo + pronombre"
+      },
+      {
+        "greek": "παρένεγκε",
+        "translit": "parenegke",
+        "gloss": "aparta",
+        "parse": "verbo aoristo, imperativo, activo, 2a persona singular"
+      },
+      {
+        "greek": "τοῦτο τὸ ποτήριον",
+        "translit": "touto to potērion",
+        "gloss": "esta copa",
+        "parse": "demostrativo + sustantivo, acusativo, neutro"
+      },
+      {
+        "greek": "ἀλλ' οὐ τί ἐγὼ θέλω",
+        "translit": "all' ou ti egō thelō",
+        "gloss": "pero no lo que yo quiero",
+        "parse": "conjunción + negación + pronombre"
+      },
+      {
+        "greek": "ἀλλὰ τί σύ",
+        "translit": "alla ti sy",
+        "gloss": "sino lo que tú",
+        "parse": "conjunción + pronombre"
+      }
+    ],
+    "note": "\"Abba\" = término familiar arameo, \"papá\". Revolucionario: el judaísmo evitaba \"Padre\" por respeto. Jesús lo usa con intimidad filial única. \"Potērion\" = copa de la ira de Dios (Isaías 51:17). \"No lo que yo quiero, sino lo que tú\": obediencia absoluta."
+  },
+  "mar-14:62": {
+    "greek": "ἐγώ εἰμι, καὶ ὄψεσθε τὸν υἱὸν τοῦ ἀνθρώπου ἐκ δεξιῶν καθήμενον τῆς δυνάμεως καὶ ἐρχόμενον μετὰ τῶν νεφελῶν τοῦ οὐρανοῦ",
+    "translit": "egō eimi, kai opsesthe ton huion tou anthrōpou ek dexiōn kathēmenon tēs dynameōs kai erchomenon meta tōn nephelōn tou ouranou",
+    "interlinear": [
+      {
+        "greek": "ἐγώ εἰμι",
+        "translit": "egō eimi",
+        "gloss": "Yo soy",
+        "parse": "pronombre + verbo presente, indicativo, 1a persona singular"
+      },
+      {
+        "greek": "ὄψεσθε",
+        "translit": "opsesthe",
+        "gloss": "veréis",
+        "parse": "verbo futuro, indicativo, medio, 2a persona plural"
+      },
+      {
+        "greek": "τὸν υἱὸν τοῦ ἀνθρώπου",
+        "translit": "ton huion tou anthrōpou",
+        "gloss": "al Hijo del Hombre",
+        "parse": "sustantivos, acusativo y genitivo"
+      },
+      {
+        "greek": "ἐκ δεξιῶν",
+        "translit": "ek dexiōn",
+        "gloss": "a la diestra",
         "parse": "preposición + adjetivo, genitivo"
       },
       {
-        "greek": "ἐκχυννόμενον",
-        "translit": "ekchynnomenon",
-        "gloss": "derramada",
-        "parse": "participio presente, nominativo, neutro, singular"
+        "greek": "καθήμενον",
+        "translit": "kathēmenon",
+        "gloss": "sentado",
+        "parse": "participio presente, medio/pasivo, acusativo, masculino, singular"
       },
       {
-        "greek": "εἰς ἄφεσιν ἁμαρτιῶν",
-        "translit": "eis aphesin hamartiōn",
-        "gloss": "para perdón de pecados",
-        "parse": "sustantivos, acusativo y genitivo"
+        "greek": "τῆς δυνάμεως",
+        "translit": "tēs dynameōs",
+        "gloss": "del Poder (Dios)",
+        "parse": "sustantivo, genitivo, femenino, singular"
       }
     ],
-    "note": "Cristo instituye el nuevo pacto con lenguaje de Éxodo 24:8 (sangre del pacto) y de Isaías 53 (siervo que justifica a muchos). \"Ekchynnomenon\" = siendo derramada, presente continuo: sacrificio en acto."
+    "note": "Momento climático de Marcos. \"Egō eimi\" = eco del Nombre divino (Éxodo 3:14). Combina el Salmo 110:1 (sentado a la diestra) y Daniel 7:13 (viniendo con nubes). El Sanedrín entiende: blasfemia. La cruz es el precio de la verdad."
   },
-  "mt-27:51": {
-    "greek": "καὶ ἰδοὺ τὸ καταπέτασμα τοῦ ναοῦ ἐσχίσθη ἀπ' ἄνωθεν ἕως κάτω εἰς δύο",
-    "translit": "kai idou to katapetasma tou naou eschisthē ap' anōthen heōs katō eis duo",
+  "mar-15:34": {
+    "greek": "Ἐλωῒ Ἐλωῒ λεμὰ σαβαχθανεί; ὅ ἐστιν μεθερμηνευόμενον· Ὁ θεός μου ὁ θεός μου, εἰς τί ἐγκατέλιπές με;",
+    "translit": "Elōi Elōi lema sabachthanei; ho estin methermēneuomenon; Ho theos mou ho theos mou, eis ti egkatelipes me?",
     "interlinear": [
       {
-        "greek": "τὸ καταπέτασμα",
-        "translit": "to katapetasma",
-        "gloss": "el velo",
-        "parse": "sustantivo, nominativo, neutro, singular"
+        "greek": "Ἐλωῒ Ἐλωῒ",
+        "translit": "Elōi Elōi",
+        "gloss": "Dios mío, Dios mío",
+        "parse": "arameo, vocativo"
       },
       {
-        "greek": "τοῦ ναοῦ",
-        "translit": "tou naou",
-        "gloss": "del templo",
-        "parse": "sustantivo, genitivo, masculino, singular"
+        "greek": "λεμὰ σαβαχθανεί",
+        "translit": "lema sabachthanei",
+        "gloss": "¿por qué me has desamparado?",
+        "parse": "arameo"
+      },
+      {
+        "greek": "μεθερμηνευόμενον",
+        "translit": "methermēneuomenon",
+        "gloss": "traducido",
+        "parse": "participio presente, pasivo, nominativo, neutro, singular"
+      },
+      {
+        "greek": "ἐγκατέλιπές με",
+        "translit": "egkatelipes me",
+        "gloss": "me has desamparado",
+        "parse": "verbo aoristo, indicativo, activo, 2a persona singular + pronombre"
+      }
+    ],
+    "note": "Marcos preserva el arameo original del grito. Cita el Salmo 22:1. No abandono metafísico, sino judicial: Cristo carga el pecado de los suyos. \"Egkatelipes\" = dejar abandonado, abandonar completamente. En este grito nace la salvación."
+  },
+  "mar-15:37-38": {
+    "greek": "ὁ δὲ Ἰησοῦς ἀφεὶς φωνὴν μεγάλην ἐξέπνευσεν. Καὶ τὸ καταπέτασμα τοῦ ναοῦ ἐσχίσθη εἰς δύο ἀπ' ἄνωθεν ἕως κάτω",
+    "translit": "ho de Iēsous apheis phōnēn megalēn exepneusen. Kai to katapetasma tou naou eschisthē eis duo ap' anōthen heōs katō",
+    "interlinear": [
+      {
+        "greek": "ἀφεὶς φωνὴν μεγάλην",
+        "translit": "apheis phōnēn megalēn",
+        "gloss": "dando una gran voz",
+        "parse": "participio aoristo + sustantivo + adjetivo, acusativo"
+      },
+      {
+        "greek": "ἐξέπνευσεν",
+        "translit": "exepneusen",
+        "gloss": "expiró",
+        "parse": "verbo aoristo, indicativo, activo, 3a persona singular"
+      },
+      {
+        "greek": "τὸ καταπέτασμα τοῦ ναοῦ",
+        "translit": "to katapetasma tou naou",
+        "gloss": "el velo del templo",
+        "parse": "sustantivos, nominativo y genitivo, neutro"
       },
       {
         "greek": "ἐσχίσθη",
@@ -4992,90 +5166,78 @@ const ORIGINAL_TEXTS = {
         "translit": "ap' anōthen heōs katō",
         "gloss": "de arriba abajo",
         "parse": "adverbios"
-      },
-      {
-        "greek": "εἰς δύο",
-        "translit": "eis duo",
-        "gloss": "en dos",
-        "parse": "preposición + numeral"
       }
     ],
-    "note": "Dios rasga el velo, no el hombre (\"de arriba abajo\"). El velo era el del Lugar Santísimo. Su rasgamiento es teológico: el acceso al Padre está abierto por la muerte de Cristo. Cumple la tipología del AT."
+    "note": "\"Exepneusen\" = exhaló el espíritu (expiró). El velo rasgado \"de arriba abajo\" (obra de Dios, no del hombre) indica el fin del sistema del templo. El acceso al Padre está abierto por la muerte de Cristo. Cumple la tipología del AT."
   },
-  "mt-28:19-20": {
-    "greek": "πορευθέντες οὖν μαθητεύσατε πάντα τὰ ἔθνη, βαπτίζοντες αὐτοὺς εἰς τὸ ὄνομα τοῦ πατρὸς καὶ τοῦ υἱοῦ καὶ τοῦ ἁγίου πνεύματος",
-    "translit": "poreuthentes oun mathēteusate panta ta ethnē, baptizontes autous eis to onoma tou patros kai tou huiou kai tou hagiou pneumatos",
+  "mar-16:6": {
+    "greek": "μὴ ἐκθαμβεῖσθε· Ἰησοῦν ζητεῖτε τὸν Ναζαρηνὸν τὸν ἐσταυρωμένον· ἠγέρθη, οὐκ ἔστιν ὧδε· ἴδε ὁ τόπος ὅπου ἔθηκαν αὐτόν",
+    "translit": "mē ekthambeisthe; Iēsoun zēteite ton Nazarēnon ton estaurōmenon; ēgerthē, ouk estin hōde; ide ho topos hopou ethēkan auton",
     "interlinear": [
       {
-        "greek": "πορευθέντες",
-        "translit": "poreuthentes",
-        "gloss": "habiendo ido",
-        "parse": "participio aoristo, nominativo, masculino, plural"
+        "greek": "μὴ ἐκθαμβεῖσθε",
+        "translit": "mē ekthambeisthe",
+        "gloss": "No os asombréis",
+        "parse": "negación + verbo presente, imperativo, pasivo, 2a persona plural"
       },
       {
-        "greek": "μαθητεύσατε",
-        "translit": "mathēteusate",
-        "gloss": "haced discípulos",
-        "parse": "verbo aoristo, imperativo, activo, 2a persona plural"
+        "greek": "τὸν ἐσταυρωμένον",
+        "translit": "ton estaurōmenon",
+        "gloss": "el crucificado",
+        "parse": "participio perfecto, pasivo, acusativo, masculino, singular"
       },
       {
-        "greek": "πάντα τὰ ἔθνη",
-        "translit": "panta ta ethnē",
-        "gloss": "todas las naciones",
-        "parse": "adjetivo + sustantivo, acusativo, neutro, plural"
+        "greek": "ἠγέρθη",
+        "translit": "ēgerthē",
+        "gloss": "ha resucitado",
+        "parse": "verbo aoristo, indicativo, pasivo, 3a persona singular"
       },
       {
-        "greek": "βαπτίζοντες",
-        "translit": "baptizontes",
-        "gloss": "bautizándolos",
-        "parse": "participio presente, nominativo, masculino, plural"
-      },
-      {
-        "greek": "εἰς τὸ ὄνομα",
-        "translit": "eis to onoma",
-        "gloss": "en el nombre",
-        "parse": "sustantivo, acusativo, neutro, singular"
-      },
-      {
-        "greek": "τοῦ πατρὸς καὶ τοῦ υἱοῦ καὶ τοῦ ἁγίου πνεύματος",
-        "translit": "tou patros kai tou huiou kai tou hagiou pneumatos",
-        "gloss": "del Padre y del Hijo y del Espíritu Santo",
-        "parse": "sustantivos en genitivo"
+        "greek": "οὐκ ἔστιν ὧδε",
+        "translit": "ouk estin hōde",
+        "gloss": "no está aquí",
+        "parse": "negación + verbo presente + adverbio"
       }
     ],
-    "note": "El mandato central: 4 participios subordinados al imperativo \"mathēteusate\". Bautismo trinitario = fórmula bautismal primitiva. \"Eis to onoma\" = en posesión del nombre (no solo \"en nombre de\")."
+    "note": "\"Ēgerthē\" (aoristo pasivo): fue levantado (por Dios). La resurrección es obra del Padre. \"Ton estaurōmenon\" = el crucificado: título permanente. La identidad del Cristo resucitado es la del Crucificado. El Evangelio del Siervo termina con el Crucificado vivo."
   }
 };
 const VERSIONS = {
-  "mt-1:23": {
-    "rvr1960": "He aquí que una virgen concebirá y dará a luz un hijo, y llamarás su nombre Emmanuel, que traducido es: Dios con nosotros",
-    "nvi": "La virgen concebirá y dará a luz un hijo, y lo llamarán Emanuel (que significa \"Dios con nosotros\")",
-    "lbla": "He aquí, la virgen concebirá y dará a luz un hijo, y llamarán Su nombre Emmanuel, que traducido significa: Dios con nosotros",
-    "note": "Las tres versiones coinciden en \"virgen\" (parthenos). Diferencia menor: RVR1960 \"llamarás\" (2a sing.) vs NVI/LBLA \"llamarán\" (3a plur.). El griego \"kalesousin\" es 3a plural, así que NVI/LBLA son más fieles."
+  "mar-1:1": {
+    "rvr1960": "Principio del evangelio de Jesucristo, Hijo de Dios",
+    "nvi": "Principio del evangelio de Jesucristo, el Hijo de Dios",
+    "lbla": "El principio del evangelio de Jesucristo, el Hijo de Dios",
+    "note": "RVR1960 y NVI coinciden. LBLA añade artículo \"El\". El griego no tiene artículo antes de \"archē\": es más bien título que oración. El debate textual: algunos manuscritos antiguos omiten \"Hijo de Dios\"."
   },
-  "mt-5:3": {
-    "rvr1960": "Bienaventurados los pobres en espíritu, porque de ellos es el reino de los cielos",
-    "nvi": "Dichosos los pobres en espíritu, porque el reino de los cielos les pertenece",
-    "lbla": "Bienaventurados los pobres en espíritu, pues de ellos es el reino de los cielos",
-    "note": "NVI traduce \"makarioi\" como \"dichosos\" (más coloquial), RVR/LBLA \"bienaventurados\" (más solemne). Ambos válidos; \"makarioi\" tiene connotación de bendición divina, no solo felicidad humana."
+  "mar-1:15": {
+    "rvr1960": "El tiempo se ha cumplido, y el reino de Dios se ha acercado; arrepentíos, y creed en el evangelio",
+    "nvi": "Se ha cumplido el tiempo —dice Jesús— y el reino de Dios está cerca. Arrepiéntanse y crean las buenas nuevas",
+    "lbla": "El tiempo se ha cumplido y el reino de Dios se ha acercado; arrepentíos y creed en el evangelio",
+    "note": "NVI parafrasea \"está cerca\" en vez de \"se ha acercado\" (ēngiken, perfecto). El perfecto griego indica acción pasada con efecto presente: el Reino ya está aquí. NVI y LBLA traducen \"evangelio\" como \"buenas nuevas\" en NVI."
   },
-  "mt-6:9": {
-    "rvr1960": "Padre nuestro que estás en los cielos, santificado sea tu nombre",
-    "nvi": "Padre nuestro que estás en el cielo, santificado sea tu nombre",
-    "lbla": "Padre nuestro que estás en los cielos, santificado sea tu nombre",
-    "note": "Diferencia menor: RVR/LBLA \"cielos\" (plural, refleja el griego \"ouranois\" plural), NVI \"cielo\" (singular). El plural enfatiza la trascendencia judía."
+  "mar-10:45": {
+    "rvr1960": "Porque el Hijo del Hombre no vino para ser servido, sino para servir, y para dar su vida en rescate por muchos",
+    "nvi": "Ni aun el Hijo del hombre vino para que le sirvan, sino para servir y dar su vida en rescate por muchos",
+    "lbla": "Porque ni aun el Hijo del Hombre vino para ser servido, sino para servir y dar su vida en rescate por muchos",
+    "note": "Las tres versiones coinciden en lo esencial. \"Lytron\" = rescate: precio de liberación. \"Anti pollōn\" = por/en lugar de muchos. La preposición anti indica sustitución. \"Muchos\" en sentido semítico = todos (cf. Isaías 53:11-12)."
   },
-  "mt-16:18": {
-    "rvr1960": "tú eres Pedro, y sobre esta roca edificaré mi iglesia",
-    "nvi": "tú eres Pedro, y sobre esta piedra edificaré mi iglesia",
-    "lbla": "tú eres Pedro, y sobre esta roca edificaré mi iglesia",
-    "note": "RVR/LBLA distinguen \"Petros\" (Pedro) y \"petra\" (roca) traduciendo ambos como \"piedra\" (NVI) o \"roca\" (RVR/LBLA). El juego de palabras griego se pierde en español. La mayoría de los eruditos ven la confesión de Pedro como la roca."
+  "mar-14:36": {
+    "rvr1960": "Y decía: Abba, Padre, todas las cosas son posibles para ti; aparta de mí esta copa; mas no lo que yo quiero, sino lo que tú",
+    "nvi": "Abba, Padre —dijo—, todo es posible para ti. No me hagas beber este trago amargo. Pero no sea lo que yo quiero, sino lo que quieres tú",
+    "lbla": "Y decía: ¡Abba, Padre! Todas las cosas te son posibles; aparta de mí esta copa; pero no sea lo que Yo quiero, sino lo que Tú",
+    "note": "NVI parafrasea \"copa\" como \"trago amargo\", perdiendo la alusión al AT (copa de la ira, Isaías 51:17). LBLA preserva \"copa\" con exclamation. RVR1960 es la más literal. \"Abba\" se preserva en las tres (arameo original)."
   },
-  "mt-28:19": {
-    "rvr1960": "Por tanto, id, y haced discípulos a todas las naciones",
-    "nvi": "Por tanto, vayan y hagan discípulos de todas las naciones",
-    "lbla": "Id, pues, y haced discípulos de todas las naciones",
-    "note": "El griego tiene un solo imperativo: \"mathēteusate\" (haced discípulos). \"Id\" es participio subordinado. NVI capta mejor este flujo: el énfasis cae en \"haced discípulos\" mientras se va."
+  "mar-15:34": {
+    "rvr1960": "Dios mío, Dios mío, ¿por qué me has desamparado?",
+    "nvi": "Dios mío, Dios mío, ¿por qué me has abandonado?",
+    "lbla": "Dios mío, Dios mío, ¿por qué me has abandonado?",
+    "note": "RVR1960 usa \"desamparado\" (egkataleipō = dejar completamente abandonado). NVI y LBLA usan \"abandonado\". \"Desamparado\" capta mejor la intensidad del prefijo ek (fuera de). Cita el Salmo 22:1 en arameo."
+  },
+  "mar-16:6": {
+    "rvr1960": "No os asombréis; buscáis a Jesús nazareno, el que fue crucificado; ha resucitado, no está aquí; mirad el lugar en donde le pusieron",
+    "nvi": "No se asusten —les dijo—. Ustedes buscan a Jesús el nazareno, el que fue crucificado. ¡Ha resucitado! No está aquí. Miren el lugar donde lo pusieron",
+    "lbla": "No os asombréis; buscáis a Jesús nazareno, el que fue crucificado; ha resucitado, no está aquí; mirad el lugar donde le pusieron",
+    "note": "Las tres coinciden. NVI usa \"¡Ha resucitado!\" con exclamación, captando el énfasis griego. \"Ēgerthē\" (aoristo pasivo): fue levantado por Dios. \"Estaurōmenon\" (perfecto pasivo): el crucificado permanente — su identidad de crucificado permanece."
   }
 };
 let currentLevel = localStorage.getItem('biblia-difficulty-level') || 'intermediate';
@@ -5151,6 +5313,8 @@ function buildLookupKey(node) {
   let bookAbbr = '';
   if (ref.startsWith('Hebreos')) bookAbbr = 'heb';
   else if (ref.startsWith('Mateo') || ref.startsWith('Mt')) bookAbbr = 'mt';
+  else if (ref.startsWith('Marcos') || ref.startsWith('Mc')) bookAbbr = 'mar';
+  else if (ref.startsWith('Lucas') || ref.startsWith('Lc')) bookAbbr = 'luc';
   if (!bookAbbr) return null;
 
   // Extract chapter and verse range (e.g., '1:18-25' or '1:23')
@@ -5343,752 +5507,652 @@ window.stage3_applied = true;
 const ADDITIONAL_COMMENTS = {
   "m1": [
     {
-      "author": "Crisóstomo · Homilía II sobre Mateo",
-      "text": "Mateo comienza con la genealogía para mostrar a los judíos que Cristo es verdaderamente hijo de David y de Abraham, cumpliendo las promesas. La genealogía incluye mujeres pecadoras (Tamar, Rahab, Betsabé) para mostrar que la gracia ya operaba en el linaje davídico."
+      "author": "Orígenes · De principiis (Sobre los principios)",
+      "text": "El vocablo «principio» (archē) que Marcos escoge no es mera cronología: evoca el Génesis, señalando que en la persona de Jesucristo Dios inaugura una creación nueva. El evangelio no comienza con un relato, sino con una Persona que es el verdadero «principio» de toda realidad redimida."
     },
     {
-      "author": "R.T. France · Comentario a Mateo",
-      "text": "La genealogía está estructurada en tres grupos de catorce: Abraham a David, David al exilio, exilio a Cristo. La repetición de 14 no es accidental: en gematría hebrea, las letras del nombre \"David\" (DWD) suman 14. Mateo enfatiza: este es el hijo de David, el Mesías prometido."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "El título «Hijo de Dios» es programático para todo el Evangelio: desde la primera línea el lector sabe lo que los demonios proclamarán y el centurión confesará al pie de la cruz. «Principio» apunta al inicio de una nueva era escatológica, no al simple comienzo de un libro."
     }
   ],
   "m2": [
     {
-      "author": "León Magno · Tomo a Flaviano",
-      "text": "Cristo nació de madre virgen sin padre humano, concebido por el Espíritu Santo. Verdadero Dios y verdadero hombre. No perdió lo que era al asumir lo que no era. Emmanuel: Dios verdaderamente con nosotros."
+      "author": "Agustín de Hipona · Sermón 293 sobre el Bautista",
+      "text": "Juan es la voz que precede a la Palabra; su misión no es hablar de sí, sino preparar el oído del corazón para recibir al Verbo encarnado. Por eso bautiza con agua, símbolo de arrepentimiento, mientras Cristo bautizará con el Espíritu que transforma."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo cita Is 7:14 con la LXX \"parthenos\" (virgen). El nacimiento virginal es esencial cristológicamente: asegura que Jesús no heredó la naturaleza pecaminosa de Adán, y que el Niño es verdaderamente el Hijo de Dios encarnado, no un hombre adoptado."
+      "author": "Craig Keener · Comentario al Evangelio de Marcos",
+      "text": "La cita compuesta de Malaquías e Isaías sitúa a Juan dentro de la profecía del nuevo éxodo: el mensajero prepara en el desierto un camino para Dios mismo. El desierto evoca a la vez el pecado de Israel y el lugar donde Dios renueva a su pueblo."
     }
   ],
   "m3": [
     {
-      "author": "Agustín de Hipona · Sermón sobre Epifanía",
-      "text": "Los magos gentiles adoran al Rey de los judíos. Israel no le reconoció; los gentiles le buscaron. La gracia rompe fronteras: el Rey de los judíos es el Salvador del mundo. Los dones (oro, incienso, mirra) confiesan proféticamente al Rey, al Dios, al que ha de morir."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "Al sumergirse en las aguas del Jordán, el Verbo no se contaminó, sino que las santificó, asumiendo nuestra condición para darnos la suya. La voz del Padre y la paloma del Espíritu manifiestan que en este Hijo habita toda la plenitud de la Deidad."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "Los magos no eran reyes, sino astrólogos-philósofos persas. Su venida cumple la profecía de Números 24:17 (estrella de Jacob) y anticipa la conversión de los gentiles. Su adoración contrasta con la hostilidad de Herodes y la indiferencia de Jerusalén."
+      "author": "N.T. Wright · El día que comenzó la revolución",
+      "text": "La teofanía trinitaria señala a Jesús como el verdadero Israel y el siervo sufriente de Isaías, en quien se concentra la vocación del pueblo de Dios. El bautismo une la unción real con el destino de muerte que marcará todo su camino hacia la cruz."
     }
   ],
   "m4": [
     {
-      "author": "Crisóstomo · Homilía IX sobre Mateo",
-      "text": "Cristo repite la historia de Israel. Como Israel bajó a Egipto y fue llamado de allá, así Cristo. Es el verdadero Israel que cumple lo que el pueblo antiguo solo fue en figura. La huida a Egipto cumple Oseas 11:1: \"de Egipto llamé a mi Hijo\"."
+      "author": "Hilario de Poitiers · De Trinitate (Sobre la Trinidad)",
+      "text": "Cristo es llevado al desierto para ser tentado, no porque ignorara nuestra fragilidad, sino para vencer en nuestra carne lo que Adán perdió en el paraíso. Donde Israel fracasó cuarenta años, el verdadero Israel triunfa cuarenta días."
     },
     {
-      "author": "R.T. France · Comentario a Mateo",
-      "text": "Mateo 2:15 cita Oseas 11:1 aplicándolo a Cristo. La cita original se refería al Éxodo de Israel. Mateo usa tipología: Cristo es el verdadero Israel, que reproduce la historia del pueblo y la cumple."
+      "author": "John Owen · Sobre la tentación y el pecado",
+      "text": "La tentación de Cristo revela que el maligno ataca siempre donde la Palabra de Dios puede ser torcida; cada respuesta de Jesús es «escrito está», demostrando que la victoria proviene de la sumisión total a la Escritura. En él queda derrotado el tentador que en Adán había triunfado."
     }
   ],
   "m5": [
     {
-      "author": "Jerónimo · Comentario a Mateo",
-      "text": "Mateo cita a Jeremías para mostrar que el sufrimiento de los inocentes no es derrota, sino cumplimiento. El Mesías nace en medio de violencia, como toda la historia de la salvación. La luz brilla en las tinieblas, y las tinieblas no la pueden vencer."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "El reino que Cristo anuncia no es de fronteras terrenas ni de ejércitos, sino el señorío de Dios que entra en el corazón arrepentido. «Acercarse» significa que lo que los profetas prometieron de lejos ya está a la puerta."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "La cita de Jeremías 31:15 (Raquel llorando por sus hijos) en Mateo 2:18 es tipológica. Raquel representa a Israel. El llanto por los inocentes de Belén se conecta con el llanto de Israel en el exilio. Pero el contexto de Jeremías 31 es promesa: el nuevo pacto viene."
+      "author": "Geerhardus Vos · El Reino de Dios y la iglesia",
+      "text": "La cercanía del reino en Marcos no es una instalación política sino la venida escatológica del gobierno divino en la persona de Jesús. El arrepentimiento y la fe son las dos caras de la respuesta exigida ante el advenimiento del Rey."
     }
   ],
   "m6": [
     {
-      "author": "Crisóstomo · Homilía IX sobre Mateo",
-      "text": "Mateo combina varias profecías. Nazareno evoca al nazareo (consagrado, Jue 13:5), pero también al \"Renuevo\" (netzer, Is 11:1). Jesús es el consagrado y el renuevo davídico a la vez. La humildad de Nazaret esconde la gloria del Renuevo prometido."
+      "author": "Jerónimo · Comentario al Evangelio de Mateo",
+      "text": "Cristo no llama a los sabios ni a los poderosos, sino a pescadores, para que la fuerza del cambio evidencie el poder del que llama. Dejan al instante las redes y al padre, mostrando que la gracia no admite dilación cuando el Maestro habla."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "Mateo 2:23 dice que Jesús habitaría en Nazaret \"para que se cumpliese lo que fue dicho por los profetas\". No hay una sola cita del AT que diga \"será llamado nazareno\". Mateo combina varias alusiones: el nazareo (Jue 13:5), el netzer de Isaías 11:1 (renuevo davídico)."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "El seguimiento (akolouthein) en Marcos es seguir literalmente al maestro en su itinerario hacia la cruz. El abandono de redes, barca y padre prefigura el costo total que el discipulado exigirá a lo largo del Evangelio."
     }
   ],
   "m7": [
     {
-      "author": "Crisóstomo · Homilía X sobre Mateo",
-      "text": "Juan es la voz; Cristo es la Palabra. Juan prepara; Cristo llega. El desierto es figura del corazón estéril que será hecho camino del Señor. El AT termina donde comienza el Evangelio."
+      "author": "Gregorio Magno · Homilías sobre los Evangelios",
+      "text": "La novedad de la enseñanza de Jesús estriba en que no habla de cosas ajenas, sino con autoridad propia, pues es el mismo Creador quien ordena a sus criaturas caídas. El espíritu inmundo obedece al que reconoce como su Señor aun en medio del silencio."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 3:3 cita Isaías 40:3 aplicándolo a Juan el Bautista. La voz clama en el desierto: preparen el camino del Señor. Juan es el heraldo del Rey que viene. Su ministerio en el desierto simboliza que el antiguo sistema está terminando."
+      "author": "R.C. Sproul · Comentario al Evangelio de Marcos",
+      "text": "Marcos subraya la autoridad (exousía) de Jesús como hilo conductor: enseña como nadie y manda a los demonios con una palabra. El demonio confiesa una cristología verdadera que la gente aún no comprende: el Santo de Dios."
     }
   ],
   "m8": [
     {
-      "author": "Crisóstomo · Homilía XII sobre Mateo",
-      "text": "Cristo no se bautiza por necesidad de purificación, sino para santificar las aguas del bautismo. Cumple toda justicia. En el bautismo se manifiesta la Trinidad: el Padre habla, el Hijo es ungido, el Espíritu desciende como paloma."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "Cristo sana primero la fiebre con un toque de su mano, demostrando que su cuerpo comunica la vida divina. Luego, al caer la noche, reúne a todos los enfermos para mostrar que el sábado cede ante la misericordia."
     },
     {
-      "author": "Herman Ridderbos · El Matrimonio del Cordero",
-      "text": "El bautismo de Jesús es su ungimiento oficial para el oficio mesiánico. La voz del Padre combina el Salmo 2:7 (\"mi Hijo eres tú\") e Isaías 42:1 (\"mi siervo, en quien tengo complacencia\"). Jesús es anunciado como Rey-Siervo."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La escena resume el ministerio galileo: sanidad y exorcismo se entrelazan como signos de la irrupción del reino. La suegra, levantada para servir, prefigura el discipulado activo que Jesús pedirá a los suyos."
     }
   ],
   "m9": [
     {
-      "author": "Gregorio Magno · Cuarenta Homilías sobre Evangelios",
-      "text": "Cristo es tentado en el desierto como Adán en el paraíso. Adán cayó en abundancia; Cristo vence en hambre. Donde Israel cayó en el desierto, Cristo es obediente. Cada tentación respondida con Deuteronomio: la Palabra es espada del Espíritu."
+      "author": "Gregorio Magno · Homilías sobre los Evangelios",
+      "text": "Mientras los hombres lo buscan por los milagros, Cristo se retira a orar para enseñarnos que la comunión con el Padre precede a toda obra. La oración de Jesús en la oscuridad revela el manantial secreto de su poder."
     },
     {
-      "author": "Thomas Goodwin · Cristo desplegado",
-      "text": "Cristo fue tentado en todo como nosotros, pero sin pecado. Las tres tentaciones resumen todas las tentaciones humanas: apetito (pan), presunción (tirarse del templo), ambición (reinos del mundo). Cristo vence donde Adán cayó, donde Israel cayó."
+      "author": "Sinclair Ferguson · Comentario al Evangelio de Marcos",
+      "text": "Jesús no se deja domesticar por el éxito popular: su misión es predicar, no satisfacer la demanda de prodigios. El «por eso he venido» reorienta el ministerio hacia la proclamación que generará fe verdadera, no mera admiración."
     }
   ],
   "m10": [
     {
-      "author": "Crisóstomo · Homilía XIV sobre Mateo",
-      "text": "Cristo no ofrece doctrina primero, sino persona: \"venid en pos de mí\". El discipulado comienza con seguimiento, no con intelecto. Pescadores de hombres: oficio humilde transformado en ministerio de salvación."
+      "author": "Cirilo de Alejandría · Comentario al Evangelio de Juan",
+      "text": "Al tocar al leproso, Cristo no contrae la impureza sino que, como fuego divino, consume la enfermedad. La compasión movida (splagchnizomai) revela que en él se humaniza la entraña misma de Dios."
     },
     {
-      "author": "John Stott · Llamados a Salvar",
-      "text": "Mateo 4:19 muestra el llamado de los primeros discípulos: \"venid en pos de mí, y os haré pescadores de hombres\". El discipulado comienza con seguimiento, no con comprensión intelectual. Cristo transforma oficios humildes en ministerios de salvación."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "Cristo impone su mano sobre el leproso para mostrarnos que la purificación no viene de la Ley, sino de su sola palabra. El milagro es figura de aquella limpieza interior del pecado que solo la gracia puede obrar."
     }
   ],
   "m11": [
     {
-      "author": "Jerónimo · Comentario a Mateo",
-      "text": "La geografía es teología. Cristo no elige Jerusalén sino Galilea. La luz llega a los que estaban lejos. La salvación es para los gentiles también, no solo para Israel. Cumple la profecía de Isaías 9:1-2."
+      "author": "Agustín de Hipona · Tratados sobre el Evangelio de Juan",
+      "text": "Para que se sepa que el Hijo del Hombre tiene poder en la tierra para perdonar pecados, primero sana el cuerpo visible; así, por lo exterior, se cree lo invisible. El paralítico es imagen de todo hombre al que el peso del pecado impide caminar hacia Dios."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 4:14-16 cita Isaías 9:1-2 para mostrar que Galilea de los gentiles vería gran luz. Cristo comienza su ministerio en una región despreciada, cumpliendo profecía. El mensaje: \"arrepentíos, porque el reino de los cielos se ha acercado\" inauguró la nueva era."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La palabra de perdón pronunciada sobre el paralítico es escandalosa porque sólo Dios puede perdonar; el milagro subsiguiente la autentica. Marcos sitúa aquí el primer conflicto cristológico decisivo con las autoridades religiosas."
     }
   ],
   "m12": [
     {
-      "author": "Crisóstomo · Homilía XIV sobre Mateo",
-      "text": "Mateo cita Isaías para mostrar que Galilea, despreciada por los judíos piadosos, sería la primera en recibir la luz. Cristo no elige Jerusalén sino Galilea. La salvación es para los marginados, cumpliendo la profecía."
+      "author": "Martín Lutero · Sermones sobre los Evangelios dominicales",
+      "text": "Cristo es médico de los enfermos, no de los sanos; por eso se sienta a la mesa de los publicanos. Quien se tiene por justo se excluye a sí mismo del banquete de la gracia."
     },
     {
-      "author": "R.T. France · Comentario a Mateo",
-      "text": "Mateo 4:14-16 cumple Isaías 9:1-2. \"El pueblo asentado en tinieblas vio gran luz\". Galilea de los gentiles, región despreciada, es la primera en recibir el Evangelio. La geografía es teología: Cristo comienza donde el mundo espera menos."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "El llamado de Leví rompe toda tabla de pureza: un recaudador, símbolo viviente de la opresión romana, es convertido en discípulo. «No he venido a llamar justos, sino pecadores» resume el propósito entero de la encarnación."
     }
   ],
   "m13": [
     {
-      "author": "Crisóstomo · Homilía LXXIV sobre Mateo",
-      "text": "El discurso del Monte de los Olivos combina profecía del 70 d.C. con la consumación final. La predicación del Evangelio a todas las naciones es condición y señal. La Iglesia tiene tarea misionera hasta el fin."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "El sábado fue dado por causa del hombre, no el hombre por el sábado; Cristo, Señor del sábado, lo restaura a su fin verdadero, que es la misericordia. La dureza de corazón de los fariseos convierte un don en homicidio."
     },
     {
-      "author": "N.T. Wright · Jesús y la Victoria de Dios",
-      "text": "Mateo 24 combina elementos del 70 d.C. (destrucción de Jerusalén) con la consumación cósmica. Jesús profetiza el juicio sobre Israel incrédulo. La predicación \"en todo el mundo\" (24:14) es condición para el fin: la Iglesia tiene tarea misionera hasta la consumación."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "Las cinco controversias enmarcadas por Marcos culminan en la conjura homicida: la gracia que rompe los cercos legalistas desata el odio. El relato del hombre de la mano seca muestra que el sábado cede ante el sufrimiento humano."
     }
   ],
   "m14": [
     {
-      "author": "Crisóstomo · Homilía LXXV sobre Mateo",
-      "text": "Las señales no son para calcular fechas, sino para discernir tiempos. La higuera simboliza a Israel: cuando vean las señales, el verano está cerca. La vigilancia activa, no la especulación. \"El cielo y la tierra pasarán, pero mis palabras no pasarán\"."
+      "author": "Agustín de Hipona · Sermones sobre las parábolas",
+      "text": "La semilla es la Palabra de Dios y los terrenos son los corazones; cuatro son las disposiciones del alma ante la predicación. Solo el corazón buen terreno retiene la palabra y la hace fructificar con paciencia."
     },
     {
-      "author": "R.T. France · Comentario a Mateo",
-      "text": "Mateo 24:32-35 usa la parábola de la higuera: cuando las ramas se ponen tiernas, el verano está cerca. Las señales son dadas para discernimiento, no para calcular fechas. Cristo afirma: \"el cielo y la tierra pasarán, pero mis palabras no pasarán\"."
+      "author": "Klyne Snodgrass · Historias con intención",
+      "text": "La parábola del sembrador no es una agricultura ilustrada, sino una teodicea del Reino: la Palabra aparentemente fracasada terminará rindiendo treinta, sesenta y ciento por uno. El oído que oye es don tan milagroso como la cosecha misma."
     }
   ],
   "m15": [
     {
-      "author": "Crisóstomo · Homilía LXXVI sobre Mateo",
-      "text": "Cristo se humilla en su conocimiento, ocultando a los ángeles y a los hombres el día. No es ignorancia, sino pedagogía: si supiéramos el día, viviríamos en negligencia. La incertidumbre es escuela de vigilancia. Estad preparados."
+      "author": "Gregorio Magno · Homilías sobre los Evangelios",
+      "text": "La lámpara no se enciende para esconderse, sino para iluminar la casa; así la gracia recibida exige manifestarse en obras. Quien esconde el talento se condena a sí mismo."
     },
     {
-      "author": "Anthony Hoekema · La Biblia y el Futuro",
-      "text": "Mateo 24:36 afirma que \"del día y la hora nadie sabe, ni aun los ángeles, sino solo mi Padre\". La incertidumbre del tiempo mantiene a la Iglesia vigilante. Si supiéramos la fecha, la tentación sería negligencia. Velar es la vocación escatológica."
+      "author": "Herman Ridderbos · La venida del Reino",
+      "text": "La medida con que medimos será la medida con que se nos devuelva: el Reino amplifica tanto la receptividad como el descuido. Escuchar y responder es un acto moral que determina la capacidad futura de recibir la revelación."
     }
   ],
   "m16": [
     {
-      "author": "Agustín de Hipona · Sermón 361",
-      "text": "Las cinco vírgenes necias tienen lámpara pero no aceite: la fe sin obras. Las prudentes llevan aceite: caridad, vida interior, Espíritu. El Esposo tarda; solo las preparadas entran a las bodas. Velad, porque no sabéis el día ni la hora."
+      "author": "Agustín de Hipona · Sermones sobre las parábolas",
+      "text": "El hombre duerme y se levanta sin saber cómo crece la semilla, porque el crecimiento del Reino es obra secreta de Dios, no del operario. Al labrador solo le cabe sembrar y esperar con paciencia la cosecha."
     },
     {
-      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
-      "text": "La parábola de las diez vírgenes (Mt 25:1-13) enseña la necesidad de preparación personal para la venida del Esposo. El aceite representa la vida interior, el Espíritu, la gracia. Las vírgenes necias tenían lámpara (apariencia) pero no aceite (realidad)."
+      "author": "Geerhardus Vos · Teología bíblica",
+      "text": "Esta parábola, exclusiva de Marcos, subraya la autonomía del crecimiento escatológico: el Reino avanza por virtud propia, no por artificio humano. La siembra y la siega enmarcan la historia de la redención dentro del plan divino."
     }
   ],
   "m17": [
     {
-      "author": "Gregorio Magno · Parábolas del Evangelio",
-      "text": "Cada siervo recibe según su capacidad. No todos igual, pero todos responsables. El talento enterrado es la vida desperdiciada. La fidelidad en lo poco abre puertas a lo mucho: el gozo del Señor. El siervo inútil es echado a las tinieblas exteriores."
+      "author": "Jerónimo · Comentario al Evangelio de Mateo",
+      "text": "Del grano más pequeño brota el mayor de los huertos, porque el Reino de los cielos desprecia los comienzos pomposos y crece en lo humilde. En las aves que anidan se figura la Iglesia que cobija a todas las naciones."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La parábola de los talentos (Mt 25:14-30) enseña la responsabilidad del pueblo de Dios durante la ausencia del Señor. Cada siervo recibe según su capacidad, pero todos son responsables. El talento enterrado representa la vida desperdiciada por miedo al Señor \"duro\"."
+      "author": "Herman Ridderbos · La venida del Reino",
+      "text": "El contraste entre la pequeñez de la semilla y la grandeza del arbusto subraya el carácter paradójico del Reino: comienza insignificante y termina imponente. No es una promesa de evolución moral, sino de consumación escatológica."
     }
   ],
   "m18": [
     {
-      "author": "Crisóstomo · Homilía LXXIX sobre Mateo",
-      "text": "Cristo se identifica con sus hermanos más pequeños. Lo que se hace a ellos, a él se hace. El juicio final no es por conocimiento doctrinal, sino por misericordia vivida. La fe verdadera produce obras de amor. Los justos no sabían que servían a Cristo."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "Cristo duerme en la popa para probar la fe de los suyos, y se levanta con una palabra para mostrar que los elementos le obedecen. El temor de los discípulos revela cuán poco conocían aún al que llevaban en la barca."
     },
     {
-      "author": "John Stott · La Cruz de Cristo",
-      "text": "Mateo 25:40 (\"en cuanto lo hicisteis a uno de estos mis hermanos más pequeños, a mí lo hicisteis\") muestra la identificación de Cristo con los necesitados. El juicio final se basa en obras de misericordia, no como mérito, sino como evidencia de fe verdadera."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La pregunta «¿quién es éste?» resuena como clave cristológica del capítulo: el que domeña el caos es el mismo Dios que en el Salmo 107 apacigua la tempestad. El mar, símbolo de las potencias malignas, queda sujeto a su palabra."
     }
   ],
   "m19": [
     {
-      "author": "Cirilo de Alejandría · Comentario a Mateo",
-      "text": "El Hijo del Hombre de Daniel se sienta en trono de gloria. La humillación de Belén y Getsemaní se trueca en exaltación. Cristo es Juez universal; el AT lo anunció, el NT lo confirma. Las ovejas a su derecha, los cabritos a su izquierda."
+      "author": "Gregorio Magno · Homilías sobre los Evangelios",
+      "text": "El endemoniado que habitaba entre los sepulcros es figura de todo hombre esclavo del pecado, fuera de sí mismo. Cristo lo sana sentándolo, vestido y en su juicio, devolviéndole la dignidad perdida de la criatura racional."
     },
     {
-      "author": "N.T. Wright · La Resurrección del Hijo de Dios",
-      "text": "Mateo 25:31 describe al \"Hijo del Hombre viniendo en su gloria\" para juzgar a las naciones. Esto cumple Daniel 7:13-14: el que recibe dominio eterno ahora juzga a todos los pueblos. Cristo es Señor escatológico."
+      "author": "Craig Keener · Comentario al Evangelio de Marcos",
+      "text": "La región gentil de Gadara y la piara de cerdos situan el relato fuera de los límites de pureza de Israel, mostrando que la misión de Jesús desborda toda frontera étnica. El nombre «Legión» vincula la posesión con la opresión militar romana."
     }
   ],
   "m20": [
     {
-      "author": "Agustín de Hipona · Sermón 361",
-      "text": "La regeneración es la renovación cósmica. Cristo sienta a sus apóstoles en tronos: la Iglesia juzga a Israel según el cumplimiento. El Reino escatológico incluye restauración de la creación. En la regeneración, todas las cosas son hechas nuevas."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "La mujer, considerada impura por su flujo, toca en secreto el manto de Jesús, y obtiene lo que la Ley le negaba durante doce años. La fe la salva antes que el contacto, pues es la fe la que toca verdaderamente a Cristo."
     },
     {
-      "author": "Anthony Hoekema · La Biblia y el Futuro",
-      "text": "Mateo 19:28 (\"en la regeneración, cuando el Hijo del Hombre se siente en el trono de su gloria\") describe la renovación cósmica escatológica. \"Regeneración\" (palingenesia) es el nuevo nacimiento del cosmos. El Reino incluye nueva creación."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La hemorroísa, excluida del culto por su impureza legal, rompe toda barrera tocando a Jesús, quien en vez de contraer impureza comunica sanidad. Es el primer caso en Marcos donde la fe personal se vincula explícitamente a la salvación."
     }
   ],
   "m21": [
     {
-      "author": "Crisóstomo · Homilía LXXV sobre Mateo",
-      "text": "La venida de Cristo será visible como relámpago. No oculta en el desierto ni en cámaras secretas. Su manifestación será universal, no local. Todo ojo le verá. No os dejéis engañar por falsos cristos que dicen \"aquí está\" o \"allí está\"."
+      "author": "Agustín de Hipona · Sermón sobre la hija de Jairo",
+      "text": "Cristo levanta a la doncella tomándola de la mano, como quien despierta a quien duerme, porque para el Creador la muerte no es obstáculo. El secreto mandato revela que la vida que él da aún ha de permanecer oculta hasta su manifestación."
     },
     {
-      "author": "Anthony Hoekema · La Biblia y el Futuro",
-      "text": "Mateo 24:27 describe la parusía como relámpago que cruza el cielo: visible, instantáneo, universal. Esto contrasta con los falsos mesías que aparecen en secreto (24:26). La venida de Cristo será manifiesta a todos, no escondida."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "La doble sanidad de la mujer y la niña entrelaza fe, demora y resurrección en un único cuadro teológico. «Talita cumi» conserva el arameo original de Jesús, un toque de intimidad en el clímax de su ministerio galileo."
     }
   ],
   "m22": [
     {
-      "author": "Agustín de Hipona · Sermón del Monte I.4",
-      "text": "Las bienaventuranzas son siete gradas de subida al Reino. Comienzan en la pobreza de espíritu (reconocer indigencia) y terminan en la paz (perfecta conformidad con Dios). Cada una pide lo que la siguiente promete. El Reino es ya y no todavía."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "Los convecinos de Jesús se escandalizan precisamente porque lo conocen según la carne: el carpintero no puede ser profeta. La familiaridad, lejos de abrir los ojos, los ciega, pues la envidia apaga toda luz recibida."
     },
     {
-      "author": "D. Martyn Lloyd-Jones · Estudios en el Sermón del Monte",
-      "text": "Las bienaventuranzas (Mt 5:3-12) no son un código opcional, sino la descripción de la naturaleza del cristiano. La pobreza de espíritu es la primera porque es la puerta: hasta reconocer nuestra indigencia, no podemos recibir el Reino."
+      "author": "N.T. Wright · Jesús y la victoria de Dios",
+      "text": "El rechazo en Nazaret anticipa el destino del profeta que vuelve a su pueblo y no es recibido. La «falta de fe» no es una debilidad intelectual sino una negativa a reordenar la vida alrededor del Reino que Jesús encarna."
     }
   ],
   "m23": [
     {
-      "author": "Crisóstomo · Homilía XV sobre Mateo",
-      "text": "Cristo no dice \"vosotros debéis ser sal y luz\", sino \"vosotros sois sal y luz\". La identidad precede al mandamiento. La sal preserva de corrupción; la luz disipa tinieblas. Si la sal pierde su sabor, ya no sirve para nada."
+      "author": "Gregorio Magno · Regla pastoral",
+      "text": "Cristo envía a sus discípulos de dos en dos para enseñar que toda predicación se funda en la caridad mutua, que es la perfección del amor. Sin bastón ni pan, deben aprender que su sostén es el que los envía, no los recursos del mundo."
     },
     {
-      "author": "John Stott · Contracultura Cristiana",
-      "text": "La Iglesia es alternativa a la sociedad caída. Sal preserva contra la corrupción cultural; luz expone la oscuridad espiritual. Ambas metáforas implican contraste: la sal solo preserva si es distinta de la carne; la luz solo alumbra si es distinta de la oscuridad."
+      "author": "Sinclair Ferguson · Comentario al Evangelio de Marcos",
+      "text": "El envío de los Doce prolonga la autoridad de Jesús sobre los demonios y, al mismo tiempo, los sumerge en la vulnerabilidad de la dependencia. La sandalia desgastada y el pan ausente son signos del Reino que viene sin violencia."
     }
   ],
   "m24": [
     {
-      "author": "Hilario de Poitiers · De Trinitate",
-      "text": "Cristo no deshace la Ley, sino que la lleva a plenitud. La Ley apuntaba a él; él la llena de sentido. Los tipos se cumplen; la letra se trueca en Espíritu. La justicia del Reino supera a la de los fariseos en hondura, no en abolición."
+      "author": "Agustín de Hipona · Sermones sobre el Bautista",
+      "text": "Juan, precursor en el nacimiento, lo es también en la muerte; bautizó con agua al Inocente y con su sangre fue bautizado. Su martirio proclama que el camino del Esposo es también el de su amigo."
     },
     {
-      "author": "Sinclair Ferguson · El Sermón del Monte",
-      "text": "Mateo 5:17-20 afirma que Cristo \"no vino para abrogar la ley, sino para cumplir\". \"Cumplir\" (plēroō) tiene doble sentido: realizar los tipos proféticos y profundizar los mandamientos éticos. La justicia del Reino supera a la farisaica en interioridad."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "El relato enmarcado de la muerte del Bautista interpone el banquete de Herodes frente a la multiplicación de panes, contrastando dos reinos. La muerte del justo anticipa la del Justo por excelencia, que pronto será entregado."
     }
   ],
   "m25": [
     {
-      "author": "Crisóstomo · Homilía XVI sobre Mateo",
-      "text": "Cristo no contradice a Moisés, sino que va a la raíz. La Ley prohibía el acto; Cristo juzga el deseo. La justicia del Reino es interior. La autoridad con que enseña (\"yo digo\") supera a la de los profetas: ellos decían \"así dice Jehová\"; Cristo dice \"yo os digo\"."
+      "author": "Cirilo de Alejandría · Comentario al Evangelio de Juan",
+      "text": "Cristo toma los cinco panes, los bendice y los multiplica, mostrando que es el mismo que dio el maná en el desierto. El que sacia a las multitudes en el monte prefigura el banquete eucarístico que da vida eterna."
     },
     {
-      "author": "Sinclair Ferguson · El Sermón del Monte",
-      "text": "Las seis antítesis (ira, lujuria, divorcio, juramento, venganza, amor a enemigos) muestran que la justicia del Reino va más allá de la externa. No es abolición de la Ley, sino intensificación: del acto al motivo, de la letra al espíritu. Cristo no rebaja la Ley, la eleva."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "Cristo prueba la fe de los discípulos mandándoles que den de comer, cuando ellos mismos carecían de pan. El milagro enseña que cuando Dios ordena dar, él mismo provee el recurso que su mandato exige."
     }
   ],
   "m26": [
     {
-      "author": "Tertuliano · De Oratione",
-      "text": "El Padre Nuestro es compendio de todo el Evangelio. Comienza con la paternidad de Dios, sigue con su santificación, pide el Reino, somete la voluntad, y solo después clama por el pan, el perdón y la victoria sobre el mal. El orden importa."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "Cristo pasa junto a sus discípulos caminando sobre las aguas para mostrar que las olas que ellos temen son suelo firme bajo sus pies. Su palabra «Yo soy» revela la divinidad que se adelanta en la hora cuarta de la noche."
     },
     {
-      "author": "Joachim Jeremias · Las Palabras de Jesús",
-      "text": "El Padre Nuestro en arameo probablemente decía \"Abba\" — término familiar infantil. Era revolucionario: los judíos evitaban \"Padre\" por respeto. Jesús lo usa directamente: Abba. Esta intimidad filial es la novedad del Evangelio: en Cristo, podemos llamar a Dios \"Abba, Padre\"."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "El endurecimiento de los discípulos tras los panes revela que los milagros no generan fe por sí solos. La teofanía del «Yo soy» sobre el mar los remite al Dios que en el Éxodo holló las aguas del caos."
     }
   ],
   "m27": [
     {
-      "author": "Crisóstomo · Homilía XIX sobre Mateo",
-      "text": "Tres pilares de la piedad judía: limosna, oración, ayuno. Cristo no los abole, sino que los purifica. El hipócrita busca aplauso humano; el creyente busca al Padre que ve en secreto. La recompensa celestial supera a la terrenal."
+      "author": "Jerónimo · Comentario al Evangelio de Mateo",
+      "text": "Los fariseos sustituyen el mandamiento de Dios por la tradición de los ancianos, dejando a los padres sin honor so pretexto de ofrenda. Toda tradición que invalida el amor al prójimo se vuelve irreligión disfrazada de piedad."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 6:1-18 trata las tres prácticas de piedad del judaísmo: limosna, oración, ayuno. Cristo no las abole, sino que las purifica de hipocresía. El hipócrita busca aplauso humano; el verdadero creyente busca al Padre \"que ve en lo secreto\"."
+      "author": "D.A. Carson · Comentario a Mateo (Expositor's)",
+      "text": "El qorban era una estratagema legal que permitía eludir el quinto mandamiento declarando dedicado a Dios lo que debía sustentar a los padres. Jesús desenmascara cómo la casuística corrompe el espíritu mismo de la Ley."
     }
   ],
   "m28": [
     {
-      "author": "Crisóstomo · Homilía XX sobre Mateo",
-      "text": "El corazón sigue al tesoro. Si tu tesoro está en la tierra, tu corazón se hace terrenal; si está en el cielo, tu corazón se eleva. La caridad es la única inversión eterna: lo que damos, lo guardamos."
+      "author": "Agustín de Hipona · Sermones",
+      "text": "Lo que contamina al hombre no entra por la boca, sino que sale del corazón, manantial de todos los males. Cristo traslada la pureza del rito externo al interior, donde nace el verdadero culto o la verdadera iniquidad."
     },
     {
-      "author": "John Piper · Future Grace",
-      "text": "Mateo 6:19-21 enseña que \"donde esté vuestro tesoro, allí estará también vuestro corazón\". El corazón sigue al tesoro, no viceversa. Si atesoramos en la tierra, nuestro corazón se apega a lo temporal. Si atesoramos en el cielo, nuestro corazón se eleva."
+      "author": "Craig Keener · Comentario al Evangelio de Marcos",
+      "text": "Jesús abroga, de hecho, la distinción ritual entre puro e impuro, preparando el camino para la misión a los gentiles. La lista de vicios que brota del corazón describe la corrupción que ninguna ablución puede lavar."
     }
   ],
   "m29": [
     {
-      "author": "Agustín de Hipona · Sermón sobre el Monte",
-      "text": "Cristo no prohíbe juzgar con discernimiento (cf. Mt 7:6, 15), sino juzgar con hipocresía. El que tiene una viga en su ojo no puede ver la paja en el del hermano. Sánate primero; luego ayuda al otro. La medida con que medimos será la que se nos aplique."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "La mujer sirofenicia, siendo extranjera, vence con su humildad al mismo Señor, pidiendo las migajas que caen de la mesa de los hijos. Cristo resiste no por desprecio, sino para que la fe de ella resplandezca ante todos."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 7:1-5 no prohíbe el juicio moral, sino el juicio hipócrita. Cristo mismo manda discernir a los falsos profetas (Mt 7:15-20). Lo que condena es juzgar a otros con estándares que uno mismo no cumple: la viga propia ignorada mientras se señala la paja ajena."
+      "author": "N.T. Wright · Jesús y la victoria de Dios",
+      "text": "El encuentro con la mujer gentil marca un giro misionero: el pan de los hijos se ofrece también a los cachorros bajo la mesa. La fe perseverante de la mujer anticipa la apertura del Reino a todas las naciones."
     }
   ],
   "m30": [
     {
-      "author": "Crisóstomo · Homilía XX sobre Mateo",
-      "text": "El orden del Reino invierte el nuestro. Buscamos primero el pan; Cristo nos dice: buscad el Reino y el pan vendrá añadido. Dios no niega lo necesario a los que le buscan primero. La jerarquía libera de la ansiedad."
+      "author": "Gregorio Magno · Homilías sobre los Evangelios",
+      "text": "Cristo toca los oídos y la lengua del sordomudo, porque el remedio viene por el contacto del que es Verbo encarnado. «Effatá» abre al hombre entero: oye la fe, confiesa la salvación."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 6:33 (\"buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas\") invierte la jerarquía natural. No buscar primero el pan, sino el Reino. La promesa no es riqueza, sino provisión necesaria. La ansiedad se cura con jerarquía correcta."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "Los gestos terapéuticos de Jesús (dedos en los oídos, saliva en la lengua) muestran que la encarnación asume la corporalidad del sufrimiento. «Habla bien» no es sólo sanidad fonética, sino restauración de la alabanza."
     }
   ],
   "m31": [
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "El Reino es el tema central de Mateo (32 menciones de \"reino de los cielos\"). No es solo escatológico, sino ya presente en Cristo. La basileia es el reinado soberano de Dios manifestado en persona, palabras y obras de Jesús. Es ya y no todavía."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "Cristo multiplica de nuevo los panes para los gentiles, mostrando que su misericordia no se ciñe a Israel. La levadura de los fariseos es la hipocresía que fermenta con sutileza todo el corazón del hombre."
     },
     {
-      "author": "George Ladd · Evangelio del Reino",
-      "text": "El Reino de Dios en Mateo no es un territorio, sino un reinado dinámico. Es la soberanía de Dios invadiendo la historia humana en Cristo. Por eso los milagros son señales del Reino: la enfermedad, el demonio, la muerte retroceden donde el Rey llega."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La segunda multiplicación, en territorio gentil, complementa la primera y prepara la confesión de Pedro. La advertencia sobre la levadura denuncia una teología terrenal del mesianismo que los discípulos aún comparten."
     }
   ],
   "m32": [
     {
-      "author": "Jerónimo · Comentario a Mateo",
-      "text": "El título \"Hijo del Hombre\" es el preferido de Cristo para sí mismo. Combina humildad (hijo de hombre = ser humano) y gloria (Daniel 7:13). Jesús evita \"Mesías\" con connotaciones políticas y se define desde Daniel 7."
+      "author": "Hilario de Poitiers · De Trinitate (Sobre la Trinidad)",
+      "text": "Pedro confiesa por revelación del Padre lo que la carne y la sangre no podían enseñarle: Cristo, el Hijo del Dios vivo. Esta piedra de confesión es el fundamento sobre el que se edifica la Iglesia de todos los tiempos."
     },
     {
-      "author": "Geerhardus Vos · Teología Bíblica",
-      "text": "El \"Hijo del Hombre\" de Daniel 7 es figura colectiva (los santos) e individual (un representante). Cristo lo aplica a sí mismo: él es el Hijo del Hombre que recibe el reino. Pero añade: el Hijo del Hombre debe padecer antes de reinar (Mt 16:21)."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "Cesarea de Filipo es el punto de inflexión: la identidad mesiánica se revela y, a renglón seguido, se redefine como sufrimiento. El silencio impuesto indica que la cruz, no el entusiasmo popular, define al Mesías."
     }
   ],
   "m33": [
     {
-      "author": "Juan Calvino · Comentario a Mateo",
-      "text": "Pedro confiesa lo que la carne y la sangre no revelaron: Cristo es el Mesías, el Hijo del Dios viviente. Esta confesión es la roca de la Iglesia. Las puertas del Hades no prevalecerán: la Iglesia no morirá, porque su Cabeza ya resucitó."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "Cristo anuncia su pasión no como destino ciego, sino como entrega libre del que tiene poder para dar su vida y recobrarla. En el «debe» (dei) resuena el designio salvífico del Padre, cumplido en el Hijo."
     },
     {
-      "author": "Oscar Cullmann · Pedro, discípulo, apóstol, mártir",
-      "text": "La confesión de Pedro en Cesarea de Filipo es el punto de inflexión del Evangelio de Mateo. Hasta aquí: Cristo revelado en obras. Desde aquí: Cristo revelado en palabra, y el anuncio de la cruz. Pedro confiesa correctamente pero malinterpreta qué significa ser Cristo."
+      "author": "John Stott · La cruz de Cristo",
+      "text": "La primera predicción de la pasión escandaliza a Pedro porque concebía un mesianismo de gloria sin cruz. Jesús reprime la tentación satánica: el camino del Cristo es necesariamente el del sufrimiento redentor."
     }
   ],
   "m34": [
     {
-      "author": "Hilario de Poitiers · Sobre Mateo",
-      "text": "Solo Dios puede perdonar pecados. Jesús perdona como Dios, no en nombre de Dios. La sanidad del paralítico es signo visible del perdón invisible. Cristo prueba lo invisible con lo visible. Los escriblas se escandalizan: solo Dios perdona."
+      "author": "Orígenes · Comentario al Evangelio de Mateo",
+      "text": "Negarse a sí mismo es despojarse del hombre viejo para vestir al Cristo; tomar la cruz es seguir sus pasos hasta la muerte. Solo el que pierde su vida por el Evangelio la encuentra verdaderamente."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "Mateo 9:1-8 muestra a Cristo reclamando autoridad de perdonar pecados, atributo divino. Los escribas tienen razón teológica: solo Dios perdona. La respuesta de Cristo: sanar al paralítico como evidencia visible de su autoridad invisible para perdonar."
+      "author": "John Stott · El discípulo radical",
+      "text": "En el mundo romano la cruz era vergüenza, no ornamento; seguirla significa aceptar la misma reprobación social del Maestro. El que se avergüence de Cristo aquí será avergonzado en su parusía: la confesión es indisociable del discipulado."
     }
   ],
   "m35": [
     {
-      "author": "Crisóstomo · Homilía XXXIX sobre Mateo",
-      "text": "Cristo reclama autoridad sobre el día más sagrado de Israel. El sábado fue hecho para el hombre, no el hombre para el sábado. Cristo es Señor de la Ley misma, porque él es el Dios que dio la Ley. Los discípulos tienen permiso real para hacer lo que los sacerdotes hacían en el templo."
+      "author": "León Magno · Sermón 51 sobre la Transfiguración",
+      "text": "En el monte, Cristo muestra a los tres discípulos el esplendor de la carne que un día tendrán los santos. Moisés y Elías conversan con él sobre su partida, porque la Ley y los Profetas convergen en su pasión."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 12:1-8 muestra a Cristo reclamando señorío sobre el sábado. El argumento: David comió pan sagrado en necesidad (1 Samuel 21), los sacerdotes profanan el sábado en el templo y son inocentes. Pues \"uno mayor que el templo está aquí\". Cristo es Señor del sábado."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La transfiguración es una anticipación provisoria de la gloria pascual otorgada para sostener la fe ante el escándalo de la cruz. La voz del Padre reinterpreta el bautismo: «escuchadle», ahora que se encamina al Calvario."
     }
   ],
   "m36": [
     {
-      "author": "Matthew Henry · Comentario a Mateo",
-      "text": "El templo era el lugar de la presencia de Dios. Cristo es la verdadera presencia, mayor que el edificio. Si los sacerdotes servían en el templo en sábado sin culpa, ¡cuánto más los discípulos del Señor del templo! Cristo supera toda institución del AT."
+      "author": "Agustín de Hipona · Tratados sobre el Evangelio de Juan",
+      "text": "Jesús anuncia de nuevo su entrega para curar a los discípulos del deseo de grandeza que los consume. El silencio de ellos ante el anuncio revela que aún miden al Mesías con la medida del mundo."
     },
     {
-      "author": "G.K. Beale · El Templo y la Misión de la Iglesia",
-      "text": "Mateo 12:6 (\"uno mayor que el templo está aquí\") afirma la superioridad de Cristo sobre el templo. El templo era el lugar de la presencia de Dios; Cristo es esa presencia encarnada. Si el templo justificaba a los sacerdotes en el sábado, Cristo justifica a sus discípulos."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La segunda predicción, en Galilea, recala en el «entregado» (paradidónai), verbo clave de toda la pasión. La incomprensión de los Doce prepara la disputa sobre quién es el mayor que sigue a continuación."
     }
   ],
   "m37": [
     {
-      "author": "Crisóstomo · Homilía XXXVII sobre Mateo",
-      "text": "A Juan en la cárcel, Jesús responde con Isaías 35. Las señales del Mesías son las profetizadas. Cristo no se proclama a sí mismo con palabras; deja que las obras hablen. Los ciegos ven, los cojos andan, los leprosos son limpiados: el AT se cumple visiblemente."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "Cristo pone a un niño en medio para enseñar que el Reino no se mide por la categoría, sino por la humildad. Recibir a un pequeño en su nombre es recibir al Padre que lo envió, porque la caridad con los pequeños es teología."
     },
     {
-      "author": "R.T. France · Comentario a Mateo",
-      "text": "Mateo 11:2-6 responde a Juan el Bautista con citas de Isaías 35:5-6 y 61:1. Las señales mesiánicas (ciegos ven, cojos andan, leprosos limpiados, sordos oyen, muertos resucitan, pobres evangelizados) son las profetizadas. Cristo cumple el AT visiblemente."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "El niño, sin estatus ni derecho, encarna la lógica invertida del Reino: recibirlo a él es recibir a Jesús y al Padre. En una cultura del honor, el gesto de ponerlo «en medio» es una subversión simbólica radical."
     }
   ],
   "m38": [
     {
-      "author": "Crisóstomo · Homilía XXXVIII sobre Mateo",
-      "text": "El yugo de Cristo es suave porque él mismo lo lleva con nosotros. No es ausencia de carga, sino carga compartida. La humildad es el aprendizaje: no ideas nuevas, sino un corazón nuevo. Venid a mí los cargados, y yo os haré descansar."
+      "author": "Agustín de Hipona · Sermón sobre la unidad de la Iglesia",
+      "text": "El que no está contra nosotros está por nosotros: Cristo defiende la caridad contra el celo indiscreto de los discípulos. Quien hace un milagro en nombre de Cristo ya lo confiesa, aunque no ande con nuestro grupo."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 11:28-30 invita a los cansados a tomar el yugo de Cristo. El yugo era instrumento de trabajo para animales de carga; Cristo lo transforma en descanso. \"Aprended de mí, que soy manso y humilde de corazón\". El descanso no es inactividad, sino discipulado bajo el Maestro manso."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "Jesús corrige el exclusivismo celoso de Juan con un principio de amplio reconocimiento: la obra del Reino desborda los círculos oficiales. Un vaso de agua dado en su nombre no quedará sin recompensa."
     }
   ],
   "m39": [
     {
-      "author": "Crisóstomo · Homilía LXXXII sobre Mateo",
-      "text": "Cristo transforma la Pascua. El pan y la copa son ahora su cuerpo y su sangre. El verdadero Cordero pascual es él. La Cena es memorial de su muerte, pero también banquete anticipado del Reino (Mt 26:29). No beberé más de este fruto de la vid hasta aquel día."
+      "author": "León Magno · Sermones sobre la pasión",
+      "text": "Cristo sube a Jerusalén caminando delante de los suyos, para que vean en su rostro la determinación del que libremente se ofrece. La tercera predicción detalla la entrega a los gentiles, cumpliendo cuanto los profetas anunciaron."
     },
     {
-      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
-      "text": "La Cena del Señor (Mt 26:26-28) instituye el nuevo pacto con sangre. Cristo no solo enseña, sino que instituye un sacramento: signo y sello del pacto. \"Para perdón de pecados\" — el nuevo pacto se funda en expiación. No hay pacto sin sangre (Heb 9:22)."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "Por tercera vez Jesús precisa el contenido de su pasión: burlas, azotes y muerte, seguidos de la resurrección. El «estupefactos» de los discípulos y el «temor» de los que siguen muestran la tensión de un mesianismo incomprensible."
     }
   ],
   "m40": [
     {
-      "author": "Agustín de Hipona · Sermón 73 sobre el Sembrador",
-      "text": "La Palabra es única, pero los corazones son cuatro. La diferencia no está en la semilla, sino en el suelo. El camino = corazón endurecido. Pedregal = superficial. Espinos = dividido. Buena tierra = preparado por la gracia. El fruto varía: 30, 60, 100."
+      "author": "Gregorio Magno · Regla pastoral",
+      "text": "Los hijos de Zebedeo buscan los primeros puestos sin saber qué piden; Cristo les ofrece la copa y el bautismo, no la gloria. El Hijo del Hombre no vino a ser servido, sino a servir y dar su vida en rescate por muchos."
     },
     {
-      "author": "Klyne Snodgrass · Historias con Intención",
-      "text": "La parábola del sembrador (Mt 13:1-23) es clave hermenéutica para todas las parábolas: explica por qué algunas personas responden y otras no. La semilla es la Palabra del Reino. Los cuatro suelos representan cuatro respuestas humanas, no cuatro tipos de personas inmutables."
+      "author": "Craig Keener · Comentario al Evangelio de Marcos",
+      "text": "La petición de Santiago y Juan revela cuánto se ha malentendido el mesianismo: quieren tronos a la derecha e izquierda, pero la cruz colocará allí a dos criminales. «Rescate por muchos» evoca al siervo de Isaías 53."
     }
   ],
   "m41": [
     {
-      "author": "Crisóstomo · Homilía XLVI sobre Mateo",
-      "text": "La parábola del trigo y la cizaña enseña que el Reino convive con el mal hasta el juicio final. Cristo prohíbe el celo inquisitorial: arrancar la cizaña daña el trigo. La Iglesia visible es campo mixto; la separación es escatológica."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "Cristo entra en Jerusalén montado en un borrico, no en carro de guerra, porque su reino no es de este mundo. La multitud lo aclama con el Hosanna del Salmo 118, reconociendo al que viene en el nombre del Señor."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La parábola del trigo y la cizaña (Mt 13:24-30, 36-43) enseña que el Reino convive con el mal hasta el juicio final. Cristo prohíbe el celo inquisitorial. La Iglesia visible es campo mixto; la separación es escatológica, obra de ángeles, no de hombres."
+      "author": "N.T. Wright · El día que comenzó la revolución",
+      "text": "La entrada a lomos de un pollino, no de un corcel, es una parodia profética de la realeza de paz. Jesús cumple la profecía de Zacarías y reclama simbólicamente el templo y la ciudad como propios."
     }
   ],
   "m42": [
     {
-      "author": "Crisóstomo · Homilía XLVI sobre Mateo",
-      "text": "El Reino no purga inmediatamente el mal. Convive con la cizaña hasta la siega. Cristo prohíbe el celo inquisitorial: arrancar la cizaña es dañar el trigo. El juicio final separará; la Iglesia es campo mixto."
+      "author": "Juan Calvino · Armonía evangélica",
+      "text": "La higuera estéril es figura de Israel, que teniendo hojas de piedad no daba fruto de justicia. La purificación del templo denuncia que la casa de oración se había convertido en cueva de ladrones."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La parábola del trigo y la cizaña (Mt 13:24-30, 36-43) enseña que el Reino convive con el mal hasta el juicio final. Cristo prohíbe el celo inquisitorial: arrancar la cizaña (falsos creyentes) daña el trigo (verdaderos creyentes). La Iglesia visible es campo mixto."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "Marcos enmarca la purificación del templo con la maldición de la higuera, interpretando aquella como juicio a un culto estéril. La fe que mueve montes y el perdón entre hermanos son el verdadero fruto que Dios busca."
     }
   ],
   "m43": [
     {
-      "author": "Agustín de Hipona · Sermón 73",
-      "text": "La levadura obra oculta pero transformadora. El Reino no se impone por fuerza, sino que penetra. Tres medidas: mucha harina. La Iglesia transforma el mundo desde dentro, no desde fuera."
+      "author": "Agustín de Hipona · Tratados sobre el Evangelio de Juan",
+      "text": "Cristo responde con una pregunta a la pregunta sobre su autoridad, poniendo a prueba el corazón de los que lo interrogan. El silencio sobre el bautismo de Juan los condena, porque no quieren reconocer lo que ya saben."
     },
     {
-      "author": "George Ladd · Evangelio del Reino",
-      "text": "La parábola de la levadura (Mt 13:33) enseña que el Reino crece de forma oculta pero transformadora. Tres medidas de harina era cantidad enorme (cf. Gn 18:6): la levadura penetra todo. El Reino no se impone por fuerza externa, sino que transforma desde dentro."
+      "author": "Craig Keener · Comentario al Evangelio de Marcos",
+      "text": "El intercambio sobre la autoridad de Jesús enlaza con el bautismo de Juan, que lo había acreditado públicamente. Los líderes temen al pueblo, no buscan la verdad: su negativa a responder los descalifica como jueces."
     }
   ],
   "m44": [
     {
-      "author": "Crisóstomo · Homilía XLVI sobre Mateo",
-      "text": "El Reino vale más que todo lo que se posee. No es mérito encontrarlo, sino gracia. Pero una vez hallado, exige renuncia gozosa. El que ve el tesoro vende todo sin tristeza. La fe no es cálculo: el que ve el tesoro vende todo."
+      "author": "Agustín de Hipona · Sermón sobre los labradores malvados",
+      "text": "La viña es el pueblo de Israel, los labradores son los jefes, los siervos son los profetas y el hijo amado es Cristo. La piedra desechada por los constructores se convierte en cabeza de ángulo: la cruz se trueca en exaltación."
     },
     {
-      "author": "Klyne Snodgrass · Historias con Intención",
-      "text": "La parábola del tesoro escondido (Mt 13:44) enseña el valor inestimable del Reino. El hallazgo es casual (no se buscaba), pero la respuesta es total: vende todo. La gracia del Reino es inmerecida, pero la respuesta a la gracia es absoluta."
+      "author": "Klyne Snodgrass · Historias con intención",
+      "text": "La parábola es una denuncia profética directa: el hijo enviado por último es rechazado y muerto, lo que reapropia el cántico de la viña de Isaías 5. El juicio recae sobre los labradores, y la viña pasa a otros."
     }
   ],
   "m45": [
     {
-      "author": "Agustín de Hipona · Sermón 73",
-      "text": "La perla es Cristo, o el Reino, o la fe. Una sola cosa necesaria. El mercader la encuentra buscándola, como el tesoro por casualidad: ambas son formas de gracia. Vendlo todo = la conversión entera. No hay parcialidad en el Reino."
+      "author": "Jerónimo · Comentario al Evangelio de Mateo",
+      "text": "El Shemá y el amor al prójimo resumen la Ley y los Profetas, porque toda piedad se reduce a amar a Dios y al hermano. El escriba responde con discreción y es reconocido por Cristo como no lejos del Reino."
     },
     {
-      "author": "Klyne Snodgrass · Historias con Intención",
-      "text": "La parábola de la perla de gran precio (Mt 13:45-46) muestra el valor supremo del Reino. A diferencia del tesoro (hallado casualmente), la perla es buscada por un mercader. Ambas parábolas enseñan lo mismo: el Reino vale más que todo, y quien lo encuentra vende todo."
+      "author": "R.C. Sproul · Comentario al Evangelio de Marcos",
+      "text": "Jesús une el primer mandamiento del Deuteronomio con el amor al prójimo del Levítico, mostrando que no hay amor a Dios sin amor concreto al hermano. «No estás lejos del Reino» confirma la respuesta pero señala que aún falta el paso decisivo."
     }
   ],
   "m46": [
     {
-      "author": "Crisóstomo · Homilía XLVII sobre Mateo",
-      "text": "La red recoge de todo; el juicio separa al final. La Iglesia visible contiene peces buenos y malos. No nos toca a nosotros separar ahora, sino predicar. La separación es escatológica, obra de ángeles, no de hombres."
+      "author": "Atanasio · Contra los arrianos",
+      "text": "Si David lo llama Señor, ¿cómo puede ser su hijo? Porque el Mesías es a la vez descendiente según la carne y Señor según la divinidad. Esta pregunta desarma la cristología reductora de cuantos niegan la divinidad del Hijo."
     },
     {
-      "author": "R.T. France · Comentario a Mateo",
-      "text": "La parábola de la red (Mt 13:47-50) refuerza la del trigo y la cizaña: el Reino convive con el mal hasta el juicio final. La red recoge todo tipo de peces; la separación se hace al final, por ángeles. La Iglesia visible es mixta; Dios juzga al final."
+      "author": "Donald Macleod · La persona de Cristo",
+      "text": "El argumento del Salmo 110 muestra que el mesianismo davídico no agota la identidad de Jesús: él es también el Señor exaltado a la diestra. La encarnación une, sin confundir, la descendencia real y la soberanía divina."
     }
   ],
   "m47": [
     {
-      "author": "Crisóstomo · Homilía LXVIII sobre Mateo",
-      "text": "La viña es Israel. Los labradores son los líderes. Los siervos son los profetas. El Hijo es Cristo. La piedra rechazada se vuelve cabeza del ángulo. El Reino pasa a los gentiles productores de fruto."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "La viuda echa dos pequeñas monedas, más que todos, porque dio todo lo que tenía para vivir. Cristo mide las ofrendas no por la cantidad, sino por el amor que las sostiene y el sacrificio que las acompaña."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "La parábola de los labradores (Mt 21:33-46) es alegoría: la viña es Israel (Is 5), los labradores son los líderes, los siervos son los profetas, el Hijo es Cristo. La piedra rechazada (Sal 118:22) se vuelve cabeza del ángulo. El Reino pasa a gentiles productores de fruto."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "El contraste entre los ricos que dan de lo que les sobra y la viuda que da «todo su sustento» es una crítica al culto aparente. La ofrenda de la viuda prefigura la entrega total de Jesús, que pronto dará su vida."
     }
   ],
   "m48": [
     {
-      "author": "Crisóstomo · Homilía LXIX sobre Mateo",
-      "text": "Las bodas del Cordero reúnen a todos: primero los invitados (Israel) que rehusaron; luego los de los caminos (gentiles). Pero no basta entrar: hace falta el vestido de boda (justicia de Cristo). Muchos llamados, pocos escogidos."
+      "author": "Jerónimo · Comentario al Evangelio de Mateo",
+      "text": "El discurso del Monte de los Olivos instruye a los discípulos sobre el fin, no para alimentar la curiosidad, sino para velar. Las señales son dolores de parto, no de muerte, porque el fin del mundo es principio del Reino."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La parábola de las bodas del hijo del rey (Mt 22:1-14) combina invitación universal (todos, buenos y malos) con exigencia particular (vestido de boda). Los primeros invitados (Israel) rehusaron; los segundos (gentiles) entraron. Pero no todos los que entran son elegidos: el vestido representa la justicia de Cristo."
+      "author": "Anthony Hoekema · La Biblia y el futuro",
+      "text": "Jesús mezcla la profecía sobre la destrucción del templo con la de su parusía, en un patrón típico de la profecía escatológica. El mandato de velar y orar sitúa la esperanza en clave ética, no de cálculo cronológico."
     }
   ],
   "m49": [
     {
-      "author": "Crisóstomo · Homilía XCIV sobre Mateo",
-      "text": "Cristo resucitado reclama autoridad universal. Cumple Daniel 7:14. La Gran Comisión fluye de la autoridad: porque tiene todo poder, envía a todas las naciones. El bautismo trinitario marca la entrada al Reino. La enseñanza es continua. La promesa de presencia acompaña la misión."
+      "author": "Agustín de Hipona · Tratados sobre el Evangelio de Juan",
+      "text": "La mujer derrama sobre Jesús un perfume carísimo, anticipando su unción para la sepultura. Donde los discípulos calculan el precio, ella adora el misterio; por eso su gesto es proclamado donde se predique el Evangelio."
     },
     {
-      "author": "John Stott · La Misión Cristiana en el Mundo Moderno",
-      "text": "La Gran Comisión (Mt 28:16-20) tiene cuatro elementos: ir, hacer discípulos, bautizar, enseñar. El verbo principal es \"mathēteusate\" (haced discípulos) — los demás son participios subordinados. La misión es integral: conversión + comunión + formación. La promesa \"yo estoy con vosotros\" garantiza que la misión no fracasará."
+      "author": "Sinclair Ferguson · Comentario al Evangelio de Marcos",
+      "text": "La unción en Betania es el preludio de la pasión: la mujer comprende lo que los Once aún ignoran. Frente a la traición de Judas que se gesta, ella ofrece un gesto de amor extravagante que Jesús recibe como unción mortuoria."
     }
   ],
   "m50": [
     {
-      "author": "Crisóstomo · Homilía XXXII sobre Mateo",
-      "text": "Los Doce reciben autoridad para continuar el ministerio de Cristo. Predican el mismo mensaje: Reino cercano. Las señales confirman la Palabra. La gratuidad es ley: nada se cobró, nada se debe cobrar. Obra de gracia, no de comercio."
+      "author": "Cirilo de Alejandría · Comentario al Evangelio de Juan",
+      "text": "Judas, que había visto los milagros y comido el pan con el Maestro, lo entrega por dinero, muestra de que el corazón no se cambia por los signos. El endurecimiento gradual abre paso a la entrada de Satanás en el traidor."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "Mateo 10:1-15 muestra la comisión de los Doce. Reciben autoridad sobre espíritus inmundos y enfermedades. Predican: \"el reino de los cielos se ha acercado\". La instrucción: no llevar oro ni plata ni alforja; depender de la hospitalidad. El obrero es digno de su alimento."
+      "author": "R.C. Sproul · Comentario al Evangelio de Marcos",
+      "text": "El contraste entre la unción de Betania y la traición de Judas subraya que el mismo amor de Cristo puede endurecer o quebrantar. Treinta piezas de plata miden la vileza de un corazón que prefirió el lucro al Señor."
     }
   ],
   "m51": [
     {
-      "author": "Crisóstomo · Homilía XXXVII sobre Mateo",
-      "text": "La mies es abundante; los obreros escasos. La solución no es estratégica, sino de oración. Pedir al Señor de la mies que envíe obreros. La vocación nace de la intercesión. La urgencia espiritual precede al método."
+      "author": "Juan Calvino · Institución de la religión cristiana",
+      "text": "En la cena, Cristo nos da su cuerpo y su sangre bajo el pan y el vino, para que, alimentados por él, vivamos de su vida. La Santa Cena es un don visible que sella en nosotros la promesa del perdón."
     },
     {
-      "author": "John Stott · La Misión Cristiana",
-      "text": "Mateo 9:35-38 muestra a Cristo con compasión por las multitudes \"como ovejas sin pastor\". La mies es mucha, los obreros pocos. La solución: orar al Señor de la mies. La vocación misionera nace de la intercesión. El capítulo 10 sigue: la oración se responde con envío."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "El «sangre de la alianza» derramada por muchos retoma Éxodo 24 y, sobre todo, Isaías 53, redefiniendo la pascua en clave sacrificial. Jesús se identifica con el cordero cuya sangre funda la nueva alianza."
     }
   ],
   "m52": [
     {
-      "author": "Crisóstomo · Homilía XXV sobre Mateo",
-      "text": "Cristo toca al intocable. La lepra era exclusión total: religiosa, social, familiar. Cristo no solo cura; restaura. El toque impuro no contamina al Santo; el Santo purifica lo impuro. Cumple la Ley enviando al sacerdote."
+      "author": "León Magno · Sermones sobre la pasión",
+      "text": "Cristo anuncia la negación de Pedro para curar su presunción antes de la caída; el pastor será quebrantado y las ovejas dispersadas. La promesa del pastor resucitado que irá delante a Galilea precede al anuncio de la negación."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "La sanidad del leproso (Mt 8:1-4) muestra a Cristo tocando al intocable. La lepra causaba exclusión total: religiosa, social, familiar. Cristo no se contamina al tocar; purifica. El mandato de mostrar al sacerdote cumple la Ley (Lv 14), pero testifica que el verdadero purificador ha venido."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La cita de Zacarías 13,7 («heriré al pastor») enmarca la pasión como juicio y purificación. El «antes que el gallo cante dos veces» mide la fragilidad de Pedro y, a la vez, la precisión profética de Jesús."
     }
   ],
   "m53": [
     {
-      "author": "Crisóstomo · Homilía XXVI sobre Mateo",
-      "text": "Un gentil romano enseña a Israel qué es fe. Cristo encuentra más fe en el centurión que en todo Israel. Las naciones entrarán al banquete de Abraham. La gracia no conoce fronteras étnicas. Muchos vendrán del oriente y del occidente."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "En el huerto, Cristo se angustia hasta la muerte, mostrando que asumió un cuerpo capaz de temer, para vencer en él el miedo. «No lo que yo quiero, sino lo que tú» entrega la voluntad humana al Padre en obediencia perfecta."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La sanidad del siervo del centurión (Mt 8:5-13) incluye la primera afirmación explícita de la inclusión de los gentiles: \"muchos vendrán del oriente y del occidente, y se sentarán con Abraham... en el reino de los cielos\". Un gentil romano enseña a Israel qué es fe."
+      "author": "Donald Macleod · Cristo crucificado",
+      "text": "Getsemaní revela el misterio de las dos voluntades: la voluntad humana de Cristo retrocede ante el cáliz, pero se somete sin reserva al Padre. La copa es la ira divina que él bebe en lugar de los suyos."
     }
   ],
   "m54": [
     {
-      "author": "Crisóstomo · Homilía XXVIII sobre Mateo",
-      "text": "Los salmos atribuyen a Dios el calmar el mar. Cristo lo hace con una palabra. Los discípulos preguntan: ¿qué hombre es este? La respuesta es teológica: este hombre es Dios. La creación reconoce a su Creador."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "Con un beso, signo de amistad, consuma Judas la mayor de las traiciones; Cristo lo llama «amigo», porque aún lo invita al arrepentimiento. El beso del traidor se vuelve acusación contra sí mismo."
     },
     {
-      "author": "Richard Bauckham · Jesús y el Dios de Israel",
-      "text": "La calma de la tempestad (Mt 8:23-27) atribuye a Cristo lo que el AT atribuía solo a Yahvé (Sal 89:9, 107:29). Los discípulos preguntan: \"¿qué hombre es este?\". La respuesta es teológicamente explosiva: este hombre es Dios. Cristo tiene autoridad divina sobre el caos."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "El «con un beso entrega al Hijo del Hombre» resume la ironía trágica de la pasión: el signo del afecto se trueca en señal de entrega. El joven que huye desnudo evoca, quizá, la desnudez de la Iglesia privada de su Señor."
     }
   ],
   "m55": [
     {
-      "author": "Crisóstomo · Homilía XXVIII sobre Mateo",
-      "text": "Los demonios confiesan lo que los hombres tardan en reconocer: Jesús es Hijo de Dios. \"Antes de tiempo\" indica que hay un día de juicio señalado. Cristo ya tiene autoridad sobre los poderes oscuros. Los demonios le ruegan."
+      "author": "León Magno · Tomo a Flaviano",
+      "text": "Ante el sumo sacerdote, Cristo confiesa sin ambages su divinidad: «Yo soy», y se declara Hijo del Bendito sentado a la diestra. La unción de las dos naturalezas confesada aquí es fundamento de la fe católica."
     },
     {
-      "author": "G.K. Beale · El Libro de las Revelaciones",
-      "text": "La liberación de los endemoniados gadarenos (Mt 8:28-34) muestra a Cristo con autoridad sobre los poderes demoníacos. Los demonios confiesan: \"Jesús, Hijo de Dios\" — lo que los hombres aún no reconocen. Cristo ya ejerce autoridad escatológica sobre los poderes."
+      "author": "Donald Macleod · La persona de Cristo",
+      "text": "La respuesta de Jesús combina Daniel 7 (el Hijo del Hombre que viene con las nubes) y el Salmo 110 (sentado a la diestra). Es la cristología más elevada en labios del propio Jesús, que le cuesta la condena del Sanedrín."
     }
   ],
   "m56": [
     {
-      "author": "Crisóstomo · Homilía XXXI sobre Mateo",
-      "text": "Cristo toma la mano impura (cadáver) y da vida. Como Elías y Eliseo, pero con autoridad propia, no en oración a Dios. La muerte no puede resistir su voz. Es primicia de la resurrección final. La niña se levanta."
+      "author": "Agustín de Hipona · Tratados sobre el Evangelio de Juan",
+      "text": "El gallo canta y Pedro recuerda la palabra de Jesús; su llanto es ya comienzo de conversión. Cristo no lo había abandonado, pues lo miró en el instante mismo en que negó conocerlo."
     },
     {
-      "author": "N.T. Wright · La Resurrección del Hijo de Dios",
-      "text": "La resurrección de la hija de Jairo (Mt 9:18-26) muestra a Cristo con autoridad sobre la muerte. Como Elías (1 R 17) y Eliseo (2 R 4), pero con autoridad propia, no en oración a Dios. Cristo toma la mano del cadáver y da vida. Es primicia de la resurrección final."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "Marcos conserva el detalle exclusivo del segundo canto del gallo y de la mirada de Jesús, intensificando el drama. El llanto amargo de Pedro no cierra la historia: en Galilea será restaurado."
     }
   ],
   "m57": [
     {
-      "author": "Crisóstomo · Homilía XLIX sobre Mateo",
-      "text": "Cinco panes, cinco mil alimentados. Cristo repite el milagro de Eliseo, pero mayor. La abundancia mesiánica. Los discípulos son mediadores: reciben de Cristo, dan al pueblo. Cristo bendice, parte, da; los discípulos distribuyen."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "Cristo comparece ante Pilato como rey de un reino que no es de este mundo, y calla ante sus acusadores como cordero llevado al matadero. Su silencio cumple la profecía y vence con mansedumbre la soberbia del poder."
     },
     {
-      "author": "Herman Ridderbos · El Matrimonio del Cordero",
-      "text": "La multiplicación de panes (Mt 14:13-21) cumple el tipo de Eliseo (2 R 4:42-44) pero lo supera. Cristo es el verdadero dador de pan mesiánico. Los doce canastos sobrantes representan a las doce tribus: hay abundancia para todo Israel. Anticipa la Cena del Señor."
+      "author": "John Stott · La cruz de Cristo",
+      "text": "Pilato reconoce la inocencia de Jesús, pero cede al chantaje del pueblo: la justicia humana se rinde ante la conveniencia política. El «crucifícalo» de la multitud revela la irracionalidad del pecado ante la santidad."
     }
   ],
   "m58": [
     {
-      "author": "Agustín de Hipona · Sermón 295",
-      "text": "Pedro confiesa: \"Tú eres el Cristo, el Hijo del Dios viviente\". Cristo responde: \"sobre esta roca edificaré mi iglesia\". ¿Qué roca? No la persona de Pedro, sino la confesión de Pedro. La fe de Pedro es la primera piedra de la Iglesia."
+      "author": "León Magno · Sermones sobre la pasión",
+      "text": "Los soldados visten a Cristo de púrpura y le coronan de espinas, burlándose del rey que verdaderamente es. En la ignominia se oculta la gloria, porque su reino se manifiesta en el oprobio de la cruz."
     },
     {
-      "author": "R.C. Sproul · La Verdad del Evangelio",
-      "text": "El juego de palabras en Mateo 16:18 es significativo: \"Petros\" (piedra, masc.) y \"petra\" (roca maciza, fem.). Cristo edifica sobre la roca, no sobre la piedrita. La lectura más bíblica y ecuménica: la confesión \"Cristo es el Hijo de Dios\" es la roca fundacional."
+      "author": "William Lane · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "La burla regia de los soldados es, sin saberlo, una confesión: el rey de los judíos es coronado de espinas, fruto del pecado de Adán. La liturgia del escarnio prefigura, en clave invertida, la exaltación pascual."
     }
   ],
   "m59": [
     {
-      "author": "Juan Calvino · Comentario a Mateo",
-      "text": "Las llaves son el ministerio de la Palabra: predicar el Evangelio, retener o remitir pecados. No es poder arbitrario, sino declaración del juicio de Dios. La Iglesia no crea verdad; la reconoce y la administra. Atar y desatar = interpretar la Escritura con autoridad."
+      "author": "Agustín de Hipona · Tratados sobre el Evangelio de Juan",
+      "text": "Sobre la cruz, Cristo lleva el pecado de todos, y por eso grita el abandono del Salmo 22, haciéndose pecado por nosotros. En esa tiniebla se cumple el intercambio admirable: él se hace maldito para que seamos benditos."
     },
     {
-      "author": "Herman Ridderbos · El Matrimonio del Cordero",
-      "text": "Las llaves del Reino (Mt 16:19) representan autoridad de administración. En el judaísmo, \"atar y desatar\" significaba interpretar la ley y excomulgar o readmitir. Cristo da esta autoridad a Pedro (y a la Iglesia, Mt 18:18). No es poder arbitrario, sino ministerio de la Palabra."
+      "author": "John Stott · La cruz de Cristo",
+      "text": "El «Dios mío, ¿por qué me has desamparado?» expresa el misterio insondable de la sustitución: el Hijo cargando el juicio debido a los pecadores. Es el grito del que sufre el abandono para que los suyos nunca sean abandonados."
     }
   ],
   "m60": [
     {
-      "author": "Crisóstomo · Homilía LIV sobre Mateo",
-      "text": "A partir de la confesión de Pedro, Jesús abre el libro de su pasión. Necesidad: el Mesías debe padecer. Pedro es Pedro según la carne: escandalizado. Satanás = tropiezo. La cruz antes que la corona. \"¡Quítate de delante de mí, Satanás!\"."
+      "author": "León Magno · Sermones sobre la pasión",
+      "text": "Al expirar Cristo, el velo del templo se rasga de arriba abajo, porque el cielo se abre a los creyentes por la sangre del Mediador. El centurión, viéndolo expirar, confiesa que era verdaderamente Hijo de Dios."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 16:21 marca el punto de inflexión del Evangelio: \"desde entonces comenzó Jesús a declarar... que le era necesario ir a Jerusalén y padecer... y ser muerto, y resucitar al tercer día\". Pedro, que acaba de confesar, ahora reprende. La cruz es escándalo aun para los discípulos."
+      "author": "N.T. Wright · El día que comenzó la revolución",
+      "text": "El velo rasgado señala que el templo ha cumplido su función y queda abierto el acceso a la presencia de Dios por medio de Jesús. La confesión del centurión gentil, en el clímax del Evangelio, recoge el título inicial del libro."
     }
   ],
   "m61": [
     {
-      "author": "Crisóstomo · Homilía LV sobre Mateo",
-      "text": "La cruz era instrumento de vergüenza y muerte. Cristo la convierte en símbolo de discipulado. Negarse a sí mismo es soltar el yo como centro. Tomar la cruz es aceptar el juicio del yo. Seguir es confiar en quien va delante."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "Cristo es sepultado para santificar el sepulcro y mostrarse verdaderamente muerto según la carne. José de Arimatea, miembro del Sanedrín, lo reclama con audacia, y la piedra que sella la tumba será testigo de la resurrección."
     },
     {
-      "author": "Dietrich Bonhoeffer · El Precio del Discipulado",
-      "text": "Mateo 16:24 (\"si alguno quiere venir en pos de mí, niéguese a sí mismo, y tome su cruz, y sígame\") define el discipulado. La cruz no es una carga general, sino muerte al yo. \"Cuando Cristo llama a un hombre, le llama a venir y morir\". La gracia barata es negación de la cruz."
+      "author": "James Edwards · Comentario al Evangelio de Marcos (PNTC)",
+      "text": "La sepultura por José de Arimatea cumple la profecía de Isaías 53 (con los ricos en su muerte) y certifica la realidad de la muerte de Jesús. Pilato entrega el cuerpo tras cerciorarse de la muerte, dato histórico de peso."
     }
   ],
   "m62": [
     {
-      "author": "Cirilo de Alejandría · Comentario a Lucas",
-      "text": "La transfiguración anticipa la gloria de la resurrección. Cristo muestra su gloria divina a tres testigos antes de la cruz, para que recordaran en la pasión quién era. Moisés (Ley) y Elías (Profetas) testifican. La voz del Padre: \"A él oíd\"."
+      "author": "Crisóstomo · Homilías sobre Mateo",
+      "text": "Las mujeres llegan al sepulcro al amanecer del primer día, hallando la piedra removida y un joven sentado que anuncia la resurrección. El ángel les manda avisar a los discípulos, y especialmente a Pedro, que Cristo va delante a Galilea."
     },
     {
-      "author": "Richard Bauckham · Jesús y el Dios de Israel",
-      "text": "La transfiguración (Mt 17:1-9) es teofanía. Cristo resplandece como el sol — atributo divino (cf. Sal 104:2). La voz del Padre identifica al Hijo y manda escucharle. Es ratificación del bautismo: el Padre confirma al Hijo antes de la cruz. La nube es shekinah."
+      "author": "R.T. France · Comentario al Evangelio de Marcos (NICNT)",
+      "text": "El final en 16,8, con las mujeres huyendo callando «porque tenían temor», es abrupto pero teológicamente cargado: el temor es reverencia ante lo inaudito. La promesa de Galilea queda en pie, abriendo el futuro a los lectores."
     }
   ],
   "m63": [
     {
-      "author": "Agustín de Hipona · Enarrationes in Psalmos",
-      "text": "La oveja perdida es el pecador. El Pastor no espera que vuelva, sino que sale a buscarla. Las 99 en el monte son los justos. La voluntad del Padre es que ninguno se pierda: el Evangelio es de búsqueda, no de espera."
+      "author": "Agustín de Hipona · Armonía evangélica (De consensu evangelistarum)",
+      "text": "Cristo resucitado se aparece a María Magdalena, a los dos del campo y a los Once, enviándolos a predicar a toda criatura. El que fue sepultado se manifiesta vivo, confirmando que la muerte no pudo retener al Santo."
     },
     {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La parábola de la oveja perdida (Mt 18:10-14) muestra el corazón del Pastor. No es la oveja que vuelve, sino el Pastor que sale a buscar. \"No es la voluntad de vuestro Padre que se pierda uno de estos pequeños\". La Iglesia debe buscar al descarriado."
+      "author": "Craig Keener · Comentario al Evangelio de Marcos",
+      "text": "La llamada «terminación larga» recoge la comisión misionera y los signos que acompañarán a los creyentes, en sintonía con la promesa de Hechos 2. El Señor coopera con la predicación, confirmando la palabra con señales."
     }
   ],
   "m64": [
     {
-      "author": "Crisóstomo · Homilía LXI sobre Mateo",
-      "text": "Lamec prometió venganza setenta veces siete; Cristo promete perdón setenta veces siete. El Evangelio invierte el orden caído. El perdón no tiene límite, porque el nuestro ha sido infinito. La parábola del siervo cruel lo confirma."
+      "author": "León Magno · Sermón sobre la Ascensión",
+      "text": "Cristo, resucitado, asciende al cielo y se sienta a la diestra del Padre, no para abandonarnos, sino para prepararnos lugar. Desde allí intercede por los suyos y derrama los dones del Espíritu sobre la Iglesia."
     },
     {
-      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
-      "text": "Mateo 18:21-35 responde a Pedro sobre cuántas veces perdonar. \"Setenta veces siete\" = sin límite. La parábola del siervo que fue perdonado una deuda enorme pero no perdonó a su consiervo una pequeña muestra la lógica del Reino: quien ha sido perdonado mucho, debe perdonar mucho."
+      "author": "Herman Bavinck · Teología reformada",
+      "text": "La ascensión es el tránsito del estado de humillación al de exaltación: la humanidad de Cristo entra en la esfera celestial. Su sesión a la diestra expresa el ejercicio presente de su señorío cósmico y sacerdotal sobre la Iglesia."
     }
   ],
   "m65": [
     {
-      "author": "Juan Calvino · Comentario a Mateo",
-      "text": "La disciplina es proceso de restauración, no de castigo. Testigos, Iglesia, oración. La presencia de Cristo en medio de dos o tres no es genérica: es su presencia judicial en la disciplina. La Iglesia es su tribunal de gracia."
+      "author": "Atanasio · Sobre la encarnación",
+      "text": "Lo que comenzó en el Jordán culmina en la ascensión: el Verbo encarnado recorre íntegramente nuestra condición para abrirnos la del Padre. Principio y fin se abrazan en la persona de Cristo, centro de toda la Escritura."
     },
     {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 18:15-20 establece el proceso de disciplina: confrontación privada, luego con testigos, luego ante la Iglesia. El objetivo es \"ganar al hermano\" (restauración, no castigo). \"Donde están dos o tres congregados en mi nombre, allí estoy yo\" asegura la presencia de Cristo en la disciplina eclesial."
-    }
-  ],
-  "m66": [
-    {
-      "author": "Hilario de Poitiers · De Trinitate",
-      "text": "El niño es figura de dependencia y confianza. El Reino no se entra por mérito, sino por humildad. Volverse como niño es reconocer la propia pobreza espiritual. Cristo se identifica con el niño: recibirlo es recibir a Cristo."
-    },
-    {
-      "author": "D.A. Carson · Comentario a Mateo",
-      "text": "Mateo 18:1-5 usa al niño como modelo del discípulo. No la inocencia del niño (los niños judíos no eran idealizados), sino su dependencia y falta de status. \"Si no os volvéis y os hacéis como niños, no entraréis en el reino de los cielos\". La humildad es la puerta del Reino."
-    }
-  ],
-  "m67": [
-    {
-      "author": "Crisóstomo · Homilía LXXX sobre Mateo",
-      "text": "La mujer unge a Jesús para su sepultura sin saberlo. Su amor es profético. Criticada por los discípulos, defendida por Cristo. El Evangelio se predicará y se recordará su obra. La devoción precede a la doctrina."
-    },
-    {
-      "author": "Craig Keener · Comentario a Mateo",
-      "text": "La unción en Betania (Mt 26:6-13) es profética: la mujer unge a Jesús \"para prepararme para la sepultura\". Jesús interpreta su acto como anticipación de su muerte. \"Dondequiera que se predique este evangelio, también se contará lo que ésta ha hecho\". La devoción es memoria perpetua."
-    }
-  ],
-  "m68": [
-    {
-      "author": "Crisóstomo · Homilía LXXXI sobre Mateo",
-      "text": "Cristo transforma la Pascua. El pan y la copa son ahora su cuerpo y su sangre. El verdadero Cordero pascual es él. La Cena es memorial de su muerte, pero también banquete anticipado del Reino. No beberé más de este fruto de la vid hasta aquel día."
-    },
-    {
-      "author": "Herman Bavinck · Nuevos Comentarios a Heidelberg",
-      "text": "La última cena (Mt 26:17-30) transforma la Pascua judía en Cena del Señor. Cristo es el verdadero Cordero pascual. El pan = cuerpo. La copa = sangre del nuevo pacto. \"Haced esto en memoria de mí\" instituye un sacramento: signo y sello del nuevo pacto."
-    }
-  ],
-  "m69": [
-    {
-      "author": "Crisóstomo · Homilía LXXXIII sobre Mateo",
-      "text": "Cristo ora como hombre verdadero. La copa es la ira de Dios sobre el pecado. No rehúsa la voluntad del Padre, sino que la abraza. La oración de Getsemaní es modelo: \"no como yo quiero, sino como tú\". La obediencia hasta la cruz."
-    },
-    {
-      "author": "Donald Macleod · Cristo Crucificado",
-      "text": "Getsemaní (Mt 26:36-46) muestra a Cristo orando como hombre verdadero. \"Esta copa\" es la ira de Dios sobre el pecado. Cristo no rehúsa la voluntad del Padre, sino que la abraza: \"no como yo quiero, sino como tú\". La oración es modelo de sumisión. La obediencia de Cristo va hasta la cruz."
-    }
-  ],
-  "m70": [
-    {
-      "author": "Jerónimo · Comentario a Mateo",
-      "text": "El gallo canta y Pedro llora. La caída del apóstol es consuelo para todos los caídos. La mirada de Cristo precede al llanto. La gracia restaurará a Pedro en el mar de Galilea. El pecado no tiene la última palabra."
-    },
-    {
-      "author": "John Owen · Sobre la Apostasía",
-      "text": "La negación de Pedro (Mt 26:69-75) muestra que aun los apóstoles pueden caer gravemente. Pero la diferencia entre Pedro y Judas no es la caída, sino el arrepentimiento: Pedro llora amargamente; Judas se desespera. La mirada de Cristo precede al llanto. La gracia restaura al caído que se arrepiente."
-    }
-  ],
-  "m71": [
-    {
-      "author": "Crisóstomo · Homilía LXXXVI sobre Mateo",
-      "text": "Cristo ante Pilato es el Siervo silencioso. Confiesa su realeza, pero redefine: \"mi reino no es de este mundo\" (Jn 18:36). Barrabás es liberado; el Justo condenado. El gran intercambio: culpable libre, inocente muerto."
-    },
-    {
-      "author": "John Stott · La Cruz de Cristo",
-      "text": "Mateo 27:11-26 muestra a Cristo ante Pilato. Jesús confiesa su realeza pero redefine su naturaleza: su reino es espiritual, no político. La liberación de Barrabás y condena de Cristo es el \"gran intercambio\": el culpable queda libre, el Justo es condenado. Esto prefigura la sustitución penal."
-    }
-  ],
-  "m72": [
-    {
-      "author": "Crisóstomo · Homilía LXXXVIII sobre Mateo",
-      "text": "Cristo clama el inicio del Salmo 22. No abandono metafísico, sino judicial: carga el pecado de los suyos. El Padre vuelve su rostro para reconciliar al mundo. La oscuridad es santo juicio. En este grito nace la salvación."
-    },
-    {
-      "author": "Donald Macleod · Cristo Crucificado",
-      "text": "Mateo 27:46 cita el Salmo 22:1: \"Dios mío, ¿por qué me has desamparado?\". Cristo no abandona la filiación, sino que experimenta el abandono judicial que el pecador merece. El Padre vuelve su rostro al Hijo que carga el pecado. En este grito de abandono nace nuestra salvación."
-    }
-  ],
-  "m73": [
-    {
-      "author": "Jerónimo · Comentario a Mateo",
-      "text": "Dios rasga el velo, no el hombre (\"de arriba abajo\"). El velo era del Lugar Santísimo. Su rasgamiento es teológico: el acceso al Padre está abierto por la muerte de Cristo. Cumple la tipología del AT. El templo antiguo caduca."
-    },
-    {
-      "author": "N.T. Wright · Jesús y la Victoria de Dios",
-      "text": "El rasgamiento del velo del templo (Mt 27:51) es teológicamente significativo: indica el fin del sistema del templo. Dios rasga el velo \"de arriba abajo\", no los hombres. El acceso a Dios ya no es por sacerdocio levítico y sacrificios, sino por la sangre de Cristo."
-    }
-  ],
-  "m74": [
-    {
-      "author": "Crisóstomo · Homilía XC sobre Mateo",
-      "text": "La tumba vacía es prueba de la victoria. Cristo resucita por su propio poder, pero el Padre le levanta. Cumple el Salmo 16: \"no dejarás mi alma en el Hades\". Las mujeres son primeras testigos: la gracia invierte el orden social."
-    },
-    {
-      "author": "N.T. Wright · La Resurrección del Hijo de Dios",
-      "text": "La resurrección de Cristo (Mt 28:1-10) no es reanimación (como Lázaro), sino el inicio de la nueva creación. Es el primer evento escatológico: el final de la muerte ha comenzado en Cristo. La tumba vacía y las apariciones son evidencia histórica. La resurrección confirma que la cruz fue victoria."
-    }
-  ],
-  "m75": [
-    {
-      "author": "Crisóstomo · Homilía sobre 1 Pedro",
-      "text": "Cristo es la piedra angular que une judío y gentil en un solo pueblo sacerdotal. Ya no hay casta sacerdotal; todos los creyentes son sacerdotes. Cada cristiano ofrece sacrificios espirituales y tiene acceso directo al Padre por el único Mediador."
-    },
-    {
-      "author": "Martin Lutero · A la Nobleza Cristiana",
-      "text": "1 Pedro 2:9 establece el sacerdocio universal de todos los creyentes. No hay casta sacerdotal en el nuevo pacto. Cada cristiano tiene acceso directo a Dios por Cristo. El sacerdocio católico romano de orden es negación del sacerdocio único de Cristo y del sacerdocio universal de los creyentes."
+      "author": "Richard Bauckham · Jesús y los testigos oculares",
+      "text": "El inclusio de Marcos entre 1,1 y 16,20 enmarca el Evangelio como cumplimiento de la promesa en la persona de Jesús. La predicación confirmada con señales muestra que el «principio» del evangelio sigue desplegándose en la misión de la Iglesia."
     }
   ]
 };
