@@ -1788,6 +1788,247 @@ body.theme-light .bp-link .bp-desc{
   .difficulty-btn::after { display: none; }
 }
 
+
+/* ---------- LEVEL FEEDBACK V3: novedades por nivel ---------- */
+
+/* Gating real de contenido por nivel: en Básico se oculta lo de Intermedio+ */
+body.level-beginner .extended-comments-section{display:none !important}
+body.level-beginner .context-link{display:none !important}
+body.level-beginner .glossary-term{
+  border-bottom:none;
+  cursor:inherit;
+  color:inherit;
+  position:static;
+}
+body.level-beginner .glossary-term:hover{color:inherit}
+body.level-beginner .glossary-tooltip{display:none !important}
+
+/* Chip NUEVO: contenido destacado del nivel actual (persistente) */
+.novelty-chip{
+  position:absolute;
+  top:-8px;
+  left:-8px;
+  font-size:.52rem;
+  font-weight:800;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  padding:2px 7px;
+  border-radius:9px;
+  z-index:6;
+  pointer-events:none;
+  white-space:nowrap;
+}
+.novelty-chip.intermediate{
+  background:rgba(13,27,42,.95);
+  color:var(--pacto);
+  border:1px solid rgba(88,166,255,.85);
+  box-shadow:0 0 10px -2px rgba(88,166,255,.75);
+}
+.novelty-chip.advanced{
+  background:rgba(13,27,42,.95);
+  color:var(--esperanza);
+  border:1px solid rgba(184,124,255,.85);
+  box-shadow:0 0 10px -2px rgba(184,124,255,.75);
+}
+body.theme-light .novelty-chip.intermediate{
+  background:rgba(255,255,255,.97);
+  color:#1f6feb;
+  border-color:#1f6feb;
+}
+body.theme-light .novelty-chip.advanced{
+  background:rgba(255,255,255,.97);
+  color:#8250df;
+  border-color:#8250df;
+}
+.mobile-node-card .novelty-chip{
+  top:-8px;
+  left:10px;
+  font-size:.56rem;
+}
+
+/* Aro de color en nodos destacados del nivel (efecto básico, persistente) */
+body.level-intermediate .node.is-featured{
+  outline:1.5px solid rgba(88,166,255,.6);
+  outline-offset:2px;
+}
+body.level-advanced .node.is-featured{
+  outline:1.5px solid rgba(184,124,255,.65);
+  outline-offset:2px;
+}
+body.level-intermediate .mobile-node-card.is-featured{
+  outline:1.5px solid rgba(88,166,255,.6);
+  outline-offset:2px;
+}
+body.level-advanced .mobile-node-card.is-featured{
+  outline:1.5px solid rgba(184,124,255,.65);
+  outline-offset:2px;
+}
+
+/* Modo foco "Novedades": atenúa lo que no aporta contenido destacado */
+body.novelty-focus .node:not(.is-featured){opacity:.13;filter:grayscale(.75)}
+body.novelty-focus .mobile-node-card:not(.is-featured){opacity:.22}
+body.novelty-focus .arrow-path{opacity:.05}
+body.novelty-focus .cluster{opacity:.22}
+
+/* Pastilla "Novedades" en los filtros */
+.marker-filter-pill.novelty-filter-pill.active{
+  background:rgba(88,166,255,.16);
+  border-color:rgba(88,166,255,.65);
+  color:var(--pacto);
+}
+
+/* Panel de resumen al cambiar de nivel */
+.level-news-panel{
+  position:fixed;
+  bottom:88px;
+  left:50%;
+  transform:translateX(-50%) translateY(14px);
+  width:min(400px,calc(100% - 24px));
+  background:linear-gradient(160deg,var(--panel),var(--panel-2));
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px 12px;
+  z-index:950;
+  box-shadow:0 12px 34px -8px rgba(0,0,0,.55);
+  opacity:0;
+  pointer-events:none;
+  transition:.28s ease;
+}
+.level-news-panel.show{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.level-news-panel .news-close{
+  position:absolute;
+  top:6px;
+  right:8px;
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-size:1.05rem;
+  cursor:pointer;
+  line-height:1;
+  padding:4px 6px;
+}
+.level-news-panel .news-close:hover{color:var(--text)}
+.level-news-panel .news-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:6px;
+  padding-right:22px;
+}
+.level-news-panel .news-icon{font-size:1.05rem}
+.level-news-panel .news-title{
+  font-weight:700;
+  font-size:.92rem;
+  letter-spacing:.2px;
+}
+.level-news-panel .news-sub{
+  font-size:.74rem;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.level-news-panel .news-list{
+  list-style:none;
+  margin:0 0 10px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.level-news-panel .news-list li{
+  font-size:.76rem;
+  color:var(--text);
+  display:flex;
+  gap:7px;
+  align-items:baseline;
+  line-height:1.45;
+}
+.level-news-panel .news-list li::before{
+  content:"\2726";
+  font-size:.62rem;
+  flex:0 0 auto;
+  opacity:.9;
+}
+.level-news-panel .news-list.intermediate li::before{color:var(--pacto)}
+.level-news-panel .news-list.advanced li::before{color:var(--esperanza)}
+.level-news-panel .news-list.beginner li::before{color:var(--iglesia)}
+.level-news-panel .news-list li b{color:var(--pacto)}
+.level-news-panel .news-list.advanced li b{color:var(--esperanza)}
+.level-news-panel .news-btn{
+  width:100%;
+  padding:8px 10px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.3px;
+  background:rgba(88,166,255,.14);
+  border:1px solid rgba(88,166,255,.55);
+  color:var(--pacto);
+  transition:.18s;
+}
+.level-news-panel .news-btn:hover{background:rgba(88,166,255,.26)}
+.level-news-panel .news-btn.advanced{
+  background:rgba(184,124,255,.14);
+  border-color:rgba(184,124,255,.55);
+  color:var(--esperanza);
+}
+.level-news-panel .news-btn.advanced:hover{background:rgba(184,124,255,.26)}
+
+/* Botón flotante para salir del modo foco */
+.novelty-exit-btn{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  display:none;
+  align-items:center;
+  gap:8px;
+  padding:9px 16px;
+  border-radius:999px;
+  cursor:pointer;
+  z-index:940;
+  background:rgba(13,27,42,.92);
+  border:1px solid rgba(88,166,255,.6);
+  color:#79c0ff;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.3px;
+  box-shadow:0 8px 26px -6px rgba(0,0,0,.6);
+}
+body.theme-light .novelty-exit-btn{
+  background:rgba(255,255,255,.95);
+  color:#1f6feb;
+}
+.novelty-exit-btn .exit-count{
+  background:rgba(88,166,255,.2);
+  border-radius:999px;
+  padding:1px 8px;
+  font-size:.7rem;
+}
+body.novelty-focus .novelty-exit-btn{display:flex}
+
+/* Línea "nuevo en este nivel" dentro del modal */
+.node-news-line{
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.3px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.node-news-line.intermediate{color:var(--pacto)}
+.node-news-line.advanced{color:var(--esperanza)}
+
+@media (max-width:768px){
+  .level-news-panel{bottom:calc(80px + var(--safe-bottom,0px))}
+  .novelty-exit-btn{bottom:calc(20px + var(--safe-bottom,0px))}
+}
+
 </style>
 <style>
 :root{
@@ -2773,6 +3014,7 @@ body.theme-light .cluster{
       <li><b>Buscar</b> en la caja superior por título, referencia bíblica o tema</li>
       <li><b>Filtros</b> por categoría: clic en las pastillas de color</li>
       <li><b>Referencias cruzadas</b> en el modal: clic para saltar a otro nodo</li>
+      <li><b>Niveles de estudio</b> (Básico · Intermedio · Avanzado): al cambiar de nivel, los nodos con contenido nuevo llevan la etiqueta <b>NUEVO</b> con un aro de color; la pastilla <b>Novedades</b> resalta solo esos nodos</li>
     </ul>
     <p style="font-style:italic;color:var(--muted);font-size:.78rem;margin-top:14px">Comentarios clásicos y modernos: Juan Calvino, Agustín de Hipona, Crisóstomo, Matthew Henry, Jerónimo, Hilario de Poitiers, D.A. Carson, R.T. France, Craig Keener.</p>
   </div>
@@ -5321,7 +5563,7 @@ showNodeDetails = function(node) {
 };
 
 // Helper: build a key for ORIGINAL_TEXTS lookup
-function buildLookupKey(node) {
+function buildLookupKey(node, lookupStore) {
   // Try to match node.ref to a key like 'heb-1:3' or 'mt-1:23'
   const ref = node.ref;
   // Extract book abbreviation and chapter:verse
@@ -5338,24 +5580,37 @@ function buildLookupKey(node) {
   const startVerse = match[2];
   const endVerse = match[3] || startVerse;
 
-  // Try each verse in the range
-  for (let v = parseInt(startVerse); v <= parseInt(endVerse); v++) {
-    // Try exact key first: heb-chapter:verse
-    const exactKey = `${bookAbbr}-${chapter}:${v}`;
-    if (ORIGINAL_TEXTS[exactKey]) return exactKey;
+  // Stores to search: the requested one, or greek first and then versions
+  const stores = lookupStore ? [lookupStore]
+    : [ORIGINAL_TEXTS, (typeof VERSIONS !== 'undefined' ? VERSIONS : null)];
 
-    // Try ranges: look for keys like 'heb-chapter:verse-X' or 'heb-chapter:X-verse'
-    for (const k of Object.keys(ORIGINAL_TEXTS)) {
-      const keyMatch = k.match(new RegExp(`^${bookAbbr}-${chapter}:([0-9]+)(?:-([0-9]+))?$`));
-      if (keyMatch) {
-        const kStartVerse = parseInt(keyMatch[1]);
-        const kEndVerse = keyMatch[2] ? parseInt(keyMatch[2]) : kStartVerse;
-        if (v >= kStartVerse && v <= kEndVerse) return k;
+  // Try each verse in the range, store by store
+  for (const st of stores) {
+    if (!st) continue;
+    for (let v = parseInt(startVerse); v <= parseInt(endVerse); v++) {
+      // Try exact key first: book-chapter:verse
+      const exactKey = `${bookAbbr}-${chapter}:${v}`;
+      if (st[exactKey]) return exactKey;
+
+      // Try ranges: look for keys like 'book-chapter:verse-X'
+      for (const k of Object.keys(st)) {
+        const keyMatch = k.match(new RegExp(`^${bookAbbr}-${chapter}:([0-9]+)(?:-([0-9]+))?$`));
+        if (keyMatch) {
+          const kStartVerse = parseInt(keyMatch[1]);
+          const kEndVerse = keyMatch[2] ? parseInt(keyMatch[2]) : kStartVerse;
+          if (v >= kStartVerse && v <= kEndVerse) return k;
+        }
       }
     }
   }
 
   return null;
+}
+
+// Resolve a key specifically in VERSIONS (comparative versions)
+function buildVersionKey(node) {
+  if (typeof VERSIONS === 'undefined') return null;
+  return buildLookupKey(node, VERSIONS);
 }
 
 // Add original text section
@@ -5431,7 +5686,7 @@ function addOriginalTextSection(node, modalBody) {
 function addVersionsSection(node, modalBody) {
   if (modalBody.querySelector('.versions-section')) return;
 
-  const key = buildLookupKey(node);
+  const key = (typeof buildVersionKey === 'function') ? buildVersionKey(node) : buildLookupKey(node);
   if (!key) return;
 
   const data = VERSIONS[key];
@@ -6365,7 +6620,8 @@ function countHigherLevelNodes() {
   let greekCount = 0;
   NODES.forEach(n => {
     const key = buildLookupKey(n);
-    if (key && typeof VERSIONS !== 'undefined' && VERSIONS[key]) versionsCount++;
+    const vkey = (typeof buildVersionKey === 'function') ? buildVersionKey(n) : key;
+    if (vkey && typeof VERSIONS !== 'undefined' && VERSIONS[vkey]) versionsCount++;
     if (key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key]) greekCount++;
   });
   return { versionsCount, greekCount };
@@ -6391,8 +6647,9 @@ function updateNodeMarkers() {
     const node = nodeMap[nodeId];
     if (!node) return;
     const key = buildLookupKey(node);
+    const vkey = (typeof buildVersionKey === 'function') ? buildVersionKey(node) : key;
 
-    const hasVersions = key && typeof VERSIONS !== 'undefined' && VERSIONS[key];
+    const hasVersions = vkey && typeof VERSIONS !== 'undefined' && VERSIONS[vkey];
     const hasGreek = key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key];
 
     // Remove existing markers
@@ -6404,8 +6661,8 @@ function updateNodeMarkers() {
     if (currentLevel === 'beginner') {
       // Show both markers
       if (hasVersions || hasGreek) {
-        el.classList.add(hasVersions ? 'has-versions' : '');
-        el.classList.add(hasGreek ? 'has-greek' : '');
+        if (hasVersions) el.classList.add('has-versions');
+        if (hasGreek) el.classList.add('has-greek');
         const indicator = document.createElement('div');
         indicator.className = 'level-indicator';
         if (hasVersions) indicator.innerHTML += '<span class="level-dot versions" title="Tiene versiones comparativas"></span>';
@@ -6432,8 +6689,9 @@ function updateNodeMarkers() {
     const node = nodeMap[nodeId];
     if (!node) return;
     const key = buildLookupKey(node);
+    const vkey = (typeof buildVersionKey === 'function') ? buildVersionKey(node) : key;
 
-    const hasVersions = key && typeof VERSIONS !== 'undefined' && VERSIONS[key];
+    const hasVersions = vkey && typeof VERSIONS !== 'undefined' && VERSIONS[vkey];
     const hasGreek = key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key];
 
     el.classList.remove('has-versions', 'has-greek');
@@ -6442,8 +6700,8 @@ function updateNodeMarkers() {
 
     if (currentLevel === 'beginner') {
       if (hasVersions || hasGreek) {
-        el.classList.add(hasVersions ? 'has-versions' : '');
-        el.classList.add(hasGreek ? 'has-greek' : '');
+        if (hasVersions) el.classList.add('has-versions');
+        if (hasGreek) el.classList.add('has-greek');
         const indicator = document.createElement('div');
         indicator.className = 'level-indicator';
         if (hasVersions) indicator.innerHTML += '<span class="level-dot versions" title="Versiones comparativas"></span>';
@@ -6544,6 +6802,274 @@ applyFilter = function() {
 };
 
 window.level_feedback_v2 = true;
+
+
+// ============================================================
+// LEVEL FEEDBACK V3: novedades por nivel + panel de resumen
+// ============================================================
+(function(){
+  if (window.level_feedback_v3) return;
+  window.level_feedback_v3 = true;
+
+  var INTRO_KEY = 'biblia-level-news-intro-v1';
+  var introTimer = null;
+  var focusActive = false;
+
+  function nNodos(n){ return n === 1 ? '1 nodo' : n + ' nodos'; }
+  function resaltar(feat, what){
+    return feat === 1 ? 'Resaltar el único nodo con ' + what
+                      : 'Resaltar los ' + feat + ' nodos con ' + what;
+  }
+
+  // ---- Qué aporta cada nodo en cada nivel ----
+  function getNodeExtras(node){
+    if (!node) return { extended: [], hasVersions: false, hasGreek: false };
+    var ext = [];
+    try {
+      if (typeof ADDITIONAL_COMMENTS !== 'undefined' && ADDITIONAL_COMMENTS[node.id]) {
+        var v = ADDITIONAL_COMMENTS[node.id];
+        ext = Array.isArray(v) ? v : [v];
+      }
+      if (!ext.length && typeof BATCH1_COMMENTS !== 'undefined' && BATCH1_COMMENTS[node.id]) {
+        ext = [BATCH1_COMMENTS[node.id]];
+      }
+      if (!ext.length && typeof FULL_EXTENDED_COMMENTS !== 'undefined' && FULL_EXTENDED_COMMENTS[node.id]) {
+        var f = FULL_EXTENDED_COMMENTS[node.id];
+        ext = Array.isArray(f) ? f : [f];
+      }
+    } catch (e) {}
+    var key = (typeof buildLookupKey === 'function') ? buildLookupKey(node) : null;
+    var vkey = (typeof buildVersionKey === 'function') ? buildVersionKey(node) : key;
+    var hasVersions = !!(vkey && typeof VERSIONS !== 'undefined' && VERSIONS[vkey]);
+    var hasGreek = !!(key && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[key]);
+    return { extended: ext, hasVersions: hasVersions, hasGreek: hasGreek };
+  }
+
+  // Nodos destacados del nivel: lo escaso y visible del mapa
+  function isFeaturedAt(level, ex){
+    if (level === 'intermediate') return ex.hasVersions;
+    if (level === 'advanced') return ex.hasGreek;
+    if (level === 'beginner') return ex.hasVersions || ex.hasGreek;
+    return false;
+  }
+
+  function computeStats(level){
+    level = level || currentLevel;
+    var s = { total: 0, ext: 0, ver: 0, grk: 0, feat: 0 };
+    NODES.forEach(function(n){
+      var ex = getNodeExtras(n);
+      s.total++;
+      if (ex.extended.length) s.ext++;
+      if (ex.hasVersions) s.ver++;
+      if (ex.hasGreek) s.grk++;
+      if (isFeaturedAt(level, ex)) s.feat++;
+    });
+    return s;
+  }
+
+  // ---- Marcadores persistentes (permanecen mientras estás en el nivel) ----
+  function applyNoveltyMarkers(){
+    var level = currentLevel;
+    document.querySelectorAll('.node, .mobile-node-card').forEach(function(el){
+      el.classList.remove('is-featured', 'advanced-novelty');
+      var chip = el.querySelector('.novelty-chip');
+      if (chip) chip.remove();
+      var node = nodeMap[el.dataset.id];
+      if (!node) return;
+      var ex = getNodeExtras(node);
+      if (!isFeaturedAt(level, ex)) return;
+      el.classList.add('is-featured');
+      if (level === 'advanced') el.classList.add('advanced-novelty');
+      if (level === 'intermediate' || level === 'advanced') {
+        var c = document.createElement('span');
+        c.className = 'novelty-chip ' + level;
+        c.textContent = 'NUEVO';
+        c.title = level === 'intermediate'
+          ? 'Novedad en Intermedio: versiones comparativas (RVR · NVI · LBLA)'
+          : 'Novedad en Avanzado: texto griego interlineal';
+        el.appendChild(c);
+      }
+    });
+    updateNoveltyPill();
+  }
+
+  var _origUpdateNodeMarkersV3 = updateNodeMarkers;
+  updateNodeMarkers = function(){
+    _origUpdateNodeMarkersV3.apply(this, arguments);
+    applyNoveltyMarkers();
+  };
+
+  // ---- Tooltips con conteos reales ----
+  var _origUpdateTooltipsV3 = updateDifficultyTooltips;
+  updateDifficultyTooltips = function(){
+    if (_origUpdateTooltipsV3) _origUpdateTooltipsV3.apply(this, arguments);
+    try {
+      var s = computeStats();
+      var b = document.querySelector('.difficulty-btn[data-level="beginner"]');
+      var i = document.querySelector('.difficulty-btn[data-level="intermediate"]');
+      var a = document.querySelector('.difficulty-btn[data-level="advanced"]');
+      if (b) b.setAttribute('data-tooltip', 'Esencial: versículos + comentario clásico');
+      if (i) i.setAttribute('data-tooltip', '+ ' + nNodos(s.ext) + ' con comentarios extendidos · ' + nNodos(s.ver) + ' con versiones · glosario');
+      if (a) a.setAttribute('data-tooltip', '+ ' + nNodos(s.grk) + ' con griego interlineal (incluye todo Intermedio)');
+    } catch (e) {}
+  };
+
+  // ---- Modo foco "Novedades" ----
+  function setNoveltyFocus(on){
+    focusActive = on;
+    document.body.classList.toggle('novelty-focus', on);
+    var s = computeStats();
+    var what = currentLevel === 'advanced' ? 'griego' :
+               (currentLevel === 'intermediate' ? 'versiones' : 'contenido adicional');
+    var pill = document.querySelector('.novelty-filter-pill');
+    if (pill) pill.classList.toggle('active', on);
+    var exitBtn = document.getElementById('noveltyExitBtn');
+    if (exitBtn) {
+      exitBtn.innerHTML = '× Ver todos · <span class="exit-count">' + s.feat + ' con ' + what + '</span>';
+    }
+    var panel = document.getElementById('levelNewsPanel');
+    if (on && panel) panel.classList.remove('show');
+    if (typeof showToast === 'function') {
+      showToast(on ? (s.feat === 1 ? 'Resaltado: 1 nodo con ' + what : 'Resaltados: ' + s.feat + ' nodos con ' + what) : 'Mostrando todos los nodos');
+    }
+  }
+
+  // ---- Panel de resumen al cambiar de nivel ----
+  function ensurePanel(){
+    if (document.getElementById('levelNewsPanel')) return;
+    var p = document.createElement('div');
+    p.className = 'level-news-panel';
+    p.id = 'levelNewsPanel';
+    document.body.appendChild(p);
+    var e = document.createElement('button');
+    e.className = 'novelty-exit-btn';
+    e.id = 'noveltyExitBtn';
+    e.type = 'button';
+    e.addEventListener('click', function(){ setNoveltyFocus(false); });
+    document.body.appendChild(e);
+  }
+
+  function showLevelNews(level){
+    ensurePanel();
+    var p = document.getElementById('levelNewsPanel');
+    if (!p) return;
+    var s = computeStats(level);
+    var icons = { beginner: '\uD83C\uDF3F', intermediate: '\uD83C\uDF0A', advanced: '\uD83D\uDD2E' };
+    var names = { beginner: 'Básico', intermediate: 'Intermedio', advanced: 'Avanzado' };
+    var list = [], btn = '', sub = '';
+    if (level === 'beginner') {
+      sub = 'Vista esencial para una primera lectura:';
+      list.push('Versículos y un comentario clásico por nodo');
+      list.push('Ocultos por ahora: comentarios extendidos, versiones, glosario y griego');
+      if (s.ver + s.grk > 0) list.push('Los puntos azul/púrpura señalan nodos con contenido extra disponible');
+      if (s.feat > 0) btn = '<button class="news-btn" data-focus="1">' + resaltar(s.feat, 'contenido adicional') + '</button>';
+    } else if (level === 'intermediate') {
+      sub = 'Contenido nuevo que no veías en Básico:';
+      if (s.ext > 0) list.push('<b>' + nNodos(s.ext) + '</b> suman comentarios extendidos (dos más por nodo)');
+      if (s.ver > 0) list.push('<b>' + nNodos(s.ver) + '</b> con versiones comparativas RVR · NVI · LBLA → etiqueta NUEVO');
+      list.push('Glosario teológico y enlaces «Contexto» activados');
+      if (s.ver > 0) btn = '<button class="news-btn" data-focus="1">' + resaltar(s.ver, 'versiones') + '</button>';
+    } else {
+      sub = 'Se suma sobre el nivel Intermedio:';
+      if (s.grk > 0) list.push('<b>' + nNodos(s.grk) + '</b> con texto griego interlineal → etiqueta NUEVO púrpura');
+      list.push('Todo lo de Intermedio sigue visible');
+      if (s.grk > 0) btn = '<button class="news-btn advanced" data-focus="1">' + resaltar(s.grk, 'griego') + '</button>';
+    }
+    p.innerHTML = '<button class="news-close" aria-label="Cerrar">×</button>' +
+      '<div class="news-head"><span class="news-icon">' + icons[level] + '</span>' +
+      '<div class="news-title">Nivel ' + names[level] + ' activado</div></div>' +
+      '<div class="news-sub">' + sub + '</div>' +
+      '<ul class="news-list ' + level + '">' +
+      list.map(function(l){ return '<li><span>' + l + '</span></li>'; }).join('') +
+      '</ul>' + btn;
+    p.querySelector('.news-close').addEventListener('click', function(){
+      p.classList.remove('show');
+    });
+    var fb = p.querySelector('[data-focus]');
+    if (fb) fb.addEventListener('click', function(){ setNoveltyFocus(true); });
+    p.classList.add('show');
+  }
+
+  // ---- Pastilla "Novedades" en los filtros ----
+  function ensurePill(){
+    var mf = document.getElementById('markerFilters');
+    if (!mf || document.querySelector('.novelty-filter-pill')) return;
+    var pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'marker-filter-pill novelty-filter-pill';
+    pill.title = 'Resaltar solo los nodos con contenido destacado del nivel actual';
+    pill.innerHTML = '<i class="dot" style="background:var(--pacto)"></i> <span class="pill-label">Novedades</span>';
+    pill.addEventListener('click', function(){ setNoveltyFocus(!focusActive); });
+    mf.appendChild(pill);
+  }
+
+  function updateNoveltyPill(){
+    var pill = document.querySelector('.novelty-filter-pill');
+    if (!pill) return;
+    var s = computeStats();
+    var lbl = pill.querySelector('.pill-label');
+    if (lbl) lbl.textContent = 'Novedades' + (s.feat ? ' · ' + s.feat : '');
+    pill.classList.toggle('active', focusActive);
+  }
+
+  // ---- Al pulsar un botón de nivel: mostrar resumen ----
+  document.querySelectorAll('.difficulty-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      try { localStorage.setItem(INTRO_KEY, '1'); } catch (e) {}
+      if (introTimer) { clearTimeout(introTimer); introTimer = null; }
+      setTimeout(function(){ showLevelNews(btn.dataset.level); }, 60);
+    });
+  });
+
+  // ---- Modal: línea "nuevo en este nivel" ----
+  var _origShowNodeDetailsV3 = showNodeDetails;
+  showNodeDetails = function(node){
+    _origShowNodeDetailsV3.apply(this, arguments);
+    try {
+      var mc = document.querySelector('.modal-content');
+      if (!mc) return;
+      var old = mc.querySelector('.node-news-line');
+      if (old) old.remove();
+      var ex = getNodeExtras(node);
+      var parts = [];
+      if (currentLevel === 'intermediate') {
+        if (ex.extended.length) parts.push(ex.extended.length === 1 ? '1 comentario extendido' : ex.extended.length + ' comentarios extendidos');
+        if (ex.hasVersions) parts.push('versiones comparativas');
+      } else if (currentLevel === 'advanced') {
+        if (ex.hasGreek) parts.push('texto griego interlineal');
+      }
+      if (!parts.length) return;
+      var line = document.createElement('div');
+      line.className = 'node-news-line ' + currentLevel;
+      line.textContent = '\u2726 Nuevo en este nivel: ' + parts.join(' · ');
+      var badge = mc.querySelector('.level-badge');
+      if (badge && badge.parentNode) badge.parentNode.insertBefore(line, badge.nextSibling);
+      else {
+        var title = document.getElementById('modalTitle');
+        if (title && title.parentNode) title.parentNode.insertBefore(line, title.nextSibling);
+      }
+    } catch (e) {}
+  };
+
+  // ---- Init ----
+  function initV3(){
+    ensurePill();
+    ensurePanel();
+    applyNoveltyMarkers();
+    updateDifficultyTooltips();
+  }
+  setTimeout(initV3, 260);
+
+  // Panel introductorio (una sola vez, cualquier libro)
+  try {
+    if (!localStorage.getItem(INTRO_KEY)) {
+      introTimer = setTimeout(function(){
+        try { localStorage.setItem(INTRO_KEY, '1'); } catch (e) {}
+        showLevelNews(currentLevel);
+      }, 1200);
+    }
+  } catch (e) {}
+})();
 
 </script>
 
