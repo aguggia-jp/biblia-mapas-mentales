@@ -1,6 +1,6 @@
 // Service Worker · Hebreos Mapa Interactivo
 // Cache-first strategy for offline use
-const CACHE_NAME = 'hebreos-mapa-v2';
+const CACHE_NAME = 'hebreos-mapa-v3';
 const ASSETS = [
   './',
   './index.html',

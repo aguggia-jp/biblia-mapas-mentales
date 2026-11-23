@@ -454,7 +454,7 @@ body.focus-active .focus-exit-hint{display:block}
   min-width:120px;
 }
 .progress-bar-track{
-  width:60px;height:6px;
+  width:90px;height:7px;
   background:rgba(255,255,255,.06);
   border-radius:3px;
   overflow:hidden;
@@ -464,6 +464,10 @@ body.focus-active .focus-exit-hint{display:block}
   background:linear-gradient(90deg,var(--iglesia),var(--pacto));
   border-radius:3px;
   transition:width .4s ease;
+}
+.progress-bar-fill.complete{
+  background:linear-gradient(90deg,#f6c453,var(--cristo));
+  box-shadow:0 0 10px rgba(246,196,83,.55);
 }
 .progress-bar-text{
   font-weight:600;
@@ -650,7 +654,7 @@ body.focus-active .focus-exit-hint{display:block}
     padding:3px 10px;
     min-width:90px;
   }
-  .progress-bar-track{width:50px;height:5px}
+  .progress-bar-track{width:70px;height:6px}
   .notes-section textarea{font-size:.85rem;min-height:80px}
   .marker-btn{font-size:.7rem;padding:6px 11px}
   .modal-nav-btn{font-size:.74rem;padding:7px 12px}
@@ -1789,6 +1793,27 @@ body.theme-light .bp-link .bp-desc{
 }
 
 
+/* ---------- MODAL LEVEL SWITCH: cambiar profundidad sin salir del nodo ---------- */
+.modal-level-switch{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin:10px 0 14px;padding:8px 10px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.modal-level-switch .mls-label{
+  font-size:.72rem;color:var(--muted);letter-spacing:.4px;
+  margin-right:2px;white-space:nowrap;
+}
+.modal-level-switch .difficulty-btn{
+  font-size:.72rem;padding:5px 12px;border-radius:999px;
+}
+.modal-level-switch .difficulty-btn::after{display:none}
+@media (max-width:768px){
+  .modal-level-switch{gap:5px;padding:7px 8px;margin:8px 0 12px}
+  .modal-level-switch .difficulty-btn{font-size:.68rem;padding:5px 10px}
+}
+
 /* ---------- LEVEL FEEDBACK V3: novedades por nivel ---------- */
 
 /* Gating real de contenido por nivel: en Básico se oculta lo de Intermedio+ */
@@ -2859,6 +2884,13 @@ body.theme-light .cluster{
     <div id="modalCatTag" class="modal-cat-tag"></div>
     <h2 id="modalTitle" class="modal-title"></h2>
     <div id="modalRef" class="modal-ref"></div>
+    <div class="modal-level-switch" id="modalLevelSwitch" role="group" aria-label="Nivel de profundidad del estudio">
+      <span class="mls-label">Profundidad:</span>
+      <button class="difficulty-btn" data-level="beginner" data-tooltip="Solo versículos y comentarios">Básico</button>
+      <button class="difficulty-btn" data-level="intermediate" data-tooltip="+ Comentarios extendidos, glosario y versiones">Intermedio</button>
+      <button class="difficulty-btn" data-level="advanced" data-tooltip="+ Texto griego y análisis del original">Avanzado</button>
+    </div>
+
     <div id="modalBody" class="modal-body"></div>
 
     <div class="modal-markers" id="modalMarkers"></div>
@@ -4442,7 +4474,7 @@ setTimeout(initFocusMode, 100);
 // ============================================================
 // STAGE 1: PERSONAL STUDY FEATURES
 // ============================================================
-const BOOK_ID = 'heb';
+const BOOK_ID = 'mat';
 
 // Storage helpers (per book + per node)
 function getStorageKey(nodeId, suffix) {
@@ -4535,16 +4567,26 @@ function cycleMarker(nodeId) {
 // Update progress bar
 function updateProgressBar() {
   const total = NODES.length;
-  let studied = 0;
+  let studied = 0, favs = 0;
   NODES.forEach(n => {
     const m = loadMarker(n.id);
-    if (m === 'studied' || m === 'favorite') studied++;
+    if (m === 'studied') studied++;
+    else if (m === 'favorite') { studied++; favs++; }
   });
   const pct = total > 0 ? Math.round((studied / total) * 100) : 0;
   const fill = document.getElementById('progressBarFill');
   const text = document.getElementById('progressBarText');
+  const container = document.getElementById('progressBarContainer');
   if (fill) fill.style.width = pct + '%';
-  if (text) text.textContent = `${studied}/${total}`;
+  if (text) text.textContent = total > 0 ? `${studied}/${total} · ${pct}%` : '0/N';
+  if (container) container.title = `Progreso de estudio: ${studied} de ${total} nodos estudiados (${favs} favoritos). Toca el círculo de un nodo para marcarlo como estudiado.`;
+  if (fill) fill.classList.toggle('complete', pct === 100);
+  // Celebración al completar el libro (solo en la transición a 100%, no al recargar)
+  const prev = (typeof window._progressPct === 'number') ? window._progressPct : 0;
+  if (total > 0 && pct === 100 && prev < 100 && typeof showToast === 'function') {
+    showToast('\u00a1Libro completado! Has estudiado los ' + total + ' nodos.', 4000);
+  }
+  window._progressPct = pct;
 }
 
 // Get ordered list of node IDs (by cluster position, then slot)
@@ -6630,13 +6672,9 @@ function countHigherLevelNodes() {
 // Update difficulty button tooltips with counts
 function updateDifficultyTooltips() {
   const { versionsCount, greekCount } = countHigherLevelNodes();
-  const beginnerBtn = document.querySelector('.difficulty-btn[data-level="beginner"]');
-  const intermediateBtn = document.querySelector('.difficulty-btn[data-level="intermediate"]');
-  const advancedBtn = document.querySelector('.difficulty-btn[data-level="advanced"]');
-
-  if (beginnerBtn) beginnerBtn.setAttribute('data-tooltip', 'Solo versículos y comentarios');
-  if (intermediateBtn) intermediateBtn.setAttribute('data-tooltip', '+ Comentarios extendidos, glosario y ' + versionsCount + ' nodos con versiones comparativas');
-  if (advancedBtn) advancedBtn.setAttribute('data-tooltip', '+ ' + greekCount + ' nodos con texto griego original');
+  document.querySelectorAll('.difficulty-btn[data-level="beginner"]').forEach(b => b.setAttribute('data-tooltip', 'Solo versículos y comentarios'));
+  document.querySelectorAll('.difficulty-btn[data-level="intermediate"]').forEach(b => b.setAttribute('data-tooltip', '+ Comentarios extendidos, glosario y ' + versionsCount + ' nodos con versiones comparativas'));
+  document.querySelectorAll('.difficulty-btn[data-level="advanced"]').forEach(b => b.setAttribute('data-tooltip', '+ ' + greekCount + ' nodos con texto griego original'));
 }
 
 // Apply/remove visual markers on canvas nodes and mobile cards
@@ -7075,6 +7113,37 @@ window.level_feedback_v2 = true;
 
 <!-- ========== TOAST ========== -->
 <div class="toast" id="toast"></div>
+
+<script>
+// ---------- SCROLL INTELIGENTE: al subir de nivel desde el modal, el scroll
+// se desplaza a la primera sección nueva desbloqueada ----------
+(function(){
+  var modal = document.getElementById('modal');
+  if (!modal) return;
+  modal.addEventListener('click', function(e){
+    var btn = (e.target && e.target.closest) ? e.target.closest('.modal-level-switch .difficulty-btn') : null;
+    if (!btn || !modal.classList.contains('show')) return;
+    var level = btn.dataset.level;
+    setTimeout(function(){
+      var mc = modal.querySelector('.modal-content');
+      if (!mc) return;
+      var target = null;
+      if (level === 'intermediate') {
+        target = mc.querySelector('.versions-section') ||
+                 mc.querySelector('.extended-comments-section') ||
+                 mc.querySelector('.node-news-line');
+      } else if (level === 'advanced') {
+        target = mc.querySelector('.original-text-section') ||
+                 mc.querySelector('.node-news-line');
+      }
+      if (target) {
+        var r = mc.getBoundingClientRect(), s = target.getBoundingClientRect();
+        mc.scrollTo({ top: mc.scrollTop + (s.top - r.top) - 18, behavior: 'smooth' });
+      }
+    }, 420);
+  });
+})();
+</script>
 
 </body>
 </html>

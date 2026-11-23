@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mateo-mapa-v2';
+const CACHE_NAME = 'mateo-mapa-v3';
 const ASSETS = [
   './',
   './index.html',
