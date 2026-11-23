@@ -1649,6 +1649,112 @@ body.theme-light .bp-link .bp-desc{
   .bp-link .bp-desc{font-size:.7rem}
 }
 
+
+/* ---------- LEVEL FEEDBACK ---------- */
+
+/* Highlight animation for newly appearing content */
+@keyframes highlightFade {
+  0% { background-color: rgba(184, 124, 255, 0.3); box-shadow: 0 0 16px rgba(184, 124, 255, 0.4); }
+  100% { background-color: transparent; box-shadow: none; }
+}
+@keyframes highlightFadeVersions {
+  0% { background-color: rgba(88, 166, 255, 0.2); box-shadow: 0 0 16px rgba(88, 166, 255, 0.4); }
+  100% { background-color: transparent; box-shadow: none; }
+}
+.highlight-new {
+  animation: highlightFade 1.8s ease-out;
+  border-radius: 8px;
+}
+.highlight-new-versions {
+  animation: highlightFadeVersions 1.8s ease-out;
+  border-radius: 8px;
+}
+
+/* Difficulty selector tooltips */
+.difficulty-btn {
+  position: relative;
+  overflow: visible;
+}
+.difficulty-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 29, 40, 0.95);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: .66rem;
+  font-weight: 400;
+  letter-spacing: .3px;
+  text-transform: none;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+  z-index: 100;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
+}
+.difficulty-btn:hover::after {
+  opacity: 1;
+}
+
+/* Level badge in modal */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .62rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 11px;
+  margin-bottom: 8px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.level-badge.beginner {
+  background: rgba(61, 220, 132, 0.14);
+  color: var(--iglesia);
+  border: 1px solid rgba(61, 220, 132, 0.3);
+}
+.level-badge.intermediate {
+  background: rgba(88, 166, 255, 0.14);
+  color: var(--pacto);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+.level-badge.advanced {
+  background: rgba(184, 124, 255, 0.14);
+  color: var(--esperanza);
+  border: 1px solid rgba(184, 124, 255, 0.3);
+}
+
+/* "Available at higher level" indicator */
+.higher-level-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  background: rgba(184, 124, 255, 0.06);
+  border: 1px dashed rgba(184, 124, 255, 0.25);
+  border-radius: 8px;
+  font-size: .76rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.higher-level-hint .hint-icon {
+  font-size: .9rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .difficulty-btn::after {
+    display: none;
+  }
+}
+
 </style>
 <style>
 :root{
@@ -2356,9 +2462,9 @@ body.theme-light .cluster{
   
   
   <div class="difficulty-selector" id="difficultySelector">
-    <button class="difficulty-btn" data-level="beginner" title="Solo versículos y comentarios">Básico</button>
-    <button class="difficulty-btn active" data-level="intermediate" title="Versículos, comentarios, glosario y referencias cruzadas">Intermedio</button>
-    <button class="difficulty-btn" data-level="advanced" title="Todo + texto original griego + versiones en paralelo">Avanzado</button>
+    <button class="difficulty-btn" data-level="beginner" title="Solo versículos y comentarios" data-tooltip="Solo versículos y comentarios">Básico</button>
+    <button class="difficulty-btn active" data-level="intermediate" title="Versículos, comentarios, glosario y referencias cruzadas" data-tooltip="+ Versiones comparativas y glosario">Intermedio</button>
+    <button class="difficulty-btn" data-level="advanced" title="Todo + texto original griego + versiones en paralelo" data-tooltip="+ Texto griego original con análisis">Avanzado</button>
   </div>
   <div class="progress-bar-container" id="progressBarContainer" title="Progreso de estudio">
     <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
@@ -7296,6 +7402,138 @@ if (themeToggleBtn) {
 }
 
 window.v4_improvements_applied = true;
+
+
+// ============================================================
+// LEVEL FEEDBACK: visual feedback when changing difficulty level
+// ============================================================
+
+const LEVEL_DESCRIPTIONS = {
+  beginner: 'Nivel Básico: versículos y comentarios únicamente',
+  intermediate: 'Nivel Intermedio: añadidas versiones comparativas y glosario teológico',
+  advanced: 'Nivel Avanzado: añadido texto griego original con análisis interlineal'
+};
+
+// Enhanced applyDifficultyLevel with toast
+const _origApplyDifficultyLevelFeedback = applyDifficultyLevel;
+applyDifficultyLevel = function(level) {
+  const previousLevel = currentLevel;
+  _origApplyDifficultyLevelFeedback.apply(this, arguments);
+
+  // Show toast describing what changed
+  if (previousLevel !== level) {
+    showToast(LEVEL_DESCRIPTIONS[level] || 'Nivel cambiado', 3000);
+  }
+
+  // If modal is open, re-render with highlight on new content
+  if (document.getElementById('modal').classList.contains('show') && window.currentNodeId) {
+    const node = nodeMap[window.currentNodeId];
+    if (node) {
+      // Clear flags so content gets re-rendered
+      const modalBody = document.getElementById('modalBody');
+      modalBody.querySelectorAll('[data-glossary-applied]').forEach(el => {
+        delete el.dataset.glossaryApplied;
+      });
+      modalBody.querySelectorAll('[data-context-link-added]').forEach(el => {
+        delete el.dataset.contextLinkAdded;
+      });
+      modalBody.querySelectorAll('.original-text-section, .versions-section, .extended-comments-section, .share-section').forEach(el => el.remove());
+      modalBody.querySelectorAll('.focus-btn').forEach(el => el.remove());
+
+      // Re-show node details
+      setTimeout(() => {
+        showNodeDetails(node);
+
+        // Highlight newly added content
+        if (level === 'intermediate' || level === 'advanced') {
+          setTimeout(() => {
+            const versionsSection = document.querySelector('.versions-section');
+            if (versionsSection) {
+              versionsSection.classList.add('highlight-new-versions');
+              setTimeout(() => versionsSection.classList.remove('highlight-new-versions'), 2000);
+            }
+          }, 200);
+        }
+        if (level === 'advanced') {
+          setTimeout(() => {
+            const originalSection = document.querySelector('.original-text-section');
+            if (originalSection) {
+              originalSection.classList.add('highlight-new');
+              setTimeout(() => originalSection.classList.remove('highlight-new'), 2000);
+            }
+          }, 400);
+        }
+      }, 100);
+    }
+  }
+};
+
+// Add level badge to modal
+const _origShowNodeDetailsLevelFeedback = showNodeDetails;
+showNodeDetails = function(node) {
+  _origShowNodeDetailsLevelFeedback.apply(this, arguments);
+
+  const modalContent = document.querySelector('.modal-content');
+  if (!modalContent) return;
+
+  // Remove existing badge
+  const existingBadge = modalContent.querySelector('.level-badge');
+  if (existingBadge) existingBadge.remove();
+
+  // Add current level badge
+  const badge = document.createElement('div');
+  badge.className = `level-badge ${currentLevel}`;
+  const levelIcons = {
+    beginner: '🌿',
+    intermediate: '🌊',
+    advanced: '🔮'
+  };
+  const levelNames = {
+    beginner: 'Nivel Básico',
+    intermediate: 'Nivel Intermedio',
+    advanced: 'Nivel Avanzado'
+  };
+  badge.innerHTML = `${levelIcons[currentLevel]} ${levelNames[currentLevel]}`;
+
+  // Insert before the cluster badge (or title if no cluster badge)
+  const clusterBadge = modalContent.querySelector('.modal-cluster-badge');
+  const title = document.getElementById('modalTitle');
+  if (clusterBadge) {
+    modalContent.insertBefore(badge, clusterBadge);
+  } else if (title) {
+    modalContent.insertBefore(badge, title);
+  }
+
+  // Add "higher level" hint if applicable
+  const modalBody = document.getElementById('modalBody');
+  if (modalBody) {
+    // Remove existing hint
+    const existingHint = modalBody.querySelector('.higher-level-hint');
+    if (existingHint) existingHint.remove();
+
+    // Check if this node has higher-level content
+    const hasVersions = typeof buildLookupKey === 'function' && buildLookupKey(node) && typeof VERSIONS !== 'undefined' && VERSIONS[buildLookupKey(node)];
+    const hasGreek = typeof buildLookupKey === 'function' && buildLookupKey(node) && typeof ORIGINAL_TEXTS !== 'undefined' && ORIGINAL_TEXTS[buildLookupKey(node)];
+
+    if (currentLevel === 'beginner' && (hasVersions || hasGreek)) {
+      const hint = document.createElement('div');
+      hint.className = 'higher-level-hint';
+      let hintText = '💡 Este nodo tiene contenido adicional: ';
+      if (hasVersions) hintText += 'versiones comparativas (Intermedio)';
+      if (hasVersions && hasGreek) hintText += ', ';
+      if (hasGreek) hintText += 'texto griego (Avanzado)';
+      hint.innerHTML = `<span class="hint-icon">💡</span> ${hintText}. Cambia el nivel para verlo.`;
+      modalBody.appendChild(hint);
+    } else if (currentLevel === 'intermediate' && hasGreek) {
+      const hint = document.createElement('div');
+      hint.className = 'higher-level-hint';
+      hint.innerHTML = `<span class="hint-icon">💡</span> Este nodo tiene texto griego original disponible en Nivel Avanzado.`;
+      modalBody.appendChild(hint);
+    }
+  }
+};
+
+window.level_feedback_applied = true;
 
 </script>
 
