@@ -237,13 +237,13 @@ footer{
   <h1>Mapas Bíblicos Interactivos</h1>
   <p class="subtitle">Estudio tipológico libro por libro · De la sombra a la realidad en Cristo</p>
   <div class="stats">
-    <span><b>66</b> libros</span>
-    <span><b>10</b> divisiones</span>
-    <span><b>5</b> disponibles</span>
-    <span><b>61</b> en preparación</span>
+    <span><b id="stat-total">66</b> libros</span>
+    <span><b id="stat-divisions">10</b> divisiones</span>
+    <span><b id="stat-available">5</b> disponibles</span>
+    <span><b id="stat-coming">61</b> en preparación</span>
   </div>
-  <div class="legend">
-    <span class="legend-item"><i class="dot" style="background:#e0a862"></i> AT · Figura <em>(17)</em></span><span class="legend-item"><i class="dot" style="background:#ff5c5c"></i> Cristo <em>(5)</em></span><span class="legend-item"><i class="dot" style="background:#3ddc84"></i> Iglesia <em>(21)</em></span><span class="legend-item"><i class="dot" style="background:#58a6ff"></i> Pacto / Promesa <em>(5)</em></span><span class="legend-item"><i class="dot" style="background:#b87cff"></i> Esperanza <em>(18)</em></span>
+  <div class="legend" id="legend-bar">
+    <span class="legend-item"><i class="dot" style="background:#e0a862"></i> AT · Figura <em id="cat-at">(0/0)</em></span><span class="legend-item"><i class="dot" style="background:#ff5c5c"></i> Cristo <em id="cat-cristo">(0/0)</em></span><span class="legend-item"><i class="dot" style="background:#3ddc84"></i> Iglesia <em id="cat-iglesia">(0/0)</em></span><span class="legend-item"><i class="dot" style="background:#58a6ff"></i> Pacto / Promesa <em id="cat-pacto">(0/0)</em></span><span class="legend-item"><i class="dot" style="background:#b87cff"></i> Esperanza <em id="cat-esperanza">(0/0)</em></span>
   </div>
 </header>
 
@@ -1051,6 +1051,48 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.warn('[PWA] SW failed:', err.message));
   });
 }
+
+// ============================================================
+// Contador dinámico: cuenta libros disponibles / en preparación
+// y actualiza los stats del header y la leyenda por categoría.
+// ============================================================
+(function() {
+  const cards = document.querySelectorAll('.book-card');
+  let available = 0;
+  let coming = 0;
+  const catAvailable = { at: 0, cristo: 0, iglesia: 0, pacto: 0, esperanza: 0 };
+  const catTotal = { at: 0, cristo: 0, iglesia: 0, pacto: 0, esperanza: 0 };
+
+  cards.forEach(card => {
+    const cat = card.dataset.cat;
+    if (!cat || !(cat in catTotal)) return;
+    catTotal[cat]++;
+    if (card.classList.contains('available')) {
+      available++;
+      catAvailable[cat]++;
+    } else if (card.classList.contains('coming-soon')) {
+      coming++;
+    }
+  });
+
+  const total = available + coming;
+  const divisions = document.querySelectorAll('.division').length;
+
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+  set('stat-total', total);
+  set('stat-divisions', divisions);
+  set('stat-available', available);
+  set('stat-coming', coming);
+
+  Object.keys(catTotal).forEach(cat => {
+    set('cat-' + cat, '(' + catAvailable[cat] + '/' + catTotal[cat] + ')');
+  });
+
+  console.log('[Stats] Libros:', total, '| Disponibles:', available, '| En preparación:', coming, '| Divisiones:', divisions);
+})();
 </script>
 </body>
 </html>

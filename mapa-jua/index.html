@@ -2723,6 +2723,82 @@ body.theme-light .cluster{
   to{opacity:1;transform:translateY(0)}
 }
 
+
+/* ---------- RELATED NODES (improved) ---------- */
+.related-section{
+  margin-top:18px;padding-top:14px;
+  border-top:1px dashed var(--border);
+}
+.related-header{
+  font-size:.7rem;font-weight:700;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.related-group{
+  margin-bottom:12px;
+}
+.related-group-title{
+  font-size:.66rem;font-weight:600;
+  color:var(--muted);opacity:.85;
+  letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:6px;
+  display:flex;align-items:center;gap:5px;
+}
+.related-group-title .group-dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--accent,var(--muted));
+}
+.related-list{
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.related-chip{
+  display:inline-flex;flex-direction:column;
+  font-size:.72rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:5px 10px;border-radius:8px;
+  cursor:pointer;transition:.18s;
+  font-family:inherit;
+  min-width:120px;max-width:240px;
+  text-align:left;
+}
+.related-chip:hover{
+  background:rgba(255,255,255,.08);
+  border-color:var(--cristo);
+  transform:translateY(-1px);
+}
+.related-chip .chip-title{
+  font-weight:600;font-size:.74rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:230px;
+}
+.related-chip .chip-meta{
+  font-size:.66rem;color:var(--muted);
+  margin-top:2px;
+  display:flex;align-items:center;gap:5px;
+}
+.related-chip .chip-cluster{
+  display:inline-block;
+  background:var(--accent,rgba(255,255,255,.1));
+  color:var(--bg);
+  font-weight:700;
+  font-size:.6rem;
+  padding:1px 5px;border-radius:8px;
+  min-width:14px;text-align:center;
+}
+.related-chip.cat-at{--accent:var(--at)}
+.related-chip.cat-cristo{--accent:var(--cristo)}
+.related-chip.cat-iglesia{--accent:var(--iglesia)}
+.related-chip.cat-pacto{--accent:var(--pacto)}
+.related-chip.cat-esperanza{--accent:var(--esperanza)}
+
+.related-empty{
+  font-size:.7rem;color:var(--muted);
+  font-style:italic;padding:6px 0;
+}
+
 </style>
 </head>
 <body>
@@ -3439,7 +3515,7 @@ function showNodeDetails(node) {
     </div>
   `;
 
-  // Find related nodes via connections
+  // Find related nodes via connections (grouped by cluster)
   const related = new Set();
   CONNECTIONS.forEach(([a, b]) => {
     if (a === node.id) related.add(b);
@@ -3447,24 +3523,63 @@ function showNodeDetails(node) {
   });
   const relatedNodes = [...related].map(id => nodeMap[id]).filter(Boolean);
 
-  const crossRefsHtml = relatedNodes.length ? `
-    <div class="cross-refs">
-      <div class="cross-refs-title">Nodos relacionados (${relatedNodes.length})</div>
-      <div class="cross-ref-list">
-        ${relatedNodes.map(n => `<button class="cross-ref-item" data-id="${n.id}">${n.title}</button>`).join('')}
-      </div>
-    </div>
-  ` : '';
+  // Determine current cluster (by canvas position)
+  function _clusterIdx(n) {
+    if (!n) return -1;
+    let row, col;
+    if (n.y < 550) row = 0;
+    else if (n.y < 1090) row = 1;
+    else row = 2;
+    if (n.x < 1000) col = 0;
+    else if (n.x < 1920) col = 1;
+    else col = 2;
+    return row * 3 + col;
+  }
+  const currentCluster = _clusterIdx(node);
+  const inCluster = relatedNodes.filter(n => _clusterIdx(n) === currentCluster);
+  const otherClusters = relatedNodes.filter(n => _clusterIdx(n) !== currentCluster);
 
-  modalBody.innerHTML = versesHtml + commentHtml + crossRefsHtml;
+  function _renderChips(arr) {
+    return arr.map(n => {
+      const cIdx = _clusterIdx(n) + 1;
+      const refShort = (n.ref || '').replace(/^([0-9]+ )?[A-Za-z]+\\s+/, '').replace(/^\\(([^)]+)\\)$/, '$1');
+      return `<button class="related-chip cat-${n.cat}" data-id="${n.id}">
+        <span class="chip-title">${n.title}</span>
+        <span class="chip-meta">
+          <span class="chip-cluster">${cIdx}</span>
+          <span>${n.ref || ''}</span>
+        </span>
+      </button>`;
+    }).join('');
+  }
 
-  // Bind cross-ref clicks
-  modalBody.querySelectorAll('.cross-ref-item').forEach(btn => {
+  let relatedHtml = '';
+  if (relatedNodes.length > 0) {
+    relatedHtml = '<div class="related-section">' +
+      '<div class="related-header">🔗 Nodos relacionados (' + relatedNodes.length + ')</div>';
+    if (inCluster.length > 0) {
+      relatedHtml += '<div class="related-group">' +
+        '<div class="related-group-title"><span class="group-dot"></span>En este cluster (' + inCluster.length + ')</div>' +
+        '<div class="related-list">' + _renderChips(inCluster) + '</div>' +
+      '</div>';
+    }
+    if (otherClusters.length > 0) {
+      relatedHtml += '<div class="related-group">' +
+        '<div class="related-group-title"><span class="group-dot"></span>En otros clusters (' + otherClusters.length + ')</div>' +
+        '<div class="related-list">' + _renderChips(otherClusters) + '</div>' +
+      '</div>';
+    }
+    relatedHtml += '</div>';
+  }
+
+  modalBody.innerHTML = versesHtml + commentHtml + relatedHtml;
+
+  // Bind chip clicks
+  modalBody.querySelectorAll('.related-chip').forEach(btn => {
     btn.addEventListener('click', () => {
       const target = nodeMap[btn.dataset.id];
       if (target) {
         showNodeDetails(target);
-        // Center viewport on the target node
         centerOnNode(target.id);
       }
     });
