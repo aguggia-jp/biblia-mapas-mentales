@@ -5881,6 +5881,7 @@ function buildLookupKey(node, lookupStore) {
   else if (ref.startsWith('Marcos') || ref.startsWith('Mc')) bookAbbr = 'mar';
   else if (ref.startsWith('Lucas') || ref.startsWith('Lc')) bookAbbr = 'luc';
   else if (ref.startsWith('Hechos') || ref.startsWith('Hch')) bookAbbr = 'hec';
+  else if (ref.startsWith('Romanos') || ref.startsWith('Rom')) bookAbbr = 'rom';
   if (!bookAbbr) return null;
 
   // Rangos: simple '1:18-25' o cruce de capítulos '22:30-23:11'
@@ -6093,7 +6094,707 @@ window.stage3_applied = true;
 // EXTENDED COMMENTS: additional scholar insights per node
 // ============================================================
 const ADDITIONAL_COMMENTS = {
-};;;;
+  "r1": [
+    {
+      "author": "Agustín de Hipona · Epístola a los Romanos",
+      "text": "Pablo, siervo de Jesucristo: el título más honroso es ser siervo del Señor. Llamado apóstol: la gracia no anula la vocación, la confirma. Apartado para el evangelio: como los sacrificios del templo eran apartados del uso común, así Pablo fue separado desde el vientre de su madre (Gá 1:15) para un solo fin: anunciar las buenas noticias."
+    },
+    {
+      "author": "Käsemann · Perspectives on Paul",
+      "text": "El saludo romano 1:1-7 contiene toda la cristología paulina en germen: el Hijo davídico según la carne, Hijo de Dios según el Espíritu, el Kyrios a quien pertenece la gracia y la paz. Pablo no presenta un credo: confiesa una persona. La carta entera será el despliegue teológico de este saludo."
+    },
+  ],
+  "r2": [
+    {
+      "author": "Eduard Lohse · Environment of the New Testament",
+      "text": "La «fe que se divulga por todo el mundo» (v.8) era un lugar común en cartas helenísticas, pero aquí tiene base histórica: Suetonio atestigua disturbios en Roma por «Chrestus» (Claudio 25.4, año 49 d.C.), lo que expulsó a Aquila y Priscila. La fe romana era visible hasta para los paganos."
+    },
+    {
+      "author": "Peter Stuhlmacher · Comentario sobre Romanos",
+      "text": "El deseo de Pablo de «comunicar un don espiritual» (v.11) no es condescendencia apostólica: confiesa la reciprocidad carismática del cuerpo. El apóstol espera ser fortalecido por los romanos tanto como ellos por él. La gracia fluye en ambas direcciones cuando la comunidad se reúne en el nombre de Cristo."
+    },
+  ],
+  "r3": [
+    {
+      "author": "Martín Lutero · Prefacio a Romanos (1522)",
+      "text": "Este evangelio es poder: no palabra muerta sino fuerza viva que transforma al que la recibe con fe. La fe no es asentimiento histórico («también los demonios creen y tiemblan»); es confiar de todo corazón en la misericordia de Dios prometida en Cristo. Tal fe une el alma a Cristo como esposa al esposo."
+    },
+    {
+      "author": "Anders Nygren · Comentario sobre Romanos",
+      "text": "«De fe a fe» (ek pisteōs eis pistin): la justicia de Dios se revela exclusivamente en el ámbito de la fe, no en el de las obras. No hay transición a otro modo de acceso. La fe no es punto de partida para algo superior: es el modo entero de la relación del creyente con Dios, desde el primer momento hasta la gloria."
+    },
+  ],
+  "r4": [
+    {
+      "author": "Richard Hays · The Conversion of the Imagination",
+      "text": "Habacuc 2:4 en su contexto profético confrontaba la incredulidad ante la invasión caldea: el justo vive por su fidelidad a Dios en medio del juicio. Pablo lo reinterpreta bajo el Espíritu: la fe que justifica no es genérica sino que se dirige específicamente al evangelio de Cristo. La cita funda la hermenéutica paulina del AT."
+    },
+    {
+      "author": "Calvino · Institución III.11.20",
+      "text": "«El justo por la fe vivirá»: de esta sentencia aprendemos que la vida no se adquiere por méritos sino que procede de la fe; y que la fe no se funda en nuestra justicia sino en la misericordia de Dios. Pablo nos enseña que el hombre justo no es el que se basta a sí mismo sino el que recibe de Dios lo que no tiene."
+    },
+  ],
+  "r5": [
+    {
+      "author": "N.T. Wright · The Resurrection of the Son of God",
+      "text": "«Designado Hijo de Dios con poder… por la resurrección» (horisthentos hyiou theou) no introduce la adopción cristológica: la resurrección es la entronización pública del Hijo eterno. El paralelo con Sal 2:7 («hoy te he engendrado», citado en He 1:5 y 5:5 en contexto de resurrección) lo confirma: la cruz y la tumba vacía son la coronación."
+    },
+    {
+      "author": "I. Howard Marshall · Jesus the Messiah",
+      "text": "El doble estatus de Cristo —davídico según la carne, Hijo de Dios según el Espíritu— refleja ya el argumento de toda la carta: hay dos niveles de existencia, «carne» y «Espíritu», y la resurrección marca el paso del uno al otro. El evangelio no es una idea: es el evento que abre la nueva era."
+    },
+  ],
+  "r6": [
+    {
+      "author": "Karl Barth · The Theology of the Reformed Confessions",
+      "text": "«Obediencia de la fe» (hypakoē pisteōs): el genitivo es epexegetico —la obediencia que consiste en creer. La fe es la obediencia suprema porque responde a la palabra soberana de Dios. Quien no cree no es libre sino rebelde: el pecado radical es la desobediencia de la incredulidad."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · El precio de la gracia",
+      "text": "«Por amor de su nombre» (hyper to onoma autou) muestra que la misión no se justifica por el éxito antropológico sino por la gloria de Cristo entre las naciones. La iglesia existe para que el nombre de Jesús sea confesado donde no se confesaba. Toda misión que se olvide del nombre se vuelve filantropía sin evangelio."
+    },
+  ],
+  "r7": [
+    {
+      "author": "Abraham Kuyper · The Work of the Holy Spirit",
+      "text": "La revelación natural es real pero no suficiente: deja al hombre «sin excusa» sin salvarlo. La creación revela la deidad y el poder eterno de Dios, pero no el evangelio. Por eso el gentil necesita la predicación (Rom 10), aunque su condena es justa porque conoció al Creador y lo cambió por la criatura."
+    },
+    {
+      "author": "Henri Blocher · Sin original y redención",
+      "text": "Tres veces «los entregó Dios» (1:24, 26, 28) —a pasiones, a mente reprobada, a sí mismos. La ira presente de Dios es el retiro de su mano: cuando el hombre dice «no te necesito», Dios respeta la decisión y lo suelta a las consecuencias. El juicio más terrible es Dios dando al hombre lo que pide."
+    },
+  ],
+  "r8": [
+    {
+      "author": "G.K. Beale · We Become What We Worship",
+      "text": "El intercambio adánico es siempre descendente: la gloria del Dios incorruptible por imágenes corruptibles, del hombre por el animal. El que adora se hace semejante a lo que adora (Sal 115:8). La idolatría no es solo un error teológico: es una deshumanización progresiva, porque la imagen de Dios se deforma según el objeto de su culto."
+    },
+    {
+      "author": "Oliver O'Donovan · Resurrection and Moral Order",
+      "text": "«Cambiaron la verdad de Dios por la mentira» (v.25): la mentira no es solo una falsificación sino una persona, el diablo (Jn 8:44). La idolatría es un cambio de señorío: de la Verdad encarnada al Mentiroso. Toda la vida moral del hombre fluye de este punto decisivo: a quién reconoce como Verdad."
+    },
+  ],
+  "r9": [
+    {
+      "author": "Robert Gagnon · The Bible and Homosexual Practice",
+      "text": "Pablo no habla desde prejuicio cultural sino desde la teología de la creación: lo «natural» (physin) remite a Gn 1-2, al diseño original varón-hembra. La frase «contra naturaleza» (para physin) reaparece en 1:26-27 como criterio objetivo: la homosexualidad es para Pablo la señal paradigmática de que el intercambio idólatra ha llegado al cuerpo."
+    },
+    {
+      "author": "Richard Hays · The Moral Vision of the New Testament",
+      "text": "«Recibiendo en sí mismos la retribución que convenía a su extravío» (v.27): la consecuencia del pecado es el pecado mismo en su dinámica autodestructiva. No hace falta esperar un infierno futuro: la desintegración personal y comunitaria que produce el pecado es ya el inicio del juicio. La misericordia de Dios a veces acelera las consecuencias para despertar."
+    },
+  ],
+  "r10": [
+    {
+      "author": "Jacques Ellul · The Subversion of Christianity",
+      "text": "El catálogo de 21 vicios termina con la apostasía comunitaria: «se complacen con los que las practican» (v.32). El pecado individual se vuelve cultura: lo que al principio causaba vergüenza termina siendo aplaudido en comunidad. Esta es la lógica de Sodoma: no solo pecar, sino hacer del pecado un valor público."
+    },
+    {
+      "author": "Stanley Hauerwas · The Community of Character",
+      "text": "Pablo enumera los vicios sin jerarquizarlos: el homicidio junto al murmuro, la avaricia junto a la desobediencia a los padres. La idea moderna de «pecados grandes» y «pecados pequeños» es extraña al apóstol. Todo pecado es desorden ante Dios; la jerarquía es del evangelio que rescata a todos por igual."
+    },
+  ],
+  "r11": [
+    {
+      "author": "Juan Calvino · Comentario a Romanos",
+      "text": "El judío que juzga al gentil cae en la misma condena: la ley moral que conoce escribe su propia sentencia. La «bondad de Dios» (chrēstotēs) que lleva al arrepentimiento no es permiso sino espera: el tiempo concedido no es infinito. Acumular misericordia es acumular juicio si no hay conversión."
+    },
+    {
+      "author": "John Piper · The Justification of God",
+      "text": "«Tesoros de ira» (v.5): cada misericordia postergada incrementa la deuda. La paciencia de Dios no es olvido sino acumulación. Por eso el día de la ira será más terrible para quienes más recibieron. El cristiano no se jacta de la paciencia: tiembla y predica el evangelio mientras es día."
+    },
+  ],
+  "r12": [
+    {
+      "author": "Tom Schreiner · Comentario BECNT sobre Romanos",
+      "text": "Pablo no elimina el juicio por obras (v.6) ni lo contrapone a la justificación por fe: las obras son el fruto revelador del árbol. En el día final Dios juzgará según obras porque las obras muestran qué clase de fe había. La fe sola justifica, pero la fe que justifica nunca está sola."
+    },
+    {
+      "author": "N.T. Wright · Justification",
+      "text": "«Pagará a cada uno conforme a sus obras» cita el Sal 62:12 y forma parte del juicio escatológico. Pablo no está hereje respecto al AT: está reinterpretando desde Cristo. Las obras que aprueba Dios son las que produce el Espíritu en el creyente justificado por fe (Rom 8:4, 13)."
+    },
+  ],
+  "r13": [
+    {
+      "author": "Herman Ridderbos · Paul: An Outline of His Theology",
+      "text": "El judío que cumple la ley desde el corazón (v.26-29) es ya un anticipio del nuevo pacto: la circuncisión del corazón prometida en Dt 30:6. Pablo no está aboliendo el judaísmo: lo está cumpliendo en Cristo. El verdadero Israel no se define por la carne sino por el Espíritu."
+    },
+    {
+      "author": "Markus Bockmuehl · Jewish Law in Gentile Churches",
+      "text": "El gentil que «cumple la ley» (v.26) no se hace prosélito judío: cumple la sustancia de la ley por el Espíritu. Pablo está sentando las bases para la identidad cristiana gentil: no asimilación al judaísmo, pero tampoco abandono de la ley moral. La nueva alianza interioriza lo que la antigua codificaba."
+    },
+  ],
+  "r14": [
+    {
+      "author": "E.P. Sanders · Paul, the Law, and the Jewish People",
+      "text": "La ventaja del judío no era la salvación garantizada ( Sanders matiza el «pacto nominalismo»), sino la custodia de la palabra. Israel recibió las promesas, los patriarcas, los profetas, el culto verdadero. Pero la ventaja se vuelve responsabilidad: «a todo aquel a quien se haya dado mucho, mucho se le demandará» (Lc 12:48)."
+    },
+    {
+      "author": "Richard Hays · Echoes of Scripture in the Letters of Paul",
+      "text": "«La palabra de Dios» (logia theou, v.2) es el término griego para los oráculos sagrados: Israel los recibió en depósito, no para guardarlos en secreto sino para transmitirlos. La ventaja del judío era misionera desde el principio: ser luz de las naciones (Is 49:6). El evangelio de Pablo es la reactivación de esa vocación."
+    },
+  ],
+  "r15": [
+    {
+      "author": "Karl Barth · Church Dogmatics II/1",
+      "text": "La fidelidad de Dios (pistis theou) no es una cualidad estática sino su ser-en-acto. Aunque todos los hombres fueran infieles, Dios permanece fiel porque no puede negarse a sí mismo (2 Ti 2:13). La verdad de Dios no depende de la respuesta humana: la respuesta humana solo revela si está siendo recibida."
+    },
+    {
+      "author": "Bruce Waltke · An Old Testament Theology",
+      "text": "El Sal 51:4 que Pablo cita es la confesión de David ante Natán. En su contexto original declara que Dios tiene razón incluso al juzgar al rey ungido. Pablo lo amplía a nivel cósmico: en el juicio final, todo hombre enmudecerá y Dios será justificado en sus palabras (cf. Rom 3:4 con 3:19)."
+    },
+  ],
+  "r16": [
+    {
+      "author": "Henri Blocher · Original Sin",
+      "text": "La catena del AT (Sal 14, 5, 140, 10; Is 5; Sal 36) cubre cada órgano del hombre: garganta, lengua, labios, boca, pies, ojos. Es una antropología del pecado total: no hay zona neutra. El pecado original no es una mancha localizada sino una condición que afecta al ente humano en todas sus dimensiones."
+    },
+    {
+      "author": "B.B. Warfield · The Person and Work of Christ",
+      "text": "«No hay quien busque a Dios» (v.11) cierra el debate pelagiano: el hombre caído no inicia la búsqueda de Dios. Si alguien busca, es porque Dios lo buscó primero (1 Jn 4:19). La gracia preveniente es la única explicación del arrepentimiento: nadie se vuelca a Dios sin haber sido vuelto por Él."
+    },
+  ],
+  "r17": [
+    {
+      "author": "Søren Kierkegaard · Sickness unto Death",
+      "text": "Que la boca se cierre (v.19) es la condición previa de toda verdadera teología. Mientras el hombre tenga una palabra que decir en su defensa, no puede oír la palabra de Dios que lo absuelve. El silencio del hombre es el espacio donde resuena el evangelio."
+    },
+    {
+      "author": "R.C. Sproul · The Holiness of God",
+      "text": "«Toda boca se cierre»: la imagen es la del tribunal. El acusado no tiene nada que alegar; el juez tiene todo el derecho de condenar. El asombro del evangelio no es que Dios condene al impío —eso sería justicia normal— sino que justifique al impío sin dejar de ser justo. Ese es el milagro de Rom 3:21-26."
+    },
+  ],
+  "r18": [
+    {
+      "author": "E.P. Sanders · Paul and Palestinian Judaism",
+      "text": "«Obras de la ley» (erga nomou) en Qumrán y en Pablo se refieren tanto a la Torá completa como a los «marcadores de frontera» (circuncisión, sábado, comida kasher). Sanders matiza: Pablo no critica el legalismo judío como tal, sino el intento de usar la ley como marca de identidad excluyente que impide a los gentiles entrar al pueblo de Dios."
+    },
+    {
+      "author": "James D.G. Dunn · The New Perspective on Paul",
+      "text": "Aunque la nueva perspectiva matiza el legalismo, no elimina el diagnóstico paulino: ningún ser humano (judío o gentil) puede sostenerse ante Dios por sus obras. La ley revela el pecado (v.20) sin poder resolverlo. Tanto el pelagiano como el nuevo-perspectivista necesitan escuchar la tesis de Pablo: la justificación es por fe sola."
+    },
+  ],
+  "r19": [
+    {
+      "author": "T.F. Torrance · The Doctrine of Grace in the Apostolic Fathers",
+      "text": "«Pero ahora» (nyni de) marca la línea divisoria entre las eras: antes la ley mostraba el pecado, ahora la justicia de Dios se manifiesta aparte de la ley. La cruz no es un punto aislado en el tiempo: es la irrupción del tiempo nuevo en el viejo. Los creyentes viven ya en la era del cumplimiento, aunque la consumación sea futura."
+    },
+    {
+      "author": "Michael Bird · Evangelical Theology",
+      "text": "«Justicia de Dios» (dikaiosynē theou): tres opciones en debate —(1) atributo de Dios, (2) acción de Dios que restaura el orden, (3) estatus que Dios imputa al creyente. Las tres son verdaderas y complementarias en Pablo. Dios es justo, actúa justamente y nos hace justos en Cristo. La letra a los Romanos contiene las tres dimensiones."
+    },
+  ],
+  "r20": [
+    {
+      "author": "J.I. Packer · Knowing Christianity",
+      "text": "«Justificados» (dikaiōthentes) es participio aoristo: acto puntual ya consumado. No «siendo justificados» progresivamente, sino «habiendo sido justificados» de una vez por todas. La justificación no es un proceso sino una sentencia ejecutoria: el creyente está tan justificado el día que creyó como lo estará en el cielo."
+    },
+    {
+      "author": "John Murray · Redemption Accomplished and Applied",
+      "text": "«Destituidos de la gloria de Dios» (hysterountai tēs doxēs): no es que perdimos un brillo externo, sino la comunión con Dios que era la gloria del hombre (Sal 8). Adán fue creado a imagen de Dios; el pecado oscureció esa imagen sin destruirla del todo. La justificación restaura la posición; la glorificación restaurará la imagen por completo (Rom 8:29-30)."
+    },
+  ],
+  "r21": [
+    {
+      "author": "B.B. Warfield · The Person and Work of Christ",
+      "text": "«Propiciación» (hilastērion): la palabra más cargada del NT. Evoca el kapporet, la tapa del Arca donde la sangre era rociada el día de la Expiación (Lv 16). Cristo es a la vez víctima, sacerdote y lugar de propiciación. La cruz es el nuevo Yom Kippur, definitivo, en el que Dios mismo provee el medio de su propia satisfacción."
+    },
+    {
+      "author": "Leon Morris · The Apostolic Preaching of the Cross",
+      "text": "El debate propiciación/expiación es estéril si se lo plantea como disyuntiva. En la cruz Dios «propicia» su propia ira (objetivo) y «expiá» nuestros pecados (subjetivo). Las dos dimensiones son inseparables: la ira se aplaca porque el pecado se juzga. Negar la propiciación es reducir el sustituto a ejemplo; negar la expiación es reducir la sangre a símbolo."
+    },
+  ],
+  "r22": [
+    {
+      "author": "Tom Schreiner · Comentario BECNT sobre Romanos",
+      "text": "La «ley de la fe» (nomos pisteōs, v.27) no es una nueva legalidad sino el principio rector de la nueva era. Pablo no es antinómico: cambia de ley. La fe misma es «ley» porque es el modo ordenado por Dios para acceder a su justicia. La ley de Moisés cumplió su papel; ahora la fe es la vía."
+    },
+    {
+      "author": "N.T. Wright · Justification",
+      "text": "El Shemá (Dt 6:4) es el fundamento teológico de 3:30: «Dios es uno», por tanto hay un solo método de salvación para judíos y gentiles. La justificación por fe no es una idea abstracta sino la consecuencia cristológica de la unicidad de Dios. Si Dios es uno, su pueblo es uno; si su pueblo es uno, el camino de acceso es uno."
+    },
+  ],
+  "r23": [
+    {
+      "author": "Juan Calvino · Institución III.16",
+      "text": "Abraham es el espejo de la justificación gratuita. No fue justificado por la circuncisión (que vino después, Gn 17) ni por la ley (que vino 430 años más tarde, Gá 3:17), sino por creer la promesa. Si el padre de los creyentes fue justificado por fe sola, no hay hijo de Abraham que pueda presumir de otra justicia."
+    },
+    {
+      "author": "Herman Bavinck · Reformed Dogmatics",
+      "text": "Gn 15:6 es el primer texto bíblico que usa el verbo «creer» y el sustantivo «justicia» juntos. Pablo lo recoge como fundamento: la fe que justifica es la que se fía de la palabra de Dios contra toda apariencia. Abraham creyó en un hijo de su cuerpo a los 99 años; el cristiano cree en la resurrección del Hijo de Dios."
+    },
+  ],
+  "r24": [
+    {
+      "author": "Dietrich Bonhoeffer · Creación y caída",
+      "text": "El Salmo 32 que cita Pablo describe la bienaventuranza del hombre perdonado: no del hombre que nunca pecó, sino del que confesó. La gracia no suprime el pecado: lo cubre (kepûyyim en hebreo, «cubierto»). La sangre de Cristo es el «kapporet» que cubre definitivamente nuestros pecados, anticipado ya en el Salmo 32."
+    },
+    {
+      "author": "Derek Kidner · Psalms 1-72 (Tyndale)",
+      "text": "«No inculpa de pecado» (v.8) es la negativa divina de contar: el mismo verbo (chashab) que Gn 15:6 («le fue contado por justicia»). En Abraham, Dios cuenta la fe por justicia; en David, Dios no cuenta el pecado. Las dos imputaciones —positiva y negativa— son las dos caras de la moneda de la justificación."
+    },
+  ],
+  "r25": [
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "La promesa a Abraham de «heredar el mundo» (v.13) supera a Canaán: el padre de la fe recibe las naciones (Sal 2:8). Pablo está reescribiendo la geopolítica del AT: la tierra prometida era un anticipo; la herencia del Mesías es la tierra entera. La iglesia es el nuevo Israel que hereda todo en Cristo."
+    },
+    {
+      "author": "Richard Hays · The Conversion of the Imagination",
+      "text": "«Por tanto, es por fe, para que sea por gracia» (v.16): la fe es el modo de la gracia porque excluye el mérito. Si la herencia fuera por ley, se basaría en deuda; al ser por fe, se basa en promesa. La promesa es firme —incondicional, divina— porque no depende del cumplimiento humano sino de la fidelidad de Dios."
+    },
+  ],
+  "r26": [
+    {
+      "author": "Martín Lutero · La libertad del cristiano",
+      "text": "Abraham creyó «contra esperanza» (v.18): cuando el cuerpo estaba muerto y la matriz estéril. Tal fe no nace de las circunstancias sino de la palabra de Dios. El creyente aprende a leer la promesa por encima de la realidad: no negando la realidad, sino viendo a Dios más grande que ella. La fe es «realismo aumentado por la promesa»."
+    },
+    {
+      "author": "Karl Barth · The Epistle to the Romans",
+      "text": "«Entregado por nuestras transgresiones, resucitado para nuestra justificación» (v.25): la cruz resuelve el pasado (los pecados), la resurrección abre el futuro (la justificación). Las dos no pueden separarse: una cruz sin resurrección sería condena eterna; una resurrección sin cruz sería victoria sin redención. El evangelio es el evento doble."
+    },
+  ],
+  "r27": [
+    {
+      "author": "Juan Calvino · Institución III.13",
+      "text": "«Tenemos paz con Dios»: la paz no es un sentimiento subjetivo sino un estado objetivo. El creyente puede no sentir paz y, sin embargo, tenerla, porque la paz depende de la sangre de Cristo, no de nuestra emoción. La paz interior (Fil 4:7) es fruto de la paz forense (Rom 5:1), no al revés."
+    },
+    {
+      "author": "John Stott · La cruz de Cristo",
+      "text": "«Por la fe tenemos acceso» (v.2, prosagōgē): el término griego era el ceremonial de presentación ante el rey. Solo el favor del patrón permitía entrar en su presencia. Cristo es nuestro «prosagōgeus» —el que nos toma de la mano y nos presenta al Padre. La oración cristiana no busca méritos: se apoya en el acceso que Cristo compró."
+    },
+  ],
+  "r28": [
+    {
+      "author": "Dietrich Bonhoeffer · Resistencia y rendición",
+      "text": "La cadena tribulación → paciencia → carácter → esperanza (v.3-4) no es consuelo estoico sino dinámica cristiana. La tribulación no produce esperanza automáticamente: la produce en el creyente que la recibe en Cristo. El mismo evento puede amargar al incrédulo o santificar al creyente: la diferencia es la fe en la cruz."
+    },
+    {
+      "author": "Jürgen Moltmann · Teología de la esperanza",
+      "text": "«La esperanza no avergüenza» (v.5) cita el Sal 22:5 LXX. La esperanza cristiana es la única que no defrauda porque está fundada en un hecho: el amor de Dios derramado en el corazón por el Espíritu. La cruz es el fundamento de la esperanza; el Espíritu, su anticipo. El cristiano espera desde una realidad ya dada, no desde una fantasía."
+    },
+  ],
+  "r29": [
+    {
+      "author": "Agustín de Hipona · Tratados sobre 1 Juan",
+      "text": "«Siendo aún pecadores, Cristo murió por nosotros» (v.8): el amor de Dios no nos encontró buenos, nos hizo buenos. Nos amó primero, no porque fuéramos amables, sino porque Él es amor. Su amor no se mide por nuestro valor sino por su propio ser. La cruz es la medida del amor divino: dio lo más caro a los más indignos."
+    },
+    {
+      "author": "T.F. Torrance · The Mediation of Christ",
+      "text": "«Reconciliados por la muerte de su Hijo, mucho más seremos salvos por su vida» (v.10): la resurrección no es un bonus añadido a la cruz; es la garantía de que la cruz fue suficiente. Si la muerte de Cristo reconcilió a los enemigos, su vida intercesora (He 7:25) completará la salvación. La justificación es el pasado asegurado; la glorificación, el futuro garantizado."
+    },
+  ],
+  "r30": [
+    {
+      "author": "C.S. Lewis · The Problem of Pain",
+      "text": "El argumento del «uno y los muchos» de Rom 5:12-14 es escandaloso para la modernidad individualista: ¿cómo puede el acto de Adán afectar a todos? Pero la Escritura enseña la solidaridad de la raza humana en Adán, así como la solidaridad de los redimidos en Cristo. No somos átomos: somos cabezas y representaciones."
+    },
+    {
+      "author": "G.C. Berkouwer · Sin",
+      "text": "«La muerte pasó a todos porque todos pecaron» (ef’ hōi pantes hēmarton): el texto es ambiguo —«en quien» (Adán) o «porque» (todos individualmente). Agustín eligió la primera, los pelagianos la segunda. La exégesis moderna prefiere «porque todos pecaron», pero entendido como pecado participativo en Adán, no pecado individual posterior. La muerte reina ya sobre los que no pecaron «a la manera de Adán» (v.14), lo que prueba la imputación adámica."
+    },
+  ],
+  "r31": [
+    {
+      "author": "Henri Blocher · Original Sin",
+      "text": "«Mucho más» (pollō mallon, 5 veces en Rom 5): la gracia no es simétrica al pecado, lo excede. Si Adán, un hombre finito, pudo arrastrar a la humanidad a la muerte, ¿cuánto más Cristo, el Hijo eterno, puede elevarla a la vida? La asimetría es ontológica: la obediencia de Cristo es infinitamente superior a la transgresión de Adán."
+    },
+    {
+      "author": "John Piper · The Future of Justification",
+      "text": "«Reinarán en vida» (v.17): la gracia no es solo perdón sino realeza. Los justificados no son perdonados para seguir como esclavos; son hechos reyes con Cristo. La vida eterna no es sobrevivencia pasiva sino ejercicio de la realeza de Dios en Cristo. La imagen adánica de Gn 1:26-28 (dominio) se restaura en Cristo, el segundo Adán."
+    },
+  ],
+  "r32": [
+    {
+      "author": "Geerhardus Vos · Biblical Theology",
+      "text": "La obediencia de Cristo (v.19) es su vida entera de sumisión al Padre, no solo el acto final de la cruz. «Obediencia hasta la muerte, y muerte de cruz» (Fil 2:8). Cristo vivió los 33 años en lugar nuestro: cada acto de justicia fue acumulativo. Su justicia imputada no es un instante sino una vida entera ofrecida a Dios."
+    },
+    {
+      "author": "B.B. Warfield · The Person and Work of Christ",
+      "text": "«Constituidos justos» (katestathēsan, v.19): verbo forense, no transformador. Los creyentes no son hechos justos internamente en la justificación —eso es santificación—, sino declarados justos. La justicia de Cristo se imputa legalmente: nos pertenece por derecho en virtud de la unión con Él."
+    },
+  ],
+  "r33": [
+    {
+      "author": "Gustavo Gutiérrez · Teología de la liberación",
+      "text": "«Donde abundó el pecado, sobreabundó la gracia» (v.20): la gracia no es simetría moral sino exceso divino. Los pobres y oprimidos del mundo conocen esta dinámica: donde el pecado estructural parece invencible, la gracia de Dios desborda. La cruz es el punto cumbre: el pecado humano llegó a su clímax matando a Dios, y la gracia respondió con la resurrección."
+    },
+    {
+      "author": "Karl Barth · Church Dogmatics IV/1",
+      "text": "«Para que así como el pecado reinó para muerte, así también la gracia reine por la justicia para vida eterna» (v.21): el verbo «reinar» une los dos reinados. No hay zona neutra: o se reina el pecado para muerte, o reina la gracia para vida. La gracia reina «por la justicia» —no arbitrariamente, sino sobre base jurídica: la cruz. El reinado de la gracia es legal y soberano."
+    },
+  ],
+  "r34": [
+    {
+      "author": "Oscar Cullmann · Baptism in the New Testament",
+      "text": "El bautismo de Rom 6 no es solo agua: es el evento espiritual de incorporación a Cristo, del cual el agua es signo visible. Bautizarse «en Cristo Jesús» (eis Christon) significa ser insertado en su muerte y resurrección. La fe y el bautismo son inseparables: la fe es la realidad interior, el bautismo es su sacramentalización visible."
+    },
+    {
+      "author": "Michael Horton · The Christian Faith",
+      "text": "«¿Permaneceremos en el pecado?» (v.1): la pregunta revela que Pablo predicó la gracia tan radicalmente que parecía antinómica. La respuesta no es «sé más cuidadoso» sino «has muerto al pecado». La santificación no es mejora moral del viejo yo: es la vida nueva del yo que ya murió y resucitó con Cristo. La ética cristiana se funda en la unión con Cristo, no en la amenaza de juicio."
+    },
+  ],
+  "r35": [
+    {
+      "author": "Watchman Nee · El hombre normal (The Normal Christian Life)",
+      "text": "«Consideraos muertos al pecado» (v.11): no «sentíos muertos» sino «contadlos muertos». La fe se apodera de un hecho (la cruz) antes de verlo realizado en la experiencia. La muerte al pecado no es una experiencia a buscar: es un hecho a contar. La santificación empieza por la fe en la muerte de Cristo, no por el esfuerzo por morir al yo."
+    },
+    {
+      "author": "John Owen · La mortificación del pecado",
+      "text": "«El cuerpo del pecado sea destruido» (katargēthē, v.6): el cuerpo del pecado es el yo organizado alrededor del pecado como señor. La cruz no abolió la presencia del pecado en el creyente: abolió su señorío. El pecado sigue presente pero no reina. La lucha contra el pecado restante (mortificación) es la consecuencia lógica, no la causa, de la muerte con Cristo."
+    },
+  ],
+  "r36": [
+    {
+      "author": "Tom Schreiner · Comentario BECNT sobre Romanos",
+      "text": "«No sois vuestros… habéis sido comprados por precio» (1 Co 6:19-20) es el reverso de Rom 6: la libertad cristiana no es autonomía sino cambio de amo. El esclavo del pecado no se libera por esfuerzo: se libera porque otro compró su libertad. La sangre de Cristo es el precio del rescate (apolytrōsis, 3:24)."
+    },
+    {
+      "author": "D.A. Carson · How Long, O Lord?",
+      "text": "«La dádiva de Dios es vida eterna en Cristo Jesús» (v.23): la vida eterna no es una sustancia infusa sino una persona —Cristo— recibida por fe. «El que tiene al Hijo tiene la vida» (1 Jn 5:12). La vida eterna comienza en la conversión, no en la muerte: el creyente ya vive la vida del siglo venidero, aunque aguarda su consumación."
+    },
+  ],
+  "r37": [
+    {
+      "author": "Tom Wright · Paul for Everyone: Romans",
+      "text": "La metáfora del matrimonio (v.1-3) es ingeniosa: la ley se parece al primer marido, el creyente a la esposa, Cristo al nuevo esposo. ¿Cómo se disuelve el primer matrimonio? Por la muerte —no la del marido (la ley no muere), sino la de la esposa, muerta con Cristo en el bautismo. Liberada del primer vínculo, la esposa puede casarse con Cristo, «para que llevemos fruto para Dios»."
+    },
+    {
+      "author": "Herman Ridderbos · Paul: An Outline of His Theology",
+      "text": "«Sirvamos bajo el régimen nuevo del Espíritu y no bajo el régimen viejo de la letra» (v.6): el contraste no es entre ley y desorden, sino entre ley interiorizada (Espíritu) y ley externa (letra). La nueva alianza (Jer 31:33) cumple la antigua escribiéndola en el corazón. La diferencia no es el contenido moral sino el modo de operación."
+    },
+  ],
+  "r38": [
+    {
+      "author": "Tom Schreiner · Comentario BECNT sobre Romanos",
+      "text": "El décimo mandamiento («no codiciarás», Ex 20:17) es la prueba decisiva: los otros nueve se pueden cumplir externamente, pero la codicia es deseo interior. Cuando el hombre se confronta con un mandato sobre el deseo, descubre que es pecador desde la raíz. Pablo, fariseo perfecto en lo externo, cae en el décimo mandamiento."
+    },
+    {
+      "author": "Søren Kierkegaard · El concepto de la angustia",
+      "text": "La ley no crea el pecado sino que lo «despierta» (v.9): el pecado estaba «muerto» (latente) antes de la ley, y «revivió» cuando la ley lo confrontó. La prohibición no genera el deseo de pecar donde no había, sino que revela el deseo que ya estaba ahí. Adán pecó contra un mandato; el hombre caído sigue pecando precisamente porque hay mandato."
+    },
+  ],
+  "r39": [
+    {
+      "author": "Martín Lutero · Sermón sobre Rom 7 (1515-16)",
+      "text": "«El bien que quiero, no hago; el mal que no quiero, eso hago» (v.19): Lutero leía este texto autobiográficamente —del creyente que, justificado, sigue luchando con el pecado restante. El conflicto no es señal de incredulidad sino de fe: el no-creyente no siente conflicto, vive tranquilo en su pecado. La angustia del Rom 7 es la prueba de que la ley ha obrado."
+    },
+    {
+      "author": "John Murray · Comentario sobre Romanos",
+      "text": "«Miserable de mí» (talaipōros, v.24): el grito de 7:24 es el preludio de 8:1. Solo el que reconoce su impotencia puede recibir la libertad del Espíritu. El cap.7 no es destino del creyente sino punto de paso: termina con el grito de auxilio que conduce al cap.8. La santificación no es superación del Rom 7 por esfuerzo, sino salida del Rom 7 por el Espíritu."
+    },
+  ],
+  "r40": [
+    {
+      "author": "Martín Lutero · Prefacio a Romanos",
+      "text": "«Ninguna condenación hay para los que están en Cristo Jesús» (8:1): el verbo «condenación» (katakryma) no significa solo veredicto adverso sino sentencia ejecutoria. El creyente no solo no es culpable: ya no está bajo sentencia. La cruz absorbió la condena; la resurrección inauguró la justificación. El Espíritu aplica al creyente el beneficio ya consumado."
+    },
+    {
+      "author": "Karl Barth · Church Dogmatics IV/2",
+      "text": "«Cristo en semejanza de carne de pecado» (v.3): el Hijo no asumió la carne pecaminosa (no pecó), pero sí la «semejanza» —la condición humana caída, sujeta a tentación y muerte. Es la diferencia entre la hamartología cristológica: Cristo asume todo lo humano excepto el pecado mismo (He 4:15). En esa semejanza, condenó al pecado en la cruz."
+    },
+  ],
+  "r41": [
+    {
+      "author": "Juan Crisóstomo · Homilías sobre Romanos",
+      "text": "El Espíritu, que mora en vosotros, vivificará también vuestros cuerpos mortales (v.11): la resurrección futura no es una novedad absoluta sino la consumación de lo que el Espíritu ya empezó. El creyente es ya «templo del Espíritu» (1 Co 6:19); la resurrección será la manifestación visible de lo que ya es invisible."
+    },
+    {
+      "author": "Michael Horton · The Christian Faith",
+      "text": "«Si alguno no tiene el Espíritu de Cristo, no es de él» (v.9): la presencia del Espíritu es el criterio definitivo de pertenencia a Cristo, no las obras ni los sentimientos. El bautismo en el Espíritu no es una segunda experiencia para los maduros: es la marca de todo creyente desde la conversión. Sin Espíritu no hay cristiano."
+    },
+  ],
+  "r42": [
+    {
+      "author": "J.I. Packer · Keep in Step with the Spirit",
+      "text": "«Abba, Padre» (v.15): la misma invocación de Jesús en Getsemaní (Mr 14:36). El creyente, por el Espíritu, usa el lenguaje del Hijo eterno. La oración cristiana no empieza con palabras nuestras: empieza con la oración del Hijo que el Espíritu hace resonar en nosotros. Toda verdadera oración es participada en la oración de Cristo."
+    },
+    {
+      "author": "D.A. Carson · The Difficult Doctrine of the Love of God",
+      "text": "«Herederos de Dios y coherederos con Cristo» (v.17): la herencia no es un premio, es la posesión misma de Dios. El Padre no nos da cosas: se nos da a sí mismo en Cristo. La herencia del creyente es Dios. Por eso el sufrimiento presente es pasajero: lo que se hereda es eterno e infinito."
+    },
+  ],
+  "r43": [
+    {
+      "author": "Herman Bavinck · Reformed Dogmatics",
+      "text": "La cadena dorada (v.30): «a los que predestinó, a éstos también llamó; y a los que llamó, a éstos también justificó; y a los que justificó, a éstos también glorificó». Cinco eslabones, todos en aoristo profético: ya consumados en el propósito divino. Ningún creyente se pierde entre uno y otro: el que empieza en predestinación termina en glorificación."
+    },
+    {
+      "author": "John Piper · The Pleasures of God",
+      "text": "«Todas las cosas les ayudan a bien» (v.28): no «todas las cosas son buenas» sino que Dios las hace «cooperar» para bien. El bien se define en el v.29: conformidad a la imagen de Cristo. Las cosas malas (enfermedad, persecución, muerte) son instrumentos —no pruebas del abandono de Dios, sino medios para producir la imagen del Hijo en el creyente."
+    },
+  ],
+  "r44": [
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "La enumeración de los privilegios de Israel (v.4-5) culmina en Cristo «según la carne». Pablo enumera 8 prerrogativas irreversibles: el pacto (singular), la ley, el culto, las promesas, los patriarcas, y sobre todo el Mesías. Que Israel haya rechazado al Mesías no invalida los privilegios: los confirma, porque el rechazo es paradójicamente el cumplimiento de Is 53."
+    },
+    {
+      "author": "Bruce Waltke · An Old Testament Theology",
+      "text": "«Dios sobre todas las cosas, bendito por los siglos» (v.5): la frase es una doxología cristológica. En el judaísmo del primer siglo, esta fórmula (berakhah) se usaba exclusivamente para YHVH. Pablo la aplica a Cristo, sellando la deidad mesiánica. Es uno de los versículos más altos de toda la carta."
+    },
+  ],
+  "r45": [
+    {
+      "author": "Henri Blocher · Justification of the Ungodly",
+      "text": "«No todos los que descienden de Israel son Israel» (v.6): la distinción entre Israel étnico e Israel espiritual. Pablo no está aboliendo la promesa —«la palabra de Dios no ha fallado» (v.6)— sino mostrando que la promesa siempre operó por elección dentro de Israel. Isaac, no Ismael; Jacob, no Esaú: la línea de la promesa siempre fue más estrecha que la línea de la sangre."
+    },
+    {
+      "author": "C.E.B. Cranfield · Comentario ICC sobre Romanos",
+      "text": "«A Jacob amé, a Esaú aborrecí» (v.13, cita de Mal 1:2-3): en hebreo, «amar/aborrecer» es comparativo, no absoluto. Dios eligió a Jacob antes del nacimiento (v.11), cuando «no habían aún hecho ni bien ni mal». La elección no se basa en obras futuras previstas: es puramente soberana, «para que el propósito de Dios conforme a elección permaneciese»."
+    },
+  ],
+  "r46": [
+    {
+      "author": "Juan Calvino · Institución III.22",
+      "text": "«Tendré misericordia del que yo tenga misericordia» (v.15, cita de Ex 33:19): la misericordia divina no se condiciona a mérito alguno. Si se condicionara, no sería misericordia sino deuda. La elección es la base de toda gracia; sin elección, la gracia sería respuesta humana disfrazada. Solo la elección soberana hace de la gracia algo verdaderamente gratuito."
+    },
+    {
+      "author": "John Piper · The Justification of God",
+      "text": "«Al que quiere, endurece» (v.18): el endurecimiento no es una arbitrariedad cruel. Faraón ya había endurecido su propio corazón (Ex 8:15, 32; 9:34) antes de que Dios lo endureciera (Ex 9:12; 10:20; 11:10). El endurecimiento divino confirma una decisión humana previa. Dios no crea maldad: la fija."
+    },
+  ],
+  "r47": [
+    {
+      "author": "G.C. Berkouwer · Divine Election",
+      "text": "Los «vasos de ira» (v.22) son descritos como «preparados para destrucción» —en griego, el verbo katērtismena está en voz media o pasiva. Si es pasivo, Dios los preparó; si es medio, se prepararon a sí mismos. El v.23 con «preparó de antemano» (proētoimasen) es activo y divino para los vasos de misericordia. La asimetría es teológica: la gracia es activa de Dios; el juicio es pasivo (Dios los entrega a su propia decisión)."
+    },
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "La cita de Oseas (v.25-26) es decisiva: «Llamaré pueblo mío al que no era mi pueblo». Los gentiles, excluidos del pacto, son ahora llamados «pueblo». Esto no es reemplazo (Israel sustituido por la Iglesia) sino inclusión: el pueblo de Dios se amplía a los gentiles sin abolir a Israel. La Iglesia es Israel ampliado, no Israel abolido."
+    },
+  ],
+  "r48": [
+    {
+      "author": "Richard Hays · Echoes of Scripture in the Letters of Paul",
+      "text": "La combinación de Is 8:14 (piedra de tropiezo) e Is 28:16 (piedra angular en Sion) es una lectura cristológica. La piedra que es tropiezo para Israel es la misma que es fundamento para el creyente. La diferencia no está en la piedra sino en la postura: el que cree no se avergüenza; el que tropieza cae."
+    },
+    {
+      "author": "Peter Stuhlmacher · Comentario sobre Romanos",
+      "text": "Israel «tropezó» porque buscaba la justicia por ley (v.32): la misma ley que apuntaba a Cristo se volvió obstáculo cuando se la usó como camino de justicia propia. La ley, bien entendida, conduce a Cristo (Gá 3:24); mal entendida, ciega. Pablo no abroga la ley: la cumple en Cristo, fin de la ley para justificación (10:4)."
+    },
+  ],
+  "r49": [
+    {
+      "author": "Karl Barth · Church Dogmatics II/2",
+      "text": "«Celos por Dios, pero no conforme a ciencia» (v.2): el celo sin conocimiento es peor que la indiferencia, porque persigue el fin correcto por el camino equivocado. Israel no fue condenado por falta de fervor sino por exceso de fervor mal dirigido. La teología reformada recuerda: nada es más peligroso que la ortodoxia mal orientada."
+    },
+    {
+      "author": "N.T. Wright · The Climax of the Covenant",
+      "text": "«Cristo es el fin de la ley» (telos nomou, v.4): «telos» significa tanto «término» como «meta». Cristo no abolió la ley (cf. Mt 5:17); la cumplió y la llevó a su destinación. La ley fue dada para llevar a Cristo; una vez llegado Cristo, la ley ha cumplido su función pedagógica (Gá 3:24-25). Ya no justifica; sigue moralmente normativa como guía de vida."
+    },
+  ],
+  "r50": [
+    {
+      "author": "Richard Bauckham · Jesus and the God of Israel",
+      "text": "«Jesús es Señor» (Kyrios Iēsous, v.9): la confesión más densa del NT. «Kyrios» en la LXX traduce YHVH (6800 veces). Aplicar este título a Jesús es la afirmación cristológica más alta posible en el judaísmo del primer siglo. Pablo no diluye el monoteísmo judío (Dt 6:4): lo reconfigura en torno a Jesús, incluido en la identidad del único Dios."
+    },
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "La cita de Dt 30:12-14 (v.6-8) es reinterpretada: originalmente hablaba de la ley ya dada («no subas al cielo, no bajes al abismo»), Pablo la aplica al evangelio. La palabra está cerca: en la boca y el corazón. ¿Por qué este cambio? Porque Cristo mismo descendió y ascendió (Ef 4:9-10): la encarnación y resurrección cumplen lo que la ley prometía."
+    },
+  ],
+  "r51": [
+    {
+      "author": "John Stott · Romanos: Dios para hoy",
+      "text": "La cadena «¿cómo invocarán… cómo creerán… cómo oirán… cómo predicarán…?» (v.14-15) es el fundamento teológico de las misiones. La fe no nace espontáneamente: requiere predicación. La predicación no nace espontáneamente: requiere envío. Por eso la iglesia que no envía se seca, y la iglesia que no predica no produce fe. Las misiones son el oxígeno de la iglesia."
+    },
+    {
+      "author": "Tom Schreiner · Comentario BECNT sobre Romanos",
+      "text": "«La fe es por el oír; y el oír, por la palabra de Dios» (v.17): la palabra aquí es rhēma Christou —«palabra de Cristo». No es solo la Escritura: es el evangelio que testifica de Cristo. La predicación fiel no es exposición moralista ni comentario académico: es presentación viva de Cristo, el único que despierta fe cuando es oído."
+    },
+  ],
+  "r52": [
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "«No ha desechado Dios a su pueblo» (v.1): Pablo se cita a sí mismo como prueba. Si un fariseo de fariseos (Fil 3:5) ha creído en el Mesías, el pacto con Israel sigue vigente. La categoría de «remanente» (leimma, v.5) hereda la de Elías (1 R 19:18): nunca toda Israel cae, siempre hay un resto fiel. La elección opera dentro de Israel, no contra Israel."
+    },
+    {
+      "author": "Henri Blocher · Justification of the Ungodly",
+      "text": "«Si por gracia, entonces no por obras; de otra manera la gracia ya no es gracia» (v.6): el principio exclusivo. Cualquier teología que mezcle gracia y obras como causas concurrentes de la justificación abole la gracia. Pablo no dialoga con el pelagianismo: lo anatematiza (Gá 1:8-9). La gracia o es sola o no es gracia."
+    },
+  ],
+  "r53": [
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "La metáfora del olivo (v.17-24) es única en Pablo. Los gentiles se injertan «contra naturaleza» (v.24) en el olivo cultivado: no reemplazan a Israel, se suman a su tronco. Las raíces son los patriarcas; la savia, las promesas. La advertencia (v.18-22) es solemne: el gentil que se jacta puede ser desgajado. La soberbia gentil es tan condenada como la jactancia judía."
+    },
+    {
+      "author": "Karl Barth · Church Dogmatics II/2",
+      "text": "«Todo Israel será salvo» (v.26): el texto más debatido de Rom 9-11. Barth leía «Israel» como el Israel espiritual (judíos y gentiles creyentes). Otros leen el Israel étnico al final de los tiempos. En cualquier caso, el misterio es claro: Dios no ha roto su pacto con Israel, y la historia terminará con una reconciliación escatológica que sobrepasa nuestro cálculo."
+    },
+  ],
+  "r54": [
+    {
+      "author": "Dietrich Bonhoeffer · El precio de la gracia",
+      "text": "«Presentéis vuestros cuerpos en sacrificio vivo» (v.1): la gracia barata dice «todo está perdonado, vive como quieras». La gracia cara dice «todo está perdonado, por tanto entrégate entero». El cuerpo —no el alma, no el sentimiento— es lo que se ofrece. La santificación no es mística interior: es entrega concreta de la vida visible."
+    },
+    {
+      "author": "Calvino · Institución III.7",
+      "text": "«No os conforméis a este siglo» (v.2): la conformidad con el mundo no es solo pecado moral sino esclavitud mental. La transformación (metamorphousthe) empieza por la renovación del entendimiento: pensar con la mente de Cristo (1 Co 2:16). El cristiano no es solo un pagano reformado: es un hombre con otra mente, iluminado por el evangelio."
+    },
+  ],
+  "r55": [
+    {
+      "author": "John Stott · Romanos: Dios para hoy",
+      "text": "La enumeración de siete dones (v.6-8) no es exhaustiva: 1 Co 12 añade otros, Ef 4 también. Lo decisivo es que cada don se define por su uso: profecía «según la fe», servicio «en servir», enseñanza «en enseñar». El don no es para lucimiento personal sino para edificación del cuerpo. El cristiano sin don es una contradicción: el Espíritu reparte a cada uno."
+    },
+    {
+      "author": "D.A. Carson · Showing the Spirit",
+      "text": "«Miembros los unos de los otros» (v.5): la frase es más radical que «miembros del cuerpo de Cristo». Pablo dice que somos miembros unos de otros —interdependencia radical. Lo que le pasa a uno le pasa a todos (1 Co 12:26). No hay cristiano solitario. Toda la vida cristiana es relacional porque Dios mismo es comunión (Padre, Hijo, Espíritu)."
+    },
+  ],
+  "r56": [
+    {
+      "author": "Tom Wright · Paul for Everyone: Romans",
+      "text": "La lista de 12 imperativos en vv.9-13 (aborrecer, adherirse, amar, honrar, dilatar, servir, gozar, sufrir, perseverar, comunicar, hospedar) describe el amor cristiano operante. No son consejos opcionales: son la anatomía del amor. Sin hospitalidad concreta el amor es teoría; sin aborrecer el mal, el amor es sentimentalismo. El amor verdadero es selectivo y activo."
+    },
+    {
+      "author": "Juan Crisóstomo · Homilías sobre Romanos",
+      "text": "«Practicando la hospitalidad» (philoxenian, v.13): la Iglesia primitiva no tenía templos sino casas. La hospitalidad no era virtud opcional sino condición de sobrevivencia del evangelio. Los misioneros itinerantes necesitaban casas abiertas; los pobres, mesa compartida. La casa cristiana era el templo donde el Señor era honrado en el forastero."
+    },
+  ],
+  "r57": [
+    {
+      "author": "Stanley Hauerwas · The Peaceable Kingdom",
+      "text": "«Bendecid a los que os persiguen» (v.14): la ética cristiana no nace del resentimiento sino de la imitación del Padre que hace salir su sol sobre justos e injustos (Mt 5:45). Bendecir al perseguidor no es debilidad sino fuerza superior: solo el que está seguro del amor del Padre puede bendecir al que lo odia. Es la oración de Esteban (Hch 7:60), que alcanzó a Pablo."
+    },
+    {
+      "author": "John Howard Yoder · The Politics of Jesus",
+      "text": "«Ascuas de fuego sobre su cabeza» (v.20, cita de Pr 25:21-22): la imagen antigua era de arrepentimiento —el enemigo avergonzado se arrepiente. No es venganza simbólica sino acción que busca la reconciliación. La no-violencia cristiana no es pasividad: es un acto de fe en que el bien puede vencer al mal (v.21), cosa que el mal no puede hacer por sí mismo."
+    },
+  ],
+  "r58": [
+    {
+      "author": "Oscar Cullmann · The State in the New Testament",
+      "text": "Pablo escribe Rom 13 bajo Nerón (54-68 d.C.), aún joven y relativamente benigno. Pero las palabras son universales: «no hay autoridad sino de parte de Dios» (v.1). El Estado es diaconado —servicio— aunque no lo sepa. La potestad de la espada (v.4) es real: el Estado contiene el caos. Pero la sumisión no es absoluta (Hch 5:29): cuando el Estado manda pecar, desobedecer es obedecer a Dios."
+    },
+    {
+      "author": "John Howard Yoder · The Politics of Jesus",
+      "text": "«Pagad a todos lo que debéis» (v.7): tributo, respeto, honra. La Iglesia no es anti-Estado; reconoce su función. Pero no absolutiza al Estado: lo relativiza como diaconado temporal. El Reino de Dios es anterior y superior a todo Estado. La Iglesia recuerda al Estado que rinde cuentas al Kyrios que está sobre todo principado y potestad."
+    },
+  ],
+  "r59": [
+    {
+      "author": "N.T. Wright · Paul for Everyone: Romans",
+      "text": "«El que ama al prójimo, ha cumplido la ley» (v.8): no «amor en lugar de ley» sino «amor como cumplimiento (plēroma) de la ley». El amor no abroga los Diez Mandamientos: los interioriza. Quien ama no necesita prohibición externa: ya no robará, no matará, no codiciará. El amor es la nueva ley interior (Jer 31:33) operando por el Espíritu."
+    },
+    {
+      "author": "Calvino · Comentario a Romanos",
+      "text": "«No debáis a nadie nada, sino el amaros» (v.8): la deuda del amor es la única deuda perpetua. Todo otro pago se termina; el amor se debe siempre. Por eso el cristiano nunca puede decir «ya he amado bastante». La gracia, recibida gratis, se vuelve deuda permanente para con el prójimo que aún no la ha recibido."
+    },
+  ],
+  "r60": [
+    {
+      "author": "Agustín de Hipona · Confesiones VIII.12",
+      "text": "«Vestíos del Señor Jesucristo, y no proveáis para los deseos de la carne» (v.14): este verso fue la chispa de mi conversión. Oí una voz infantil que repetía «toma y lee»; abrí el códice y leí esta frase. La vestidura de Cristo cubre la desnudez del pecado. «No proveer» para la carne es no planear el pecado: la santificación empieza por no organizar la tentación."
+    },
+    {
+      "author": "Stanley Hauerwas · Character and the Christian Life",
+      "text": "«Conociendo el tiempo» (v.11): el cristiano vive el kairos, no solo el chronos. El tiempo escatológico ha irrumpido: la salvación está más cerca que cuando creímos. La ética cristiana no es timeless sino urgent. Vivir «como de día» (v.13) es vivir con conciencia de que el Señor vuelve. La escatología no es miedo sino lucidez moral."
+    },
+  ],
+  "r61": [
+    {
+      "author": "D.A. Carson · Love in Hard Places",
+      "text": "El «débil» y el «fuerte» (v.1-12) no son categorías morales absolutas sino posiciones respecto a cuestiones indiferentes (días, comidas). El débil no era menos espiritual: tenía la conciencia formada de un modo más estricto. El fuerte, no más espiritual: entendía la libertad cristiana. La regla no era «ganar al débil» ni «corregir al fuerte»: recibir mutuamente, porque ambos rendirán cuentas al mismo Señor."
+    },
+    {
+      "author": "Tom Schreiner · Comentario BECNT sobre Romanos",
+      "text": "La cita de Is 45:23 (v.11, «ante mí se doblará toda rodilla») aplicada a Cristo es un caso notable de reinterpretación cristológica del AT. En Fil 2:10-11 el mismo texto se aplica a Jesús como Kyrios. Aquí, el tribunal ante el que comparecemos es Cristo: cada uno dará cuenta de sí. La conciencia cristiana no es autónoma: está bajo la mirada del Kyrios."
+    },
+  ],
+  "r62": [
+    {
+      "author": "Richard Hays · The Moral Vision of the New Testament",
+      "text": "«El reino de Dios no es comida ni bebida, sino justicia, paz y gozo en el Espíritu Santo» (v.17): la definición más densa del reino en Pablo. Tres realidades éticas (no rituales), todas «en el Espíritu». La libertad cristiana no es libertinaje: se autolimita por amor (v.21). La conciencia es el árbitro individual, pero el amor al hermano es la regla superior."
+    },
+    {
+      "author": "John Stott · Romanos: Dios para hoy",
+      "text": "«Bienaventurado el que no se condena a sí mismo en lo que aprueba» (v.22): la conciencia es frágil. Forzar a un hermano a actuar contra su conciencia es destruir su fe, aunque la acción en sí sea lícita. La pedagogía pastoral consiste en esperar que la conciencia crezca, no en aplastarla con la verdad. El amor es paciente con las conciencias débiles."
+    },
+  ],
+  "r63": [
+    {
+      "author": "C.S. Lewis · El peso de la gloria",
+      "text": "«Cristo no se agradó a sí mismo» (v.3, cita del Sal 69:9): el principio de la encarnación es el no-agradarse. Cristo se vació (Flp 2:7), no buscó lo suyo (1 Co 13:5). Toda imitación cristiana empieza aquí: ¿a quién puedo servir hoy? La pregunta correcta no es «¿qué me toca?» sino «¿qué debo llevar hoy que no me toca?»."
+    },
+    {
+      "author": "Dietrich Bonhoeffer · Vida en comunidad",
+      "text": "«Para que con un mismo sentir… glorifiquéis» (v.5-6): la unidad no se construye por simpatía sino por imitación de Cristo. Cuando cada miembro deja de agradarse a sí mismo y carga al otro, la comunidad alcanza «un mismo sentir según Cristo Jesús». La unidad cristiana no es uniformidad sino armonía: cada uno diferente, todos centrados en Cristo."
+    },
+  ],
+  "r64": [
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "Las cuatro citas del AT (Sal 18:49; Dt 32:43; Sal 117:1; Is 11:10) forman un crescendo: gentiles alaban a Dios con Israel, gentiles se unen a los santos, gentiles y judíos alaban juntos, y finalmente la «raíz de Jesé» (Cristo) reina sobre gentiles. Pablo está diseñando la liturgia de la iglesia mixta: judíos y gentiles adorando al mismo Kyrios."
+    },
+    {
+      "author": "Herman Ridderbos · Paul: An Outline of His Theology",
+      "text": "«Cristo Jesús vino a ser siervo de la circuncisión para confirmar las promesas hechas a los padres» (v.8): la encarnación tiene una dirección específica —primero a Israel. Cristo no cancela el pacto abrahámico: lo confirma. La misión a los gentiles no es un plan B tras el rechazo judío: es el despliegue del plan divino desde Abraham, que «sería heredero del mundo» (Rom 4:13)."
+    },
+  ],
+  "r65": [
+    {
+      "author": "J.I. Packer · Knowing God",
+      "text": "«El Dios de esperanza os llene de todo gozo y paz en el creer» (v.13): la esperanza cristiana no es sentimiento optimista sino virtud teologal producida por el Espíritu. Gozo y paz son su fruto (Gá 5:22). El cristiano no es optimista porque las cosas vayan bien, sino porque sabe que Dios es fiel. La esperanza que no depende de circunstancias es la única que no defraunda."
+    },
+    {
+      "author": "Calvino · Institución III.2",
+      "text": "«Para que abundéis en esperanza por el poder del Espíritu Santo» (v.13): la esperanza crece. No es estática: se profundiza con cada prueba soportada en fe. El Espíritu es el agente de este crecimiento, sellando al creyente con el anticipo de la gloria (Ef 1:14). La santificación es, en parte, el crecimiento de la esperanza."
+    },
+  ],
+  "r66": [
+    {
+      "author": "Eduard Lohse · Environment of the New Testament",
+      "text": "«Ministro de Jesucristo a los gentiles» (leitourgos, v.16): el término griego era religioso —servicio sacerdotal en el templo. Pablo se ve a sí mismo como sacerdote que ofrece a los gentiles convertidos como sacrificio a Dios. La evangelización no es proselitismo sino liturgia: cada gentil que cree es ofrenda que sube al Padre."
+    },
+    {
+      "author": "Roland Allen · Missionary Methods",
+      "text": "«No edificar sobre fundamento ajeno» (v.20): el principio paulino de pioneer mission. Pablo no iba donde otros ya habían predicado: abría campos nuevos. Esto no era orgullo sino estrategia: el campo blanco era inmenso, ¿por qué duplicar esfuerzos donde ya había iglesia? La iglesia actual necesita recuperar este principio: ir donde Cristo no es nombrado."
+    },
+  ],
+  "r67": [
+    {
+      "author": "F.F. Bruce · The Book of Acts (NICNT)",
+      "text": "El plan «Jerusalén → Roma → España» (v.23-24) revela la geografía teológica de Pablo. Jerusalén: cierre del ministerio judeocristiano con la colecta. Roma: centro del imperio, donde Pablo será testigo (Hch 23:11). España: el extremo occidental, cumplimiento de «hasta lo último de la tierra» (Hch 1:8). Pablo encarnaba la misión que Jesús encomendó."
+    },
+    {
+      "author": "Eckhard Schnabel · Early Christian Mission",
+      "text": "España (Hispania) era provincia romana desde Augusto. La tradición patrística posterior afirma que Pablo efectivamente llegó allí después de su liberación de la primera prisión romana (62-64 d.C.). Aunque no es seguro bíblicamente, el plan de Rom 15 muestra la vocación pionera de Pablo: siempre hacia la frontera, nunca hacia la zona cómoda."
+    },
+  ],
+  "r68": [
+    {
+      "author": "James D.G. Dunn · Comentario WBC sobre Romanos",
+      "text": "Febe, diaconisa (diakonos) de Cencrea, era probablemente la portadora de la carta. Pablo la recomienda con términos técnicos legales: «que la ayudéis… porque ella ha ayudado a muchos, y a mí también» (prostatis, patrona). Febe era una mujer de recursos económicos que financiaba el ministerio paulino. La primera voz que leyó Romanos en voz alta fue femenina."
+    },
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "Los 26 nombres de Rom 16 son una ventana a la iglesia romana: casas, redes laborales, esclavos y libres, judíos y gentiles, hombres y mujeres. Priscila y Aquila (v.3, expulsados por Claudio en 49 d.C., Hch 18:2) eran los líderes; Andronico y Junias (v.7) eran «muy estimados entre los apóstoles» —probablemente marido y mujer. La iglesia primitiva era mixta desde el inicio."
+    },
+  ],
+  "r69": [
+    {
+      "author": "D.A. Carson · From Sabbath to Lord's Day",
+      "text": "«Causan divisiones y tropiezos en contra de la doctrina» (v.17): la herejía no siempre es negación doctrinal; a menudo es práctica divisiva. Pablo advierte contra los que con «palabras suaves y bendiciones» engañan (v.18). La ortodoxia sin amor es herejía práctica; el amor sin verdad es herejía teórica. La doctrina apostólica incluye ambas dimensiones."
+    },
+    {
+      "author": "Richard Hays · The Moral Vision of the New Testament",
+      "text": "«El Dios de paz aplastará en breve a Satanás bajo vuestros pies» (v.20, cita de Gn 3:15): la promesa de la protoevangelio se cumple en la iglesia. No en un individuo heroico sino en la comunidad que vence al maligno por la sangre del Cordero y la palabra del testimonio (Ap 12:11). El pueblo de Dios es el lugar donde se realiza la victoria de la cruz."
+    },
+  ],
+  "r70": [
+    {
+      "author": "N.T. Wright · Paul and the Faithfulness of God",
+      "text": "La doxología (v.25-27) condensa el evangelio paulino: el misterio oculto desde los siglos, ahora revelado «por las Escrituras de los profetas». Pablo no introduce un evangelio nuevo: despliega lo que los profetas anunciaron. La inclusión de los gentiles es el contenido del misterio. La obediencia de la fe es el fruto. La gloria al único Dios es el fin."
+    },
+    {
+      "author": "C.E.B. Cranfield · Comentario ICC sobre Romanos",
+      "text": "«Al único y sabio Dios, sea gloria mediante Jesucristo para siempre» (v.27): la carta cierra donde empezó (1:5, «obediencia a la fe… por amor de su nombre»). El círculo se cierra. El Dios único (Dt 6:4) recibe gloria por medio de Cristo. La doctrina de Romanos no termina en explicación sino en adoración: lo que se comprende se adora; lo que no se comprende, también."
+    },
+  ],
+};
 
 // Override showNodeDetails to add extended comments
 const _origShowNodeDetailsExt = showNodeDetails;
