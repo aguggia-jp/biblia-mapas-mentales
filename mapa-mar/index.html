@@ -2815,10 +2815,10 @@ body.theme-light .cluster{
 <button class="info-btn" id="infoBtn" title="Introducción al libro" aria-label="Introducción">ⓘ</button>
   <div class="brand">
     <h1>Marcos · Mapa Interactivo</h1>
-    <span class="sub">El Evangelio del Siervo · ~50 nodos temáticos</span>
+    <span class="sub">El Evangelio del Siervo · ~50 estudios temáticos</span>
   </div>
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Buscar nodo, referencia o concepto…" autocomplete="off">
+    <input type="text" id="searchInput" placeholder="Buscar estudio, referencia o concepto…" autocomplete="off">
   </div>
   <div class="filter-pills" id="filterPills">
     <button class="filter-pill active" data-cat="all"><i class="dot" style="background:#fff"></i> Todos</button>
@@ -2833,7 +2833,7 @@ body.theme-light .cluster{
     <button class="marker-filter-pill" data-marker="studied"><i class="dot" style="background:var(--iglesia)"></i> Estudiados</button>
     <button class="marker-filter-pill" data-marker="favorite"><i class="dot" style="background:var(--at)"></i> Favoritos</button>
   </div>
-  <div class="stats" id="stats">— nodos visibles</div>
+  <div class="stats" id="stats">— estudios visibles</div>
   
   
   <div class="difficulty-selector" id="difficultySelector">
@@ -2958,7 +2958,7 @@ body.theme-light .cluster{
 <button class="cluster-menu-btn" id="clusterMenuBtn" title="Ir a un cluster" aria-label="Ir a un cluster">☰</button>
 <div class="cluster-menu-backdrop" id="clusterMenuBackdrop"></div>
 <div class="cluster-menu-panel" id="clusterMenuPanel">
-  <h4>Ir al cluster</h4>
+  <h4>Ir al grupo</h4>
   <div id="clusterMenuList"></div>
 </div>
 
@@ -3124,14 +3124,14 @@ body.theme-light .cluster{
     <h2>Cómo usar el mapa</h2>
     <p>Un mapa interactivo para profundizar en la Evangelio de Marcos, organizado en <b>nueve grupos temáticos</b> que conectan el Antiguo Testamento con Cristo, la Iglesia y la esperanza escatológica.</p>
     <ul>
-      <li><b>Clic</b> en cualquier nodo → versículos + comentario clásico + referencias cruzadas</li>
-      <li><b>Pasar el cursor</b> sobre un nodo → resalta sus conexiones (flechas luminosas)</li>
-      <li><b>Arrastrar</b> el canvas para desplazarte · <b>Rueda del ratón</b> para zoom</li>
+      <li><b>Clic</b> en cualquier estudio → versículos + comentario clásico + referencias cruzadas</li>
+      <li><b>Pasar el cursor</b> sobre un estudio → resalta sus conexiones (flechas luminosas)</li>
+      <li><b>Arrastrar</b> el mapa para desplazarte · <b>Rueda del ratón</b> para zoom</li>
       <li><b>Botones +/−</b> abajo a la derecha para zoom controlado</li>
       <li><b>Buscar</b> en la caja superior por título, referencia bíblica o tema</li>
       <li><b>Filtros</b> por categoría: clic en las pastillas de color</li>
-      <li><b>Referencias cruzadas</b> en el modal: clic para saltar a otro nodo</li>
-      <li><b>Niveles de estudio</b> (Básico · Intermedio · Avanzado): al cambiar de nivel, los nodos con contenido nuevo llevan la etiqueta <b>NUEVO</b> con un aro de color; la pastilla <b>Novedades</b> resalta solo esos nodos</li>
+      <li><b>Referencias cruzadas</b> en la ventana: clic para saltar a otro estudio</li>
+      <li><b>Niveles de estudio</b> (Básico · Intermedio · Avanzado): al cambiar de nivel, los estudios con contenido nuevo llevan la etiqueta <b>NUEVO</b> con un aro de color; la pastilla <b>Novedades</b> resalta solo esos estudios</li>
     </ul>
     <p style="font-style:italic;color:var(--muted);font-size:.78rem;margin-top:14px">Comentarios clásicos y modernos: Juan Calvino, Agustín de Hipona, Crisóstomo, Matthew Henry, Jerónimo, Hilario de Poitiers, D.A. Carson, R.T. France, Craig Keener.</p>
   </div>
@@ -3141,6 +3141,37 @@ body.theme-light .cluster{
 // ============================================================
 // DATA: ~100 NODES FOR HEBREWS CONSTELLATION MAP
 // ============================================================
+
+// ============================================================
+// LAYOUT HELPER: cálculo automático de posición de nodos.
+// Elimina solapamientos manuales. Para nuevos libros, las
+// posiciones pueden omitirse y calcularse con nodePosition().
+// ============================================================
+// Canvas: 2600x1810. 9 grupos (3x3).
+// Cada cluster: 4 columnas x 2 filas = 8 nodos máx.
+// Cluster grid:
+//   row 0: y_base=80    (clusters 0,1,2)
+//   row 1: y_base=600   (clusters 3,4,5)
+//   row 2: y_base=1140  (clusters 6,7,8)
+//   col 0: x_base=80    (clusters 0,3,6)
+//   col 1: x_base=1000  (clusters 1,4,7)
+//   col 2: x_base=1920  (clusters 2,5,8)
+// Dentro del cluster:
+//   posInCluster 0..3: fila 1, columnas 0..3 (dx=230)
+//   posInCluster 4..7: fila 2, columnas 0..3 (dy=120)
+function nodePosition(clusterIdx, posInCluster) {
+  const row = Math.floor(clusterIdx / 3);
+  const col = clusterIdx % 3;
+  const baseX = [80, 1000, 1920][col];
+  const baseY = [80, 600, 1140][row];
+  const innerCol = posInCluster % 4;
+  const innerRow = Math.floor(posInCluster / 4);
+  return {
+    x: baseX + innerCol * 230,
+    y: baseY + innerRow * 120
+  };
+}
+
 const NODES = [
   { id:'m1', x:80, y:80, cat:'cristo', title:'Principio del Evangelio', ref:'Marcos 1:1', verses:[{ref:'Marcos 1:1',text:'Principio del evangelio de Jesucristo, Hijo de Dios.'},{ref:'Isaías 40:3',text:'Voz que clama en el desierto: Preparad camino a Jehová.'}], comment:{author:'Crisóstomo · Homilía sobre Marcos',text:'Marcos comienza con "principio" — no porque el Evangelio termine, sino porque es el inicio de la nueva creación. Cristo es el Evangelio personificado: no es un mensaje sobre él, sino que él ES el mensaje. "Hijo de Dios" aparece desde el primer versículo, pero los demonios lo confiesan antes que los discípulos lo entiendan.'} },
   { id:'m2', x:290, y:80, cat:'at', title:'Juan el Bautista · Preparación', ref:'Marcos 1:2-8', verses:[{ref:'Marcos 1:7-8',text:'Viene tras mí el que es más poderoso que yo... él os bautizará con Espíritu Santo.'},{ref:'Malaquías 4:5',text:'He aquí, yo os envío el profeta Elías, antes que venga el día de Jehová.'}], comment:{author:'R.T. France · Comentario a Marcos',text:'Marcos cita Malaquías 4:5 e Isaías 40:3 combinándolos. Juan es Elías prometido, el heraldo del Mesías. Su bautismo de agua prepara; el bautismo con Espíritu del Mesías transforma. La diferencia entre los dos bautismos marca la diferencia entre las dos alianzas.'} },
@@ -3519,16 +3550,16 @@ function showNodeDetails(node) {
   let relatedHtml = '';
   if (relatedNodes.length > 0) {
     relatedHtml = '<div class="related-section">' +
-      '<div class="related-header">🔗 Nodos relacionados (' + relatedNodes.length + ')</div>';
+      '<div class="related-header">🔗 Estudios relacionados (' + relatedNodes.length + ')</div>';
     if (inCluster.length > 0) {
       relatedHtml += '<div class="related-group">' +
-        '<div class="related-group-title"><span class="group-dot"></span>En este cluster (' + inCluster.length + ')</div>' +
+        '<div class="related-group-title"><span class="group-dot"></span>En este grupo (' + inCluster.length + ')</div>' +
         '<div class="related-list">' + _renderChips(inCluster) + '</div>' +
       '</div>';
     }
     if (otherClusters.length > 0) {
       relatedHtml += '<div class="related-group">' +
-        '<div class="related-group-title"><span class="group-dot"></span>En otros clusters (' + otherClusters.length + ')</div>' +
+        '<div class="related-group-title"><span class="group-dot"></span>En otros grupos (' + otherClusters.length + ')</div>' +
         '<div class="related-list">' + _renderChips(otherClusters) + '</div>' +
       '</div>';
     }
@@ -3631,7 +3662,7 @@ function applyFilter() {
       n.classList.add('hidden');
     }
   });
-  statsEl.innerHTML = `<b>${visible}</b> nodos visibles`;
+  statsEl.innerHTML = `<b>${visible}</b> estudios visibles`;
   // Also dim arrows connected to hidden nodes
   document.querySelectorAll('.arrow-path').forEach(p => {
     const fromNode = document.querySelector(`.node[data-id="${p.dataset.from}"]`);
@@ -4554,6 +4585,21 @@ setTimeout(initFocusMode, 100);
 // STAGE 1: PERSONAL STUDY FEATURES
 // ============================================================
 const BOOK_ID = 'mar';
+// Metadata estandarizada del libro (para uso de etapa 4: mapa global, búsqueda, timeline)
+window.BOOK_META = {
+  book_id: 'mar',
+  book_name: 'Marcos',
+  book_abbr: 'Mc',
+  testament: 'NT',
+  canonical_position: 41,
+  chapters: 16,
+  author_traditional: 'Juan Marcos',
+  date_written: 'ca. 55-65 d.C.',
+  place_written: 'Roma',
+  category: 'cristo',
+  clusters: 9,
+};
+
 
 // Storage helpers (per book + per node)
 function getStorageKey(nodeId, suffix) {
@@ -4663,7 +4709,7 @@ function updateProgressBar() {
   // Celebración al completar el libro (solo en la transición a 100%, no al recargar)
   const prev = (typeof window._progressPct === 'number') ? window._progressPct : 0;
   if (total > 0 && pct === 100 && prev < 100 && typeof showToast === 'function') {
-    showToast('\u00a1Libro completado! Has estudiado los ' + total + ' nodos.', 4000);
+    showToast('\u00a1Libro completado! Has estudiado los ' + total + ' estudios.', 4000);
   }
   window._progressPct = pct;
 }
@@ -4832,7 +4878,7 @@ function buildNotesList() {
     }
   }
   if (notes.length === 0) {
-    notesList.innerHTML = '<div class="notes-empty">Aún no has escrito notas.<br>Abre cualquier nodo y escribe tu reflexión en el área "Mi nota personal".</div>';
+    notesList.innerHTML = '<div class="notes-empty">Aún no has escrito notas.<br>Abre cualquier estudio y escribe tu reflexión en el área "Mi nota personal".</div>';
     return;
   }
   notesList.innerHTML = notes.map(({node, note}) => `
@@ -5138,7 +5184,7 @@ function buildShareText(node) {
     text += '— ' + node.comment.author + '\n\n';
   }
   // Add link to the node
-  text += '🔗 Ver nodo completo: ' + BOOK_PUBLIC_URL + '#node-' + node.id;
+  text += '🔗 Ver estudio completo: ' + BOOK_PUBLIC_URL + '#node-' + node.id;
   return text;
 }
 
@@ -5845,17 +5891,105 @@ showNodeDetails = function(node) {
   // Beginner: only RVR1960 (already shown) + comments
 };
 
+// ============================================================
+// BOOK_NAME_VARIANTS: mapa central libro -> variantes de prefijo
+// UNA sola fuente de verdad para el buildLookupKey.
+// Al crear un libro nuevo, NO hace falta tocar esto si el libro
+// ya está listado aquí (todos los 66 libros están incluidos).
+// ============================================================
+const BOOK_NAME_VARIANTS = {
+  // Pentateuco
+  'gen': ['Génesis', 'Gén', 'Gen'],
+  'exo': ['Éxodo', 'Exo', 'Ex', 'Éx'],
+  'lev': ['Levítico', 'Lev', 'Lv'],
+  'num': ['Números', 'Num', 'Nm'],
+  'deu': ['Deuteronomio', 'Deut', 'Deu', 'Dt'],
+  // Históricos
+  'jos': ['Josué', 'Jos'],
+  'jue': ['Jueces', 'Jue', 'Jc'],
+  'rut': ['Rut', ' Rt'],
+  '1sa': ['1 Samuel', '1 Sa', '1Sa'],
+  '2sa': ['2 Samuel', '2 Sa', '2Sa'],
+  '1re': ['1 Reyes', '1 Re', '1Re'],
+  '2re': ['2 Reyes', '2 Re', '2Re'],
+  '1cr': ['1 Crónicas', '1 Cr', '1Cr', '1 Cronicas'],
+  '2cr': ['2 Crónicas', '2 Cr', '2Cr', '2 Cronicas'],
+  'esd': ['Esdras', 'Esd'],
+  'neh': ['Nehemías', 'Neh', 'Ne'],
+  'est': ['Ester', 'Est'],
+  // Poéticos
+  'job': ['Job', 'Jb'],
+  'sal': ['Salmos', 'Sal', 'Sl'],
+  'pro': ['Proverbios', 'Prov', 'Pr'],
+  'ecc': ['Eclesiastés', 'Ecl', 'Ec', 'Eclesiastes'],
+  'cnt': ['Cantares', 'Cnt', 'Cant', 'Cantico'],
+  // Proféticos mayores
+  'isa': ['Isaías', 'Isa', 'Is', 'Isaias'],
+  'jer': ['Jeremías', 'Jer', 'Jr'],
+  'lam': ['Lamentaciones', 'Lam'],
+  'eze': ['Ezequiel', 'Eze', 'Ez'],
+  'dan': ['Daniel', 'Dan', 'Dn'],
+  // Proféticos menores
+  'oso': ['Oseas', 'Os', 'Ose'],
+  'joe': ['Joel', 'Joe', 'Jl'],
+  'amo': ['Amós', 'Amo', 'Am', 'Amos'],
+  'abd': ['Abdías', 'Abd', 'Ab'],
+  'jon': ['Jonás', 'Jon', 'Jns'],
+  'mic': ['Miqueas', 'Mic', 'Mi', 'Miq'],
+  'nah': ['Nahúm', 'Nah', 'Na', 'Nahum'],
+  'hab': ['Habacuc', 'Hab', 'Hab'],
+  'sof': ['Sofonías', 'Sof', 'Sf', 'Sofonias'],
+  'hag': ['Hageo', 'Hag', 'Hg'],
+  'zac': ['Zacarías', 'Zac', 'Zc', 'Zacarias'],
+  'mal': ['Malaquías', 'Mal', 'Ml', 'Malaquias'],
+  // Evangelios
+  'mat': ['Mateo', 'Mt'],
+  'mar': ['Marcos', 'Mc', 'Mr'],
+  'luc': ['Lucas', 'Lc', 'Lu'],
+  'jua': ['Juan', 'Jn'],
+  // Historia
+  'hec': ['Hechos', 'Hch', 'Hc'],
+  // Cartas paulinas
+  'rom': ['Romanos', 'Rom', 'Ro'],
+  '1co': ['1 Corintios', '1 Co', '1Co'],
+  '2co': ['2 Corintios', '2 Co', '2Co'],
+  'gal': ['Gálatas', 'Gal', 'Gál', 'Ga'],
+  'efe': ['Efesios', 'Ef'],
+  'flp': ['Filipenses', 'Fil', 'Flp', 'Fp'],
+  'col': ['Colosenses', 'Col'],
+  '1te': ['1 Tesalonicenses', '1 Ts', '1Te', '1 Tes'],
+  '2te': ['2 Tesalonicenses', '2 Ts', '2Te', '2 Tes'],
+  '1ti': ['1 Timoteo', '1 Ti', '1Ti', '1 Tim'],
+  '2ti': ['2 Timoteo', '2 Ti', '2Ti', '2 Tim'],
+  'tit': ['Tito', 'Tit', 'Tt'],
+  'flm': ['Filemón', 'Flm', 'Filemon', 'Fm'],
+  // Cartas generales
+  'heb': ['Hebreos', 'Heb'],
+  'snt': ['Santiago', 'Sant', 'Stg', 'Snt'],
+  '1pe': ['1 Pedro', '1 Pe', '1Pe', '1 Pd'],
+  '2pe': ['2 Pedro', '2 Pe', '2Pe', '2 Pd'],
+  '1jn': ['1 Juan', '1 Jn', '1Jn', '1 Jua'],
+  '2jn': ['2 Juan', '2 Jn', '2Jn', '2 Jua'],
+  '3jn': ['3 Juan', '3 Jn', '3Jn', '3 Jua'],
+  'jud': ['Judas', 'Jud'],
+  // Profecía
+  'apo': ['Apocalipsis', 'Ap', 'Apo', 'Apc']
+};
+
+
 // Helper: build a key for ORIGINAL_TEXTS lookup
 function buildLookupKey(node, lookupStore) {
   // Try to match node.ref to a key like 'heb-1:3' or 'mt-1:23'
   const ref = node.ref;
   // Extract book abbreviation and chapter:verse
   // Examples: 'Hebreos 1:2', 'Mateo 1:23', 'Hebreos 4:14-16', 'Hebreos 9:11-14'
+  // Lookup dinámico: usa BOOK_ID + mapa central BOOK_NAME_VARIANTS.
+  // No hay if/else por libro: el BOOK_ID determina qué variantes aceptar.
+  const variants = (typeof BOOK_NAME_VARIANTS !== 'undefined' && BOOK_NAME_VARIANTS[BOOK_ID]) || [];
   let bookAbbr = '';
-  if (ref.startsWith('Hebreos')) bookAbbr = 'heb';
-  else if (ref.startsWith('Mateo') || ref.startsWith('Mt')) bookAbbr = 'mt';
-  else if (ref.startsWith('Marcos') || ref.startsWith('Mc')) bookAbbr = 'mar';
-  else if (ref.startsWith('Lucas') || ref.startsWith('Lc')) bookAbbr = 'luc';
+  for (const v of variants) {
+    if (ref.startsWith(v)) { bookAbbr = BOOK_ID; break; }
+  }
   if (!bookAbbr) return null;
 
   // Extract chapter and verse range (e.g., '1:18-25' or '1:23')
@@ -6816,8 +6950,8 @@ function countHigherLevelNodes() {
 function updateDifficultyTooltips() {
   const { versionsCount, greekCount } = countHigherLevelNodes();
   document.querySelectorAll('.difficulty-btn[data-level="beginner"]').forEach(b => b.setAttribute('data-tooltip', 'Solo versículos y comentarios'));
-  document.querySelectorAll('.difficulty-btn[data-level="intermediate"]').forEach(b => b.setAttribute('data-tooltip', '+ Comentarios extendidos, glosario y ' + versionsCount + ' nodos con versiones comparativas'));
-  document.querySelectorAll('.difficulty-btn[data-level="advanced"]').forEach(b => b.setAttribute('data-tooltip', '+ ' + greekCount + ' nodos con texto griego original'));
+  document.querySelectorAll('.difficulty-btn[data-level="intermediate"]').forEach(b => b.setAttribute('data-tooltip', '+ Comentarios extendidos, glosario y ' + versionsCount + ' estudios con versiones comparativas'));
+  document.querySelectorAll('.difficulty-btn[data-level="advanced"]').forEach(b => b.setAttribute('data-tooltip', '+ ' + greekCount + ' estudios con texto griego original'));
 }
 
 // Apply/remove visual markers on canvas nodes and mobile cards
@@ -6996,10 +7130,10 @@ window.level_feedback_v2 = true;
   var introTimer = null;
   var focusActive = false;
 
-  function nNodos(n){ return n === 1 ? '1 nodo' : n + ' nodos'; }
+  function nNodos(n){ return n === 1 ? '1 estudio' : n + ' nodos'; }
   function resaltar(feat, what){
-    return feat === 1 ? 'Resaltar el único nodo con ' + what
-                      : 'Resaltar los ' + feat + ' nodos con ' + what;
+    return feat === 1 ? 'Resaltar el único estudio con ' + what
+                      : 'Resaltar los ' + feat + ' estudios con ' + what;
   }
 
   // ---- Qué aporta cada nodo en cada nivel ----
@@ -7111,7 +7245,7 @@ window.level_feedback_v2 = true;
     var panel = document.getElementById('levelNewsPanel');
     if (on && panel) panel.classList.remove('show');
     if (typeof showToast === 'function') {
-      showToast(on ? (s.feat === 1 ? 'Resaltado: 1 nodo con ' + what : 'Resaltados: ' + s.feat + ' nodos con ' + what) : 'Mostrando todos los nodos');
+      showToast(on ? (s.feat === 1 ? 'Resaltado: 1 estudio con ' + what : 'Resaltados: ' + s.feat + ' estudios con ' + what) : 'Mostrando todos los estudios');
     }
   }
 
@@ -7140,13 +7274,13 @@ window.level_feedback_v2 = true;
     var list = [], btn = '', sub = '';
     if (level === 'beginner') {
       sub = 'Vista esencial para una primera lectura:';
-      list.push('Versículos y un comentario clásico por nodo');
+      list.push('Versículos y un comentario clásico por estudio');
       list.push('Ocultos por ahora: comentarios extendidos, versiones, glosario y griego');
-      if (s.ver + s.grk > 0) list.push('Los puntos azul/púrpura señalan nodos con contenido extra disponible');
+      if (s.ver + s.grk > 0) list.push('Los puntos azul/púrpura señalan estudios con contenido extra disponible');
       if (s.feat > 0) btn = '<button class="news-btn" data-focus="1">' + resaltar(s.feat, 'contenido adicional') + '</button>';
     } else if (level === 'intermediate') {
       sub = 'Contenido nuevo que no veías en Básico:';
-      if (s.ext > 0) list.push('<b>' + nNodos(s.ext) + '</b> suman comentarios extendidos (dos más por nodo)');
+      if (s.ext > 0) list.push('<b>' + nNodos(s.ext) + '</b> suman comentarios extendidos (dos más por estudio)');
       if (s.ver > 0) list.push('<b>' + nNodos(s.ver) + '</b> con versiones comparativas RVR · NVI · LBLA → etiqueta NUEVO');
       list.push('Glosario teológico y enlaces «Contexto» activados');
       if (s.ver > 0) btn = '<button class="news-btn" data-focus="1">' + resaltar(s.ver, 'versiones') + '</button>';
