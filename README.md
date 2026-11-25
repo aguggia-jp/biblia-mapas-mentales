@@ -12,11 +12,15 @@ biblia-mapas/
 ├── icon-192.png            ← Ícono general
 ├── icon-512.png
 ├── README.md               ← Este archivo
-├── mapa-hebreos/           ← Mapa de Hebreos (DISPONIBLE)
+├── mapa-heb/               ← Mapa de Hebreos (DISPONIBLE)
 │   ├── index.html
 │   ├── manifest.json
 │   ├── sw.js
 │   └── icon-*.png
+├── mapa-mat/               ← Mateo (DISPONIBLE)
+├── mapa-mar/               ← Marcos (DISPONIBLE)
+├── mapa-luc/               ← Lucas (DISPONIBLE)
+├── mapa-jua/               ← Juan (DISPONIBLE)
 ├── mapa-gen/               ← Génesis (placeholder)
 ├── map-exo/                ← Éxodo (placeholder)
 ├── ... (una carpeta por cada libro)
@@ -26,8 +30,26 @@ biblia-mapas/
 ## Estado actual
 
 - **66 libros** organizados en **10 divisiones** temáticas
-- **1 mapa disponible**: Hebreos (con ~100 nodos interconectados, versículos, comentarios clásicos, referencias cruzadas)
-- **65 mapas en preparación**: páginas placeholder listas para cuando se desarrolle cada libro
+- **5 mapas disponibles**:
+  - **Hebreos** (~104 nodos, 9 clusters, griego interlineal, versiones comparativas)
+  - **Mateo** (~75 nodos) · **Marcos** (~65 nodos) · **Lucas** (~69 nodos) · **Juan** (~70 nodos)
+- **61 mapas en preparación**: páginas placeholder listas para cuando se desarrolle cada libro
+
+## Niveles de estudio
+
+Cada mapa tiene tres niveles de profundidad (selector arriba a la derecha):
+
+| Nivel | Contenido |
+|-------|-----------|
+| 🌿 **Básico** | Versículos + 1 comentario clásico por nodo |
+| 🌊 **Intermedio** | + 2 comentarios extendidos de eruditos por nodo, glosario teológico, enlaces «Contexto» y versiones comparativas (RVR · NVI · LBLA) |
+| 🔮 **Avanzado** | + Texto griego interlineal con análisis de términos |
+
+**Feedback visual al cambiar de nivel**:
+- Al cambiar de nivel aparece un **panel de resumen** con lo que se activa (conteos reales) y un botón para resaltar esos nodos.
+- Los nodos con contenido nuevo del nivel llevan la etiqueta **NUEVO** (azul: versiones · púrpura: griego) y un aro de color, que **permanecen mientras estás en ese nivel**.
+- La pastilla **«Novedades»** (junto a los filtros) resalta solo esos nodos y atenúa el resto.
+- En **Básico**, los puntos azul/púrpura sobre los nodos indican que hay contenido adicional disponible en niveles superiores.
 
 ## Categorías de color
 

@@ -3159,6 +3159,37 @@ body.theme-light .cluster{
 // ============================================================
 // DATA: ~100 NODES FOR HEBREWS CONSTELLATION MAP
 // ============================================================
+
+// ============================================================
+// LAYOUT HELPER: cálculo automático de posición de nodos.
+// Elimina solapamientos manuales. Para nuevos libros, las
+// posiciones pueden omitirse y calcularse con nodePosition().
+// ============================================================
+// Canvas: 2600x1810. 9 clusters (3x3).
+// Cada cluster: 4 columnas x 2 filas = 8 nodos máx.
+// Cluster grid:
+//   row 0: y_base=80    (clusters 0,1,2)
+//   row 1: y_base=600   (clusters 3,4,5)
+//   row 2: y_base=1140  (clusters 6,7,8)
+//   col 0: x_base=80    (clusters 0,3,6)
+//   col 1: x_base=1000  (clusters 1,4,7)
+//   col 2: x_base=1920  (clusters 2,5,8)
+// Dentro del cluster:
+//   posInCluster 0..3: fila 1, columnas 0..3 (dx=230)
+//   posInCluster 4..7: fila 2, columnas 0..3 (dy=120)
+function nodePosition(clusterIdx, posInCluster) {
+  const row = Math.floor(clusterIdx / 3);
+  const col = clusterIdx % 3;
+  const baseX = [80, 1000, 1920][col];
+  const baseY = [80, 600, 1140][row];
+  const innerCol = posInCluster % 4;
+  const innerRow = Math.floor(posInCluster / 4);
+  return {
+    x: baseX + innerCol * 230,
+    y: baseY + innerRow * 120
+  };
+}
+
 const NODES = [
   { id:'j1', x:80, y:80, cat:'cristo', title:'El Verbo eterno', ref:'Juan 1:1', verses:[{ref:'Juan 1:1',text:'En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios.'},{ref:'Génesis 1:1',text:'En el principio creó Dios los cielos y la tierra.'}], comment:{author:'Andreas Köstenberger · Comentario a Juan (BTCB)',text:'Juan abre su Evangelio con un eco deliberado de Génesis 1:1: «en el principio» no señala un punto cronológico, sino la eternidad pre-creacional. El Verbo no «llegó a ser» sino que «era» (ēn, imperfecto durativo): su existencia no tiene comienzo. La distinción entre el Verbo y Dios (πρὸς τὸν θεόν) salvaguarda la pluralidad en la Deidad, mientras que «Dios era el Verbo» (θεὸς ἦν ὁ λόγος), con el predicado anarthroso, afirma la deidad plena del Verbo sin colapsar las personas.'} },
   { id:'j2', x:290, y:80, cat:'cristo', title:'Todas las cosas por él', ref:'Juan 1:3', verses:[{ref:'Juan 1:3',text:'Todas las cosas por él fueron hechas, y sin él nada de lo que ha sido hecho, fue hecho.'},{ref:'Colosenses 1:16',text:'Porque en él fueron creadas todas las cosas, las que hay en los cielos y las que hay en la tierra, visibles e invisibles; todo fue creado por medio de él y para él.'}], comment:{author:'Atanasio · Contra los arrianos',text:'Si todas las cosas fueron hechas por el Verbo, entonces el Verbo mismo no puede ser contado entre las cosas hechas; pues lo que crea no es creado. Por ello la fe ortodoxa confiesa al Hijo como coeterno al Padre, no como una criatura intermedia entre Dios y el mundo, sino como el artífice de todo lo que existe.'} },
@@ -4591,6 +4622,21 @@ setTimeout(initFocusMode, 100);
 // STAGE 1: PERSONAL STUDY FEATURES
 // ============================================================
 const BOOK_ID = 'jua';
+// Metadata estandarizada del libro (para uso de etapa 4: mapa global, búsqueda, timeline)
+window.BOOK_META = {
+  book_id: 'jua',
+  book_name: 'Juan',
+  book_abbr: 'Jn',
+  testament: 'NT',
+  canonical_position: 43,
+  chapters: 21,
+  author_traditional: 'Juan (el apóstol)',
+  date_written: 'ca. 85-95 d.C.',
+  place_written: 'Éfeso',
+  category: 'cristo',
+  clusters: 9,
+};
+
 
 // Storage helpers (per book + per node)
 function getStorageKey(nodeId, suffix) {
@@ -6350,18 +6396,105 @@ showNodeDetails = function(node) {
   // Beginner: only RVR1960 (already shown) + comments
 };
 
+// ============================================================
+// BOOK_NAME_VARIANTS: mapa central libro -> variantes de prefijo
+// UNA sola fuente de verdad para el buildLookupKey.
+// Al crear un libro nuevo, NO hace falta tocar esto si el libro
+// ya está listado aquí (todos los 66 libros están incluidos).
+// ============================================================
+const BOOK_NAME_VARIANTS = {
+  // Pentateuco
+  'gen': ['Génesis', 'Gén', 'Gen'],
+  'exo': ['Éxodo', 'Exo', 'Ex', 'Éx'],
+  'lev': ['Levítico', 'Lev', 'Lv'],
+  'num': ['Números', 'Num', 'Nm'],
+  'deu': ['Deuteronomio', 'Deut', 'Deu', 'Dt'],
+  // Históricos
+  'jos': ['Josué', 'Jos'],
+  'jue': ['Jueces', 'Jue', 'Jc'],
+  'rut': ['Rut', ' Rt'],
+  '1sa': ['1 Samuel', '1 Sa', '1Sa'],
+  '2sa': ['2 Samuel', '2 Sa', '2Sa'],
+  '1re': ['1 Reyes', '1 Re', '1Re'],
+  '2re': ['2 Reyes', '2 Re', '2Re'],
+  '1cr': ['1 Crónicas', '1 Cr', '1Cr', '1 Cronicas'],
+  '2cr': ['2 Crónicas', '2 Cr', '2Cr', '2 Cronicas'],
+  'esd': ['Esdras', 'Esd'],
+  'neh': ['Nehemías', 'Neh', 'Ne'],
+  'est': ['Ester', 'Est'],
+  // Poéticos
+  'job': ['Job', 'Jb'],
+  'sal': ['Salmos', 'Sal', 'Sl'],
+  'pro': ['Proverbios', 'Prov', 'Pr'],
+  'ecc': ['Eclesiastés', 'Ecl', 'Ec', 'Eclesiastes'],
+  'cnt': ['Cantares', 'Cnt', 'Cant', 'Cantico'],
+  // Proféticos mayores
+  'isa': ['Isaías', 'Isa', 'Is', 'Isaias'],
+  'jer': ['Jeremías', 'Jer', 'Jr'],
+  'lam': ['Lamentaciones', 'Lam'],
+  'eze': ['Ezequiel', 'Eze', 'Ez'],
+  'dan': ['Daniel', 'Dan', 'Dn'],
+  // Proféticos menores
+  'oso': ['Oseas', 'Os', 'Ose'],
+  'joe': ['Joel', 'Joe', 'Jl'],
+  'amo': ['Amós', 'Amo', 'Am', 'Amos'],
+  'abd': ['Abdías', 'Abd', 'Ab'],
+  'jon': ['Jonás', 'Jon', 'Jns'],
+  'mic': ['Miqueas', 'Mic', 'Mi', 'Miq'],
+  'nah': ['Nahúm', 'Nah', 'Na', 'Nahum'],
+  'hab': ['Habacuc', 'Hab', 'Hab'],
+  'sof': ['Sofonías', 'Sof', 'Sf', 'Sofonias'],
+  'hag': ['Hageo', 'Hag', 'Hg'],
+  'zac': ['Zacarías', 'Zac', 'Zc', 'Zacarias'],
+  'mal': ['Malaquías', 'Mal', 'Ml', 'Malaquias'],
+  // Evangelios
+  'mat': ['Mateo', 'Mt'],
+  'mar': ['Marcos', 'Mc', 'Mr'],
+  'luc': ['Lucas', 'Lc', 'Lu'],
+  'jua': ['Juan', 'Jn'],
+  // Historia
+  'hec': ['Hechos', 'Hch', 'Hc'],
+  // Cartas paulinas
+  'rom': ['Romanos', 'Rom', 'Ro'],
+  '1co': ['1 Corintios', '1 Co', '1Co'],
+  '2co': ['2 Corintios', '2 Co', '2Co'],
+  'gal': ['Gálatas', 'Gal', 'Gál', 'Ga'],
+  'efe': ['Efesios', 'Ef'],
+  'flp': ['Filipenses', 'Fil', 'Flp', 'Fp'],
+  'col': ['Colosenses', 'Col'],
+  '1te': ['1 Tesalonicenses', '1 Ts', '1Te', '1 Tes'],
+  '2te': ['2 Tesalonicenses', '2 Ts', '2Te', '2 Tes'],
+  '1ti': ['1 Timoteo', '1 Ti', '1Ti', '1 Tim'],
+  '2ti': ['2 Timoteo', '2 Ti', '2Ti', '2 Tim'],
+  'tit': ['Tito', 'Tit', 'Tt'],
+  'flm': ['Filemón', 'Flm', 'Filemon', 'Fm'],
+  // Cartas generales
+  'heb': ['Hebreos', 'Heb'],
+  'snt': ['Santiago', 'Sant', 'Stg', 'Snt'],
+  '1pe': ['1 Pedro', '1 Pe', '1Pe', '1 Pd'],
+  '2pe': ['2 Pedro', '2 Pe', '2Pe', '2 Pd'],
+  '1jn': ['1 Juan', '1 Jn', '1Jn', '1 Jua'],
+  '2jn': ['2 Juan', '2 Jn', '2Jn', '2 Jua'],
+  '3jn': ['3 Juan', '3 Jn', '3Jn', '3 Jua'],
+  'jud': ['Judas', 'Jud'],
+  // Profecía
+  'apo': ['Apocalipsis', 'Ap', 'Apo', 'Apc']
+};
+
+
 // Helper: build a key for ORIGINAL_TEXTS lookup
 function buildLookupKey(node, lookupStore) {
   // Try to match node.ref to a key like 'heb-1:3' or 'mt-1:23'
   const ref = node.ref;
   // Extract book abbreviation and chapter:verse
   // Examples: 'Hebreos 1:2', 'Mateo 1:23', 'Hebreos 4:14-16', 'Hebreos 9:11-14'
+  // Lookup dinámico: usa BOOK_ID + mapa central BOOK_NAME_VARIANTS.
+  // No hay if/else por libro: el BOOK_ID determina qué variantes aceptar.
+  const variants = (typeof BOOK_NAME_VARIANTS !== 'undefined' && BOOK_NAME_VARIANTS[BOOK_ID]) || [];
   let bookAbbr = '';
-  if (ref.startsWith('Hebreos')) bookAbbr = 'heb';
-  else if (ref.startsWith('Mateo') || ref.startsWith('Mt')) bookAbbr = 'mt';
-  else if (ref.startsWith('Marcos') || ref.startsWith('Mc')) bookAbbr = 'mar';
-  else if (ref.startsWith('Lucas') || ref.startsWith('Lc')) bookAbbr = 'luc';
-  else if (ref.startsWith('Juan') || ref.startsWith('Jn')) bookAbbr = 'jua';
+  for (const v of variants) {
+    if (ref.startsWith(v)) { bookAbbr = BOOK_ID; break; }
+  }
   if (!bookAbbr) return null;
 
   // Extract chapter and verse range (e.g., '1:18-25' or '1:23')
