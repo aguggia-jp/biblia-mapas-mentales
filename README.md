@@ -12,7 +12,7 @@ biblia-mapas/
 ├── icon-192.png            ← Ícono general
 ├── icon-512.png
 ├── README.md               ← Este archivo
-├── mapa-heb/               ← Mapa de Hebreos (DISPONIBLE)
+├── mapa-heb/               ← Hebreos (DISPONIBLE)
 │   ├── index.html
 │   ├── manifest.json
 │   ├── sw.js
@@ -21,8 +21,14 @@ biblia-mapas/
 ├── mapa-mar/               ← Marcos (DISPONIBLE)
 ├── mapa-luc/               ← Lucas (DISPONIBLE)
 ├── mapa-jua/               ← Juan (DISPONIBLE)
+├── mapa-hec/               ← Hechos (DISPONIBLE)
+├── mapa-rom/               ← Romanos (DISPONIBLE)
+├── mapa-1co/ · mapa-2co/   ← 1-2 Corintios (DISPONIBLES)
+├── mapa-gal/ · mapa-efe/   ← Gálatas, Efesios (DISPONIBLES)
+├── mapa-fil/ · mapa-col/   ← Filipenses, Colosenses (DISPONIBLES)
+├── mapa-1te/ · mapa-2te/   ← 1-2 Tesalonicenses (DISPONIBLES)
 ├── mapa-gen/               ← Génesis (placeholder)
-├── map-exo/                ← Éxodo (placeholder)
+├── mapa-exo/               ← Éxodo (placeholder)
 ├── ... (una carpeta por cada libro)
 └── mapa-apo/               ← Apocalipsis (placeholder)
 ```
@@ -30,10 +36,12 @@ biblia-mapas/
 ## Estado actual
 
 - **66 libros** organizados en **10 divisiones** temáticas
-- **5 mapas disponibles**:
+- **15 mapas disponibles**:
+  - **Evangelios**: Mateo (~75 nodos) · Marcos (~65) · Lucas (~69) · Juan (~70)
+  - **Hechos**: Hechos
+  - **Cartas paulinas**: Romanos · 1 Corintios · 2 Corintios · Gálatas · Efesios · Filipenses · Colosenses · 1 Tesalonicenses · 2 Tesalonicenses
   - **Hebreos** (~104 nodos, 9 clusters, griego interlineal, versiones comparativas)
-  - **Mateo** (~75 nodos) · **Marcos** (~65 nodos) · **Lucas** (~69 nodos) · **Juan** (~70 nodos)
-- **61 mapas en preparación**: páginas placeholder listas para cuando se desarrolle cada libro
+- **51 mapas en preparación**: páginas placeholder listas para cuando se desarrolle cada libro
 
 ## Niveles de estudio
 

@@ -1,5 +1,5 @@
 // Service Worker · Mapas Bíblicos
-const CACHE_NAME = 'biblia-mapas-v1';
+const CACHE_NAME = 'biblia-mapas-v2';
 const ASSETS = [
   "./",
   "./index.html",
